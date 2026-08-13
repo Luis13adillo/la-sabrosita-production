@@ -1,0 +1,100 @@
+# ---------------------------------------------------------------
+# La Sabrosita production workspace
+#
+# Rule of thumb: client SOURCE media belongs in this repo (through Git
+# LFS). Anything a machine can regenerate does not.
+# ---------------------------------------------------------------
+
+# --- Rendered video and render output ------------------------------
+# TV renders and Remotion output are regenerated from code plus the
+# masters, so the code and the masters are what deserve version
+# history. A single 4K render is larger than every asset in this repo
+# combined, and it changes on every run.
+#
+# This is a blanket rule on purpose. If the client ever hands over real
+# SOURCE footage that has to be kept, add it deliberately with
+# `git add -f` and add a matching line to .gitattributes so it goes
+# through LFS instead of landing in Git as a raw blob.
+*.mp4
+*.mov
+*.webm
+*.avi
+*.mkv
+*.prores
+*.mxf
+
+# Remotion / render output directories
+motion/out/
+motion/build/
+motion/.remotion/
+out/
+build/
+dist/
+
+# --- Dependencies --------------------------------------------------
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+bower_components/
+
+# --- Secrets -------------------------------------------------------
+# Never. Not even "temporarily". This repo is private, but private is
+# not the same as safe — every collaborator and every clone gets them.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.keystore
+credentials.json
+secrets.json
+service-account*.json
+
+# --- OS junk -------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+.AppleDouble
+.LSOverride
+Icon?
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --- Temporary and working files -----------------------------------
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+*.log
+.cache/
+.tmp/
+tmp/
+scratch/
+
+# Adobe / editor scratch — the working file is not the deliverable
+*.psb
+*.aep
+Adobe Premiere Pro Auto-Save/
+Adobe After Effects Auto-Save/
+
+# --- Editor / tooling ----------------------------------------------
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Local Claude Code settings are per-machine, not project state
+.claude/settings.local.json
+
+# --- Explicitly NOT ignored ----------------------------------------
+# assets/** is the point of this repo. It is tracked through Git LFS,
+# configured in .gitattributes. Do not add an assets/ ignore rule.
