@@ -1,0 +1,543 @@
+{
+  "_generated": "scripts/build-inventory.py — edit the script's INVENTORY table, not this file",
+  "_source": "~/Downloads/LaSabrosita (client's manual selection, 2026-08-16), read via assets/manual",
+  "_note": "This supersedes tv-menu/assets/products/products.json for the reel. That catalog is unmodified and still Rubric's source of truth.",
+  "imageCount": 46,
+  "productCount": 41,
+  "opaqueImages": [],
+  "categoryOrder": [
+    "HELADOS",
+    "ANTOJITOS",
+    "POSTRES",
+    "BEBIDAS"
+  ],
+  "productsPerCategory": {
+    "HELADOS": [
+      "Banana Split",
+      "Choco Banana",
+      "Crazy Shake",
+      "Helado Chino",
+      "Helado en Cono",
+      "La Sabrosita",
+      "Paletas",
+      "Paletas Locas",
+      "Sandwich de Helado"
+    ],
+    "ANTOJITOS": [
+      "Chicharron Preparado",
+      "Chicharron en Rueda",
+      "Diablitos",
+      "Elote",
+      "Elote Hot Cheetos",
+      "Esquimal",
+      "Esquite",
+      "Esquite Hot Cheetos",
+      "Marucha Loca",
+      "Platano Frito",
+      "Tostilocos"
+    ],
+    "POSTRES": [
+      "Bionico con Nieve",
+      "Churros",
+      "Coctel de Fruta",
+      "Crepa",
+      "Crepa Dubai",
+      "Croissant",
+      "Fresas Dubai",
+      "Fresas con Crema",
+      "Fresas en Cajita",
+      "Gelatina",
+      "Mango en Flor",
+      "Mini Pancakes",
+      "Mini Pancakes Dubai",
+      "Waffle"
+    ],
+    "BEBIDAS": [
+      "Aguas Explosivas",
+      "Aguas Frescas",
+      "Chamoyada",
+      "Frappe",
+      "Licuado",
+      "Michelaguas",
+      "Raspado"
+    ]
+  },
+  "multiImageProducts": {
+    "Crazy Shake": [
+      "lasabrosita_crazy-shakes_master_v01_1786749567455.png",
+      "lasabrosita_crazy-shakes_master_v02_1786749103746.png",
+      "lasabrosita_crazy-shakes_master_v03_1786751666844.png",
+      "lasabrosita_crazy-shakes_master_v04_1786754000102.png"
+    ],
+    "Helado Chino": [
+      "lasabrosita_helado-chino_master_v01_1786749676565.png",
+      "lasabrosita_helado-chino_master_v02_1786751663700.png"
+    ],
+    "Gelatina": [
+      "lasabrosita_gelatina_master_v02_1786750022930.png",
+      "lasabrosita_gelatina_master_v03_1786750138087.png"
+    ]
+  },
+  "images": [
+    {
+      "file": "lasabrosita_bananasplit1_enhanced_v02_1786574294521.png",
+      "name": "Banana Split",
+      "category": "HELADOS",
+      "depicts": "split banana in a white boat dish, three scoops, syrup, cherries",
+      "width": 1536,
+      "height": 1024,
+      "cutout": true,
+      "boardRank": 0
+    },
+    {
+      "file": "lasabrosita_choco-banana_master_v01_1786749441143.png",
+      "name": "Choco Banana",
+      "category": "HELADOS",
+      "depicts": "chocolate-dipped banana on a stick with nut sprinkle",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 1
+    },
+    {
+      "file": "lasabrosita_crazy-shakes_master_v01_1786749567455.png",
+      "name": "Crazy Shake",
+      "category": "HELADOS",
+      "depicts": "shake with whipped cream, chocolate drizzle and a whole Oreo",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 2
+    },
+    {
+      "file": "lasabrosita_crazy-shakes_master_v02_1786749103746.png",
+      "name": "Crazy Shake",
+      "category": "HELADOS",
+      "depicts": "shake with a marshmallow-studded rim and chocolate drizzle down the cup",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 2
+    },
+    {
+      "file": "lasabrosita_crazy-shakes_master_v03_1786751666844.png",
+      "name": "Crazy Shake",
+      "category": "HELADOS",
+      "depicts": "shake with a chocolate-sprinkle rim and two wafer sticks standing up",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 2
+    },
+    {
+      "file": "lasabrosita_crazy-shakes_master_v04_1786754000102.png",
+      "name": "Crazy Shake",
+      "category": "HELADOS",
+      "depicts": "pink shake, rainbow-sprinkle rim, cake slice and a candle",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 2
+    },
+    {
+      "file": "lasabrosita_helado-chico_master_v01_1786750132349.png",
+      "name": "Helado en Cono",
+      "category": "HELADOS",
+      "depicts": "two scoops on a waffle cone",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 3
+    },
+    {
+      "file": "lasabrosita_helado-chino_master_v01_1786749676565.png",
+      "name": "Helado Chino",
+      "category": "HELADOS",
+      "depicts": "packaged peach-flavour moulded ice cream in its printed box",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 4
+    },
+    {
+      "file": "lasabrosita_helado-chino_master_v02_1786751663700.png",
+      "name": "Helado Chino",
+      "category": "HELADOS",
+      "depicts": "packaged mango-flavour moulded ice cream in its printed box",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 4
+    },
+    {
+      "file": "lasabrosita_vaso-la-sabrosita_master_v01_1786752206548.png",
+      "name": "La Sabrosita",
+      "category": "HELADOS",
+      "depicts": "the house cup — layered ice cream, strawberries, cake and wafer",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 5
+    },
+    {
+      "file": "RealPaletas.png",
+      "name": "Paletas",
+      "category": "HELADOS",
+      "depicts": "grouped shot — the whole paleta range fanned on crushed ice with fruit",
+      "width": 1536,
+      "height": 1024,
+      "cutout": true,
+      "boardRank": 6
+    },
+    {
+      "file": "lasabrosita_paleta-loca_master_v02_1786750630712.png",
+      "name": "Paletas Locas",
+      "category": "HELADOS",
+      "depicts": "chamoy cup loaded with fruit, a tamarind paleta standing in it",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 7
+    },
+    {
+      "file": "lasabrosita_sandwich-de-helado_master_v01_1786745597408.png",
+      "name": "Sandwich de Helado",
+      "category": "HELADOS",
+      "depicts": "vanilla ice-cream sandwich between two chocolate wafers",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 8
+    },
+    {
+      "file": "lasabrosita_diablitos_master_v01_1786749677163.png",
+      "name": "Diablitos",
+      "category": "ANTOJITOS",
+      "depicts": "dark chamoy cup with tamarind straw and a red straw",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 0
+    },
+    {
+      "file": "lasabrosita_elote-regular_master_v01_1786750023360.png",
+      "name": "Elote",
+      "category": "ANTOJITOS",
+      "depicts": "corn on a stick with mayo, cheese and chile",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 1
+    },
+    {
+      "file": "lasabrosita_elote-con-hot-cheetos_master_v02_1786750634245.png",
+      "name": "Elote Hot Cheetos",
+      "category": "ANTOJITOS",
+      "depicts": "corn on a stick coated in crushed Hot Cheetos with mustard drizzle",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 2
+    },
+    {
+      "file": "lasabrosita_esquimales_master_v01_1786749455174.png",
+      "name": "Esquimal",
+      "category": "ANTOJITOS",
+      "depicts": "chocolate-coated bar on a stick under dense rainbow sprinkles",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 3
+    },
+    {
+      "file": "lasabrosita_esquites-_master_v02_1786750022528.png",
+      "name": "Esquite",
+      "category": "ANTOJITOS",
+      "depicts": "white foam cup of corn with cheese, chile powder, lime and a spoon",
+      "width": 1024,
+      "height": 1536,
+      "cutout": true,
+      "boardRank": 4
+    },
+    {
+      "file": "lasabrosita_esquites-hot-cheetos_master_v02_1786750022528.png",
+      "name": "Esquite Hot Cheetos",
+      "category": "ANTOJITOS",
+      "depicts": "white foam cup of corn under a tall red Hot Cheetos mound, lime wedge",
+      "width": 1199,
+      "height": 1312,
+      "cutout": true,
+      "boardRank": 5
+    },
+    {
+      "file": "lasabrosita_chicharron-en-rueda_master_v01_1786750264098.png",
+      "name": "Chicharron en Rueda",
+      "category": "ANTOJITOS",
+      "depicts": "bagged wheel-shaped chicharrones, plain",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 6
+    },
+    {
+      "file": "lasabrosita_chicharron-preparado_master_v02_1786737545135.png",
+      "name": "Chicharron Preparado",
+      "category": "ANTOJITOS",
+      "depicts": "flat chicharron sheet dressed with cabbage, cream, tomato and lime",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 7
+    },
+    {
+      "file": "lasabrosita_marucha-loca_master_v01_1786737425162.png",
+      "name": "Marucha Loca",
+      "category": "ANTOJITOS",
+      "depicts": "instant-noodle cup buried in Hot Cheetos, cream and cheese in a tray",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 8
+    },
+    {
+      "file": "lasabrosita_platano-frito_master_v01_1786750053785.png",
+      "name": "Platano Frito",
+      "category": "ANTOJITOS",
+      "depicts": "fried plantain rounds with cream and strawberry drizzle",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 10
+    },
+    {
+      "file": "lasabrosita_tostilocos_master_v01_1786749464122.png",
+      "name": "Tostilocos",
+      "category": "ANTOJITOS",
+      "depicts": "open Tostitos bag loaded with cucumber, jicama, peanuts and chamoy",
+      "width": 1312,
+      "height": 1199,
+      "cutout": true,
+      "boardRank": 11
+    },
+    {
+      "file": "lasabrosita_bionico-con-nieve_master_v02_1786750635027.png",
+      "name": "Bionico con Nieve",
+      "category": "POSTRES",
+      "depicts": "tray of fruit and cream topped with strawberries and a cherry",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 1
+    },
+    {
+      "file": "lasabrosita_churros_master_v01_1786751660230.png",
+      "name": "Churros",
+      "category": "POSTRES",
+      "depicts": "kraft carton of sugared churros",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 4
+    },
+    {
+      "file": "lasabrosita_coktel-de-fruta_master_v03_1786643037755.png",
+      "name": "Coctel de Fruta",
+      "category": "POSTRES",
+      "depicts": "clear cup of layered fruit with chile and standing mango spears",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 5
+    },
+    {
+      "file": "lasabrosita_crepa_master_v01_1786750148022.png",
+      "name": "Crepa",
+      "category": "POSTRES",
+      "depicts": "folded crepe with strawberries, cream and icing sugar",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 6
+    },
+    {
+      "file": "lasabrosita_crepa-dubai1_enhanced_v01_1786749837363.png",
+      "name": "Crepa Dubai",
+      "category": "POSTRES",
+      "depicts": "crepe on a white plate under green kataifi, banana, strawberry and chocolate",
+      "width": 1536,
+      "height": 1024,
+      "cutout": true,
+      "boardRank": 7
+    },
+    {
+      "file": "lasabrosita_croissant-con-helado_master_v01_1786752208201.png",
+      "name": "Croissant",
+      "category": "POSTRES",
+      "depicts": "split croissant in a clamshell with ice cream, fruit and chocolate",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 8
+    },
+    {
+      "file": "lasabrosita_fresas-con-crema_master_v01_1786749781237.png",
+      "name": "Fresas con Crema",
+      "category": "POSTRES",
+      "depicts": "cup of strawberries in cream under a whipped-cream crown",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 9
+    },
+    {
+      "file": "lasabrosita_fresas-dubai_master_v01_1786737290671.png",
+      "name": "Fresas Dubai",
+      "category": "POSTRES",
+      "depicts": "cup of chocolate-shelled strawberries with pistachio crumb",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 10
+    },
+    {
+      "file": "lasabrosita_fresas-en-cajita_master_v01_1786749786803.png",
+      "name": "Fresas en Cajita",
+      "category": "POSTRES",
+      "depicts": "printed strawberry carton topped with cream, sprinkles, wafer and cherry",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 11
+    },
+    {
+      "file": "lasabrosita_gelatina_master_v02_1786750022930.png",
+      "name": "Gelatina",
+      "category": "POSTRES",
+      "depicts": "lidded cup — pink base with blue and purple gelatin cubes",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 12
+    },
+    {
+      "file": "lasabrosita_gelatina_master_v03_1786750138087.png",
+      "name": "Gelatina",
+      "category": "POSTRES",
+      "depicts": "lidded cup — white base with blue and green gelatin cubes",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 12
+    },
+    {
+      "file": "lasabrosita_mango-en-palo_master_v02_1786750623131.png",
+      "name": "Mango en Flor",
+      "category": "POSTRES",
+      "depicts": "mango carved into a flower on a stick, dusted with chile",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 13
+    },
+    {
+      "file": "lasabrosita_mini-pancakes_master_v01_1786749822726.png",
+      "name": "Mini Pancakes",
+      "category": "POSTRES",
+      "depicts": "tray of mini pancakes with chocolate drizzle and sliced strawberries",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 14
+    },
+    {
+      "file": "lasabrosita_mini-pancakes-dubai_master_v01_1786750287502.png",
+      "name": "Mini Pancakes Dubai",
+      "category": "POSTRES",
+      "depicts": "clamshell of mini pancakes under green kataifi and pistachio",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 15
+    },
+    {
+      "file": "lasabrosita_waffle_master_v01_1786749802836.png",
+      "name": "Waffle",
+      "category": "POSTRES",
+      "depicts": "waffle bowl with cream, strawberries, chocolate and wafer sticks",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 17
+    },
+    {
+      "file": "AguasFrescas.png",
+      "name": "Aguas Frescas",
+      "category": "BEBIDAS",
+      "depicts": "grouped shot — a full row of aguas frescas jars with the fruit they are made from",
+      "width": 1536,
+      "height": 1024,
+      "cutout": true,
+      "boardRank": 0
+    },
+    {
+      "file": "lasabrosita_aguas-explosivas_master_v01_1786749566189.png",
+      "name": "Aguas Explosivas",
+      "category": "BEBIDAS",
+      "depicts": "chamoy-rimmed cup loaded with fruit, tamarind stick and straw",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 1
+    },
+    {
+      "file": "lasabrosita_chamoyada_master_v01_1786746470000.png",
+      "name": "Chamoyada",
+      "category": "BEBIDAS",
+      "depicts": "mango chamoyada with chamoy swirl and a tamarind straw",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 2
+    },
+    {
+      "file": "lasabrosita_frappe-20oz_master_v01_1786749550180.png",
+      "name": "Frappe",
+      "category": "BEBIDAS",
+      "depicts": "chocolate frappe with whipped cream and a green straw",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 3
+    },
+    {
+      "file": "lasabrosita_licuado_master_v02_1786749106577.png",
+      "name": "Licuado",
+      "category": "BEBIDAS",
+      "depicts": "strawberry licuado under a dome lid with whipped cream and a cherry",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 4
+    },
+    {
+      "file": "lasabrosita_michelaguas_master_v01_1786750172488.png",
+      "name": "Michelaguas",
+      "category": "BEBIDAS",
+      "depicts": "branded Micheláguas jar of mango with a chile rim",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 6
+    },
+    {
+      "file": "lasabrosita_raspados_master_v01_1786749454753.png",
+      "name": "Raspado",
+      "category": "BEBIDAS",
+      "depicts": "cup of red shaved ice piled above the rim",
+      "width": 2000,
+      "height": 2000,
+      "cutout": true,
+      "boardRank": 7
+    }
+  ]
+}

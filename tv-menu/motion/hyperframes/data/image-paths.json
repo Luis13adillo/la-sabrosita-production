@@ -1,0 +1,237 @@
+{
+ "_generated": "scripts/build-asset-map.py \u2014 do not hand-edit",
+ "_what": "selection filename -> the path this project reads it from, relative to the project root. Every path stays inside the repo.",
+ "_matchedOn": "md5 of the file contents, never the filename",
+ "images": {
+  "AguasFrescas.png": {
+   "path": "assets/selected/AguasFrescas.png",
+   "md5": "3680a453d853a92ab3694d91843d4cbb",
+   "bytes": 3530689
+  },
+  "RealPaletas.png": {
+   "path": "assets/products/LS_Paletas_MASTER_v03.png",
+   "md5": "c04a67c3d5ea1c0cede215c0e2e2e4b8",
+   "bytes": 3332942
+  },
+  "lasabrosita_aguas-explosivas_master_v01_1786749566189.png": {
+   "path": "assets/products/LS_Aguas-Explosivas_MASTER_v01.png",
+   "md5": "0b9d987b91979aad0d4a41ea0891164f",
+   "bytes": 2985932
+  },
+  "lasabrosita_bananasplit1_enhanced_v02_1786574294521.png": {
+   "path": "assets/selected/lasabrosita_bananasplit1_enhanced_v02_1786574294521.png",
+   "md5": "49ae3da317053d2480f56e3ee5c5a891",
+   "bytes": 2155320
+  },
+  "lasabrosita_bionico-con-nieve_master_v02_1786750635027.png": {
+   "path": "assets/products/LS_Bionico-con-Nieve_MASTER_v02.png",
+   "md5": "c228f4295fd013ccbb134c324d4beec0",
+   "bytes": 3741376
+  },
+  "lasabrosita_chamoyada_master_v01_1786746470000.png": {
+   "path": "assets/products/LS_Chamoyada_MASTER_v01.png",
+   "md5": "e20427920b74c2c57bfd2191d688900d",
+   "bytes": 3748213
+  },
+  "lasabrosita_chicharron-en-rueda_master_v01_1786750264098.png": {
+   "path": "assets/products/LS_Chicharron-en-Rueda_MASTER_v01.png",
+   "md5": "810fc0d224d166f0646645b4acbe9d98",
+   "bytes": 5386182
+  },
+  "lasabrosita_chicharron-preparado_master_v02_1786737545135.png": {
+   "path": "assets/masters/LS_Chicharron-Preparado_MASTER_v02.png",
+   "md5": "ac806be1fbfb42e3660ee30838375376",
+   "bytes": 3810045
+  },
+  "lasabrosita_choco-banana_master_v01_1786749441143.png": {
+   "path": "assets/products/LS_Choco-Banana_MASTER_v01.png",
+   "md5": "fcf6136c30cf94fa88e81be892422433",
+   "bytes": 2453668
+  },
+  "lasabrosita_churros_master_v01_1786751660230.png": {
+   "path": "assets/products/LS_Churros_MASTER_v01.png",
+   "md5": "2f5508d0ae04e50464f7ae91ff4bc0b2",
+   "bytes": 4911565
+  },
+  "lasabrosita_coktel-de-fruta_master_v03_1786643037755.png": {
+   "path": "assets/masters/LS_Coktel-de-Fruta_MASTER_v03.png",
+   "md5": "0feaf3de36b3d960c6a41e7ecabc47b9",
+   "bytes": 4598997
+  },
+  "lasabrosita_crazy-shakes_master_v01_1786749567455.png": {
+   "path": "assets/products/LS_Crazy-Shakes_MASTER_v01.png",
+   "md5": "85849616cab2a907968c8f61c3cbf5e8",
+   "bytes": 3557095
+  },
+  "lasabrosita_crazy-shakes_master_v02_1786749103746.png": {
+   "path": "assets/products/LS_Crazy-Shakes_MASTER_v02.png",
+   "md5": "54e4b4fbf1075fcdba4696aaea84bd2d",
+   "bytes": 2907450
+  },
+  "lasabrosita_crazy-shakes_master_v03_1786751666844.png": {
+   "path": "assets/products/LS_Crazy-Shakes_MASTER_v03.png",
+   "md5": "02e2f9a336df4b025d13ec8011015aad",
+   "bytes": 3379600
+  },
+  "lasabrosita_crazy-shakes_master_v04_1786754000102.png": {
+   "path": "assets/products/LS_Crazy-Shakes_MASTER_v04.png",
+   "md5": "0a558cb8b3c0ba46162184388359fec5",
+   "bytes": 2829573
+  },
+  "lasabrosita_crepa-dubai1_enhanced_v01_1786749837363.png": {
+   "path": "assets/selected/lasabrosita_crepa-dubai1_enhanced_v01_1786749837363.png",
+   "md5": "665e62d90c4279f3b2aee4a6c316c4de",
+   "bytes": 2999917
+  },
+  "lasabrosita_crepa_master_v01_1786750148022.png": {
+   "path": "assets/products/LS_Crepa_MASTER_v01.png",
+   "md5": "47547dd977393b3175e6852f5e2733cd",
+   "bytes": 5376607
+  },
+  "lasabrosita_croissant-con-helado_master_v01_1786752208201.png": {
+   "path": "assets/products/LS_Croissant-con-Helado_MASTER_v01.png",
+   "md5": "050055c2cdb2f3baa615b8ba1b1e8dac",
+   "bytes": 5879298
+  },
+  "lasabrosita_diablitos_master_v01_1786749677163.png": {
+   "path": "assets/products/LS_Diablitos_MASTER_v01.png",
+   "md5": "542a8ad40fa465835d4ad3acb693ffc4",
+   "bytes": 3495024
+  },
+  "lasabrosita_elote-con-hot-cheetos_master_v02_1786750634245.png": {
+   "path": "assets/products/LS_Elote-con-Hot-Cheetos_MASTER_v02.png",
+   "md5": "fcd74b7e4e781bda0c3af02dd3186b27",
+   "bytes": 1839626
+  },
+  "lasabrosita_elote-regular_master_v01_1786750023360.png": {
+   "path": "assets/products/LS_Elote-Regular_MASTER_v01.png",
+   "md5": "61f04c06ca1cb3818a746019cbdc6fad",
+   "bytes": 2761616
+  },
+  "lasabrosita_esquimales_master_v01_1786749455174.png": {
+   "path": "assets/products/LS_Esquimales_MASTER_v01.png",
+   "md5": "e876abf20d26fbf05d577bb350a66eac",
+   "bytes": 3641057
+  },
+  "lasabrosita_esquites-_master_v02_1786750022528.png": {
+   "path": "assets/selected/lasabrosita_esquites-_master_v02_1786750022528.png",
+   "md5": "5286f584810fb9eef48396bae8421ab3",
+   "bytes": 2029651
+  },
+  "lasabrosita_esquites-hot-cheetos_master_v02_1786750022528.png": {
+   "path": "assets/selected/lasabrosita_esquites-hot-cheetos_master_v02_1786750022528.png",
+   "md5": "e69446f2e54ff37d801eca9d6dd102ae",
+   "bytes": 1863100
+  },
+  "lasabrosita_frappe-20oz_master_v01_1786749550180.png": {
+   "path": "assets/products/LS_Frappe_20oz_MASTER_v01.png",
+   "md5": "9458275011e18617a59092d22bb1ea3c",
+   "bytes": 2866440
+  },
+  "lasabrosita_fresas-con-crema_master_v01_1786749781237.png": {
+   "path": "assets/products/LS_Fresas-con-Crema_MASTER_v01.png",
+   "md5": "a29937d5a6c768937df8c2b4ad3caf4e",
+   "bytes": 2802828
+  },
+  "lasabrosita_fresas-dubai_master_v01_1786737290671.png": {
+   "path": "assets/masters/LS_Fresas-Dubai_MASTER_v01.png",
+   "md5": "cf8c13e0b2db6041375d025c7ac37f94",
+   "bytes": 3074202
+  },
+  "lasabrosita_fresas-en-cajita_master_v01_1786749786803.png": {
+   "path": "assets/products/LS_Fresas-en-Cajita_MASTER_v01.png",
+   "md5": "0bd4db4908c71504b89afa1645063555",
+   "bytes": 3374644
+  },
+  "lasabrosita_gelatina_master_v02_1786750022930.png": {
+   "path": "assets/products/LS_Gelatina_MASTER_v02.png",
+   "md5": "649600a196eb2e9d54141f5e718d32e5",
+   "bytes": 3537569
+  },
+  "lasabrosita_gelatina_master_v03_1786750138087.png": {
+   "path": "assets/products/LS_Gelatina_MASTER_v03.png",
+   "md5": "4fa85b5850c2e19895bb5fc5e8821b1c",
+   "bytes": 4063006
+  },
+  "lasabrosita_helado-chico_master_v01_1786750132349.png": {
+   "path": "assets/products/LS_Helado-Chico_MASTER_v01.png",
+   "md5": "2d08cc616caa7393fbc3cb29da0b78de",
+   "bytes": 2391757
+  },
+  "lasabrosita_helado-chino_master_v01_1786749676565.png": {
+   "path": "assets/products/LS_Helado-Chino_MASTER_v01.png",
+   "md5": "58916bb367a91dca3639767c183c7a19",
+   "bytes": 3190052
+  },
+  "lasabrosita_helado-chino_master_v02_1786751663700.png": {
+   "path": "assets/products/LS_Helado-Chino_MASTER_v02.png",
+   "md5": "dbcefde69ad54a8281d562d4428e1c81",
+   "bytes": 3399301
+  },
+  "lasabrosita_licuado_master_v02_1786749106577.png": {
+   "path": "assets/products/LS_Licuado_MASTER_v02.png",
+   "md5": "85ef9289cdfbca3f17aeb74c126512b8",
+   "bytes": 3427178
+  },
+  "lasabrosita_mango-en-palo_master_v02_1786750623131.png": {
+   "path": "assets/products/LS_Mango-en-Palo_MASTER_v02.png",
+   "md5": "28bc4f87207f66349301027a7db2de22",
+   "bytes": 3050455
+  },
+  "lasabrosita_marucha-loca_master_v01_1786737425162.png": {
+   "path": "assets/masters/LS_Marucha-Loca_MASTER_v01.png",
+   "md5": "e36de22f30b9fd8377dc832ffccfd254",
+   "bytes": 5463268
+  },
+  "lasabrosita_michelaguas_master_v01_1786750172488.png": {
+   "path": "assets/products/LS_Michelaguas_MASTER_v01.png",
+   "md5": "2e6a2779c039c9e7ccf8db4ac6d80941",
+   "bytes": 4319751
+  },
+  "lasabrosita_mini-pancakes-dubai_master_v01_1786750287502.png": {
+   "path": "assets/products/LS_Mini-Pancakes-Dubai_MASTER_v01.png",
+   "md5": "58fa6994a3439d7c43ae37f8d5f67db6",
+   "bytes": 7482945
+  },
+  "lasabrosita_mini-pancakes_master_v01_1786749822726.png": {
+   "path": "assets/products/LS_Mini-Pancakes_MASTER_v01.png",
+   "md5": "615be36ef9f9107003232b530c806bc0",
+   "bytes": 7134539
+  },
+  "lasabrosita_paleta-loca_master_v02_1786750630712.png": {
+   "path": "assets/products/LS_Paleta-Loca_MASTER_v02.png",
+   "md5": "9461126948859798a37dd4e6498bba7b",
+   "bytes": 3214427
+  },
+  "lasabrosita_platano-frito_master_v01_1786750053785.png": {
+   "path": "assets/products/LS_Platano-Frito_MASTER_v01.png",
+   "md5": "eadae91d5421426330903ffd0d066f96",
+   "bytes": 6530103
+  },
+  "lasabrosita_raspados_master_v01_1786749454753.png": {
+   "path": "assets/products/LS_Raspados_MASTER_v01.png",
+   "md5": "16e2d7eb8a4f9df234ea2ab7a8779bfa",
+   "bytes": 4096845
+  },
+  "lasabrosita_sandwich-de-helado_master_v01_1786745597408.png": {
+   "path": "assets/products/LS_Sandwich-de-Helado_MASTER_v01.png",
+   "md5": "a50d5ef67a94101a46b18ee0ba444d63",
+   "bytes": 3599016
+  },
+  "lasabrosita_tostilocos_master_v01_1786749464122.png": {
+   "path": "assets/selected/lasabrosita_tostilocos_master_v01_1786749464122.png",
+   "md5": "07cfb7b1b7f302faefaeb8d5e61338de",
+   "bytes": 2161889
+  },
+  "lasabrosita_vaso-la-sabrosita_master_v01_1786752206548.png": {
+   "path": "assets/products/LS_Vaso-La-Sabrosita_MASTER_v01.png",
+   "md5": "9d187062e834d44067007582cb93010c",
+   "bytes": 3837190
+  },
+  "lasabrosita_waffle_master_v01_1786749802836.png": {
+   "path": "assets/products/LS_Waffle_MASTER_v01.png",
+   "md5": "6035f9cf8dbfba024f2b61e1d1d4545d",
+   "bytes": 4196423
+  }
+ }
+}

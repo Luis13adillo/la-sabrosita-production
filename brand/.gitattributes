@@ -1,0 +1,19 @@
+# Git LFS for the brand binaries.
+#
+# Same anchoring reason as tv-menu/.gitattributes: the root file's patterns all
+# contain a slash, so they are anchored to the repo root and do not reach into
+# brand/. Without a rule here the primary lockup — a 3 MB PNG — would land in
+# git as a raw blob.
+#
+# The root .gitattributes has an UNCOMMITTED change from another session that
+# adds equivalent brand/** rules. When that lands, this file becomes redundant
+# and should be deleted rather than left to disagree with it. It exists now so
+# the logo can be committed without touching that unfinished work.
+#
+# Deliberately NOT here: brand.json and README.md. They are the part a human
+# reviews, and a brand change must show up as a readable diff ("hot pink moved
+# from #F20A88 to ...") rather than as an opaque LFS pointer swap.
+logos/*.png      filter=lfs diff=lfs merge=lfs -text
+logos/*.PNG      filter=lfs diff=lfs merge=lfs -text
+logos/*.svg      -filter -diff -merge text
+guidelines/*.pdf filter=lfs diff=lfs merge=lfs -text

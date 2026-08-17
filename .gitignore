@@ -31,6 +31,41 @@ out/
 build/
 dist/
 
+# HyperFrames render output that is NOT video, and therefore slipped past
+# the blanket *.mp4 rule above: the frame snapshots and contact sheets the
+# CLI writes while a composition is being reviewed. They are the same class
+# of thing as a render — regenerated from the code and the masters by
+#   npx hyperframes snapshot --at <times> -o renders/<name>
+# and one review pass of the 39-product reel writes ~350 MB of them.
+#
+# The directory itself is kept (renders/.gitkeep is tracked) so the path
+# exists on a fresh clone.
+#
+# `**/` is load-bearing: a pattern containing a slash is anchored to THIS
+# file's directory, so a bare `renders/*` would only ever match a renders/
+# folder at the repo root — not tv-menu/motion/hyperframes/renders/, which
+# is the one that fills up.
+**/renders/*
+!**/renders/.gitkeep
+
+# HyperFrames Studio's preview thumbnail cache. 1,099 files after one
+# session, rewritten on every preview, useful to nobody but the local
+# Studio instance.
+.thumbnails/
+
+# HyperFrames tool scratch: animation maps, frame packets, diagnostics.
+# Regenerated on demand from the compositions
+#   node <skill>/scripts/animation-map.mjs . --out .hyperframes/anim-map
+# and a single animation map of the 39-product reel is 1.4 MB of sampled
+# bounding boxes — an analysis OF the source, never the source.
+.hyperframes/
+
+# Python bytecode. The build scripts are run directly, so CPython drops a
+# __pycache__ next to them; it is machine- and version-specific
+# (cpython-314) and rebuilt on every run.
+__pycache__/
+*.pyc
+
 # --- Dependencies --------------------------------------------------
 node_modules/
 .pnp

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #0D0D0F; }
+
+/* ============================================================
+ * GENERATED FILE — DO NOT EDIT.
+ * Source of truth: brand/brand.json  (itself transcribed from
+ * brand/guidelines/LS_Brand-Guidelines_v01.pdf).
+ * Regenerate:  python3 scripts/build-brand-css.py
+ *
+ * brandVersion: v01   schemaVersion: 1.0.0
+ * ============================================================ */
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('assets/fonts/NotoSans-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('assets/fonts/NotoSans-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url('assets/fonts/NotoSans-700-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url('assets/fonts/NotoSans-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url('assets/fonts/NotoSans-900-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url('assets/fonts/NotoSans-900-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+#root {
+  /* --- palette (brand.json → color.palette) --- */
+  --ls-hot-pink: #F20A88;            /* Hot Pink */
+  --ls-deep-purple: #4B1557;            /* Deep Purple */
+  --ls-electric-blue: #1296DB;            /* Electric Blue */
+  --ls-sunny-yellow: #F5C21E;            /* Sunny Yellow */
+  --ls-base-cream: #FFF8EF;            /* Base Cream */
+  --ls-dark-contrast: #0D0D0F;      /* contrastFields.darkContrast */
+
+  /* --- typography (brand.json → typography) --- */
+  --ls-font: 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
+  --ls-weight-headings: 700;
+  --ls-weight-body: 400;
+  --ls-weight-emphasis: 700;
+
+  /* --- gradient (brand.json → gradient) ---
+   * brand.json publishes from/to but leaves exactStops and angleDeg null.
+   * The angle below is a PROJECT working value, not a brand rule.
+   * See design.md → 'Values the guidelines do not define'. */
+  --ls-gradient-from: var(--ls-hot-pink);
+  --ls-gradient-to: var(--ls-deep-purple);
+  --ls-gradient-angle: 155deg;
+  --ls-gradient: linear-gradient(var(--ls-gradient-angle), var(--ls-gradient-from), var(--ls-gradient-to));
+
+  /* --- TV safe area ---
+   * brand.json lists safe-title margins under notSpecifiedInSource.
+   * 5% action / 10% title is the SMPTE convention, used as a working
+   * value pending client confirmation. Not a brand rule. */
+  --ls-safe-action: 54px;   /* 5% of 1080 */
+  --ls-safe-title: 96px;    /* ~9% of 1080 */
+}
+
+/* ------------------------------------------------------------------
+   ROOT CHROME — everything that survives a scene change.
+
+   Inlined into index.html by scripts/build-index.py. Kept in its own file
+   for the same reason compositions/product-scene.css is: the CSS is the
+   design, and it should be readable without wading through a generator.
+
+   These four layers are NOT clips. They have no data-start / data-duration /
+   data-track-index and are never hidden by the framework — they exist for
+   the whole reel and the root timeline drives them. That is
+   hyperframes-core's shared-background pattern, and it is what stops the
+   ticker restarting and the logo flickering at every cut.
+
+   Stacking is CSS, not tracks: data-track-index is temporal only. Order here
+   is field (0) -> ring (1) -> frames (5) -> ticker (8) -> logo (9).
+   ------------------------------------------------------------------ */
+
+#root {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  font-family: var(--ls-font);
+  /* No background on the root itself: the producer's frame compositing can
+     drop it and render black. The full-bleed .field child carries it. */
+}
+
+/* ============================================================ FIELD ===== */
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--ls-gradient);
+}
+
+/* The client-approved artwork. The gradient above stays as the declared
+   background so a frame still paints if the image is missing at render time,
+   and so brand.json remains the source of the fallback colour.
+
+   FIT: the source is 1792x1024 (1.750), the canvas is 1920x1080 (1.778).
+   `cover` keeps the full WIDTH — both side swirls survive — and spends the
+   17px of overflow on the height. `bottom` decides which edge pays: measured
+   hard-edge counts are 16 per row at the top against 23-24 at the bottom,
+   because the bottom carries the thin cream/blue swirl lines. Anchoring to
+   the bottom spends the crop on the flatter edge.
+
+   The drift is a transform on this element rather than a background-size
+   animation: background-size is not on the animatable allowlist, and tweening
+   it would relayout the paint every frame. */
+.field-img {
+  position: absolute;
+  inset: 0;
+  background-image: url("assets/backgrounds/LS_Menu_Background_v01.png");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* ============================================================= RING ===== */
+
+.ring {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.ring-item {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+}
+
+/* A separate wrapper for the idle float, so the finale's scale pop and the
+   float never write to the same element's transform. */
+.ring-float {
+  position: absolute;
+  inset: 0;
+}
+
+.ring-float img {
+  position: absolute;
+  display: block;
+  height: auto;
+  filter: drop-shadow(0 18px 26px color-mix(in srgb, var(--ls-deep-purple) 50%, transparent));
+}
+
+/* ============================================================ FRAMES ==== */
+
+/* Each frame is a transparent sub-composition painted over the field. */
+.mount {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+/* =========================================================== TICKER ===== */
+
+.ticker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 82px;
+  z-index: 8;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--ls-deep-purple);
+  border-top: 5px solid var(--ls-hot-pink);
+}
+
+.ticker-strip {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.ticker-strip span {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+  color: var(--ls-base-cream);
+  font-weight: var(--ls-weight-headings);
+  font-size: 28px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ticker-strip .star {
+  color: var(--ls-sunny-yellow);
+  font-style: normal;
+}
+
+/* ============================================================= LOGO ===== */
+
+/* The primary lockup, BARE.
+
+   NO BACKGROUND — no card, no panel, no scrim, no plate, no "subtle" fill.
+   Client instruction, 2026-08-17, and it is the correct one: the PNG is a real
+   transparent cut-out and the mark carries its own white keyline, which is the
+   separation a card would have been duplicating. See the LOGO block in
+   scripts/reel_spec.py for the verification and the size floor.
+
+   No CSS transform here either. Position and scale are both GSAP's — a CSS
+   transform plus a GSAP tween on the same property is the
+   gsap_css_transform_conflict lint error, and at render time they fight. */
+.logo-mark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 660px;
+  height: auto;
+  z-index: 9;
+  display: block;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+    </style>
+  </head>
+  <body>
+    <!-- GENERATED by scripts/build-index.py from data/scene-plan.json.
+         Do not hand-edit: edit the plan or scripts/reel_spec.py and re-run,
+         or Studio drags will be overwritten on the next build.
+
+         41 frames, 46 images, 41 products, 141.6s.
+         Every product holds the screen for 3.4s. -->
+    <div id="root" data-composition-id="main"
+         data-start="0" data-duration="141.6"
+         data-width="1920" data-height="1080">
+
+      <!-- The one continuous field. Not a clip: it exists for the whole reel,
+           and the root timeline drifts it. The brand gradient stays underneath
+           as the declared background, so the frame still paints correctly if
+           the artwork is ever missing at render time. -->
+      <div class="field">
+        <div class="field-img" id="bg-img"></div>
+      </div>
+
+      <!-- Eight products framing the open and the close. -->
+      <div class="ring" id="ring">
+        <div class="ring-item" id="ring-0" style="left: 120px; top: 78px;">
+          <div class="ring-float">
+            <img src="assets/selected/lasabrosita_bananasplit1_enhanced_v02_1786574294521.png" alt="Banana Split" style="width: 260.0px; left: 0.0px; top: 93.4px;" />
+          </div>
+        </div>
+        <div class="ring-item" id="ring-1" style="left: 120px; top: 405px;">
+          <div class="ring-float">
+            <img src="assets/products/LS_Sandwich-de-Helado_MASTER_v01.png" alt="Sandwich de Helado" style="width: 280.6px; left: -9.3px; top: -8.4px;" />
+          </div>
+        </div>
+        <div class="ring-item" id="ring-2" style="left: 120px; top: 732px;">
+          <div class="ring-float">
+            <img src="assets/masters/LS_Marucha-Loca_MASTER_v01.png" alt="Marucha Loca" style="width: 260.0px; left: 0.0px; top: 13.4px;" />
+          </div>
+        </div>
+        <div class="ring-item" id="ring-3" style="left: 1540px; top: 78px;">
+          <div class="ring-float">
+            <img src="assets/products/LS_Crepa_MASTER_v01.png" alt="Crepa" style="width: 299.2px; left: -22.9px; top: 4.5px;" />
+          </div>
+        </div>
+        <div class="ring-item" id="ring-4" style="left: 1540px; top: 405px;">
+          <div class="ring-float">
+            <img src="assets/products/LS_Fresas-en-Cajita_MASTER_v01.png" alt="Fresas en Cajita" style="width: 267.1px; left: -7.1px; top: -4.3px;" />
+          </div>
+        </div>
+        <div class="ring-item" id="ring-5" style="left: 1540px; top: 732px;">
+          <div class="ring-float">
+            <img src="assets/products/LS_Aguas-Explosivas_MASTER_v01.png" alt="Aguas Explosivas" style="width: 272.5px; left: -6.7px; top: -4.8px;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="mount" id="mount-01" data-composition-id="01-cold-open" data-composition-src="compositions/frames/01-cold-open.html"
+           data-start="0.0" data-duration="4.0" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-02" data-composition-id="02-helados-1" data-composition-src="compositions/frames/02-helados-1.html"
+           data-start="3.65" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-03" data-composition-id="03-helados-2" data-composition-src="compositions/frames/03-helados-2.html"
+           data-start="7.05" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-04" data-composition-id="04-helados-3" data-composition-src="compositions/frames/04-helados-3.html"
+           data-start="10.45" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-05" data-composition-id="05-helados-4" data-composition-src="compositions/frames/05-helados-4.html"
+           data-start="13.85" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-06" data-composition-id="06-helados-5" data-composition-src="compositions/frames/06-helados-5.html"
+           data-start="17.25" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-07" data-composition-id="07-helados-6" data-composition-src="compositions/frames/07-helados-6.html"
+           data-start="20.65" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-08" data-composition-id="08-helados-7" data-composition-src="compositions/frames/08-helados-7.html"
+           data-start="24.05" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-09" data-composition-id="09-helados-8" data-composition-src="compositions/frames/09-helados-8.html"
+           data-start="27.45" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-10" data-composition-id="10-helados-9" data-composition-src="compositions/frames/10-helados-9.html"
+           data-start="30.85" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-11" data-composition-id="11-antojitos-1" data-composition-src="compositions/frames/11-antojitos-1.html"
+           data-start="34.25" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-12" data-composition-id="12-antojitos-2" data-composition-src="compositions/frames/12-antojitos-2.html"
+           data-start="37.65" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-13" data-composition-id="13-antojitos-3" data-composition-src="compositions/frames/13-antojitos-3.html"
+           data-start="41.05" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-14" data-composition-id="14-antojitos-4" data-composition-src="compositions/frames/14-antojitos-4.html"
+           data-start="44.45" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-15" data-composition-id="15-antojitos-5" data-composition-src="compositions/frames/15-antojitos-5.html"
+           data-start="47.85" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-16" data-composition-id="16-antojitos-6" data-composition-src="compositions/frames/16-antojitos-6.html"
+           data-start="51.25" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-17" data-composition-id="17-antojitos-7" data-composition-src="compositions/frames/17-antojitos-7.html"
+           data-start="54.65" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-18" data-composition-id="18-antojitos-8" data-composition-src="compositions/frames/18-antojitos-8.html"
+           data-start="58.05" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-19" data-composition-id="19-antojitos-9" data-composition-src="compositions/frames/19-antojitos-9.html"
+           data-start="61.45" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-20" data-composition-id="20-postres-1" data-composition-src="compositions/frames/20-postres-1.html"
+           data-start="64.85" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-21" data-composition-id="21-postres-2" data-composition-src="compositions/frames/21-postres-2.html"
+           data-start="68.25" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-22" data-composition-id="22-postres-3" data-composition-src="compositions/frames/22-postres-3.html"
+           data-start="71.65" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-23" data-composition-id="23-postres-4" data-composition-src="compositions/frames/23-postres-4.html"
+           data-start="75.05" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-24" data-composition-id="24-postres-5" data-composition-src="compositions/frames/24-postres-5.html"
+           data-start="78.45" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-25" data-composition-id="25-postres-6" data-composition-src="compositions/frames/25-postres-6.html"
+           data-start="81.85" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-26" data-composition-id="26-postres-7" data-composition-src="compositions/frames/26-postres-7.html"
+           data-start="85.25" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-27" data-composition-id="27-postres-8" data-composition-src="compositions/frames/27-postres-8.html"
+           data-start="88.65" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-28" data-composition-id="28-postres-9" data-composition-src="compositions/frames/28-postres-9.html"
+           data-start="92.05" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-29" data-composition-id="29-postres-10" data-composition-src="compositions/frames/29-postres-10.html"
+           data-start="95.45" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-30" data-composition-id="30-postres-11" data-composition-src="compositions/frames/30-postres-11.html"
+           data-start="98.85" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-31" data-composition-id="31-postres-12" data-composition-src="compositions/frames/31-postres-12.html"
+           data-start="102.25" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-32" data-composition-id="32-postres-13" data-composition-src="compositions/frames/32-postres-13.html"
+           data-start="105.65" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-33" data-composition-id="33-postres-14" data-composition-src="compositions/frames/33-postres-14.html"
+           data-start="109.05" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-34" data-composition-id="34-bebidas-1" data-composition-src="compositions/frames/34-bebidas-1.html"
+           data-start="112.45" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-35" data-composition-id="35-bebidas-2" data-composition-src="compositions/frames/35-bebidas-2.html"
+           data-start="115.85" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-36" data-composition-id="36-bebidas-3" data-composition-src="compositions/frames/36-bebidas-3.html"
+           data-start="119.25" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-37" data-composition-id="37-bebidas-4" data-composition-src="compositions/frames/37-bebidas-4.html"
+           data-start="122.65" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-38" data-composition-id="38-bebidas-5" data-composition-src="compositions/frames/38-bebidas-5.html"
+           data-start="126.05" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-39" data-composition-id="39-bebidas-6" data-composition-src="compositions/frames/39-bebidas-6.html"
+           data-start="129.45" data-duration="3.85" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-40" data-composition-id="40-bebidas-7" data-composition-src="compositions/frames/40-bebidas-7.html"
+           data-start="132.85" data-duration="3.85" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div class="mount" id="mount-41" data-composition-id="41-close" data-composition-src="compositions/frames/41-close.html"
+           data-start="136.6" data-duration="5.0" data-track-index="0" data-width="1920" data-height="1080"></div>
+
+      <!-- One strip, one linear pass. Never restarted, so it reads as a real
+           ticker rather than 41 short ones. -->
+      <!-- data-layout-allow-overflow: the strip is DELIBERATELY wider than the
+           frame — that is what a ticker is. .ticker clips it, so nothing is
+           ever painted outside the canvas; only the element's own box extends
+           past it. Verified against renders/look before the attribute was
+           added, per hyperframes-core's rule on silencing overflow findings. -->
+      <div class="ticker">
+        <div class="ticker-strip" id="ticker-strip" data-layout-allow-overflow>
+          <span>Aguas frescas<i class="star">&#10022;</i></span><span>Chamoyadas<i class="star">&#10022;</i></span><span>Bionicos<i class="star">&#10022;</i></span><span>Churros<i class="star">&#10022;</i></span><span>Crepas<i class="star">&#10022;</i></span><span>Crazy shakes<i class="star">&#10022;</i></span><span>Chicharrón preparado<i class="star">&#10022;</i></span><span>Diablitos<i class="star">&#10022;</i></span>
+          <span>Aguas frescas<i class="star">&#10022;</i></span><span>Chamoyadas<i class="star">&#10022;</i></span><span>Bionicos<i class="star">&#10022;</i></span><span>Churros<i class="star">&#10022;</i></span><span>Crepas<i class="star">&#10022;</i></span><span>Crazy shakes<i class="star">&#10022;</i></span><span>Chicharrón preparado<i class="star">&#10022;</i></span><span>Diablitos<i class="star">&#10022;</i></span>
+          <span>Aguas frescas<i class="star">&#10022;</i></span><span>Chamoyadas<i class="star">&#10022;</i></span><span>Bionicos<i class="star">&#10022;</i></span><span>Churros<i class="star">&#10022;</i></span><span>Crepas<i class="star">&#10022;</i></span><span>Crazy shakes<i class="star">&#10022;</i></span><span>Chicharrón preparado<i class="star">&#10022;</i></span><span>Diablitos<i class="star">&#10022;</i></span>
+          <span>Aguas frescas<i class="star">&#10022;</i></span><span>Chamoyadas<i class="star">&#10022;</i></span><span>Bionicos<i class="star">&#10022;</i></span><span>Churros<i class="star">&#10022;</i></span><span>Crepas<i class="star">&#10022;</i></span><span>Crazy shakes<i class="star">&#10022;</i></span><span>Chicharrón preparado<i class="star">&#10022;</i></span><span>Diablitos<i class="star">&#10022;</i></span>
+          <span>Aguas frescas<i class="star">&#10022;</i></span><span>Chamoyadas<i class="star">&#10022;</i></span><span>Bionicos<i class="star">&#10022;</i></span><span>Churros<i class="star">&#10022;</i></span><span>Crepas<i class="star">&#10022;</i></span><span>Crazy shakes<i class="star">&#10022;</i></span><span>Chicharrón preparado<i class="star">&#10022;</i></span><span>Diablitos<i class="star">&#10022;</i></span>
+          <span>Aguas frescas<i class="star">&#10022;</i></span><span>Chamoyadas<i class="star">&#10022;</i></span><span>Bionicos<i class="star">&#10022;</i></span><span>Churros<i class="star">&#10022;</i></span><span>Crepas<i class="star">&#10022;</i></span><span>Crazy shakes<i class="star">&#10022;</i></span><span>Chicharrón preparado<i class="star">&#10022;</i></span><span>Diablitos<i class="star">&#10022;</i></span>
+          <span>Aguas frescas<i class="star">&#10022;</i></span><span>Chamoyadas<i class="star">&#10022;</i></span><span>Bionicos<i class="star">&#10022;</i></span><span>Churros<i class="star">&#10022;</i></span><span>Crepas<i class="star">&#10022;</i></span><span>Crazy shakes<i class="star">&#10022;</i></span><span>Chicharrón preparado<i class="star">&#10022;</i></span><span>Diablitos<i class="star">&#10022;</i></span>
+          <span>Aguas frescas<i class="star">&#10022;</i></span><span>Chamoyadas<i class="star">&#10022;</i></span><span>Bionicos<i class="star">&#10022;</i></span><span>Churros<i class="star">&#10022;</i></span><span>Crepas<i class="star">&#10022;</i></span><span>Crazy shakes<i class="star">&#10022;</i></span><span>Chicharrón preparado<i class="star">&#10022;</i></span><span>Diablitos<i class="star">&#10022;</i></span>
+        </div>
+      </div>
+
+      <!-- One lockup for the whole reel: centre-stage for the cold open, then
+           it flies to the corner and holds there until the close.
+
+           The transparent PNG straight onto the artwork — nothing behind it.
+           See .logo-mark in reel-chrome.css. -->
+      <img class="logo-mark" id="logo" src="assets/brand/logos/LS_Logo_Primary_v01.png"
+           alt="La Sabrosita Ice Cream &amp; Snacks" />
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      (function () {
+        var tl = gsap.timeline({ paused: true });
+        var TOTAL = 141.6;
+        var FINALE = 136.6;
+
+        /* --- the field drifts, once, one way -----------------------------
+           A slow push across 141.6s. sine-wave-loop's amplitude caps govern a
+           BREATH (something that returns); this never returns, so it reads as
+           the camera easing in rather than the background pulsing. */
+        tl.fromTo("#bg-img",
+          { scale: 1.04 },
+          { scale: 1.09, duration: TOTAL, ease: "none" }, 0);
+
+        /* --- the ring clears, then comes back ---------------------------- */
+        tl.to("#ring",
+          { opacity: 0, duration: 2.2, ease: "power2.inOut" }, 1.0);
+        tl.to("#ring",
+          { opacity: 1, duration: 1.40, ease: "power2.out" }, FINALE - 0.5);
+
+        /* Each product pops back in on its own beat at the finale.
+           immediateRender:false is load-bearing: without it GSAP applies the
+           from-state at page load and all eight sit at 0.7 scale through the
+           entire cold open. */
+        for (var i = 0; i < 6; i++) {
+          tl.fromTo("#ring-" + i,
+            { scale: 0.70 },
+            { scale: 1, duration: 0.85, ease: "power3.out",
+              immediateRender: false },
+            FINALE - 0.4 + i * 0.07);
+        }
+
+        /* A little life while the ring is on screen. It rides a separate
+           wrapper from the scale pop above, so two tweens never fight over
+           one element's transform. Phase tween is linear — the sine is the
+           curve (sine-wave-loop). */
+        var phase = { p: 0 };
+        var floats = gsap.utils.toArray(".ring-float");
+        tl.to(phase, {
+          p: Math.PI * 2 * 18, duration: TOTAL, ease: "none",
+          onUpdate: function () {
+            for (var j = 0; j < floats.length; j++) {
+              floats[j].style.transform =
+                "translateY(" + (Math.sin(phase.p + j * 0.8) * 7).toFixed(2) + "px)";
+            }
+          }
+        }, 0);
+
+        /* --- the logo flies to the corner, and back ---------------------- */
+        tl.fromTo("#logo",
+          { x: 630.0, y: 161.9, scale: 1.0 },
+          { x: 72.0, y: 54.0, scale: 0.38,
+            duration: 1.4, ease: "power3.inOut" }, 2.6);
+        tl.to("#logo",
+          { x: 630.0, y: 161.9, scale: 1.0,
+             duration: 1.20, ease: "power3.inOut" }, FINALE - 0.2);
+
+        /* --- the ticker ------------------------------------------------- */
+        tl.fromTo("#ticker-strip",
+          { x: 0 },
+          { x: -16217.6, duration: TOTAL, ease: "none" }, 0);
+
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>
