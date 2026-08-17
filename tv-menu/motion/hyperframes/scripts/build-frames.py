@@ -138,6 +138,11 @@ def card_copy(fr, copy):
 
 
 # ------------------------------------------------------------ the product ---
+def tune_for(fr):
+    """The per-scene placement override for one frame, or {} for the other 36."""
+    return RS.SCENE_TUNE.get(fr["id"], {})
+
+
 def zone_boxes(fr, bboxes):
     """
     [(product, box_w, box_h)] for every shot, laid out inside PRODUCT_BOX.
@@ -156,7 +161,7 @@ def zone_boxes(fr, bboxes):
 
     gap = (RS.PAIR_GAP if fr["sceneType"] == "pair"
            else RS.CLUSTER_GAP.get(n, 24))
-    overlap = RS.CLUSTER_OVERLAP.get(n, 0)
+    overlap = tune_for(fr).get("overlap", RS.CLUSTER_OVERLAP.get(n, 0))
     span = (gap - overlap) * (n - 1)
 
     aspects = [RS.food_aspect(bboxes[p["file"]]) for p in prods]
@@ -174,6 +179,28 @@ def zone_html(fr, bboxes):
     elif n > 1:
         cls += f" of-{n}"
 
+    tune = tune_for(fr)
+    # The zone carries no GSAP tween, so a CSS transform here is safe and
+    # compounds with the hold's push-in on .product-drift. Origin is the floor
+    # centre: the group grows upward off the baseline every other scene shares.
+    zone_style = ""
+    if tune:
+        parts = []
+        if tune.get("dx") or tune.get("dy"):
+            parts.append(f'translate({tune.get("dx", 0)}px, {tune.get("dy", 0)}px)')
+        if tune.get("scale", 1) != 1:
+            parts.append(f'scale({tune["scale"]})')
+        if parts:
+            zone_style = (f' style="transform: {" ".join(parts)}; '
+                          f'transform-origin: 50% 100%;"')
+
+    # An overlap override has to reach the CSS too — .zone.of-4's margin-left
+    # is the rule this scene is stepping outside of, so it is restated inline
+    # rather than changed for all 39 frames.
+    shot_margin = ""
+    if "overlap" in tune:
+        shot_margin = f' margin-left: -{tune["overlap"]}px;'
+
     tilt = RS.CLUSTER_TILT.get(n, ()) if fr["sceneType"] == "cluster" else ()
     rows = []
     for i, (p, bw, bh) in enumerate(boxes):
@@ -181,13 +208,17 @@ def zone_html(fr, bboxes):
         if i < len(tilt):
             style += f" transform: rotate({tilt[i]}deg);"
         card = "" if p.get("cutout", True) else " oncard"
+        box = f'width: {bw:.0f}px; height: {bh:.0f}px;'
+        if i and shot_margin:
+            box += shot_margin
         rows.append(
-            f'              <div class="shot" style="width: {bw:.0f}px; height: {bh:.0f}px;">\n'
+            f'              <div class="shot" style="{box}">\n'
             f'                <img class="shot-img{card}" src="{AP.src_for(p["file"])}" '
             f'alt="{esc(p["name"])}"\n'
             f'                     style="{style}" />\n'
             f'              </div>')
-    return f'            <div class="{cls}">\n' + "\n".join(rows) + "\n            </div>"
+    return (f'            <div class="{cls}"{zone_style}>\n'
+            + "\n".join(rows) + "\n            </div>")
 
 
 # --------------------------------------------------------------- the card ---

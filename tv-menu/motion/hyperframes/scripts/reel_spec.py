@@ -154,6 +154,53 @@ CLUSTER_TILT = {4: (-6, -2, 2, 6), 3: (-4, 0, 4), 2: (-3, 3)}
 PAIR_GAP = 40
 
 
+# ---------------------------------------------------- per-scene overrides ---
+# Luis reviewed the finished v02 video on 2026-08-17 and asked for three
+# products to be re-placed. These are deliberately SCENE-SPECIFIC: the rules
+# above still govern all 36 other frames, and Banana Split (02-helados-1) is
+# the agreed benchmark and is not tuned.
+#
+#   scale   uniform scale of the whole group, about its floor centre, so the
+#           products grow upward off the same baseline instead of drifting
+#   dx, dy  pixels, page coordinates; negative dy lifts
+#   overlap optional per-scene replacement for CLUSTER_OVERLAP — how far each
+#           shot tucks behind the one before it
+#
+# The scale is applied to .zone, which carries no GSAP tween. It compounds with
+# the hold's push-in (.product-drift, DRIFT_TO) — so the peak size is
+# scale * DRIFT_TO, and that peak is what has to clear action-safe.
+SCENE_TUNE = {
+    # Crazy Shake. The four shakes are WIDTH-limited: they already spanned
+    # 909px of the 936px between the card's right edge and action-safe, which
+    # is why they rendered 458px tall against Banana Split's 580px and read
+    # timid. A uniform group scale could not reach the 15-20% Luis asked for —
+    # 1.03 was the most that still cleared action-safe, and +3% is invisible.
+    #
+    # Tucking each shake further behind the one before it buys the height back
+    # out of width the group was already spending on gaps: 458 -> 536px, +17%,
+    # with the group's footprint unchanged (x 946.5..1853.3, as before). Luis
+    # chose this over the uniform 1.03 on 2026-08-17, knowing the trade — less
+    # of each shake's left side shows.
+    "04-helados-3": {"scale": 1.00, "dx": 0, "dy": -60, "overlap": 92},
+
+    # Paletas and Aguas Frescas keep their size and only rise.
+    #
+    # dx is 0, NOT the leftward move Luis asked for, and this is measured
+    # rather than judged: both photographs already end at x=932.8 at the drift
+    # peak and the card's right edge is x=930, so the clearance is 2.8px. A
+    # 10px move left puts 779 opaque pixels of the Aguas Frescas jars behind
+    # the card, which is translucent enough to hide them — the leftmost jar
+    # comes out with a straight vertical cut down its side. He asked for no
+    # cropping, so the move is his call, not a default.
+    #
+    # Worth knowing when he decides: the group is ALREADY optically centred in
+    # the space it has. Card right edge 930 to action-safe 1866 centres on
+    # 1398; the photo centres on 1400.
+    "08-helados-7": {"scale": 1.00, "dx": 0, "dy": -32},
+    "34-bebidas-1": {"scale": 1.00, "dx": 0, "dy": -42},
+}
+
+
 # ================================================================ CARD ======
 CARD_X, CARD_Y, CARD_W = 110, 340, 820
 CARD_PAD_T, CARD_PAD_X, CARD_PAD_B = 44, 48, 52
