@@ -1,0 +1,81 @@
+{
+  "_generated": "HAND-WRITTEN. Not derived from anything — this file is copy.",
+  "_note": [
+    "One Spanish line per menu item, shown under the name inside the card.",
+    "",
+    "'source': 'client-reel' means the line came verbatim from the 15-item reel",
+    "Luis approved (Motion graphics for food items). Those are not re-worded.",
+    "",
+    "'source': 'client-answer' means Luis answered a flagged line on 2026-08-17",
+    "and this is his wording. Treat it like 'client-reel' — do not re-word it.",
+    "",
+    "'source': 'draft' means Claude wrote it in the same voice and it has NOT",
+    "been client-checked. Every draft names only what is visible in the MASTER",
+    "or what the item's name already states. Where that was not enough to write",
+    "a line without guessing at the shop's actual recipe, 'check' says exactly",
+    "what the guess is. Fix the wording here, re-run build-frames.py — never",
+    "edit the generated HTML.",
+    "",
+    "Keys are the on-screen name from data/scene-plan.json (displayName). The two",
+    "client-named pairs have no single displayName, so they are keyed by their two",
+    "product names joined with ' + ', in plan order, and carry their own 'name'."
+  ],
+
+  "items": {
+    "Banana Split":          { "desc": "Tres nieves, fresa, nuez y cereza",            "source": "client-reel" },
+    "Choco Banana":          { "desc": "Plátano cubierto de chocolate y cacahuate",     "source": "client-reel" },
+    "Crazy Shake":           { "desc": "Malteada cargada con toppings",                 "source": "client-reel" },
+    "Helado en Cono":        { "desc": "Nieve en cono, del sabor que quieras",          "source": "draft" },
+    "Helado Chino":          { "desc": "Helado asiático",                               "source": "client-answer",
+                               "check": "Luis said 'asian ice cream'. Written in Spanish to match every other line on the reel; say the word and it becomes the English 'Asian ice cream'." },
+    "La Sabrosita":          { "desc": "El vaso de la casa",                             "source": "client-answer" },
+    "Paletas":               { "desc": "Paletas de agua y de crema, muchos sabores",    "source": "draft" },
+    "Paletas Locas":         { "desc": "Paleta bañada en chamoy, dulces y chile",       "source": "draft" },
+    "Sandwich de Helado":    { "desc": "Nieve entre dos galletas",                      "source": "draft" },
+
+    "Diablitos":             { "desc": "Raspado de tamarindo con chile y dulce",        "source": "client-reel" },
+    "Esquimal":              { "desc": "Paleta de nieve cubierta de chocolate",         "source": "draft" },
+    "Chicharron en Rueda":   { "desc": "Con salsa, limón y chile en polvo",             "source": "client-reel" },
+    "Chicharron Preparado":  { "desc": "Repollo, aguacate, crema y limón",              "source": "client-reel" },
+    "Marucha Loca":          { "desc": "Maruchan preparada",                            "source": "client-answer" },
+    "Platano Frito":         { "desc": "Plátano macho frito con crema y lechera",       "source": "draft" },
+    "Tostilocos":            { "desc": "Tostitos con cueritos, jícama, chamoy y limón", "source": "client-answer" },
+
+    "Bionico con Nieve":     { "desc": "Fruta fresca, crema, granola y nieve",          "source": "client-reel" },
+    "Churros":               { "desc": "Canela y azúcar, recién hechos",                "source": "client-reel" },
+    "Coctel de Fruta":       { "desc": "Mango, sandía, jícama, pepino y chamoy",        "source": "client-reel" },
+    "Crepa":                 { "desc": "Rellena y bañada al gusto",                     "source": "client-reel" },
+    "Crepa Dubai":           { "desc": "Pistache, chocolate y kataifi",                 "source": "client-reel" },
+    "Croissant":             { "desc": "Croissant tibio con nieve encima",              "source": "client-reel" },
+    "Fresas con Crema":      { "desc": "Fresas frescas con crema y azúcar",             "source": "draft" },
+    "Fresas Dubai":          { "desc": "Fresas con pistache, chocolate y kataifi",      "source": "draft" },
+    "Fresas en Cajita":      { "desc": "Fresas cubiertas de chocolate, para llevar",    "source": "draft" },
+    "Gelatina":              { "desc": "Gelatina de leche y de agua",                   "source": "draft" },
+    "Mango en Flor":         { "desc": "Mango en flor con chamoy, limón y chile",       "source": "draft" },
+    "Mini Pancakes":         { "desc": "Pancakes chiquitos con lechera y fruta",        "source": "draft" },
+    "Mini Pancakes Dubai":   { "desc": "Mini pancakes con pistache y chocolate",        "source": "draft" },
+    "Waffle":                { "desc": "Waffle recién hecho con nieve y fruta",         "source": "draft" },
+
+    "Aguas Frescas":         { "desc": "Horchata, jamaica, sandía, mango y más",        "source": "client-reel" },
+    "Aguas Explosivas":      { "desc": "Fresa, piña y tamarindo con escarchado",        "source": "client-reel" },
+    "Chamoyada":             { "desc": "Nieve de mango, chamoy y tamarindo",            "source": "client-reel" },
+    "Frappe":                { "desc": "Frappé de 20 oz, frío y cremoso",               "source": "draft" },
+    "Licuado":               { "desc": "Licuado de fruta con leche",                    "source": "draft" },
+    "Michelaguas":           { "desc": "Agua fresca preparada",                          "source": "client-answer" },
+    "Raspado":               { "desc": "Hielo raspado con jarabe de sabores",           "source": "draft" }
+  },
+
+  "pairs": {
+    "Elote + Esquite": {
+      "name": "Elote y Esquite",
+      "desc": "Con mayonesa, queso y chile",
+      "source": "client-answer"
+    },
+    "Elote Hot Cheetos + Esquite Hot Cheetos": {
+      "name": "Elote y Esquite Hot Cheetos",
+      "desc": "Con mayonesa, queso y Hot Cheetos",
+      "source": "client-answer",
+      "check": "Luis wrote 'Con mayonesa, queso, y hot cheetos'. Two changes, both undoable on request: the comma before 'y' is dropped, because Spanish does not take one and the Elote y Esquite card 3.4s earlier reads 'queso y chile'; and Hot Cheetos is capitalised as a brand, matching the product name above it."
+    }
+  }
+}

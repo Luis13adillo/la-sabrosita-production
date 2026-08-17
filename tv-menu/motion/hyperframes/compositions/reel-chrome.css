@@ -1,0 +1,164 @@
+/* ------------------------------------------------------------------
+   ROOT CHROME — everything that survives a scene change.
+
+   Inlined into index.html by scripts/build-index.py. Kept in its own file
+   for the same reason compositions/product-scene.css is: the CSS is the
+   design, and it should be readable without wading through a generator.
+
+   These four layers are NOT clips. They have no data-start / data-duration /
+   data-track-index and are never hidden by the framework — they exist for
+   the whole reel and the root timeline drives them. That is
+   hyperframes-core's shared-background pattern, and it is what stops the
+   ticker restarting and the logo flickering at every cut.
+
+   Stacking is CSS, not tracks: data-track-index is temporal only. Order here
+   is field (0) -> ring (1) -> frames (5) -> ticker (8) -> logo (9).
+   ------------------------------------------------------------------ */
+
+#root {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  font-family: var(--ls-font);
+  /* No background on the root itself: the producer's frame compositing can
+     drop it and render black. The full-bleed .field child carries it. */
+}
+
+/* ============================================================ FIELD ===== */
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--ls-gradient);
+}
+
+/* The client-approved artwork. The gradient above stays as the declared
+   background so a frame still paints if the image is missing at render time,
+   and so brand.json remains the source of the fallback colour.
+
+   FIT: the source is 1792x1024 (1.750), the canvas is 1920x1080 (1.778).
+   `cover` keeps the full WIDTH — both side swirls survive — and spends the
+   17px of overflow on the height. `bottom` decides which edge pays: measured
+   hard-edge counts are 16 per row at the top against 23-24 at the bottom,
+   because the bottom carries the thin cream/blue swirl lines. Anchoring to
+   the bottom spends the crop on the flatter edge.
+
+   The drift is a transform on this element rather than a background-size
+   animation: background-size is not on the animatable allowlist, and tweening
+   it would relayout the paint every frame. */
+.field-img {
+  position: absolute;
+  inset: 0;
+  background-image: url("assets/backgrounds/LS_Menu_Background_v01.png");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* ============================================================= RING ===== */
+
+.ring {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.ring-item {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+}
+
+/* A separate wrapper for the idle float, so the finale's scale pop and the
+   float never write to the same element's transform. */
+.ring-float {
+  position: absolute;
+  inset: 0;
+}
+
+.ring-float img {
+  position: absolute;
+  display: block;
+  height: auto;
+  filter: drop-shadow(0 18px 26px color-mix(in srgb, var(--ls-deep-purple) 50%, transparent));
+}
+
+/* ============================================================ FRAMES ==== */
+
+/* Each frame is a transparent sub-composition painted over the field. */
+.mount {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+/* =========================================================== TICKER ===== */
+
+.ticker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 82px;
+  z-index: 8;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--ls-deep-purple);
+  border-top: 5px solid var(--ls-hot-pink);
+}
+
+.ticker-strip {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.ticker-strip span {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+  color: var(--ls-base-cream);
+  font-weight: var(--ls-weight-headings);
+  font-size: 28px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ticker-strip .star {
+  color: var(--ls-sunny-yellow);
+  font-style: normal;
+}
+
+/* ============================================================= LOGO ===== */
+
+/* The primary lockup, BARE.
+
+   NO BACKGROUND — no card, no panel, no scrim, no plate, no "subtle" fill.
+   Client instruction, 2026-08-17, and it is the correct one: the PNG is a real
+   transparent cut-out and the mark carries its own white keyline, which is the
+   separation a card would have been duplicating. See the LOGO block in
+   scripts/reel_spec.py for the verification and the size floor.
+
+   No CSS transform here either. Position and scale are both GSAP's — a CSS
+   transform plus a GSAP tween on the same property is the
+   gsap_css_transform_conflict lint error, and at render time they fight. */
+.logo-mark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 660px;
+  height: auto;
+  z-index: 9;
+  display: block;
+  transform-origin: 0 0;
+  will-change: transform;
+}

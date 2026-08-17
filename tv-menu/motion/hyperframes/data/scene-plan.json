@@ -1,0 +1,1377 @@
+{
+  "_generated": "scripts/build-scene-plan.py — do not hand-edit; edit the script and re-run",
+  "_source": "~/Downloads/LaSabrosita (client's manual selection, 2026-08-16), read via assets/manual",
+  "format": "1920x1080",
+  "fps": 30,
+  "totalSeconds": 141.6,
+  "ceilingSeconds": 200.0,
+  "frameCount": 41,
+  "productFrameCount": 39,
+  "clusterFrameCount": 3,
+  "heroFrameCount": 2,
+  "pairFrameCount": 2,
+  "soloFrameCount": 32,
+  "excluded": [],
+  "imagesPlaced": 46,
+  "distinctNamesOnScreen": 41,
+  "categoryCounts": {
+    "HELADOS": 9,
+    "ANTOJITOS": 11,
+    "POSTRES": 14,
+    "BEBIDAS": 7
+  },
+  "frames": [
+    {
+      "frame": 1,
+      "id": "01-cold-open",
+      "kind": "cold-open",
+      "title": "Cold open — the mark drops",
+      "startCs": 0,
+      "durationCs": 400,
+      "blueprint": "logo-assemble-lockup",
+      "rules": [
+        "spring-pop-entrance",
+        "particle-burst",
+        "ambient-glow-bloom",
+        "gradient-text-sweep"
+      ],
+      "products": [],
+      "start": 0.0,
+      "duration": 4.0
+    },
+    {
+      "frame": 2,
+      "id": "02-helados-1",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Banana Split",
+      "title": "Banana Split",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": true,
+      "startCs": 400,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "waterfall-entry",
+        "spring-pop-entrance",
+        "motion-blur-streak",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-slam",
+      "treatmentNote": "the product whips up from below and overshoots, name card slams in under it",
+      "products": [
+        {
+          "name": "Banana Split",
+          "file": "lasabrosita_bananasplit1_enhanced_v02_1786574294521.png",
+          "depicts": "split banana in a white boat dish, three scoops, syrup, cherries",
+          "cutout": true
+        }
+      ],
+      "start": 4.0,
+      "duration": 3.4
+    },
+    {
+      "frame": 3,
+      "id": "03-helados-2",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Choco Banana",
+      "title": "Choco Banana",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": false,
+      "startCs": 740,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "center-outward-expansion",
+        "spring-pop-entrance",
+        "particle-burst",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-pop",
+      "treatmentNote": "the product scales up from the centre point, confetti punctuating the landing",
+      "products": [
+        {
+          "name": "Choco Banana",
+          "file": "lasabrosita_choco-banana_master_v01_1786749441143.png",
+          "depicts": "chocolate-dipped banana on a stick with nut sprinkle",
+          "cutout": true
+        }
+      ],
+      "start": 7.4,
+      "duration": 3.4
+    },
+    {
+      "frame": 4,
+      "id": "04-helados-3",
+      "kind": "products",
+      "sceneType": "cluster",
+      "nameMode": "single",
+      "displayName": "Crazy Shake",
+      "title": "Crazy Shake — every flavour",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": false,
+      "startCs": 1080,
+      "durationCs": 340,
+      "blueprint": "grid-card-assemble",
+      "rules": [
+        "center-outward-expansion",
+        "spring-pop-entrance",
+        "particle-burst",
+        "sine-wave-loop"
+      ],
+      "treatment": "variant-fan",
+      "treatmentNote": "all flavours of one product bloom outward from a single point, then settle in a row under one name card — the spread itself reads as 'same drink, many ways'",
+      "products": [
+        {
+          "name": "Crazy Shake",
+          "file": "lasabrosita_crazy-shakes_master_v01_1786749567455.png",
+          "depicts": "shake with whipped cream, chocolate drizzle and a whole Oreo",
+          "cutout": true
+        },
+        {
+          "name": "Crazy Shake",
+          "file": "lasabrosita_crazy-shakes_master_v02_1786749103746.png",
+          "depicts": "shake with a marshmallow-studded rim and chocolate drizzle down the cup",
+          "cutout": true
+        },
+        {
+          "name": "Crazy Shake",
+          "file": "lasabrosita_crazy-shakes_master_v03_1786751666844.png",
+          "depicts": "shake with a chocolate-sprinkle rim and two wafer sticks standing up",
+          "cutout": true
+        },
+        {
+          "name": "Crazy Shake",
+          "file": "lasabrosita_crazy-shakes_master_v04_1786754000102.png",
+          "depicts": "pink shake, rainbow-sprinkle rim, cake slice and a candle",
+          "cutout": true
+        }
+      ],
+      "start": 10.8,
+      "duration": 3.4
+    },
+    {
+      "frame": 5,
+      "id": "05-helados-4",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Helado en Cono",
+      "title": "Helado en Cono",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": false,
+      "startCs": 1420,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "depth-scatter-assemble",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-tumble",
+      "treatmentNote": "the product tumbles in out of depth and settles flat to camera",
+      "products": [
+        {
+          "name": "Helado en Cono",
+          "file": "lasabrosita_helado-chico_master_v01_1786750132349.png",
+          "depicts": "two scoops on a waffle cone",
+          "cutout": true
+        }
+      ],
+      "start": 14.2,
+      "duration": 3.4
+    },
+    {
+      "frame": 6,
+      "id": "06-helados-5",
+      "kind": "products",
+      "sceneType": "cluster",
+      "nameMode": "single",
+      "displayName": "Helado Chino",
+      "title": "Helado Chino — every flavour",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": false,
+      "startCs": 1760,
+      "durationCs": 340,
+      "blueprint": "comparison-split",
+      "rules": [
+        "split-tilt-cards",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "variant-pair",
+      "treatmentNote": "the two flavours swing in from opposite wings with mirrored book-open tilts and meet under one name card",
+      "products": [
+        {
+          "name": "Helado Chino",
+          "file": "lasabrosita_helado-chino_master_v01_1786749676565.png",
+          "depicts": "packaged peach-flavour moulded ice cream in its printed box",
+          "cutout": true
+        },
+        {
+          "name": "Helado Chino",
+          "file": "lasabrosita_helado-chino_master_v02_1786751663700.png",
+          "depicts": "packaged mango-flavour moulded ice cream in its printed box",
+          "cutout": true
+        }
+      ],
+      "start": 17.6,
+      "duration": 3.4
+    },
+    {
+      "frame": 7,
+      "id": "07-helados-6",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "La Sabrosita",
+      "title": "La Sabrosita",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": false,
+      "startCs": 2100,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "nudge-curve",
+        "reactive-displacement",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-swipe",
+      "treatmentNote": "the product arcs in from the wing and shoves the outgoing one off-frame",
+      "products": [
+        {
+          "name": "La Sabrosita",
+          "file": "lasabrosita_vaso-la-sabrosita_master_v01_1786752206548.png",
+          "depicts": "the house cup — layered ice cream, strawberries, cake and wafer",
+          "cutout": true
+        }
+      ],
+      "start": 21.0,
+      "duration": 3.4
+    },
+    {
+      "frame": 8,
+      "id": "08-helados-7",
+      "kind": "products",
+      "sceneType": "hero",
+      "nameMode": "single",
+      "displayName": "Paletas",
+      "title": "Paletas — hero",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": false,
+      "startCs": 2440,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "spring-pop-entrance",
+        "ambient-glow-bloom",
+        "sine-wave-loop"
+      ],
+      "treatment": "hero-reveal",
+      "treatmentNote": "one restrained move — the wide arrangement scales up onto a blooming glow and holds, the single calm beat in a fast reel",
+      "products": [
+        {
+          "name": "Paletas",
+          "file": "RealPaletas.png",
+          "depicts": "grouped shot — the whole paleta range fanned on crushed ice with fruit",
+          "cutout": true
+        }
+      ],
+      "start": 24.4,
+      "duration": 3.4
+    },
+    {
+      "frame": 9,
+      "id": "09-helados-8",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Paletas Locas",
+      "title": "Paletas Locas",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": false,
+      "startCs": 2780,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "ambient-glow-bloom",
+        "spring-pop-entrance",
+        "gradient-text-sweep",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-bloom",
+      "treatmentNote": "a glow blooms behind the product as it rises, the name sweeping in after it",
+      "products": [
+        {
+          "name": "Paletas Locas",
+          "file": "lasabrosita_paleta-loca_master_v02_1786750630712.png",
+          "depicts": "chamoy cup loaded with fruit, a tamarind paleta standing in it",
+          "cutout": true
+        }
+      ],
+      "start": 27.8,
+      "duration": 3.4
+    },
+    {
+      "frame": 10,
+      "id": "10-helados-9",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Sandwich de Helado",
+      "title": "Sandwich de Helado",
+      "category": "HELADOS",
+      "categoryRibbon": "Helados & Paletas",
+      "showsRibbon": false,
+      "startCs": 3120,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "waterfall-entry",
+        "spring-pop-entrance",
+        "motion-blur-streak",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-slam",
+      "treatmentNote": "the product whips up from below and overshoots, name card slams in under it",
+      "products": [
+        {
+          "name": "Sandwich de Helado",
+          "file": "lasabrosita_sandwich-de-helado_master_v01_1786745597408.png",
+          "depicts": "vanilla ice-cream sandwich between two chocolate wafers",
+          "cutout": true
+        }
+      ],
+      "start": 31.2,
+      "duration": 3.4
+    },
+    {
+      "frame": 11,
+      "id": "11-antojitos-1",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Diablitos",
+      "title": "Diablitos",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": true,
+      "startCs": 3460,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "center-outward-expansion",
+        "spring-pop-entrance",
+        "particle-burst",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-pop",
+      "treatmentNote": "the product scales up from the centre point, confetti punctuating the landing",
+      "products": [
+        {
+          "name": "Diablitos",
+          "file": "lasabrosita_diablitos_master_v01_1786749677163.png",
+          "depicts": "dark chamoy cup with tamarind straw and a red straw",
+          "cutout": true
+        }
+      ],
+      "start": 34.6,
+      "duration": 3.4
+    },
+    {
+      "frame": 12,
+      "id": "12-antojitos-2",
+      "kind": "products",
+      "sceneType": "pair",
+      "nameMode": "per-product",
+      "displayName": null,
+      "title": "Elote + Esquite",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": false,
+      "startCs": 3800,
+      "durationCs": 340,
+      "blueprint": "comparison-split",
+      "rules": [
+        "split-tilt-cards",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "pair-tilt",
+      "treatmentNote": "the two arrive from opposite wings with mirrored book-open tilts — same dish, two ways, and the mirror is what says they belong together",
+      "products": [
+        {
+          "name": "Elote",
+          "file": "lasabrosita_elote-regular_master_v01_1786750023360.png",
+          "depicts": "corn on a stick with mayo, cheese and chile",
+          "cutout": true
+        },
+        {
+          "name": "Esquite",
+          "file": "lasabrosita_esquites-_master_v02_1786750022528.png",
+          "depicts": "white foam cup of corn with cheese, chile powder, lime and a spoon",
+          "cutout": true
+        }
+      ],
+      "start": 38.0,
+      "duration": 3.4
+    },
+    {
+      "frame": 13,
+      "id": "13-antojitos-3",
+      "kind": "products",
+      "sceneType": "pair",
+      "nameMode": "per-product",
+      "displayName": null,
+      "title": "Elote Hot Cheetos + Esquite Hot Cheetos",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": false,
+      "startCs": 4140,
+      "durationCs": 340,
+      "blueprint": "comparison-split",
+      "rules": [
+        "waterfall-entry",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "pair-rise",
+      "treatmentNote": "the two rise together from below the frame, name cards slamming after",
+      "products": [
+        {
+          "name": "Elote Hot Cheetos",
+          "file": "lasabrosita_elote-con-hot-cheetos_master_v02_1786750634245.png",
+          "depicts": "corn on a stick coated in crushed Hot Cheetos with mustard drizzle",
+          "cutout": true
+        },
+        {
+          "name": "Esquite Hot Cheetos",
+          "file": "lasabrosita_esquites-hot-cheetos_master_v02_1786750022528.png",
+          "depicts": "white foam cup of corn under a tall red Hot Cheetos mound, lime wedge",
+          "cutout": true
+        }
+      ],
+      "start": 41.4,
+      "duration": 3.4
+    },
+    {
+      "frame": 14,
+      "id": "14-antojitos-4",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Esquimal",
+      "title": "Esquimal",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": false,
+      "startCs": 4480,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "depth-scatter-assemble",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-tumble",
+      "treatmentNote": "the product tumbles in out of depth and settles flat to camera",
+      "products": [
+        {
+          "name": "Esquimal",
+          "file": "lasabrosita_esquimales_master_v01_1786749455174.png",
+          "depicts": "chocolate-coated bar on a stick under dense rainbow sprinkles",
+          "cutout": true
+        }
+      ],
+      "start": 44.8,
+      "duration": 3.4
+    },
+    {
+      "frame": 15,
+      "id": "15-antojitos-5",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Chicharron en Rueda",
+      "title": "Chicharron en Rueda",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": false,
+      "startCs": 4820,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "nudge-curve",
+        "reactive-displacement",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-swipe",
+      "treatmentNote": "the product arcs in from the wing and shoves the outgoing one off-frame",
+      "products": [
+        {
+          "name": "Chicharron en Rueda",
+          "file": "lasabrosita_chicharron-en-rueda_master_v01_1786750264098.png",
+          "depicts": "bagged wheel-shaped chicharrones, plain",
+          "cutout": true
+        }
+      ],
+      "start": 48.2,
+      "duration": 3.4
+    },
+    {
+      "frame": 16,
+      "id": "16-antojitos-6",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Chicharron Preparado",
+      "title": "Chicharron Preparado",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": false,
+      "startCs": 5160,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "ambient-glow-bloom",
+        "spring-pop-entrance",
+        "gradient-text-sweep",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-bloom",
+      "treatmentNote": "a glow blooms behind the product as it rises, the name sweeping in after it",
+      "products": [
+        {
+          "name": "Chicharron Preparado",
+          "file": "lasabrosita_chicharron-preparado_master_v02_1786737545135.png",
+          "depicts": "flat chicharron sheet dressed with cabbage, cream, tomato and lime",
+          "cutout": true
+        }
+      ],
+      "start": 51.6,
+      "duration": 3.4
+    },
+    {
+      "frame": 17,
+      "id": "17-antojitos-7",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Marucha Loca",
+      "title": "Marucha Loca",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": false,
+      "startCs": 5500,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "waterfall-entry",
+        "spring-pop-entrance",
+        "motion-blur-streak",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-slam",
+      "treatmentNote": "the product whips up from below and overshoots, name card slams in under it",
+      "products": [
+        {
+          "name": "Marucha Loca",
+          "file": "lasabrosita_marucha-loca_master_v01_1786737425162.png",
+          "depicts": "instant-noodle cup buried in Hot Cheetos, cream and cheese in a tray",
+          "cutout": true
+        }
+      ],
+      "start": 55.0,
+      "duration": 3.4
+    },
+    {
+      "frame": 18,
+      "id": "18-antojitos-8",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Platano Frito",
+      "title": "Platano Frito",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": false,
+      "startCs": 5840,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "center-outward-expansion",
+        "spring-pop-entrance",
+        "particle-burst",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-pop",
+      "treatmentNote": "the product scales up from the centre point, confetti punctuating the landing",
+      "products": [
+        {
+          "name": "Platano Frito",
+          "file": "lasabrosita_platano-frito_master_v01_1786750053785.png",
+          "depicts": "fried plantain rounds with cream and strawberry drizzle",
+          "cutout": true
+        }
+      ],
+      "start": 58.4,
+      "duration": 3.4
+    },
+    {
+      "frame": 19,
+      "id": "19-antojitos-9",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Tostilocos",
+      "title": "Tostilocos",
+      "category": "ANTOJITOS",
+      "categoryRibbon": "Antojitos & Preparados",
+      "showsRibbon": false,
+      "startCs": 6180,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "depth-scatter-assemble",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-tumble",
+      "treatmentNote": "the product tumbles in out of depth and settles flat to camera",
+      "products": [
+        {
+          "name": "Tostilocos",
+          "file": "lasabrosita_tostilocos_master_v01_1786749464122.png",
+          "depicts": "open Tostitos bag loaded with cucumber, jicama, peanuts and chamoy",
+          "cutout": true
+        }
+      ],
+      "start": 61.8,
+      "duration": 3.4
+    },
+    {
+      "frame": 20,
+      "id": "20-postres-1",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Bionico con Nieve",
+      "title": "Bionico con Nieve",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": true,
+      "startCs": 6520,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "nudge-curve",
+        "reactive-displacement",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-swipe",
+      "treatmentNote": "the product arcs in from the wing and shoves the outgoing one off-frame",
+      "products": [
+        {
+          "name": "Bionico con Nieve",
+          "file": "lasabrosita_bionico-con-nieve_master_v02_1786750635027.png",
+          "depicts": "tray of fruit and cream topped with strawberries and a cherry",
+          "cutout": true
+        }
+      ],
+      "start": 65.2,
+      "duration": 3.4
+    },
+    {
+      "frame": 21,
+      "id": "21-postres-2",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Churros",
+      "title": "Churros",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 6860,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "ambient-glow-bloom",
+        "spring-pop-entrance",
+        "gradient-text-sweep",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-bloom",
+      "treatmentNote": "a glow blooms behind the product as it rises, the name sweeping in after it",
+      "products": [
+        {
+          "name": "Churros",
+          "file": "lasabrosita_churros_master_v01_1786751660230.png",
+          "depicts": "kraft carton of sugared churros",
+          "cutout": true
+        }
+      ],
+      "start": 68.6,
+      "duration": 3.4
+    },
+    {
+      "frame": 22,
+      "id": "22-postres-3",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Coctel de Fruta",
+      "title": "Coctel de Fruta",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 7200,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "waterfall-entry",
+        "spring-pop-entrance",
+        "motion-blur-streak",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-slam",
+      "treatmentNote": "the product whips up from below and overshoots, name card slams in under it",
+      "products": [
+        {
+          "name": "Coctel de Fruta",
+          "file": "lasabrosita_coktel-de-fruta_master_v03_1786643037755.png",
+          "depicts": "clear cup of layered fruit with chile and standing mango spears",
+          "cutout": true
+        }
+      ],
+      "start": 72.0,
+      "duration": 3.4
+    },
+    {
+      "frame": 23,
+      "id": "23-postres-4",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Crepa",
+      "title": "Crepa",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 7540,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "center-outward-expansion",
+        "spring-pop-entrance",
+        "particle-burst",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-pop",
+      "treatmentNote": "the product scales up from the centre point, confetti punctuating the landing",
+      "products": [
+        {
+          "name": "Crepa",
+          "file": "lasabrosita_crepa_master_v01_1786750148022.png",
+          "depicts": "folded crepe with strawberries, cream and icing sugar",
+          "cutout": true
+        }
+      ],
+      "start": 75.4,
+      "duration": 3.4
+    },
+    {
+      "frame": 24,
+      "id": "24-postres-5",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Crepa Dubai",
+      "title": "Crepa Dubai",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 7880,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "depth-scatter-assemble",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-tumble",
+      "treatmentNote": "the product tumbles in out of depth and settles flat to camera",
+      "products": [
+        {
+          "name": "Crepa Dubai",
+          "file": "lasabrosita_crepa-dubai1_enhanced_v01_1786749837363.png",
+          "depicts": "crepe on a white plate under green kataifi, banana, strawberry and chocolate",
+          "cutout": true
+        }
+      ],
+      "start": 78.8,
+      "duration": 3.4
+    },
+    {
+      "frame": 25,
+      "id": "25-postres-6",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Croissant",
+      "title": "Croissant",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 8220,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "nudge-curve",
+        "reactive-displacement",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-swipe",
+      "treatmentNote": "the product arcs in from the wing and shoves the outgoing one off-frame",
+      "products": [
+        {
+          "name": "Croissant",
+          "file": "lasabrosita_croissant-con-helado_master_v01_1786752208201.png",
+          "depicts": "split croissant in a clamshell with ice cream, fruit and chocolate",
+          "cutout": true
+        }
+      ],
+      "start": 82.2,
+      "duration": 3.4
+    },
+    {
+      "frame": 26,
+      "id": "26-postres-7",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Fresas con Crema",
+      "title": "Fresas con Crema",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 8560,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "ambient-glow-bloom",
+        "spring-pop-entrance",
+        "gradient-text-sweep",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-bloom",
+      "treatmentNote": "a glow blooms behind the product as it rises, the name sweeping in after it",
+      "products": [
+        {
+          "name": "Fresas con Crema",
+          "file": "lasabrosita_fresas-con-crema_master_v01_1786749781237.png",
+          "depicts": "cup of strawberries in cream under a whipped-cream crown",
+          "cutout": true
+        }
+      ],
+      "start": 85.6,
+      "duration": 3.4
+    },
+    {
+      "frame": 27,
+      "id": "27-postres-8",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Fresas Dubai",
+      "title": "Fresas Dubai",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 8900,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "waterfall-entry",
+        "spring-pop-entrance",
+        "motion-blur-streak",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-slam",
+      "treatmentNote": "the product whips up from below and overshoots, name card slams in under it",
+      "products": [
+        {
+          "name": "Fresas Dubai",
+          "file": "lasabrosita_fresas-dubai_master_v01_1786737290671.png",
+          "depicts": "cup of chocolate-shelled strawberries with pistachio crumb",
+          "cutout": true
+        }
+      ],
+      "start": 89.0,
+      "duration": 3.4
+    },
+    {
+      "frame": 28,
+      "id": "28-postres-9",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Fresas en Cajita",
+      "title": "Fresas en Cajita",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 9240,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "center-outward-expansion",
+        "spring-pop-entrance",
+        "particle-burst",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-pop",
+      "treatmentNote": "the product scales up from the centre point, confetti punctuating the landing",
+      "products": [
+        {
+          "name": "Fresas en Cajita",
+          "file": "lasabrosita_fresas-en-cajita_master_v01_1786749786803.png",
+          "depicts": "printed strawberry carton topped with cream, sprinkles, wafer and cherry",
+          "cutout": true
+        }
+      ],
+      "start": 92.4,
+      "duration": 3.4
+    },
+    {
+      "frame": 29,
+      "id": "29-postres-10",
+      "kind": "products",
+      "sceneType": "cluster",
+      "nameMode": "single",
+      "displayName": "Gelatina",
+      "title": "Gelatina — every flavour",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 9580,
+      "durationCs": 340,
+      "blueprint": "comparison-split",
+      "rules": [
+        "split-tilt-cards",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "variant-pair",
+      "treatmentNote": "the two flavours swing in from opposite wings with mirrored book-open tilts and meet under one name card",
+      "products": [
+        {
+          "name": "Gelatina",
+          "file": "lasabrosita_gelatina_master_v02_1786750022930.png",
+          "depicts": "lidded cup — pink base with blue and purple gelatin cubes",
+          "cutout": true
+        },
+        {
+          "name": "Gelatina",
+          "file": "lasabrosita_gelatina_master_v03_1786750138087.png",
+          "depicts": "lidded cup — white base with blue and green gelatin cubes",
+          "cutout": true
+        }
+      ],
+      "start": 95.8,
+      "duration": 3.4
+    },
+    {
+      "frame": 30,
+      "id": "30-postres-11",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Mango en Flor",
+      "title": "Mango en Flor",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 9920,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "depth-scatter-assemble",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-tumble",
+      "treatmentNote": "the product tumbles in out of depth and settles flat to camera",
+      "products": [
+        {
+          "name": "Mango en Flor",
+          "file": "lasabrosita_mango-en-palo_master_v02_1786750623131.png",
+          "depicts": "mango carved into a flower on a stick, dusted with chile",
+          "cutout": true
+        }
+      ],
+      "start": 99.2,
+      "duration": 3.4
+    },
+    {
+      "frame": 31,
+      "id": "31-postres-12",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Mini Pancakes",
+      "title": "Mini Pancakes",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 10260,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "nudge-curve",
+        "reactive-displacement",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-swipe",
+      "treatmentNote": "the product arcs in from the wing and shoves the outgoing one off-frame",
+      "products": [
+        {
+          "name": "Mini Pancakes",
+          "file": "lasabrosita_mini-pancakes_master_v01_1786749822726.png",
+          "depicts": "tray of mini pancakes with chocolate drizzle and sliced strawberries",
+          "cutout": true
+        }
+      ],
+      "start": 102.6,
+      "duration": 3.4
+    },
+    {
+      "frame": 32,
+      "id": "32-postres-13",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Mini Pancakes Dubai",
+      "title": "Mini Pancakes Dubai",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 10600,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "ambient-glow-bloom",
+        "spring-pop-entrance",
+        "gradient-text-sweep",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-bloom",
+      "treatmentNote": "a glow blooms behind the product as it rises, the name sweeping in after it",
+      "products": [
+        {
+          "name": "Mini Pancakes Dubai",
+          "file": "lasabrosita_mini-pancakes-dubai_master_v01_1786750287502.png",
+          "depicts": "clamshell of mini pancakes under green kataifi and pistachio",
+          "cutout": true
+        }
+      ],
+      "start": 106.0,
+      "duration": 3.4
+    },
+    {
+      "frame": 33,
+      "id": "33-postres-14",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Waffle",
+      "title": "Waffle",
+      "category": "POSTRES",
+      "categoryRibbon": "Postres & Dulces",
+      "showsRibbon": false,
+      "startCs": 10940,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "waterfall-entry",
+        "spring-pop-entrance",
+        "motion-blur-streak",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-slam",
+      "treatmentNote": "the product whips up from below and overshoots, name card slams in under it",
+      "products": [
+        {
+          "name": "Waffle",
+          "file": "lasabrosita_waffle_master_v01_1786749802836.png",
+          "depicts": "waffle bowl with cream, strawberries, chocolate and wafer sticks",
+          "cutout": true
+        }
+      ],
+      "start": 109.4,
+      "duration": 3.4
+    },
+    {
+      "frame": 34,
+      "id": "34-bebidas-1",
+      "kind": "products",
+      "sceneType": "hero",
+      "nameMode": "single",
+      "displayName": "Aguas Frescas",
+      "title": "Aguas Frescas — hero",
+      "category": "BEBIDAS",
+      "categoryRibbon": "Bebidas",
+      "showsRibbon": true,
+      "startCs": 11280,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "spring-pop-entrance",
+        "ambient-glow-bloom",
+        "sine-wave-loop"
+      ],
+      "treatment": "hero-reveal",
+      "treatmentNote": "one restrained move — the wide arrangement scales up onto a blooming glow and holds, the single calm beat in a fast reel",
+      "products": [
+        {
+          "name": "Aguas Frescas",
+          "file": "AguasFrescas.png",
+          "depicts": "grouped shot — a full row of aguas frescas jars with the fruit they are made from",
+          "cutout": true
+        }
+      ],
+      "start": 112.8,
+      "duration": 3.4
+    },
+    {
+      "frame": 35,
+      "id": "35-bebidas-2",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Aguas Explosivas",
+      "title": "Aguas Explosivas",
+      "category": "BEBIDAS",
+      "categoryRibbon": "Bebidas",
+      "showsRibbon": false,
+      "startCs": 11620,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "center-outward-expansion",
+        "spring-pop-entrance",
+        "particle-burst",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-pop",
+      "treatmentNote": "the product scales up from the centre point, confetti punctuating the landing",
+      "products": [
+        {
+          "name": "Aguas Explosivas",
+          "file": "lasabrosita_aguas-explosivas_master_v01_1786749566189.png",
+          "depicts": "chamoy-rimmed cup loaded with fruit, tamarind stick and straw",
+          "cutout": true
+        }
+      ],
+      "start": 116.2,
+      "duration": 3.4
+    },
+    {
+      "frame": 36,
+      "id": "36-bebidas-3",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Chamoyada",
+      "title": "Chamoyada",
+      "category": "BEBIDAS",
+      "categoryRibbon": "Bebidas",
+      "showsRibbon": false,
+      "startCs": 11960,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "depth-scatter-assemble",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-tumble",
+      "treatmentNote": "the product tumbles in out of depth and settles flat to camera",
+      "products": [
+        {
+          "name": "Chamoyada",
+          "file": "lasabrosita_chamoyada_master_v01_1786746470000.png",
+          "depicts": "mango chamoyada with chamoy swirl and a tamarind straw",
+          "cutout": true
+        }
+      ],
+      "start": 119.6,
+      "duration": 3.4
+    },
+    {
+      "frame": 37,
+      "id": "37-bebidas-4",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Frappe",
+      "title": "Frappe",
+      "category": "BEBIDAS",
+      "categoryRibbon": "Bebidas",
+      "showsRibbon": false,
+      "startCs": 12300,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "nudge-curve",
+        "reactive-displacement",
+        "spring-pop-entrance",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-swipe",
+      "treatmentNote": "the product arcs in from the wing and shoves the outgoing one off-frame",
+      "products": [
+        {
+          "name": "Frappe",
+          "file": "lasabrosita_frappe-20oz_master_v01_1786749550180.png",
+          "depicts": "chocolate frappe with whipped cream and a green straw",
+          "cutout": true
+        }
+      ],
+      "start": 123.0,
+      "duration": 3.4
+    },
+    {
+      "frame": 38,
+      "id": "38-bebidas-5",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Licuado",
+      "title": "Licuado",
+      "category": "BEBIDAS",
+      "categoryRibbon": "Bebidas",
+      "showsRibbon": false,
+      "startCs": 12640,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "ambient-glow-bloom",
+        "spring-pop-entrance",
+        "gradient-text-sweep",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-bloom",
+      "treatmentNote": "a glow blooms behind the product as it rises, the name sweeping in after it",
+      "products": [
+        {
+          "name": "Licuado",
+          "file": "lasabrosita_licuado_master_v02_1786749106577.png",
+          "depicts": "strawberry licuado under a dome lid with whipped cream and a cherry",
+          "cutout": true
+        }
+      ],
+      "start": 126.4,
+      "duration": 3.4
+    },
+    {
+      "frame": 39,
+      "id": "39-bebidas-6",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Michelaguas",
+      "title": "Michelaguas",
+      "category": "BEBIDAS",
+      "categoryRibbon": "Bebidas",
+      "showsRibbon": false,
+      "startCs": 12980,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "waterfall-entry",
+        "spring-pop-entrance",
+        "motion-blur-streak",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-slam",
+      "treatmentNote": "the product whips up from below and overshoots, name card slams in under it",
+      "products": [
+        {
+          "name": "Michelaguas",
+          "file": "lasabrosita_michelaguas_master_v01_1786750172488.png",
+          "depicts": "branded Micheláguas jar of mango with a chile rim",
+          "cutout": true
+        }
+      ],
+      "start": 129.8,
+      "duration": 3.4
+    },
+    {
+      "frame": 40,
+      "id": "40-bebidas-7",
+      "kind": "products",
+      "sceneType": "solo",
+      "nameMode": "single",
+      "displayName": "Raspado",
+      "title": "Raspado",
+      "category": "BEBIDAS",
+      "categoryRibbon": "Bebidas",
+      "showsRibbon": false,
+      "startCs": 13320,
+      "durationCs": 340,
+      "blueprint": "titlecard-reveal",
+      "rules": [
+        "center-outward-expansion",
+        "spring-pop-entrance",
+        "particle-burst",
+        "sine-wave-loop"
+      ],
+      "treatment": "solo-pop",
+      "treatmentNote": "the product scales up from the centre point, confetti punctuating the landing",
+      "products": [
+        {
+          "name": "Raspado",
+          "file": "lasabrosita_raspados_master_v01_1786749454753.png",
+          "depicts": "cup of red shaved ice piled above the rim",
+          "cutout": true
+        }
+      ],
+      "start": 133.2,
+      "duration": 3.4
+    },
+    {
+      "frame": 41,
+      "id": "41-close",
+      "kind": "close",
+      "title": "Close — logo, banner, town",
+      "startCs": 13660,
+      "durationCs": 500,
+      "blueprint": "logo-assemble-lockup",
+      "rules": [
+        "spring-pop-entrance",
+        "ambient-glow-bloom",
+        "waterfall-entry"
+      ],
+      "products": [],
+      "start": 136.6,
+      "duration": 5.0
+    }
+  ]
+}

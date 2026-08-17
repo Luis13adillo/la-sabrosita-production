@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <!-- Sub-composition. The runtime clones ONLY <template> contents;
+         this head is metadata for the source file and is discarded. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ============================================================
+         * GENERATED FILE — DO NOT EDIT.
+         * Source of truth: brand/brand.json  (itself transcribed from
+         * brand/guidelines/LS_Brand-Guidelines_v01.pdf).
+         * Regenerate:  python3 scripts/build-brand-css.py
+         *
+         * brandVersion: v01   schemaVersion: 1.0.0
+         * ============================================================ */
+
+        @font-face {
+          font-family: 'Noto Sans';
+          font-style: normal;
+          font-weight: 400;
+          font-display: block;
+          src: url('assets/fonts/NotoSans-400-latin-ext.woff2') format('woff2');
+          unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        @font-face {
+          font-family: 'Noto Sans';
+          font-style: normal;
+          font-weight: 400;
+          font-display: block;
+          src: url('assets/fonts/NotoSans-400-latin.woff2') format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        @font-face {
+          font-family: 'Noto Sans';
+          font-style: normal;
+          font-weight: 700;
+          font-display: block;
+          src: url('assets/fonts/NotoSans-700-latin-ext.woff2') format('woff2');
+          unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        @font-face {
+          font-family: 'Noto Sans';
+          font-style: normal;
+          font-weight: 700;
+          font-display: block;
+          src: url('assets/fonts/NotoSans-700-latin.woff2') format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        @font-face {
+          font-family: 'Noto Sans';
+          font-style: normal;
+          font-weight: 900;
+          font-display: block;
+          src: url('assets/fonts/NotoSans-900-latin-ext.woff2') format('woff2');
+          unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        @font-face {
+          font-family: 'Noto Sans';
+          font-style: normal;
+          font-weight: 900;
+          font-display: block;
+          src: url('assets/fonts/NotoSans-900-latin.woff2') format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        #root {
+          /* --- palette (brand.json → color.palette) --- */
+          --ls-hot-pink: #F20A88;            /* Hot Pink */
+          --ls-deep-purple: #4B1557;            /* Deep Purple */
+          --ls-electric-blue: #1296DB;            /* Electric Blue */
+          --ls-sunny-yellow: #F5C21E;            /* Sunny Yellow */
+          --ls-base-cream: #FFF8EF;            /* Base Cream */
+          --ls-dark-contrast: #0D0D0F;      /* contrastFields.darkContrast */
+
+          /* --- typography (brand.json → typography) --- */
+          --ls-font: 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
+          --ls-weight-headings: 700;
+          --ls-weight-body: 400;
+          --ls-weight-emphasis: 700;
+
+          /* --- gradient (brand.json → gradient) ---
+           * brand.json publishes from/to but leaves exactStops and angleDeg null.
+           * The angle below is a PROJECT working value, not a brand rule.
+           * See design.md → 'Values the guidelines do not define'. */
+          --ls-gradient-from: var(--ls-hot-pink);
+          --ls-gradient-to: var(--ls-deep-purple);
+          --ls-gradient-angle: 155deg;
+          --ls-gradient: linear-gradient(var(--ls-gradient-angle), var(--ls-gradient-from), var(--ls-gradient-to));
+
+          /* --- TV safe area ---
+           * brand.json lists safe-title margins under notSpecifiedInSource.
+           * 5% action / 10% title is the SMPTE convention, used as a working
+           * value pending client confirmation. Not a brand rule. */
+          --ls-safe-action: 54px;   /* 5% of 1080 */
+          --ls-safe-title: 96px;    /* ~9% of 1080 */
+        }
+
+        /* ------------------------------------------------------------------
+           FRAME LAYOUT — one product, one name card.
+
+           REWRITTEN 2026-08-17 to the reference reel Luis approved (the 15-item
+           React piece in "Motion graphics for food items"). What changed and why:
+
+             BEFORE                              NOW
+             product centred, filling the frame  product owns the right side
+             name placed adaptively against      name lives in a fixed card on the
+               measured negative space             left, same place every scene
+             category ribbon, top-left, only     category pill inside the card, on
+               on a category's first scene         every scene
+             opaque field per frame              transparent frame; the background,
+                                                   logo and ticker are ONE continuous
+                                                   layer owned by index.html
+
+           The adaptive placer (scripts/title_layout.py) is no longer called. It
+           solved a problem this layout does not have: cream type straight on the
+           artwork needed to find somewhere dark and empty to sit, and it had to
+           re-solve that per frame, so 39 frames had 39 different answers. A card
+           carries its own contrast and its own position, so the answer is the same
+           every time — which is what makes the reel read as one system.
+
+           The file is left on disk, not deleted: measure-alpha-grids.py and
+           background-busy.json feed it, and it is the record of how the previous
+           pass was reasoned. It is dead code until something calls it again.
+
+           Sub-composition safe: no html/body rules. The runtime clones only the
+           <template> contents into a host slot, and the compiler scopes every rule
+           to this file's data-composition-id — a rule keyed off html or body would
+           be rewritten to something that can never match. Everything hangs off #root.
+
+           Values here are LAYOUT, not brand. Every colour and the type family come
+           from assets/brand-tokens.css, generated from brand/brand.json. Sizes,
+           radii and timing are the project working values recorded in design.md and
+           scripts/reel_spec.py (brand.json marks all three notSpecifiedInSource).
+           ------------------------------------------------------------------ */
+
+        #root * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          font-family: var(--ls-font);
+          /* NO background. index.html paints one continuous field under every frame,
+             so the artwork, its slow drift, the logo and the ticker never restart at
+             a scene cut. A background here would cover all three. */
+        }
+
+        /* ==================================================================
+           PRODUCT ZONE — the right side of the frame, 890x780 at x955 y150.
+
+           Centre x 1400 — the reference reel's own. The width is set by the DRIFT,
+           not the resting frame: the hold scales the zone to 1.05, so the resting box
+           sits far enough inside action-safe (1866) that the drifted peak still
+           clears it. See PRODUCT_BOX in scripts/reel_spec.py for the arithmetic.
+           Bottom 930, clear of the ticker, whose top edge is 998.
+
+           Three nested boxes, because three different things move and GSAP may not
+           tween two of them on one element:
+
+             .product        the clip. HyperFrames owns its visibility; nothing
+                             animates it.
+             .product-slide  entrance and exit — x and opacity.
+             .product-drift  the slow push-in across the hold — scale only.
+
+           Fighting these onto one element is what the lint rule
+           gsap_css_transform_conflict exists to catch.
+           ================================================================== */
+
+        .product {
+          position: absolute;
+          left: 955px;
+          top: 150px;
+          width: 890px;
+          height: 780px;
+        }
+
+        .product-slide,
+        .product-drift {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* The push-in pivots low and centre — on the food's base, not the box's
+           middle — so the product grows the way something set down on a counter
+           does, rather than inflating from its own middle. */
+        .product-drift { transform-origin: 50% 88%; }
+
+        /* Products stand on the floor of the zone and centre across it. */
+        .zone {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          gap: 0;
+        }
+
+        /* Fixed shot box per product, width/height written inline by
+           scripts/build-frames.py, so cut-outs of different aspect ratios sit on one
+           optical baseline. */
+        .shot {
+          position: relative;
+          height: 100%;
+        }
+
+        /* Each <img> is absolutely placed with a per-image width/left/top computed
+           from data/master-bboxes.json, so the FOOD fills the box rather than the
+           master's transparent 2000x2000 canvas. Canvas coverage across the masters
+           runs 17% to 88%, so fitting the canvas rendered some products nearly 5x
+           smaller than others.
+
+           The full master is still drawn — it simply overflows the box as
+           transparent padding. Nothing is ever cropped.
+
+           The shadow is what lifts a cut-out off the artwork; without it the food
+           reads as a sticker lying flat on the background. --ls-deep-purple at low
+           alpha, so no colour enters that is not in the palette. */
+        .shot img {
+          position: absolute;
+          display: block;
+          height: auto;
+          filter: drop-shadow(0 34px 46px color-mix(in srgb, var(--ls-deep-purple) 50%, transparent));
+        }
+
+        /* Photographs on a white background rather than cut-outs. They are not
+           edited — the source folder is read-only — so the white is made deliberate:
+           a rounded card with a soft shadow, so it reads as a photo pinned to the
+           board rather than a failed knockout. Remove this class the day they arrive
+           as cut-outs. */
+        .shot img.oncard {
+          border-radius: 28px;
+          background: var(--ls-base-cream);
+          filter: none;
+          box-shadow: 0 18px 44px color-mix(in srgb, var(--ls-dark-contrast) 28%, transparent);
+        }
+
+        /* A cluster is every approved MASTER of ONE product, fanned under one name.
+           Gaps and overlaps mirror CLUSTER_GAP / CLUSTER_OVERLAP in reel_spec.py.
+
+           Overlap occludes, it never crops. The tilt is applied to the <img>, never
+           to .shot or any ancestor: those carry GSAP transforms, and a CSS transform
+           on the same element is a lint error and a fight at render time. */
+        .zone.of-2 { gap: 40px; }
+        .zone.of-3 { gap: 24px; }
+        .zone.of-4 { gap: 0; }
+        .zone.of-4 .shot + .shot { margin-left: -40px; }
+
+        .zone.of-4 .shot:nth-child(1) { z-index: 1; }
+        .zone.of-4 .shot:nth-child(2) { z-index: 2; }
+        .zone.of-4 .shot:nth-child(3) { z-index: 3; }
+        .zone.of-4 .shot:nth-child(4) { z-index: 4; }
+
+        /* Two DIFFERENT products, and only ever a client-named pair. */
+        .zone.pair { gap: 40px; }
+
+        /* ==================================================================
+           NAME CARD — left side, fixed at x110 y340, 820 wide.
+
+           The card is the readability rule made structural. brand.json ->
+           visualDirection.readabilityRule asks for menu text on a reading area; the
+           previous pass put cream display type straight on the artwork and had to
+           prove, per frame, that the pixels underneath were dark enough to hold it.
+           A panel carries its own contrast, so that whole search disappears and the
+           name lands in the same place every scene.
+
+           Height is not fixed: the card grows down as the name wraps. Top edge stays
+           put, because a card that re-centres itself every 3.4s reads as jitter.
+           scripts/build-frames.py checks the rendered height against
+           CARD_MAX_BOTTOM (958 — 40px of air above the ticker) and reports any frame
+           that would reach it.
+           ================================================================== */
+
+        .card {
+          position: absolute;
+          left: 110px;
+          top: 340px;
+          width: 820px;
+        }
+
+        .card-rise { position: relative; }
+
+        .card-panel {
+          border-radius: 40px;
+          padding: 44px 48px 52px;
+          /* --ls-deep-purple at 72%. color-mix rather than a pasted rgba() so the
+             panel still tracks brand.json the day the palette is revised. */
+          background: color-mix(in srgb, var(--ls-deep-purple) 72%, transparent);
+          backdrop-filter: blur(6px);
+        }
+
+        .pill {
+          display: inline-block;
+          background: var(--ls-hot-pink);
+          color: var(--ls-base-cream);
+          padding: 14px 26px;
+          border-radius: 999px;
+          font-weight: var(--ls-weight-headings);
+          font-size: 28px;
+          line-height: 1;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        /* The item name. brand.json -> typography.roles.emphasis is "item names" at
+           weight 700; 900 is used here because the name is display type on a dark
+           panel at TV viewing distance, and 700 at 104px reads thin against the
+           pill's 700 at 28px. Recorded as a deliberate deviation in design.md.
+
+           Size is written inline per frame — scripts/build-frames.py picks the
+           largest of 104 / 92 / 80 / 70 that keeps the name inside two lines. */
+        .name {
+          margin-top: 26px;
+          color: var(--ls-base-cream);
+          font-weight: 900;
+          line-height: 1.02;
+          letter-spacing: -0.02em;
+        }
+
+        /* The description. Copy lives in data/descriptions.json — never in the HTML,
+           never in this file. */
+        .desc {
+          margin-top: 22px;
+          color: color-mix(in srgb, var(--ls-base-cream) 86%, transparent);
+          font-weight: var(--ls-weight-body);
+          line-height: 1.3;
+        }
+
+        /* ==================================================================
+           COLD OPEN and CLOSE.
+
+           Both frames are nearly empty on purpose: the logo, the ring and the
+           background belong to index.html and run continuously across the whole
+           reel, so a cold open that drew its own copy of the mark would have to hand
+           it over at the cut — and a hand-off is exactly what a viewer sees as a
+           flicker. These two frames carry only the words.
+           ================================================================== */
+
+        .words {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          color: var(--ls-base-cream);
+        }
+
+        .words .banner {
+          font-weight: 900;
+          font-size: 40px;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+        }
+
+        .words .town {
+          margin-top: 18px;
+          font-weight: var(--ls-weight-body);
+          font-size: 34px;
+          letter-spacing: 0.05em;
+          color: color-mix(in srgb, var(--ls-base-cream) 90%, transparent);
+        }
+      </style>
+
+      <div data-hf-id="hf-mm4z" id="root" data-composition-id="36-bebidas-3" data-width="1920" data-height="1080">
+        <!-- solo-tumble: the product tumbles in out of depth and settles flat to camera -->
+        <div data-hf-id="hf-fxc1" class="product clip" id="f36-bebidas-3-product" data-start="0" data-duration="3.85" data-track-index="0">
+          <div data-hf-id="hf-0ftn" class="product-slide" id="f36-bebidas-3-slide">
+            <div data-hf-id="hf-rm9f" class="product-drift" id="f36-bebidas-3-drift">
+            <div data-hf-id="hf-5c1e" class="zone">
+              <div data-hf-id="hf-lqud" class="shot" style="width: 890px; height: 780px;">
+                <img data-hf-id="hf-tmj9" class="shot-img" src="assets/manual/lasabrosita_chamoyada_master_v01_1786746470000.png" alt="Chamoyada" style="width: 816.3px; left: 42.1px; top: -4.1px;">
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-bk5s" class="card clip" id="f36-bebidas-3-card" data-start="0" data-duration="3.85" data-track-index="1">
+          <div data-hf-id="hf-0kdq" class="card-rise" id="f36-bebidas-3-rise">
+          <div data-hf-id="hf-uvgj" class="card-panel">
+            <div data-hf-id="hf-2b97" class="pill">Bebidas</div>
+            <div data-hf-id="hf-k6ur" class="name" style="font-size: 104px;">Chamoyada</div>
+            <div data-hf-id="hf-2iln" class="desc" id="f36-bebidas-3-desc" style="font-size: 38px;">Nieve de mango, chamoy y tamarindo</div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        (function () {
+          var tl = gsap.timeline({ paused: true });
+          /* spring-pop-entrance, playful variant: the product slides in from
+             the right and settles. back.out(1.4) is well inside the rule's
+             OVERSHOOT <= 2 cap, and this brand is the explicitly-playful case
+             the rule carves out. */
+          tl.fromTo("#f36-bebidas-3-slide",
+            { x: 220, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.8, ease: "back.out(1.4)" },
+            0.0);
+
+          /* The slow push-in across the hold. One way, never returning — it
+             reads as the camera easing in rather than the product pulsing.
+             Its own wrapper, so it never shares a transform with the slide. */
+          tl.fromTo("#f36-bebidas-3-drift",
+            { scale: 0.97 },
+            { scale: 1.05, duration: 3.0, ease: "none" },
+            0.45);
+
+          /* waterfall-entry: the food lands first, then the card, then the
+             line under it. The eye goes to the picture and reads after. */
+          tl.fromTo("#f36-bebidas-3-rise",
+            { y: 60, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.75, ease: "power3.out" },
+            0.15);
+
+          tl.fromTo("#f36-bebidas-3-desc",
+            { y: 18, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
+            0.3);
+
+          /* The card leaves first, and hands over exactly as the next card
+             starts arriving — both sit at 110,340, so any overlap stacks two
+             names on one spot. See T_CARD_EXIT in reel_spec.py. */
+          tl.to("#f36-bebidas-3-rise",
+            { y: 40, opacity: 0, duration: 0.3, ease: "power2.in" },
+            3.25);
+
+          /* The product leaves after it, travelling further left than the next
+             one arrives from the right, so the two cross rather than pile. */
+          tl.to("#f36-bebidas-3-slide",
+            { x: -260, opacity: 0, duration: 0.35, ease: "power2.in" },
+            3.45);
+          window.__timelines["36-bebidas-3"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
