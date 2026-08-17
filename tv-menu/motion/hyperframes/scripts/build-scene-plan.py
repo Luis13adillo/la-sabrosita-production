@@ -9,9 +9,11 @@ SOURCE CHANGE, 2026-08-16
 -------------------------
 This used to read tv-menu/assets/products/products.json — Rubric's 47-entry
 MASTER catalog. It no longer does. The client hand-picked the images for this
-reel into ~/Downloads/LaSabrosita, and that folder is now the source of truth
-for what the video shows. Rubric's catalog is untouched and still governs
-production state; it simply is not what this reel reads.
+reel, delivered as ~/Downloads/LaSabrosita, and that selection is the source of
+truth for what the video shows. The images themselves now live in the repo —
+see data/image-paths.json — but the selection is still what decides the content.
+Rubric's catalog is untouched and still governs production state; it simply is
+not what this reel reads.
 
 Practical consequences of the swap:
   - 46 images, 41 products (was 47 images, 37 products);

@@ -2,14 +2,17 @@
 """
 Build data/source-inventory.json from the client's MANUALLY APPROVED image folder.
 
-Source of truth (client, 2026-08-16):
+Source of truth: the client's hand-picked selection of 2026-08-16.
 
-    ~/Downloads/LaSabrosita/       -> reached through assets/manual (a symlink)
+It arrived as ~/Downloads/LaSabrosita and was read through `assets/manual`, an
+absolute symlink. That is no longer true — see the PORTABILITY note below. The
+selection now resolves through scripts/asset_paths.py to paths inside the
+repository, and the filenames the client's export used remain the keys.
 
 This REPLACES tv-menu/assets/products/products.json for the reel. That catalog is
 still Rubric's business and is untouched; it simply is not what this video reads
-any more. Nothing in the Downloads folder is moved, renamed, copied or modified —
-it is read in place, and the symlink is the only thing this project adds.
+any more. No image is moved, renamed, recompressed or modified anywhere in this
+pipeline — 40 of the 46 are read exactly where the workspace already kept them.
 
 Why the table below is written out by hand instead of parsed from filenames:
 
