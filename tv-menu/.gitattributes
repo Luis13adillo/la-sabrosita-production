@@ -1,0 +1,18 @@
+# Git LFS for the product images under tv-menu/.
+#
+# The root .gitattributes already routes client media to LFS, but every one of
+# its patterns contains a slash — `assets/**/*.png` and friends — and a pattern
+# with a slash is anchored to the directory of the .gitattributes declaring it.
+# So the root's `assets/**/*.png` matches <repo>/assets/... and never reaches
+# tv-menu/assets/. Confirmed with:
+#
+#     git check-attr filter -- tv-menu/assets/products/LS_Churros_MASTER_v01.png
+#     -> filter: unspecified   (before this file existed)
+#
+# Declared here rather than as a line in the root file because the root file
+# currently carries uncommitted changes from another session; editing it would
+# drag that unfinished work into these commits.
+assets/products/*.png  filter=lfs diff=lfs merge=lfs -text
+assets/products/*.PNG  filter=lfs diff=lfs merge=lfs -text
+assets/products/*.jpg  filter=lfs diff=lfs merge=lfs -text
+assets/products/*.jpeg filter=lfs diff=lfs merge=lfs -text
