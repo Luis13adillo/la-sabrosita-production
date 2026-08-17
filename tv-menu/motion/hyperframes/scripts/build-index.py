@@ -45,6 +45,7 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import reel_spec as RS          # noqa: E402  (needs HERE on the path first)
+import asset_paths as AP        # noqa: E402
 
 PROJECT = HERE.parent
 PLAN = PROJECT / "data" / "scene-plan.json"
@@ -94,7 +95,7 @@ def ring_html(picks, bboxes):
             f'        <div class="ring-item" id="ring-{i}" '
             f'style="left: {left:.0f}px; top: {top:.0f}px;">\n'
             f'          <div class="ring-float">\n'
-            f'            <img src="assets/manual/{p["file"]}" alt="{esc(p["name"])}" '
+            f'            <img src="{AP.src_for(p["file"])}" alt="{esc(p["name"])}" '
             f'style="{style}" />\n'
             f'          </div>\n'
             f'        </div>'

@@ -51,6 +51,7 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import reel_spec as RS          # noqa: E402  (needs HERE on the path first)
+import asset_paths as AP        # noqa: E402
 
 PROJECT = HERE.parent
 PLAN = PROJECT / "data" / "scene-plan.json"
@@ -182,7 +183,7 @@ def zone_html(fr, bboxes):
         card = "" if p.get("cutout", True) else " oncard"
         rows.append(
             f'              <div class="shot" style="width: {bw:.0f}px; height: {bh:.0f}px;">\n'
-            f'                <img class="shot-img{card}" src="assets/manual/{p["file"]}" '
+            f'                <img class="shot-img{card}" src="{AP.src_for(p["file"])}" '
             f'alt="{esc(p["name"])}"\n'
             f'                     style="{style}" />\n'
             f'              </div>')

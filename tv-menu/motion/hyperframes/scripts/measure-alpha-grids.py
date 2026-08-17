@@ -17,7 +17,8 @@ grid through each frame's own scale/offset to find real empty space.
 Stored as 64 strings of 64 characters so the file stays diffable and reviewable
 rather than an opaque blob, and so build-frames.py needs no image library at all.
 
-Read-only: opens the masters through assets/manual and writes only to data/.
+Read-only: opens each master through scripts/asset_paths.py (which keeps every
+path inside the repo) and writes only to data/.
 
 Run:  python3 scripts/measure-alpha-grids.py
 """
@@ -28,7 +29,17 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 PROJECT = HERE.parent
-SRC = PROJECT / "assets" / "manual"
+sys.path.insert(0, str(HERE))
+import asset_paths as AP        # noqa: E402
+
+# PORTABILITY, 2026-08-17
+# ----------------------
+# This used to read `assets/manual`, an ABSOLUTE symlink to
+# ~/Downloads/LaSabrosita, so it only ran on one Mac. The selection now
+# resolves through scripts/asset_paths.py, which reads data/image-paths.json
+# and returns a path INSIDE the repository for every image. Nothing here
+# reads Downloads any more.
+SRC = None   # resolved per image by asset_paths
 OUT = PROJECT / "data" / "master-alpha.json"
 
 N = 64              # grid resolution per axis
@@ -66,10 +77,8 @@ def main():
     except ImportError:
         sys.exit("Pillow required: python3 -m pip install --user Pillow")
 
-    if not SRC.exists():
-        sys.exit(f"source folder missing: {SRC}")
 
-    files = sorted(p for p in SRC.iterdir()
+    files = sorted(AP.abs_for(n) for n in AP.all_images()
                    if p.suffix.lower() == ".png" and not p.name.startswith("."))
     out = {}
     opaque = []

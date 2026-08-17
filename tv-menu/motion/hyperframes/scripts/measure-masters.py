@@ -30,6 +30,7 @@ Run:  python3 scripts/measure-masters.py
 
 import json
 import pathlib
+import sys
 
 from PIL import Image
 
@@ -37,7 +38,17 @@ Image.MAX_IMAGE_PIXELS = None
 
 HERE = pathlib.Path(__file__).resolve().parent
 PROJECT = HERE.parent
-SRC = PROJECT / "assets" / "manual"
+sys.path.insert(0, str(HERE))
+import asset_paths as AP        # noqa: E402
+
+# PORTABILITY, 2026-08-17
+# ----------------------
+# This used to read `assets/manual`, an ABSOLUTE symlink to
+# ~/Downloads/LaSabrosita, so it only ran on one Mac. The selection now
+# resolves through scripts/asset_paths.py, which reads data/image-paths.json
+# and returns a path INSIDE the repository for every image. Nothing here
+# reads Downloads any more.
+SRC = None   # resolved per image by asset_paths
 INVENTORY = PROJECT / "data" / "source-inventory.json"
 OUT = PROJECT / "data" / "master-bboxes.json"
 
@@ -49,7 +60,7 @@ def main():
     out = {}
     opaque = 0
     for f in files:
-        with Image.open(SRC / f) as im:
+        with Image.open(AP.abs_for(f)) as im:
             w, h = im.size
             bb = im.getchannel("A").getbbox() if im.mode in ("RGBA", "LA") else None
             if bb == (0, 0, w, h) or bb is None:

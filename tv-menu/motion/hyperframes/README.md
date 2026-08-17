@@ -14,8 +14,30 @@ HTML. The composition is a webpage; `hyperframes render` turns it into an MP4.
 
 ## Where the pictures come from
 
-The reel reads the client's **manual selection** in `~/Downloads/LaSabrosita`.
-That folder is the source of truth for product imagery (client, 2026-08-16).
+The client hand-picked 46 images for this video. Every one of them is now read
+from **inside the repository** — nothing depends on `~/Downloads` any more.
+
+Hashing the whole workspace showed the selection was never unique: 40 of the 46
+already existed here under their canonical `LS_*` names, and only 6 existed
+nowhere else. So 40 are reached where they already live, and 6 were copied in.
+
+| resolved to | images | what it is |
+|---|---|---|
+| `assets/products/` | 36 | symlink to `tv-menu/assets/products` |
+| `assets/masters/`  | 4  | symlink to `assets/products/masters` at the repo root |
+| `assets/selected/` | 6  | real files — these exist nowhere else in the workspace |
+
+`data/image-paths.json` records which of those each image resolves to, matched
+on **file content (md5), not filename** — the client's export names
+(`lasabrosita_churros_master_v01_1786751660230.png`) and the workspace's
+canonical names (`LS_Churros_MASTER_v01.png`) are the same bytes.
+
+The original selection filename stays the key everywhere, because
+`data/scene-plan.json` uses it to decide which product appears in which scene.
+Only the resolved path changed, so the video is byte-identical.
+
+    python3 scripts/build-asset-map.py   # regenerate the map (hashes the workspace)
+    python3 scripts/verify-assets.py     # prove every reference resolves in-repo
 
 It replaced Rubric's 47-entry MASTER catalog, which the reel used to read.
 `tv-menu/assets/products/products.json` is **untouched** and still governs
@@ -28,10 +50,15 @@ the real folder — images and brand files are read in place, never copied,
 regenerated, recompressed, renamed, or moved.
 
 ```
-assets/manual   -> ~/Downloads/LaSabrosita       (46 client-selected PNGs)
-assets/products -> ../../../assets/products      (Rubric's catalog — no longer read)
-assets/brand    -> ../../../../brand             (brand.json, logos, guidelines)
+assets/products -> ../../../assets/products              (tv-menu's product images)
+assets/masters  -> ../../../../assets/products/masters   (the repo-root catalog)
+assets/brand    -> ../../../../brand                     (brand.json, logos, guidelines)
+assets/selected                                          (real files: the 6 images
+                                                          that exist nowhere else)
 ```
+
+Every one of those is **relative** and stays inside the repository. An absolute
+symlink here is what made the project unbuildable anywhere but one Mac.
 
 ## Brand values are imported, never pasted
 
@@ -67,7 +94,11 @@ compositions/
   reel-chrome.css           root layout — field, ring, ticker, logo
   frames/*.html             one sub-composition per frame (generated)
 scripts/
-  build-inventory.py        assets/manual -> source-inventory.json  (the reviewed table)
+  build-asset-map.py        hash the workspace -> data/image-paths.json
+  verify-assets.py          prove every image reference resolves inside the repo
+  asset_paths.py            NOT a generator — the one place that answers
+                            "where does this image live?"
+  build-inventory.py        the selection -> source-inventory.json  (the reviewed table)
   measure-masters.py        images -> master-bboxes.json  (read-only measurement)
   build-scene-plan.py       inventory -> scene-plan.json
   build-frames.py           plan + bboxes + CSS -> compositions/frames/*.html
@@ -103,7 +134,8 @@ Re-run in this order after any change:
 
 ```bash
 python3 scripts/build-brand-css.py     # only when brand.json changes
-python3 scripts/build-inventory.py     # when the image selection changes
+python3 scripts/build-asset-map.py     # when the image selection changes
+python3 scripts/build-inventory.py     # ditto
 python3 scripts/measure-masters.py     # ditto
 python3 scripts/build-scene-plan.py
 python3 scripts/build-frames.py
@@ -142,6 +174,9 @@ Open with the client:
 
 - **Pastel Tres Leche** is on the menu board but has no image in the selection,
   so it is not in the reel.
+- The 6 images in `assets/selected/` exist nowhere else in the workspace. If
+  they belong in the product catalog, they should be filed there properly and
+  the map regenerated — right now this project is their only home.
 - **Helado Chino** is back, with 2 images. It was removed earlier as
   not-customer-facing; the new selection includes it.
 - Three images are photographs on white rather than cut-outs and sit on cream

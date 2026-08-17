@@ -28,10 +28,21 @@ Run:  python3 scripts/build-inventory.py
 
 import json
 import pathlib
+import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 PROJECT = HERE.parent
-SRC = PROJECT / "assets" / "manual"
+sys.path.insert(0, str(HERE))
+import asset_paths as AP        # noqa: E402
+
+# PORTABILITY, 2026-08-17
+# ----------------------
+# This used to read `assets/manual`, an ABSOLUTE symlink to
+# ~/Downloads/LaSabrosita, so it only ran on one Mac. The selection now
+# resolves through scripts/asset_paths.py, which reads data/image-paths.json
+# and returns a path INSIDE the repository for every image. Nothing here
+# reads Downloads any more.
+SRC = None   # resolved per image by asset_paths
 OUT = PROJECT / "data" / "source-inventory.json"
 
 # The client's actual TV menu board, category by category and line by line.
@@ -228,7 +239,7 @@ def board_order():
 
 
 def main():
-    files = sorted(p.name for p in SRC.glob("*.png"))
+    files = sorted(AP.all_images())
     missing = [f for f in files if f not in INVENTORY]
     stale = [f for f in INVENTORY if f not in files]
     if missing:
@@ -257,7 +268,7 @@ def main():
     entries = []
     for f in files:
         name, cat, depicts = INVENTORY[f]
-        im = Image.open(SRC / f)
+        im = Image.open(AP.abs_for(f))
         w, h = im.size
         if im.mode in ("RGBA", "LA") or "transparency" in im.info:
             lo, _ = im.convert("RGBA").split()[-1].getextrema()

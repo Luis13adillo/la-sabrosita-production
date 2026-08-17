@@ -17,8 +17,9 @@ mode: collaborative
 
 ## Source
 
-The images are the client's **manual selection**, read in place from
-`~/Downloads/LaSabrosita` through the `assets/manual` symlink. Nothing in that
+The images are the client's **manual selection**. They are read from inside
+the repository — `assets/products/`, `assets/masters/` and `assets/selected/`,
+resolved per image by `data/image-paths.json`. Nothing in that
 folder is moved, renamed, copied or modified.
 
 This replaced Rubric's 47-entry MASTER catalog as the source for this reel.

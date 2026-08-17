@@ -60,6 +60,12 @@ dist/
 # bounding boxes — an analysis OF the source, never the source.
 .hyperframes/
 
+# Python bytecode. The build scripts are run directly, so CPython drops a
+# __pycache__ next to them; it is machine- and version-specific
+# (cpython-314) and rebuilt on every run.
+__pycache__/
+*.pyc
+
 # --- Dependencies --------------------------------------------------
 node_modules/
 .pnp
