@@ -1,9 +1,7 @@
 {
   "_comment": "OFFICIAL GLOBAL BRAND SOURCE OF TRUTH for La Sabrosita Ice Cream & Snacks. Every surface reads from this file: TV menus, printed menus, promos, social, print. Do not copy these values into another file — import this one. Values are transcribed from brand/guidelines/LS_Brand-Guidelines_v01.pdf. Where the PDF does not state something, this file says so rather than inventing a value; see notSpecifiedInSource.",
-
   "schemaVersion": "1.0.0",
   "brandVersion": "v01",
-
   "brand": {
     "name": "La Sabrosita Ice Cream & Snacks",
     "wordmark": "La Sabrosita",
@@ -11,7 +9,6 @@
     "location": "Swedesboro, New Jersey",
     "guidelinesYear": "2026"
   },
-
   "sourceOfTruth": {
     "document": "guidelines/LS_Brand-Guidelines_v01.pdf",
     "originalFilename": "La_Sabrosita_Brand_Guidelines_Gladio_Style.pdf",
@@ -20,14 +17,22 @@
     "transcribedOn": "2026-08-14",
     "rule": "If this file and the PDF disagree, the PDF is right and this file is stale. Fix this file, do not edit the PDF."
   },
-
   "identity": {
     "positioning": "La Sabrosita is a vibrant, family-friendly ice cream and snack destination. The identity pairs a cheerful mascot with bold flavor-driven color and clean, easy-to-read menu communication.",
-    "attributes": ["Vibrant", "Playful", "Appetizing"],
-    "personality": ["bright", "welcoming", "expressive", "easy to recognize", "joyful"],
+    "attributes": [
+      "Vibrant",
+      "Playful",
+      "Appetizing"
+    ],
+    "personality": [
+      "bright",
+      "welcoming",
+      "expressive",
+      "easy to recognize",
+      "joyful"
+    ],
     "_source": "page 4, verbatim"
   },
-
   "color": {
     "_source": "page 12, hex values verbatim",
     "_dominant": "hotPink",
@@ -35,31 +40,51 @@
       "hotPink": {
         "name": "Hot Pink",
         "hex": "#F20A88",
-        "rgb": [242, 10, 136],
+        "rgb": [
+          242,
+          10,
+          136
+        ],
         "role": "Dominant La Sabrosita color. Primary brand field, headers, category titles."
       },
       "deepPurple": {
         "name": "Deep Purple",
         "hex": "#4B1557",
-        "rgb": [75, 21, 87],
+        "rgb": [
+          75,
+          21,
+          87
+        ],
         "role": "Creates contrast and structure. Menu item names, dark panels."
       },
       "electricBlue": {
         "name": "Electric Blue",
         "hex": "#1296DB",
-        "rgb": [18, 150, 219],
+        "rgb": [
+          18,
+          150,
+          219
+        ],
         "role": "Accent. Brings energy. Used in the logo banner."
       },
       "sunnyYellow": {
         "name": "Sunny Yellow",
         "hex": "#F5C21E",
-        "rgb": [245, 194, 30],
+        "rgb": [
+          245,
+          194,
+          30
+        ],
         "role": "Highlight. Brings energy. Used in the logo drip."
       },
       "baseCream": {
         "name": "Base Cream",
         "hex": "#FFF8EF",
-        "rgb": [255, 248, 239],
+        "rgb": [
+          255,
+          248,
+          239
+        ],
         "role": "Reading space. Provides the reading areas that keep menus clear."
       }
     },
@@ -72,7 +97,6 @@
       "_note": "darkContrast hex is read off the rendered page-13 swatch, not stated as a numbered brand color. It is not a sixth palette color."
     }
   },
-
   "gradient": {
     "_source": "page 14",
     "name": "Brand Gradient",
@@ -88,17 +112,64 @@
     "angleDeg": null,
     "_warning": "The PDF names the gradient but does not publish stop positions or an angle. exactStops and angleDeg are null on purpose. Do not fill them in and call the result brand-approved without client sign-off."
   },
-
   "typography": {
-    "_source": "pages 16 and 17",
-    "family": "Noto Sans",
-    "fallbackStack": ["Noto Sans", "Helvetica Neue", "Arial", "sans-serif"],
+    "_source": "pages 16 and 17 of LS_Brand-Guidelines_v01.pdf, plus page 2 of La_Sabrosita_Brand_Identity_Kit.pdf",
+    "_correction": "CORRECTED 2026-08-25. This block previously said family: 'Noto Sans' and nothing else, which merged two faces the brand kit deliberately keeps apart. Page 2 of the Complete Brand Identity Kit, under 'Typography (Provisional)', asks for a ROUNDED PLAYFUL DISPLAY face for display and headers -- naming Fredoka and Baloo as suitable references -- and reserves Noto Sans / Arial / Roboto for menu items, prices and body text. Because this file said only 'Noto Sans', every heading on the website was set in the BODY face. That is the single largest reason the design read as generic. The PDF is authoritative and this file is a transcription of it, so this file was the thing that was wrong.",
+    "display": {
+      "role": "Display and headers",
+      "brief": "A bold, rounded, playful sans-serif that feels friendly and energetic, without competing with the script logo.",
+      "namedReferences": [
+        "Fredoka",
+        "Baloo"
+      ],
+      "chosen": "Fredoka",
+      "_chosenProvenance": "Chosen from the two the brand kit names by name. The kit says 'or a comparable rounded display typeface' and therefore does not lock one, so the specific pick is disclosed in INVENTED.md.",
+      "weights": "variable 300-700",
+      "treatment": [
+        "Bold",
+        "ALL CAPS"
+      ],
+      "selfHosted": [
+        "site/public/fonts/fredoka-latin.woff2",
+        "site/public/fonts/fredoka-latin-ext.woff2"
+      ]
+    },
+    "body": {
+      "role": "Menu items, prices, and body text",
+      "brief": "A clean, highly legible sans-serif.",
+      "namedReferences": [
+        "Noto Sans",
+        "Arial",
+        "Roboto"
+      ],
+      "chosen": "Noto Sans",
+      "weights": "variable 100-900"
+    },
+    "family": "Noto Sans — BODY ONLY. Headers use typography.display.",
+    "fallbackStack": [
+      "Noto Sans",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "displayFallbackStack": [
+      "Fredoka",
+      "Trebuchet MS",
+      "Verdana",
+      "sans-serif"
+    ],
     "roles": {
       "headings": {
-        "font": "Noto Sans Bold",
-        "weight": 700,
-        "treatment": ["Bold", "ALL CAPS"],
-        "usedFor": ["headings"]
+        "font": "Fredoka SemiBold / Bold",
+        "weight": 600,
+        "treatment": [
+          "Bold",
+          "ALL CAPS"
+        ],
+        "usedFor": [
+          "headings"
+        ],
+        "_wasWrong": "Previously said 'Noto Sans Bold'. See _correction above."
       },
       "body": {
         "font": "Noto Sans Regular",
@@ -156,7 +227,6 @@
     "lineHeights": null,
     "_warning": "The PDF shows relative hierarchy only. No point sizes, line heights, or letter spacing are published. sizes and lineHeights are null on purpose."
   },
-
   "logo": {
     "_source": "pages 5, 6, 8, 9, 10",
     "primary": {
@@ -167,7 +237,11 @@
       "format": "PNG",
       "transparent": true,
       "description": "The primary La Sabrosita logo is the preferred expression of the brand. It should be used whenever space permits.",
-      "components": ["mascot", "wordmark", "banner"],
+      "components": [
+        "mascot",
+        "wordmark",
+        "banner"
+      ],
       "provenance": "Extracted losslessly from the client's La_Sabrosita_Brand_Identity_Kit.pdf (embedded image plus its alpha mask, decoded without recompression). It is NOT a client-supplied standalone file and was NOT regenerated or redrawn. If the client provides the original vector or PNG, add it as v02 and update this block."
     },
     "placement": "Use the logo at the top center or upper left of menus, flyers, social posts, and promotional materials. Keep the complete mascot, wordmark, and banner together.",
@@ -181,12 +255,31 @@
       "digitalMinWidthPx": 250,
       "rule": "For digital use, avoid reducing the full logo below 250 px wide.",
       "whenSmaller": "When the logo must appear small, use the official complete logo on a clean cream or white area rather than removing its elements.",
-      "printMinWidth": null
+      "printMinWidth": null,
+      "_clientException": {
+        "decidedBy": "the client, Luis",
+        "on": "2026-08-26",
+        "what": "The site HEADER shows the complete mark at 54-70px directly on deep purple, with no cream plaque behind it.",
+        "whichRuleIsWaived": "minimumSize.whenSmaller — \"When the logo must appear small, use the official complete logo on a clean cream or white area rather than removing its elements.\"",
+        "whichRulesStillHold": "Deep purple is one of logo.approvedBackgrounds, so the mark is still on an approved field. Nothing is cropped, recoloured, rotated, stretched or stripped of elements — the complete mark is used, exactly as supplied. Only the cream-area clause is waived.",
+        "why": "The client asked for it directly and it holds up: the mark carries its own white keyline, so it separates from the purple without a plaque. Rendered both ways and compared before deciding.",
+        "scope": "THE HEADER ONLY. The footer mark is 150px on cream and stays that way — the client was explicit that the footer is fine as it is. scripts/brand-check.mjs enforces this scope: any OTHER small mark on a coloured field still fails."
+      }
     },
     "approvedBackgrounds": {
-      "fields": ["cream", "white", "pink", "purple", "black"],
+      "fields": [
+        "cream",
+        "white",
+        "pink",
+        "purple",
+        "black"
+      ],
       "rule": "Place the complete logo on an approved cream, white, pink, purple, or black field. Always select a background that provides enough contrast for the complete mark.",
-      "demonstratedApplications": ["hotPink", "baseCream", "deepPurple"],
+      "demonstratedApplications": [
+        "hotPink",
+        "baseCream",
+        "deepPurple"
+      ],
       "_note": "Page 10 shows the logo on hot pink and deep purple fields inset on a cream card. The mark itself sits on cream in those applications."
     },
     "correctUsage": [
@@ -195,20 +288,43 @@
       "Give the logo breathing room; never crowd it with menu text or product photography."
     ],
     "misuse": [
-      { "rule": "Do not stretch", "why": "Distorting the logo reduces recognition." },
-      { "rule": "Do not recolor", "why": "Use only approved brand applications." },
-      { "rule": "Do not rotate", "why": "Keep the logo upright and balanced." },
-      { "rule": "Do not add effects", "why": "No drop shadows, glows, or outlines." },
-      { "rule": "Do not crop", "why": "Keep the mascot, wordmark, and banner together." },
-      { "rule": "Do not place on clutter", "why": "Protect contrast and clear space." }
+      {
+        "rule": "Do not stretch",
+        "why": "Distorting the logo reduces recognition."
+      },
+      {
+        "rule": "Do not recolor",
+        "why": "Use only approved brand applications."
+      },
+      {
+        "rule": "Do not rotate",
+        "why": "Keep the logo upright and balanced."
+      },
+      {
+        "rule": "Do not add effects",
+        "why": "No drop shadows, glows, or outlines."
+      },
+      {
+        "rule": "Do not crop",
+        "why": "Keep the mascot, wordmark, and banner together."
+      },
+      {
+        "rule": "Do not place on clutter",
+        "why": "Protect contrast and clear space."
+      }
     ],
     "summaryRule": "To preserve brand consistency, do not alter, rebuild, or separate the La Sabrosita logo."
   },
-
   "visualDirection": {
     "_source": "page 19",
     "statement": "La Sabrosita designs should look bright, appetizing, and playful. Use rounded panels, subtle drips, soft waves, stars, and clean cut-out food imagery. Keep menu text on cream reading areas so every item is easy to understand.",
-    "motifs": ["rounded panels", "subtle drips", "soft waves", "stars", "clean cut-out food imagery"],
+    "motifs": [
+      "rounded panels",
+      "subtle drips",
+      "soft waves",
+      "stars",
+      "clean cut-out food imagery"
+    ],
     "do": [
       "Use colorful cut-out food images.",
       "Use clean text areas.",
@@ -218,13 +334,16 @@
     "cornerRadius": null,
     "_warning": "The PDF says 'rounded' repeatedly but publishes no radius, spacing scale, or shadow spec. cornerRadius is null on purpose."
   },
-
   "aiPrompt": {
     "_source": "page 20, verbatim",
     "template": "I am attaching the official La Sabrosita logo. Use it as the direct brand reference. Create a [FORMAT] for [PURPOSE]. Use hot pink #F20A88, deep purple #4B1557, electric blue #1296DB accents, sunny yellow #F5C21E highlights, and cream #FFF8EF reading areas. Place the logo prominently in a hot-pink header. Use soft rounded shapes, subtle drips, gentle waves, and appetizing high-saturation food imagery of [FOOD / PRODUCT]. Include this exact text: [INSERT TEXT]. Keep all required text highly legible and uncluttered.",
-    "placeholders": ["[FORMAT]", "[PURPOSE]", "[FOOD / PRODUCT]", "[INSERT TEXT]"]
+    "placeholders": [
+      "[FORMAT]",
+      "[PURPOSE]",
+      "[FOOD / PRODUCT]",
+      "[INSERT TEXT]"
+    ]
   },
-
   "notSpecifiedInSource": [
     "Gradient stop positions and angle",
     "Corner radius values for rounded panels",
