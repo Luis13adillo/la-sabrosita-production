@@ -120,3 +120,14 @@ brand/**/*.otf  filter=lfs diff=lfs merge=lfs -text
 brand/**/*.ttf  filter=lfs diff=lfs merge=lfs -text
 brand/**/*.woff  filter=lfs diff=lfs merge=lfs -text
 brand/**/*.woff2 filter=lfs diff=lfs merge=lfs -text
+
+# --- Motion compositions ---------------------------------------------
+# motion/*/assets holds copies of the same client product images the
+# compositions are built from. Rendered video is gitignored; these are
+# the SOURCE stills, and they are client media like everything above.
+# Without these lines 27 files — 60 MB — went in as raw blobs.
+motion/**/*.png  filter=lfs diff=lfs merge=lfs -text
+motion/**/*.PNG  filter=lfs diff=lfs merge=lfs -text
+motion/**/*.jpg  filter=lfs diff=lfs merge=lfs -text
+motion/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+motion/**/*.webp filter=lfs diff=lfs merge=lfs -text
