@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- Brand values come from brand/brand.json via scripts/build-brand-css.mjs.
+         No hex code is written by hand anywhere in this file. -->
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ls-deep-purple);
+        font-family: var(--ls-font);
+      }
+
+      /* ── Scene shell ─────────────────────────────────────────────────────
+         Scene divs are plain divs, not clips: the whole piece is one timeline
+         so the transition seams and the loop seam can be authored exactly. */
+      .scene {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ls-deep-purple);
+      }
+      #s-open {
+        z-index: 1;
+      }
+      #s-p1 {
+        z-index: 2;
+        opacity: 0;
+      }
+      #s-p2 {
+        z-index: 3;
+        opacity: 0;
+      }
+      #s-p3 {
+        z-index: 4;
+        opacity: 0;
+      }
+      #s-p4 {
+        z-index: 5;
+        opacity: 0;
+      }
+      #s-close {
+        z-index: 6;
+        opacity: 0;
+      }
+
+      /* One camera per scene. Its transform has exactly one writer (the drift
+         onUpdate), which composes the phase scale and the drift offset. */
+      .cam {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        transform-origin: 50% 50%;
+        will-change: transform;
+      }
+
+      /* The branded plate sits OUTSIDE the camera, filling the scene at all
+         times. Inside the camera it exposed the void at every phase scale
+         below 1 — a bright unblurred band around the frame. The camera moves
+         the midground and the product; the ground it stands on does not move
+         with it. */
+      .backdrop {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+      }
+      /* Depth layers inside the camera, parallaxed at different rates so a flat
+         cut-out reads as a staged photograph. */
+      .mid,
+      .near {
+        position: absolute;
+        inset: 0;
+        will-change: transform;
+      }
+      .mid {
+        z-index: 2;
+      }
+      .near {
+        z-index: 3;
+      }
+
+      /* ── Background plate ────────────────────────────────────────────────
+         bg-tv.png is 1792×1024; oversized here so parallax never exposes an
+         edge. The plate is the client's own branded field from the ZIP. */
+      .plate {
+        position: absolute;
+        left: -120px;
+        top: -100px;
+        width: 2160px;
+        height: 1280px;
+        background-image: url("assets/brand/bg-tv.png");
+        background-size: cover;
+        background-position: center;
+      }
+      /* Vignette keeps the corners from competing with the product. */
+      .vignette {
+        position: absolute;
+        inset: 0;
+        box-shadow: inset 0 0 300px 90px rgba(20, 4, 26, 0.55);
+      }
+
+      /* ── Hero glow (ambient-glow-bloom, peak well under the 0.45 ceiling) */
+      .glow {
+        position: absolute;
+        width: 1100px;
+        height: 1100px;
+        margin-left: -550px;
+        margin-top: -550px;
+        border-radius: 50%;
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      /* color-mix keeps every stop derived from a brand token — no hand-pasted
+         hex, per the repo's brand rule. */
+      .glow-warm {
+        background: radial-gradient(
+          circle,
+          var(--ls-sunny-yellow) 0%,
+          color-mix(in srgb, var(--ls-hot-pink) 55%, transparent) 42%,
+          transparent 70%
+        );
+      }
+      .glow-cool {
+        background: radial-gradient(
+          circle,
+          var(--ls-base-cream) 0%,
+          color-mix(in srgb, var(--ls-electric-blue) 50%, transparent) 40%,
+          transparent 70%
+        );
+      }
+      /* The open and close frames carry cream headline type across the glow, so
+         their halo has a pink core instead of a cream/yellow one — a cream core
+         drops the headline to a 1:1 contrast ratio against its own backdrop. */
+      .glow-brand {
+        background: radial-gradient(
+          circle,
+          color-mix(in srgb, var(--ls-hot-pink) 92%, transparent) 0%,
+          color-mix(in srgb, var(--ls-hot-pink) 45%, transparent) 46%,
+          transparent 72%
+        );
+      }
+
+      /* ── Oversized ghost wordmark (background treatment, video opacity) */
+      .ghost {
+        position: absolute;
+        white-space: nowrap;
+        font-weight: 900;
+        font-size: 300px;
+        line-height: 0.85;
+        letter-spacing: -0.03em;
+        color: var(--ls-base-cream);
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+
+      /* ── Hero product ────────────────────────────────────────────────────
+         The product images are the client's own masters, placed and scaled
+         only. object-fit: contain guarantees no crop and no distortion. */
+      .hero-wrap {
+        position: absolute;
+        will-change: transform, opacity, filter;
+      }
+      .hero-wrap img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 44px 52px rgba(18, 3, 24, 0.62));
+      }
+
+      /* Contact shadow — grounds the cut-out so it does not float in a void. */
+      .contact {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(16, 3, 22, 0.62) 0%,
+          rgba(16, 3, 22, 0) 72%
+        );
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+
+      /* ── Typography ──────────────────────────────────────────────────────
+         Noto Sans is the brand typeface (brand.json, guidelines pages 16–17),
+         so it overrides the house-style font guidance on purpose.
+         Sizes are video-scale; the guidelines publish no point sizes. */
+      .type-block {
+        position: absolute;
+        width: 760px;
+      }
+      .eyebrow {
+        display: inline-block;
+        font-weight: 800;
+        font-size: 30px;
+        letter-spacing: 0.16em;
+        color: var(--ls-base-cream);
+        background: var(--ls-hot-pink);
+        padding: 12px 26px 13px;
+        border-radius: 999px;
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .name {
+        margin-top: 26px;
+        font-weight: 900;
+        font-size: 118px;
+        line-height: 0.98;
+        letter-spacing: -0.02em;
+        color: var(--ls-base-cream);
+        text-shadow: 0 10px 34px rgba(16, 3, 22, 0.6);
+      }
+      /* Each word is its own animated block (waterfall-entry needs block-level,
+         sized targets — a transform on an inline span is a no-op). */
+      .word {
+        display: inline-block;
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .rule {
+        height: 8px;
+        width: 100%;
+        margin-top: 30px;
+        border-radius: 4px;
+        background: var(--ls-sunny-yellow);
+        transform-origin: 0% 50%;
+        will-change: transform;
+      }
+      .sub {
+        margin-top: 24px;
+        font-weight: 400;
+        font-size: 36px;
+        letter-spacing: 0.02em;
+        color: var(--ls-base-cream);
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+
+      /* ── Playful supporting graphics ─────────────────────────────────────
+         Four-point sparkles, the motif named in brand.json's visual direction
+         ("stars", "subtle drips"). Authored shapes, not product imagery.
+         Drawn as inline SVG rather than clip-path on purpose: the renderer
+         warns that a composition carrying many clip-path / blur /
+         radial-gradient overlays can capture solid black, and 25 sparkles
+         would have put this file deep into that range on their own. */
+      .spark {
+        position: absolute;
+        overflow: visible;
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .spark-y polygon {
+        fill: var(--ls-sunny-yellow);
+      }
+      .spark-c polygon {
+        fill: var(--ls-base-cream);
+      }
+      .spark-b polygon {
+        fill: var(--ls-electric-blue);
+      }
+
+      /* Drip band along the top edge — the guidelines' "subtle drips" motif. */
+      .drip {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 118px;
+        background: var(--ls-hot-pink);
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .drip::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 1920px;
+        height: 62px;
+        background:
+          radial-gradient(ellipse 108px 62px at 160px 0, var(--ls-hot-pink) 50%, transparent 51%),
+          radial-gradient(ellipse 74px 44px at 470px 0, var(--ls-hot-pink) 50%, transparent 51%),
+          radial-gradient(ellipse 132px 60px at 880px 0, var(--ls-hot-pink) 50%, transparent 51%),
+          radial-gradient(ellipse 88px 50px at 1290px 0, var(--ls-hot-pink) 50%, transparent 51%),
+          radial-gradient(ellipse 116px 58px at 1680px 0, var(--ls-hot-pink) 50%, transparent 51%);
+      }
+
+      /* ── Logo lockup ─────────────────────────────────────────────────────
+         Every logo file in the ZIP has an opaque background baked in, so the
+         mark is presented on a cream card — which is exactly what the
+         guidelines call for ("place the complete logo on an approved cream,
+         white, pink, or purple background"). It is never keyed or cut out. */
+      .logo-card {
+        position: absolute;
+        left: 700px;
+        top: 150px;
+        width: 520px;
+        padding: 30px 40px;
+        background: var(--ls-base-cream);
+        border-radius: 40px;
+        box-shadow: 0 34px 70px rgba(16, 3, 22, 0.55);
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .logo-card img {
+        display: block;
+        width: 100%;
+      }
+      /* Sits clear below the logo card. logo3.png is 488x421, so a 520px card
+         with 30/40 padding renders ~440px tall and ends at y=590 — the headline
+         starts at 640 so cream type never lands on the cream card. */
+      .headline {
+        position: absolute;
+        left: 460px;
+        top: 640px;
+        width: 1000px;
+        text-align: center;
+      }
+      .headline .hl {
+        display: inline-block;
+        font-weight: 900;
+        font-size: 96px;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        color: var(--ls-base-cream);
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .headline .hl-accent {
+        color: var(--ls-sunny-yellow);
+      }
+      .headline .hl-rule {
+        height: 8px;
+        width: 460px;
+        margin: 32px auto 0;
+        border-radius: 4px;
+        background: var(--ls-hot-pink);
+        transform-origin: 50% 50%;
+        will-change: transform;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="18"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- ═══ Frame 1 — Open ═══════════════════════════════════════════ -->
+      <div id="s-open" class="scene">
+        <div class="backdrop">
+            <div class="plate" data-layout-allow-overflow></div>
+            <div class="vignette"></div>
+          </div>
+          <div class="cam" data-layout-allow-overflow id="cam-open">
+          <div class="mid">
+            <div class="glow glow-brand" data-layout-allow-overflow id="open-glow" style="left: 960px; top: 460px"></div>
+            <div class="drip" data-layout-allow-overflow id="open-drip"></div>
+            <svg data-layout-allow-overflow class="spark spark-y" id="open-sp0" viewBox="0 0 100 100" style="left: 300px; top: 250px; width: 54px; height: 54px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-c" id="open-sp1" viewBox="0 0 100 100" style="left: 1560px; top: 330px; width: 40px; height: 40px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-b" id="open-sp2" viewBox="0 0 100 100" style="left: 420px; top: 800px; width: 46px; height: 46px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-y" id="open-sp3" viewBox="0 0 100 100" style="left: 1480px; top: 820px; width: 62px; height: 62px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-c" id="open-sp4" viewBox="0 0 100 100" style="left: 980px; top: 190px; width: 34px; height: 34px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+          </div>
+          <div class="near">
+            <div class="logo-card" id="open-logo">
+              <img src="assets/brand/logo3.png" alt="La Sabrosita Ice Cream and Snacks" />
+            </div>
+            <div class="headline">
+              <div><span class="hl" id="open-h1">¡HECHO CON</span></div>
+              <div><span class="hl hl-accent" id="open-h2">SABOR!</span></div>
+              <div class="hl-rule" id="open-hr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Frame 2 — Crazy Shake (type left, product right) ═════════ -->
+      <div id="s-p1" class="scene">
+        <div class="backdrop">
+            <div class="plate" data-layout-allow-overflow id="p1-plate"></div>
+            <div class="vignette"></div>
+          </div>
+          <div class="cam" data-layout-allow-overflow id="cam-p1">
+          <div class="mid" id="p1-mid">
+            <div class="glow glow-warm" data-layout-allow-overflow id="p1-glow" style="left: 1380px; top: 540px"></div>
+            <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="p1-ghost" style="left: 860px; top: 0px">SABOR</div>
+            <svg data-layout-allow-overflow class="spark spark-y" id="p1-sp0" viewBox="0 0 100 100" style="left: 1010px; top: 210px; width: 52px; height: 52px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-c" id="p1-sp1" viewBox="0 0 100 100" style="left: 1730px; top: 330px; width: 38px; height: 38px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-b" id="p1-sp2" viewBox="0 0 100 100" style="left: 1120px; top: 880px; width: 44px; height: 44px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-y" id="p1-sp3" viewBox="0 0 100 100" style="left: 1690px; top: 830px; width: 34px; height: 34px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+          </div>
+          <div class="near" id="p1-near">
+            <div class="contact" id="p1-contact" style="left: 1120px; top: 975px; width: 520px; height: 100px"></div>
+            <div class="hero-wrap" id="p1-hero" style="left: 900px; top: 60px; width: 960px; height: 960px">
+              <img src="assets/products/crazy-shakes.png" alt="Crazy Shake" />
+            </div>
+            <div class="type-block" style="left: 120px; top: 320px">
+              <span class="eyebrow" id="p1-eyebrow">HELADOS &amp; PALETAS</span>
+              <div class="name">
+                <span class="word" id="p1-w0">Crazy</span>
+                <span class="word" id="p1-w1">Shake</span>
+              </div>
+              <div class="rule" id="p1-rule"></div>
+              <div class="sub" id="p1-sub">Ice Cream &amp; Paletas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Frame 3 — Chamoyada (mirrored: product left, type right) ══ -->
+      <div id="s-p2" class="scene">
+        <div class="backdrop">
+            <div class="plate" data-layout-allow-overflow id="p2-plate"></div>
+            <div class="vignette"></div>
+          </div>
+          <div class="cam" data-layout-allow-overflow id="cam-p2">
+          <div class="mid" id="p2-mid">
+            <div class="glow glow-cool" data-layout-allow-overflow id="p2-glow" style="left: 540px; top: 540px"></div>
+            <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="p2-ghost" style="left: -60px; top: 10px">FRESCO</div>
+            <svg data-layout-allow-overflow class="spark spark-c" id="p2-sp0" viewBox="0 0 100 100" style="left: 900px; top: 240px; width: 46px; height: 46px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-y" id="p2-sp1" viewBox="0 0 100 100" style="left: 220px; top: 310px; width: 56px; height: 56px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-b" id="p2-sp2" viewBox="0 0 100 100" style="left: 830px; top: 850px; width: 40px; height: 40px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-y" id="p2-sp3" viewBox="0 0 100 100" style="left: 180px; top: 830px; width: 36px; height: 36px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+          </div>
+          <div class="near" id="p2-near">
+            <div class="contact" id="p2-contact" style="left: 270px;  top: 975px; width: 540px; height: 100px"></div>
+            <div class="hero-wrap" id="p2-hero" style="left: 60px;  top: 60px; width: 960px; height: 960px">
+              <img src="assets/products/chamoyada.png" alt="Chamoyada" />
+            </div>
+            <div class="type-block" style="left: 1040px; top: 320px">
+              <span class="eyebrow" id="p2-eyebrow">BEBIDAS</span>
+              <div class="name">
+                <span class="word" id="p2-w0">Chamoyada</span>
+              </div>
+              <div class="rule" id="p2-rule"></div>
+              <div class="sub" id="p2-sub">Drinks</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Frame 4 — Churros (type left, product right) ══════════════ -->
+      <div id="s-p3" class="scene">
+        <div class="backdrop">
+            <div class="plate" data-layout-allow-overflow id="p3-plate"></div>
+            <div class="vignette"></div>
+          </div>
+          <div class="cam" data-layout-allow-overflow id="cam-p3">
+          <div class="mid" id="p3-mid">
+            <div class="glow glow-warm" data-layout-allow-overflow id="p3-glow" style="left: 1380px; top: 560px"></div>
+            <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="p3-ghost" style="left: 840px; top: 10px">DULCE</div>
+            <svg data-layout-allow-overflow class="spark spark-y" id="p3-sp0" viewBox="0 0 100 100" style="left: 1040px; top: 240px; width: 50px; height: 50px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-c" id="p3-sp1" viewBox="0 0 100 100" style="left: 1760px; top: 380px; width: 36px; height: 36px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-b" id="p3-sp2" viewBox="0 0 100 100" style="left: 1150px; top: 860px; width: 44px; height: 44px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-y" id="p3-sp3" viewBox="0 0 100 100" style="left: 1700px; top: 800px; width: 38px; height: 38px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+          </div>
+          <div class="near" id="p3-near">
+            <div class="contact" id="p3-contact" style="left: 1030px; top: 978px; width: 700px; height: 98px"></div>
+            <div class="hero-wrap" id="p3-hero" style="left: 900px; top: 60px; width: 960px; height: 960px">
+              <img src="assets/products/churros.png" alt="Churros" />
+            </div>
+            <div class="type-block" style="left: 120px; top: 320px">
+              <span class="eyebrow" id="p3-eyebrow">POSTRES &amp; DULCES</span>
+              <div class="name">
+                <span class="word" id="p3-w0">Churros</span>
+              </div>
+              <div class="rule" id="p3-rule"></div>
+              <div class="sub" id="p3-sub">Desserts &amp; Sweets</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Frame 5 — Coctel de Fruta (mirrored) ═════════════════════ -->
+      <div id="s-p4" class="scene">
+        <div class="backdrop">
+            <div class="plate" data-layout-allow-overflow id="p4-plate"></div>
+            <div class="vignette"></div>
+          </div>
+          <div class="cam" data-layout-allow-overflow id="cam-p4">
+          <div class="mid" id="p4-mid">
+            <div class="glow glow-cool" data-layout-allow-overflow id="p4-glow" style="left: 540px; top: 540px"></div>
+            <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="p4-ghost" style="left: -40px; top: 0px">FRUTA</div>
+            <svg data-layout-allow-overflow class="spark spark-c" id="p4-sp0" viewBox="0 0 100 100" style="left: 920px; top: 260px; width: 48px; height: 48px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-y" id="p4-sp1" viewBox="0 0 100 100" style="left: 200px; top: 300px; width: 54px; height: 54px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-b" id="p4-sp2" viewBox="0 0 100 100" style="left: 850px; top: 870px; width: 40px; height: 40px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-y" id="p4-sp3" viewBox="0 0 100 100" style="left: 170px; top: 810px; width: 36px; height: 36px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+          </div>
+          <div class="near" id="p4-near">
+            <div class="contact" id="p4-contact" style="left: 290px;  top: 975px; width: 500px; height: 100px"></div>
+            <div class="hero-wrap" id="p4-hero" style="left: 60px;  top: 60px; width: 960px; height: 960px">
+              <img src="assets/products/coctel-fruta.png" alt="Coctel de Fruta" />
+            </div>
+            <div class="type-block" style="left: 1040px; top: 300px">
+              <span class="eyebrow" id="p4-eyebrow">POSTRES &amp; DULCES</span>
+              <div class="name">
+                <span class="word" id="p4-w0">Coctel</span>
+                <span class="word" id="p4-w1">de</span>
+                <span class="word" id="p4-w2">Fruta</span>
+              </div>
+              <div class="rule" id="p4-rule"></div>
+              <div class="sub" id="p4-sub">Fruit Cocktail</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Frame 6 — Close / loop seam ══════════════════════════════ -->
+      <div id="s-close" class="scene">
+        <div class="backdrop">
+            <div class="plate" data-layout-allow-overflow></div>
+            <div class="vignette"></div>
+          </div>
+          <div class="cam" data-layout-allow-overflow id="cam-close">
+          <div class="mid">
+            <div class="glow glow-brand" data-layout-allow-overflow id="close-glow" style="left: 960px; top: 500px"></div>
+            <div class="drip" data-layout-allow-overflow id="close-drip"></div>
+            <svg data-layout-allow-overflow class="spark spark-y" id="close-sp0" viewBox="0 0 100 100" style="left: 330px; top: 300px; width: 56px; height: 56px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-c" id="close-sp1" viewBox="0 0 100 100" style="left: 1540px; top: 350px; width: 42px; height: 42px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-b" id="close-sp2" viewBox="0 0 100 100" style="left: 450px; top: 790px; width: 46px; height: 46px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+            <svg data-layout-allow-overflow class="spark spark-y" id="close-sp3" viewBox="0 0 100 100" style="left: 1460px; top: 800px; width: 58px; height: 58px"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/></svg>
+          </div>
+          <div class="near">
+            <div class="logo-card" id="close-logo">
+              <img src="assets/brand/logo3.png" alt="La Sabrosita Ice Cream and Snacks" />
+            </div>
+            <div class="headline">
+              <div><span class="hl" id="close-h1">ICE CREAM</span></div>
+              <div><span class="hl hl-accent" id="close-h2">&amp; SNACKS</span></div>
+              <div class="hl-rule" id="close-hr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      var TOTAL = 18;
+      var F = 1 / 30;
+
+      /* Scene windows. Each product scene owns 3.45s including its 0.55s
+         incoming transition; the seam times are where a transition FIRES —
+         outgoing and incoming move at the same instant, never a fade-then-cut. */
+      var OPEN_AT = 0;
+      var T1 = 2.75; //  open → crazy shake   (zoom through)
+      var T2 = 5.95; //  crazy shake → chamoyada (blur crossfade)
+      var T3 = 9.15; //  chamoyada → churros
+      var T4 = 12.35; // churros → coctel de fruta
+      var T5 = 15.55; // coctel de fruta → close (zoom through)
+      // The clear finishes at 17.75, not at 18.00. The last rendered frame of an
+      // 18s/30fps file is t=17.967, so a clear that lands exactly on 18.00 still
+      // has a few percent of the lockup showing when the file wraps to frame 0.
+      var CLEAR_AT = 17.3; // close clears to the bare branded field
+
+      /* ── Camera ────────────────────────────────────────────────────────
+         multi-phase-camera: a phase scale stepped at scripted triggers plus a
+         slow sine drift, composed by a single transform writer. Every scene
+         gets its own camera so its push starts fresh, but they share one
+         drift clock running the whole 18s — which is what lets the loop close.
+         DRIFT_CYCLES is a whole number, so sin() is 0 at t=0 and at t=18 and
+         the camera transform at the last frame equals the first. */
+      var DRIFT_CYCLES = 2;
+      var DRIFT_AMP_X = 7;
+      var DRIFT_AMP_Y = 4;
+      var DRIFT_FREQ_RATIO = 1.3;
+
+      var cams = [
+        { el: document.getElementById("cam-open"), from: 1.06, to: 1.0, at: 0.0, dur: 2.6 },
+        { el: document.getElementById("cam-p1"), from: 0.94, to: 1.05, at: T1, dur: 3.3 },
+        { el: document.getElementById("cam-p2"), from: 1.05, to: 0.96, at: T2, dur: 3.3 },
+        { el: document.getElementById("cam-p3"), from: 0.94, to: 1.05, at: T3, dur: 3.3 },
+        { el: document.getElementById("cam-p4"), from: 1.05, to: 0.96, at: T4, dur: 3.3 },
+        { el: document.getElementById("cam-close"), from: 0.97, to: 1.04, at: T5, dur: 2.4 },
+      ];
+
+      // Phase channel: one proxy per camera, tweened over that scene's window.
+      cams.forEach(function (c) {
+        c.phase = { s: c.from };
+        tl.to(c.phase, { s: c.to, duration: c.dur, ease: "power2.out" }, c.at);
+      });
+
+      // Drift channel: the SINGLE writer of every camera transform. Phase scale
+      // and drift offset are composed here and nowhere else.
+      var drift = { p: 0 };
+      function writeCams() {
+        var dx = Math.sin(drift.p) * DRIFT_AMP_X;
+        var dy = Math.sin(drift.p * DRIFT_FREQ_RATIO) * DRIFT_AMP_Y;
+        for (var i = 0; i < cams.length; i++) {
+          cams[i].el.style.transform =
+            "scale(" + cams[i].phase.s + ") translate(" + dx + "px, " + dy + "px)";
+        }
+      }
+      tl.to(
+        drift,
+        {
+          p: Math.PI * 2 * DRIFT_CYCLES,
+          duration: TOTAL,
+          ease: "none",
+          onUpdate: writeCams,
+        },
+        0,
+      );
+      // Establish the t=0 pose synchronously so frame 0 is never an unposed
+      // camera, and so no CSS initial transform has to compete with the writer.
+      writeCams();
+
+      /* ── Sparkle ambience ──────────────────────────────────────────────
+         Deterministic: every value is derived from the element's index, never
+         from Math.random. Sparkles turn and breathe for the scene's whole
+         window so no frame of the background is dead. */
+      function sparkles(ids, at, dur) {
+        ids.forEach(function (id, i) {
+          var el = document.getElementById(id);
+          tl.fromTo(
+            el,
+            { opacity: 0, scale: 0.4, rotation: -40 + i * 18 },
+            {
+              opacity: 0.9,
+              scale: 1,
+              rotation: 0,
+              duration: 0.5,
+              ease: "power3.out",
+            },
+            at + 0.18 + i * 0.07,
+          );
+          var ph = { p: 0 };
+          var cycles = Math.max(1, Math.round(dur / 2.2));
+          tl.to(
+            ph,
+            {
+              p: Math.PI * 2 * cycles,
+              duration: dur,
+              ease: "none",
+              onUpdate: function () {
+                var s = Math.sin(ph.p + i * 1.1);
+                el.style.transform =
+                  "translateY(" + s * 9 + "px) scale(" + (1 + s * 0.14) + ") rotate(" + s * 26 + "deg)";
+                el.style.opacity = String(0.55 + 0.35 * Math.abs(s));
+              },
+            },
+            at + 0.68 + i * 0.07,
+          );
+        });
+      }
+
+      /* ── Hero glow (ambient-glow-bloom) ────────────────────────────────
+         Blooms so that bloom-in lands on the hero's settle: one beat, not two.
+         Peak 0.34 + amp 0.04 stays under the 0.45 ceiling. */
+      function glow(id, at, holdDur, peak, breathe) {
+        var el = document.getElementById(id);
+        tl.fromTo(
+          el,
+          { opacity: 0, scale: 0.82 },
+          { opacity: peak, scale: 1, duration: 0.85, ease: "power2.out" },
+          at,
+        );
+        // Bloom-and-hold: a scene under ~3s skips the breathe. It also MUST be
+        // skipped on any halo that gets cleared later — the breathe writes
+        // style.opacity every frame and would silently outlive the clear tween,
+        // leaving a ghost halo on the last frame and breaking the loop seam.
+        if (breathe === false) return;
+        var ph = { p: 0 };
+        var cycles = Math.max(1, Math.round(holdDur / 3.0));
+        tl.to(
+          ph,
+          {
+            p: Math.PI * 2 * cycles,
+            duration: holdDur,
+            ease: "none",
+            onUpdate: function () {
+              var s = Math.sin(ph.p);
+              el.style.opacity = String(peak + s * 0.04);
+              el.style.transform = "scale(" + (1 + s * 0.025) + ")";
+            },
+          },
+          at + 0.85,
+        );
+      }
+
+      /* ── A product frame ───────────────────────────────────────────────
+         spring-pop-entrance for the hero (smooth expo.out settle — this is a
+         premium food shot, not a cartoon), waterfall-entry for the name,
+         sine-wave-loop for the held hero, depth-of-field-blur on the
+         background while the camera pushes, and layer parallax for depth. */
+      function productFrame(cfg) {
+        var at = cfg.at;
+        var end = cfg.end;
+        var dir = cfg.mirrored ? -1 : 1;
+
+        // Background rack-focus: the plate softens as the camera pushes in, so
+        // the product is the only sharp thing on screen.
+        tl.fromTo(
+          "#" + cfg.plate,
+          { filter: "blur(0px)", scale: 1.0 },
+          { filter: "blur(7px)", scale: 1.06, duration: 2.1, ease: "power2.out" },
+          at + 0.25,
+        );
+
+        // Parallax: mid drifts against near, near travels furthest.
+        tl.fromTo(
+          "#" + cfg.mid,
+          { x: 34 * dir, y: 10 },
+          { x: -26 * dir, y: -8, duration: end - at, ease: "none" },
+          at,
+        );
+        tl.fromTo(
+          "#" + cfg.near,
+          { x: -46 * dir, y: 18 },
+          { x: 40 * dir, y: -14, duration: end - at, ease: "none" },
+          at,
+        );
+
+        // Oversized ghost word behind everything in the midground.
+        tl.fromTo(
+          "#" + cfg.ghost,
+          { opacity: 0, scale: 1.14, x: 40 * dir },
+          { opacity: 0.14, scale: 1, x: 0, duration: 1.3, ease: "power2.out" },
+          at + 0.1,
+        );
+
+        glow(cfg.glow, at + 0.12, end - at - 0.9, 0.34);
+        sparkles(cfg.sparks, at, end - at - 0.3);
+
+        // Hero entrance — rises, scales up, and resolves out of a soft blur.
+        tl.fromTo(
+          "#" + cfg.hero,
+          { opacity: 0, y: 190, scale: 0.74, rotation: -3.2 * dir, filter: "blur(14px)" },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            filter: "blur(0px)",
+            duration: 0.92,
+            ease: "expo.out",
+          },
+          at + 0.14,
+        );
+
+        // Contact shadow lands with the product, then settles wider.
+        tl.fromTo(
+          "#" + cfg.contact,
+          { opacity: 0, scaleX: 0.5, scaleY: 0.6 },
+          { opacity: 0.85, scaleX: 1, scaleY: 1, duration: 0.8, ease: "power3.out" },
+          at + 0.26,
+        );
+
+        // Held hero: bounded breathe with a settle-and-fade tail, so the frame
+        // is visually still by the time the next transition fires.
+        var heroEl = document.getElementById(cfg.hero);
+        var idleStart = at + 1.06;
+        var idleDur = Math.max(0.6, end - idleStart);
+        var ph = { p: 0 };
+        var cycles = Math.max(1, Math.round(idleDur / 2.6));
+        tl.to(
+          ph,
+          {
+            p: Math.PI * 2 * cycles,
+            duration: idleDur,
+            ease: "none",
+            onUpdate: function () {
+              var t = ph.p / (Math.PI * 2 * cycles);
+              var env = t < 0.8 ? 1 : (1 - t) / 0.2;
+              var s = Math.sin(ph.p) * env;
+              heroEl.style.transform = "translateY(" + s * 7 + "px) scale(" + (1 + s * 0.012) + ")";
+            },
+          },
+          idleStart,
+        );
+
+        // Eyebrow pill.
+        tl.fromTo(
+          "#" + cfg.eyebrow,
+          { opacity: 0, scale: 0.7, y: 22 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "power3.out" },
+          at + 0.32,
+        );
+
+        // Product name — waterfall entry. Binary opacity via set, then a whip
+        // to rest; the anchor word travels furthest, later words snap tighter.
+        var t = at + 0.52;
+        cfg.words.forEach(function (id, i) {
+          var travel = i === 0 ? 88 : 62 - i * 6;
+          var dur = i === 0 ? 0.2 : 0.16 - i * 0.012;
+          tl.set("#" + id, { opacity: 1, y: travel }, t);
+          tl.to("#" + id, { y: 0, duration: dur, ease: "power4.out" }, t);
+          t += dur - F; // overlap by one frame — a wave, not a queue
+        });
+
+        // Yellow rule draws under the name.
+        tl.fromTo(
+          "#" + cfg.rule,
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.62, ease: "power3.out" },
+          t + 0.04,
+        );
+
+        // English line last.
+        tl.fromTo(
+          "#" + cfg.sub,
+          { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+          t + 0.16,
+        );
+      }
+
+      /* ── Frame 1: Open ─────────────────────────────────────────────── */
+      glow("open-glow", 0.1, 2.3, 0.3);
+      sparkles(["open-sp0", "open-sp1", "open-sp2", "open-sp3", "open-sp4"], 0, 2.5);
+
+      tl.fromTo(
+        "#open-drip",
+        { opacity: 0, y: -150 },
+        { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" },
+        0.06,
+      );
+      tl.fromTo(
+        "#open-logo",
+        { opacity: 0, scale: 0.62, y: 40 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.78, ease: "power3.out" },
+        0.24,
+      );
+      // Headline whips up word by word (waterfall-entry).
+      tl.set("#open-h1", { opacity: 1, y: 86 }, 0.78);
+      tl.to("#open-h1", { y: 0, duration: 0.2, ease: "power4.out" }, 0.78);
+      tl.set("#open-h2", { opacity: 1, y: 70 }, 0.95);
+      tl.to("#open-h2", { y: 0, duration: 0.17, ease: "power4.out" }, 0.95);
+      tl.fromTo(
+        "#open-hr",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.6, ease: "power3.out" },
+        1.14,
+      );
+      // Logo settles with a bounded breathe through the hold.
+      var openLogo = document.getElementById("open-logo");
+      var openPh = { p: 0 };
+      tl.to(
+        openPh,
+        {
+          p: Math.PI * 2,
+          duration: 1.6,
+          ease: "none",
+          onUpdate: function () {
+            var s = Math.sin(openPh.p);
+            openLogo.style.transform = "translateY(" + s * 5 + "px) scale(" + (1 + s * 0.01) + ")";
+          },
+        },
+        1.05,
+      );
+
+      /* ── Frames 2–5: the products ──────────────────────────────────── */
+      productFrame({
+        at: T1, end: T2 + 0.55, mirrored: false,
+        plate: "p1-plate", mid: "p1-mid", near: "p1-near", ghost: "p1-ghost",
+        glow: "p1-glow", hero: "p1-hero", contact: "p1-contact",
+        eyebrow: "p1-eyebrow", words: ["p1-w0", "p1-w1"], rule: "p1-rule", sub: "p1-sub",
+        sparks: ["p1-sp0", "p1-sp1", "p1-sp2", "p1-sp3"],
+      });
+      productFrame({
+        at: T2, end: T3 + 0.55, mirrored: true,
+        plate: "p2-plate", mid: "p2-mid", near: "p2-near", ghost: "p2-ghost",
+        glow: "p2-glow", hero: "p2-hero", contact: "p2-contact",
+        eyebrow: "p2-eyebrow", words: ["p2-w0"], rule: "p2-rule", sub: "p2-sub",
+        sparks: ["p2-sp0", "p2-sp1", "p2-sp2", "p2-sp3"],
+      });
+      productFrame({
+        at: T3, end: T4 + 0.55, mirrored: false,
+        plate: "p3-plate", mid: "p3-mid", near: "p3-near", ghost: "p3-ghost",
+        glow: "p3-glow", hero: "p3-hero", contact: "p3-contact",
+        eyebrow: "p3-eyebrow", words: ["p3-w0"], rule: "p3-rule", sub: "p3-sub",
+        sparks: ["p3-sp0", "p3-sp1", "p3-sp2", "p3-sp3"],
+      });
+      productFrame({
+        at: T4, end: T5 + 0.55, mirrored: true,
+        plate: "p4-plate", mid: "p4-mid", near: "p4-near", ghost: "p4-ghost",
+        glow: "p4-glow", hero: "p4-hero", contact: "p4-contact",
+        eyebrow: "p4-eyebrow", words: ["p4-w0", "p4-w1", "p4-w2"], rule: "p4-rule", sub: "p4-sub",
+        sparks: ["p4-sp0", "p4-sp1", "p4-sp2", "p4-sp3"],
+      });
+
+      /* ── Frame 6: Close ────────────────────────────────────────────── */
+      glow("close-glow", T5 + 0.1, 1.6, 0.3, false);
+      sparkles(["close-sp0", "close-sp1", "close-sp2", "close-sp3"], T5, CLEAR_AT - T5 - 0.7);
+      tl.fromTo(
+        "#close-drip",
+        { opacity: 0, y: -150 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+        T5 + 0.08,
+      );
+      tl.fromTo(
+        "#close-logo",
+        { opacity: 0, scale: 0.66, y: 36 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.74, ease: "power3.out" },
+        T5 + 0.2,
+      );
+      tl.set("#close-h1", { opacity: 1, y: 84 }, T5 + 0.68);
+      tl.to("#close-h1", { y: 0, duration: 0.2, ease: "power4.out" }, T5 + 0.68);
+      tl.set("#close-h2", { opacity: 1, y: 68 }, T5 + 0.85);
+      tl.to("#close-h2", { y: 0, duration: 0.17, ease: "power4.out" }, T5 + 0.85);
+      tl.fromTo(
+        "#close-hr",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.55, ease: "power3.out" },
+        T5 + 1.04,
+      );
+
+      /* ── Transitions ───────────────────────────────────────────────────
+         Outgoing and incoming move at the SAME instant — the motion is the
+         handoff. Primary is the blur crossfade (product → product); the zoom
+         through is the accent, used only on the two bookends so the open and
+         the close rhyme. */
+      function zoomThrough(oldSel, newSel, T) {
+        tl.to(
+          oldSel,
+          { scale: 2.1, opacity: 0, filter: "blur(9px)", duration: 0.45, ease: "power3.in" },
+          T,
+        );
+        tl.fromTo(
+          newSel,
+          { scale: 0.62, opacity: 0, filter: "blur(9px)" },
+          { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out" },
+          T + 0.12,
+        );
+      }
+      function blurCrossfade(oldSel, newSel, T) {
+        tl.to(
+          oldSel,
+          { filter: "blur(12px)", scale: 1.05, opacity: 0, duration: 0.55, ease: "power2.inOut" },
+          T,
+        );
+        tl.fromTo(
+          newSel,
+          { filter: "blur(12px)", scale: 0.96, opacity: 0 },
+          { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.55, ease: "power2.inOut" },
+          T + 0.08,
+        );
+      }
+
+      zoomThrough("#s-open", "#s-p1", T1);
+      blurCrossfade("#s-p1", "#s-p2", T2);
+      blurCrossfade("#s-p2", "#s-p3", T3);
+      blurCrossfade("#s-p3", "#s-p4", T4);
+      zoomThrough("#s-p4", "#s-close", T5);
+
+      /* ── Loop seam ─────────────────────────────────────────────────────
+         The close clears back to the bare branded field. At t=18 the only
+         thing on screen is the plate, at the same drift offset it had at t=0
+         (the drift completes exactly DRIFT_CYCLES whole cycles), so the last
+         frame matches the first and the file loops without a visible cut.
+         This is a final-scene exit — the one place the exit ban does not
+         apply. */
+      tl.to(
+        ["#close-logo", "#close-h1", "#close-h2", "#close-hr", "#close-drip"],
+        { opacity: 0, y: -34, duration: 0.45, ease: "power2.in" },
+        CLEAR_AT,
+      );
+      tl.to("#close-glow", { opacity: 0, duration: 0.45, ease: "power2.in" }, CLEAR_AT);
+      tl.to(
+        ["#close-sp0", "#close-sp1", "#close-sp2", "#close-sp3"],
+        { opacity: 0, duration: 0.38, ease: "power2.in" },
+        CLEAR_AT + 0.06,
+      );
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

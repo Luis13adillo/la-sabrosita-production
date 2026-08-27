@@ -1,0 +1,40 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "la-sabrosita-site",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "site/scripts/serve.mjs"
+      ],
+      "port": 4321,
+      "autoPort": true
+    },
+    {
+      "name": "la-sabrosita-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4400",
+        "--directory",
+        "site"
+      ],
+      "port": 4400,
+      "autoPort": true
+    },
+    {
+      "name": "la-sabrosita-DEMO",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4500",
+        "--directory",
+        "site/.live"
+      ],
+      "port": 4500,
+      "autoPort": true
+    }
+  ]
+}

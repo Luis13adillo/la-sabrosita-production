@@ -1,0 +1,10 @@
+# HyperFrames render scratch. The renderer writes each job into a transaction
+# folder next to its output and removes it on success; a killed render leaves
+# one behind. Never part of the deliverable.
+renders/work-*/
+renders/.*.hf-transaction-*
+
+# Draft renders. The delivery file is LS_Still-Menu_Motion_v01.mp4, and the
+# repo .gitignore already excludes every *.mp4 — this line is here so the
+# intent is readable from inside the project.
+renders/_draft.mp4

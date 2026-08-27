@@ -194,8 +194,8 @@
       "kind": "products",
       "sceneType": "cluster",
       "nameMode": "single",
-      "displayName": "Helado Chino",
-      "title": "Helado Chino — every flavour",
+      "displayName": "Helado Viral",
+      "title": "Helado Viral — every flavour",
       "category": "HELADOS",
       "categoryRibbon": "Helados & Paletas",
       "showsRibbon": false,
@@ -211,13 +211,13 @@
       "treatmentNote": "the two flavours swing in from opposite wings with mirrored book-open tilts and meet under one name card",
       "products": [
         {
-          "name": "Helado Chino",
+          "name": "Helado Viral",
           "file": "lasabrosita_helado-chino_master_v01_1786749676565.png",
           "depicts": "packaged peach-flavour moulded ice cream in its printed box",
           "cutout": true
         },
         {
-          "name": "Helado Chino",
+          "name": "Helado Viral",
           "file": "lasabrosita_helado-chino_master_v02_1786751663700.png",
           "depicts": "packaged mango-flavour moulded ice cream in its printed box",
           "cutout": true

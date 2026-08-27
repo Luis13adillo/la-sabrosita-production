@@ -36,7 +36,7 @@ state; it is simply not what the video reads any more. What changed in practice:
 ## Grouping rules
 
 **One product, one scene, one name.** Three products have more than one selected
-image — Crazy Shake (4), Helado Chino (2), Gelatina (2). Those are
+image — Crazy Shake (4), Helado Viral (2), Gelatina (2). Those are
 different flavours photographed separately, not different menu items. Each gets
 **one scene** holding **all** of its images under **one name card**. The flavour is
 shown, never named — no flavour word is written anywhere, and none is invented.
@@ -91,7 +91,7 @@ Products per category: **HELADOS** 9, **ANTOJITOS** 11, **POSTRES** 14, **BEBIDA
 | 3 | 7.40–10.80 | mixed ×1 | Choco Banana | 1 pills |
 | 4 | 10.80–14.20 | **cluster** ×4 | 4 images of one product | **Crazy Shake** (one) |
 | 5 | 14.20–17.60 | mixed ×1 | Helado en Cono | 1 pills |
-| 6 | 17.60–21.00 | **cluster** ×2 | 2 images of one product | **Helado Chino** (one) |
+| 6 | 17.60–21.00 | **cluster** ×2 | 2 images of one product | **Helado Viral** (one) |
 | 7 | 21.00–24.40 | mixed ×1 | La Sabrosita | 1 pills |
 | 8 | 24.40–27.80 | **hero** ×1 | `RealPaletas.png` at 1380×920, full artwork | **Paletas** (type column) |
 | 9 | 27.80–31.20 | mixed ×1 | Paletas Locas | 1 pills |
@@ -300,7 +300,7 @@ All **4** selected images of **Crazy Shake**, together, under one name card. No 
 
 *Motion* — blueprint `titlecard-reveal`, treatment `solo-tumble`: the product tumbles in out of depth and settles flat to camera.
 
-## Frame 6 — Helado Chino — every flavour
+## Frame 6 — Helado Viral — every flavour
 
 - status: built
 - src: compositions/frames/06-helados-5.html
@@ -313,13 +313,13 @@ All **4** selected images of **Crazy Shake**, together, under one name card. No 
 - rules: split-tilt-cards, spring-pop-entrance, sine-wave-loop
 - scene_type: cluster
 - name_mode: single
-- name_card: Helado Chino
+- name_card: Helado Viral
 - category: Helados & Paletas
 - treatment: variant-pair
 - shows_ribbon: no
 - products:
-    - Helado Chino · `lasabrosita_helado-chino_master_v01_1786749676565.png` — packaged peach-flavour moulded ice cream in its printed box
-    - Helado Chino · `lasabrosita_helado-chino_master_v02_1786751663700.png` — packaged mango-flavour moulded ice cream in its printed box
+    - Helado Viral · `lasabrosita_helado-chino_master_v01_1786749676565.png` — packaged peach-flavour moulded ice cream in its printed box
+    - Helado Viral · `lasabrosita_helado-chino_master_v02_1786751663700.png` — packaged mango-flavour moulded ice cream in its printed box
 
 **The Paletas hero — a frame built around a single grouped photograph.**
 
