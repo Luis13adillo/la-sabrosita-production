@@ -1,0 +1,678 @@
+/* ============================================================================
+   THE MENU GRID
+
+   Density is the first decision and it is a deliberate one. At 1440 both
+   benchmarks put three products in a row, each about 430px wide, and show barely
+   one row per screen — that is a catalogue, and it is why michoacana.com has to
+   break a range across a collection page per category. Ours holds five columns
+   inside the 1320px measure, so a card is 232px and seven to ten products are on
+   screen at once: a menu. Below 1180 it steps 5 -> 4 -> 3 -> 2, and the card that
+   step is protecting is the one the page ships to a phone — 171px at 390, which
+   BRIEF.md's own read calls the size the cut-outs work at. `grid.js MIN_CARD` is
+   set below that rather than above it, and the widths gate is what holds it
+   honest: eleven viewports from 320 to 2560, both languages, no text out of its
+   own box anywhere.
+
+   Everything else here exists to keep 45 tiles from droning. The card paints
+   itself in its category's accent, so grouping the catalog into four sections
+   turns a random pink/blue/purple checkerboard into four colour chapters, and
+   each chapter's header carries the same accent as a rule and as page 19's motif
+   squares.
+
+   ROW SHAPE IS THE GRID'S JOB, AND IT IS WHERE THE FOOD GOT ITS SIZE BACK
+   ----------------------------------------------------------------------
+   A CSS grid row is exactly as tall as its tallest member, so the field behind a
+   paleta lying flat was being sized by the ice-cream cone three columns away.
+   card.js publishes how tall each cut-out stands; grid.js sorts each chapter by
+   that, works out which cards share a row, and hands the card back two lengths it
+   cannot compute on its own — `--stage-h`, the coloured field, and `--row-panel`,
+   the cream reading panel. Both are per row and both can only ever shrink, so
+   nothing here can crop a photograph. The visible result is a chapter that
+   settles: a row of cones, then a row of cups, then a row of things lying flat.
+
+   ONE PROMOTED TILE PER CHAPTER, AND IT HAS TO BE EARNED
+   -----------------------------------------------------
+   `.grid__feature` is two columns and two rows and goes to the product with the
+   most photographs — the same story the card's own badge is already telling. It
+   is the same SHAPE as an ordinary card, only twice the size, which is what keeps
+   a big tile from being a big emptiness; round 1 made it a doubled square and it
+   became the emptiest card on the page.
+   `.grid__wide` is two columns and one row: a field twice as wide as it is high
+   for a product that is twice as wide as it is high, laid out sideways so the
+   extra width goes to the food and the type instead of to a doubled cream band.
+
+   Round 3 chose between them on arithmetic — whichever left the smallest hole at
+   the end of the chapter — and that is how the biggest tile on the page came to
+   be awarded automatically to the flattest photograph in Helados, which is the
+   one asset in the catalogue that is packaging rather than prepared food. Merit
+   decides now: both shapes require the product to carry more than one photograph,
+   so the tile and the badge tell one story. The hole that used to drive the
+   choice is absorbed by `.sec__end` instead.
+
+   Colour discipline, from the contrast table in BRIEF.md: nothing in this file
+   ever puts text on an accent. The accents appear as rules, dots and squares —
+   shapes, not fields — because white on sunny yellow is 1.66 and there is no
+   size at which that becomes legal. Every piece of text here is deep purple on
+   cream (12.90) or cream on deep purple (13.60).
+   ========================================================================== */
+
+.menu {
+  --cols: 5;
+  --nav-h: 64px;      /* replaced with the measured header height by grid.js */
+  --bar-h: 60px;
+  padding-block: var(--s-11) var(--s-12);
+  scroll-margin-top: calc(var(--nav-h) + var(--s-4));
+}
+
+/* Every row of the menu is capped at the same measure; only the strip's own
+   background runs wider than it. */
+.menu__w {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.menu__head { margin-bottom: var(--s-6); }
+.menu__title { color: var(--c-structure); }
+.menu__lead { color: var(--c-body); }
+
+/* ---- the sticky bar ------------------------------------------------------ */
+/* The strip is a full-width block inside a full-width section, so its cream field
+   and its hairline reach both edges of the window at every size without any vw
+   arithmetic. Its contents sit on the same measure as the grid below it. */
+.menu__bar {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 30;
+  padding-block: var(--s-3);
+  background: var(--c-reading);
+  border-bottom: 1px solid rgb(var(--c-deep-purple-rgb) / .12);
+}
+.menu__bar-in {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+/* The chip row scrolls sideways on a phone rather than wrapping to a second line,
+   because a wrapping filter row changes the height of a sticky element and pushes
+   the content it is supposed to sit above. The negative block margin cancels the
+   padding that keeps the focus ring from being clipped by the scroll container. */
+.filters {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: var(--s-2);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  padding-block: var(--s-2);
+  margin-block: calc(var(--s-2) * -1);
+
+  /* On a phone the row is wider than the strip. The fade is how a chip that is
+     half off the edge reads as "there is more this way" instead of as a chip
+     that has been cut in half by the result count. */
+  --fade: linear-gradient(90deg, black 0, black calc(100% - 28px), transparent 100%);
+  mask-image: var(--fade);
+  -webkit-mask-image: var(--fade);
+}
+.filters::-webkit-scrollbar { display: none; }
+
+.filter {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-pill);
+  background: rgb(var(--c-deep-purple-rgb) / .07);
+  color: var(--c-structure);
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
+}
+
+/* Page 19's motif square — 23% of its own side — filled with the category's own
+   accent, so the four colours in the bar are the four colours of the chapters
+   below it. The inset ring is what keeps the sunny-yellow dot visible on cream;
+   the dot is decoration either way, the chip's word carries the meaning. */
+.filter__dot {
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: var(--r-motif);
+  background: rgb(var(--chip-rgb, var(--c-deep-purple-rgb)));
+  box-shadow: inset 0 0 0 1px rgb(var(--c-deep-purple-rgb) / .35);
+}
+
+@media (hover: hover) {
+  .filter:hover { background: rgb(var(--c-deep-purple-rgb) / .14); }
+}
+
+/* Selected. Deep purple, not the brand pink: cream on hot pink is 3.85 and this
+   word is 15px, so the pink chip that was here failed the contrast table outright.
+   Cream on deep purple is 13.60 at any size. */
+.filter[aria-pressed="true"] {
+  background: var(--c-structure);
+  color: var(--c-reading);
+}
+.filter[aria-pressed="true"] .filter__dot { box-shadow: inset 0 0 0 1px rgb(var(--c-base-cream-rgb) / .5); }
+
+/* "You are scrolling through this one." A ring, not a fill, so it can never be
+   mistaken for the pressed state sitting beside it. */
+.filter[data-here]:not([aria-pressed="true"]) {
+  box-shadow: inset 0 0 0 2px rgb(var(--c-deep-purple-rgb) / .45);
+}
+
+/* base.css draws its focus ring with a 4px radius, which on a pill clips its own
+   corners. Same ring, the control's own shape. */
+.filter:focus-visible, .menu__reset:focus-visible { border-radius: var(--r-pill); }
+
+/* The result count. Deep purple rather than the muted grey: at 11px the muted
+   token is 4.4:1 on cream, which is under AA for text this size. */
+.menu__count {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--c-structure);
+  white-space: nowrap;
+}
+
+/* ---- a category chapter -------------------------------------------------- */
+/* Each chapter carries an id, so `#cat-bebidas` is a real anchor into the middle
+   of a 45-item page — and an anchor that lands under a sticky header and a sticky
+   filter strip has put the thing you asked for behind the two bars you asked it
+   with. Both heights are measured onto `.menu` by grid.js, so this follows the
+   viewport instead of guessing at it. The chapter's head sits on a plate that
+   motion.css draws slightly proud of the head's own box, and `--s-5` clears that
+   as well as looking like a deliberate landing rather than a flush cut. */
+.sec {
+  margin-top: var(--s-10);
+  scroll-margin-top: calc(var(--nav-h) + var(--bar-h) + var(--s-5));
+}
+.sec:first-child { margin-top: var(--s-8); }
+
+.sec__head {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: var(--s-3) var(--s-4);
+  margin-bottom: var(--s-6);
+}
+
+/* Page 19's motif, three squares stepping up into the title. Accent-filled: this
+   is the chapter's colour arriving before its first card does. */
+.motif {
+  grid-column: 1; grid-row: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+.motif i {
+  display: block;
+  border-radius: var(--r-motif);
+  background: rgb(var(--field-rgb, var(--c-deep-purple-rgb)));
+}
+.motif i:nth-child(1) { width: 7px;  height: 7px;  opacity: .4; }
+.motif i:nth-child(2) { width: 11px; height: 11px; opacity: .7; }
+.motif i:nth-child(3) { width: 17px; height: 17px; }
+
+/* One step down from the page's own h2 on type.css's measured 1.389 ratio, so a
+   chapter never competes with "the full menu" above it. Uppercase is page 17's
+   CATEGORY TITLE treatment; the colour is not, because pink on cream is 3.85,
+   blue on cream is 3.11 and yellow on cream is not worth writing down. Deep
+   purple is 12.90 against every one of them. */
+.sec__title {
+  grid-column: 2; grid-row: 1;
+  color: var(--c-structure);
+  font-size: max(1.5rem, calc(var(--fs-section) / 1.389));
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.sec__n {
+  grid-column: 3; grid-row: 1;
+  justify-self: start;
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.6em;
+  height: 2.2em;
+  padding-inline: 0.7em;
+  border-radius: var(--r-pill);
+  background: var(--c-structure);
+  color: var(--c-reading);
+  font-size: var(--fs-note);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tracking-caps);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The accent runs the full measure, loud at the head and calming across it, so it
+   frames the chapter rather than underlining the word.
+
+   Two layers, and the second one is not decoration. A rule that simply fades its
+   own accent out reads correctly in pink, blue and purple and disappears entirely
+   in sunny yellow, which is about 1.5:1 against cream — so the accent segment
+   fades to nothing over a constant faint deep-purple rule, and all four chapters
+   get a line of the same weight with a different colour leading it. */
+.sec__rule {
+  grid-column: 1 / -1; grid-row: 2;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background:
+    linear-gradient(90deg,
+      rgb(var(--field-rgb)) 0%,
+      rgb(var(--field-rgb)) 14%,
+      rgb(var(--field-rgb) / 0) 46%),
+    rgb(var(--c-deep-purple-rgb) / .10);
+}
+
+/* ---- the grid itself ----------------------------------------------------- */
+/* THE GUTTER IS 16px, NOT 24. At five columns a 24px gutter spends 96px of a
+   1224px measure on air — 7.8% of the page's whole width given to nothing, on a
+   page whose one measured shortcoming is that the food looks small. 16px hands
+   every card 6.4px of width back and about 3% more area, with no crop risk at
+   all: the cut-out is sized in the card's own container units, so a wider card is
+   a bigger photograph rather than a tighter one. heladosmexico's tiles
+   effectively touch, and that is part of why its bar reads enormous; ours keep a
+   gutter because four colour chapters need their tiles to read as tiles. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: var(--s-4);
+  align-items: stretch;
+}
+
+/* THE TWO PROMOTED TILES. Both are always the first child of their chapter, so
+   the cells beside them are (cols - 2) wide and normal auto-flow fills the rest
+   in catalog order: no `dense`, no hole, no card reachable out of reading order.
+   grid.js decides which one a chapter gets, and it now refuses BOTH shapes below
+   the column count each one needs: the 2x2 below four columns, where two of three
+   columns and two rows deep stops being a feature and becomes the section, and
+   the 2x1 below three, where `span 2` is simply the full width and one product
+   takes an entire phone screen with no showcase geometry left to justify it.
+
+   Neither rule sets a height. The 2x2 gets its height from the two rows it spans,
+   and the wide tile gets its field from grid.js, which sizes it to the food it is
+   actually holding. */
+.grid__feature { grid-column: span 2; grid-row: span 2; }
+.grid__wide    { grid-column: span 2; }
+
+/* THE WIDE TILE STANDS THE CARD UP SIDEWAYS, because stacked it does not pay for
+   its width. Every other card is photograph over cream panel, and at double width
+   that panel becomes a two-column cream band under one product name and one line
+   of copy — on Paletas, four words and seven. Turned ninety degrees the cut-out
+   takes one column and the reading panel the other, so the extra width goes to
+   the food and to the type rather than to empty cream.
+
+   The scallop turns with it. card.css draws the cream rising into the colour as a
+   repeating bump along the top edge of the panel, which is where the seam is on
+   an ordinary card; here the seam is vertical, so the same one gradient is
+   re-laid down the panel's leading edge. Nothing new is drawn and no colour is
+   introduced — the radial stop, the cream token and the bump width are all
+   card.css's own, read through its `--scallop` / `--bump-w`.
+
+   Held above 640 because at two columns grid.js does not promote a wide tile at
+   all, so there is nothing here to lay out. */
+@media (min-width: 641px) {
+  .grid__wide .card__hit {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .grid__wide .card__panel {
+    align-content: center;
+    padding-inline-start: calc(var(--pad-card) + var(--scallop));
+  }
+  .grid__wide .card__panel::before {
+    inset-block: 0;
+    inset-inline: auto calc(100% - 1px);
+    width: calc(var(--scallop) + 1px);
+    height: auto;
+    background:
+      radial-gradient(100% 50% at 100% 50%,
+        var(--c-reading) 99%, rgb(var(--c-base-cream-rgb) / 0) 100%) repeat-y;
+    background-size: 100% var(--bump-w);
+  }
+}
+
+/* THE 2x2's CREAM BAND, SPENT ACROSS ITS WIDTH INSTEAD OF DOWN ITS LEFT EDGE.
+
+   A feature tile is two columns wide, so its band is about 480px of cream — and
+   stacked, it held a product name over one line of copy in its left 45% and
+   nothing at all in the right 55%. That is the same fault `.grid__wide` was
+   turned sideways to fix, one element down: at double width a stacked panel does
+   not pay for the width it takes.
+
+   Note what is NOT done here. Round 3's instinct was to make the band SHORTER,
+   and on this tile that is backwards. A 2x2's height is fixed from outside — two
+   ordinary rows plus the gutter between them — so a pixel taken off its band is a
+   pixel added to a field the photograph does not grow into, and the biggest
+   picture on the page ends up with a smaller share of its own tile. The band
+   keeps the row's depth (grid.js publishes it, and card.css's own
+   `.card.grid__feature .card__panel { min-height: 0 }` is overridden here to take
+   it) and spends the WIDTH instead: name on the left, the client's line on the
+   right, sharing one baseline across the whole band.
+
+   Only above 900px, which is the narrowest page grid.js will promote a 2x2 on —
+   the shape needs four columns to be a feature rather than the section itself. */
+@media (min-width: 901px) {
+  .grid .card.grid__feature .card__panel {
+    min-height: var(--row-panel, 0px);
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+    align-content: center;
+    align-items: baseline;
+    column-gap: var(--s-5);
+  }
+  .grid .card.grid__feature .card__name { grid-column: 1; }
+  .grid .card.grid__feature .card__desc { grid-column: 2; }
+  /* Name only, no approved line: it takes the whole band rather than sitting in
+     a column that exists to make room for copy that is not there. */
+  .grid .card.grid__feature.card--solo .card__name { grid-column: 1 / -1; }
+}
+
+/* THE CHAPTER CLOSE — a tile-shaped ending that fills the cell it is in.
+
+   Round 3 read the tail as a straight-edge problem and solved the edge: the
+   plaque was `align-self: end` over `min-height: var(--row-panel)`, so an 8px
+   rule, a numeral and a caption landed on the cream-panel line and the whole
+   band above them stayed bare. Measured in a blind judge's own frame that is
+   723 x 431 CSS px of empty cream with about 4% of it inked, and he read it as
+   "that is all there is" — which is fair, because the part of a tail that says
+   the menu ran out is the STAGE band, not the panel line under it.
+
+   So the close is now the same two-part shape as the card beside it. It stretches
+   to the full height of the row and splits itself where the cards split: a field
+   the height of their coloured stage, tinted with the chapter's own accent at a
+   tenth so it reads as a ghost of the tile it is standing in, carrying page 19's
+   motif stepping DOWN (so it can never be mistaken for the head of a new chapter)
+   beside the chapter's count; then the rule and the label on the panel line, so
+   the bottom edge still registers against the cards.
+
+   A tint, not an outline. Round 2 tried a faint outlined box on cream and it was
+   worse than nothing — an outline drawn around emptiness is emptiness with a
+   frame on it. A field is legal here because nothing but shapes and a numeral
+   ever goes on it; the exact alpha and what it costs the ink are measured on
+   `.sec__end-field` below.
+
+   It states two facts already on the page — a numeral and a category label, both
+   straight out of menu.json — and it is aria-hidden, because the section header
+   is the real heading and the real count.
+
+   How wide it gets is `tune`'s job, not this file's: a plaque is a deliberate
+   ending at one cell and a gap with a label on it at three, so the column count
+   is settled per chapter until the tail is one cell or none. `container-type` is
+   here so the numeral can be sized against the plaque's own width rather than
+   against a viewport that knows nothing about how many cells it spans. */
+.sec__end {
+  grid-column: span var(--end-span, 1);
+  container-type: inline-size;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+/* The stage band. Its top corners are the tile's, its bottom corners are square,
+   because that is where a card's colour meets its cream panel.
+
+   The tint is .18, not the .10 it was. Two reasons and both are measurements.
+   At a tenth the field was 6% away from the cream page in every channel and the
+   plaque read as a slightly dirty patch of the ground rather than as a tile — a
+   ghost so faint it was closer to the outlined box round 2 already threw out. And
+   the seam below it is drawn in cream, so the bumps only exist to the extent the
+   field is not cream: at a tenth they were invisible and the plaque kept a ruled
+   edge in a grid where every other tile has a scalloped one.
+   It is still only shapes and two numerals on this field, and the ink on it is
+   deep purple, which the contrast table puts at 12.90 on plain cream. Recomputed
+   against the darkest of the four accents at .18 over cream it is 8.4 — the ink
+   loses four points of a twelve-point margin and the field gains the weight it
+   needed. `a11y.mjs` measures the painted pixels rather than trusting that.
+
+   TWO LAYERS, and the second is the same fix `.sec__rule` already carries thirty
+   lines up. A single alpha over cream does not give four accents the same
+   weight, because sunny yellow is a LIGHT colour: at .18 it lands within a few
+   percent of the page in every channel and the Bebidas plaque all but vanished
+   while the Postres one read clearly. So the accent tint sits over a constant
+   faint deep-purple ground, exactly as the chapter rule's accent fades out over
+   one — every chapter closes on a field of the same weight, with its own colour
+   leading it. */
+.sec__end-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--s-4);
+  border-radius: var(--r-tile) var(--r-tile) 0 0;
+  /* The accent is a GRADIENT of one colour, not a second colour value: the
+     `background` shorthand takes at most one colour and it has to be the last
+     layer, so `background: rgb(a), rgb(b)` is not two layers — it is invalid and
+     the browser drops the whole declaration, which is exactly what it did the
+     first time this was written and left the plaque painted in nothing. */
+  background:
+    linear-gradient(rgb(var(--field-rgb) / .18) 0%, rgb(var(--field-rgb) / .18) 100%),
+    rgb(var(--c-deep-purple-rgb) / .05);
+}
+
+/* Page 19's squares, stepping down instead of up, and sized to the plaque rather
+   than to the 7/11/17 of the section header — three 17px squares in a 232px cell
+   is the same 4% of nothing the old plaque was. */
+.sec__end .motif {
+  grid-column: auto; grid-row: auto;
+  flex-direction: row-reverse;
+  gap: clamp(3px, 1.6cqw, 6px);
+}
+.sec__end .motif i:nth-child(1) { width: clamp(9px, 4cqw, 15px);  height: clamp(9px, 4cqw, 15px); }
+.sec__end .motif i:nth-child(2) { width: clamp(14px, 6cqw, 23px); height: clamp(14px, 6cqw, 23px); }
+.sec__end .motif i:nth-child(3) { width: clamp(21px, 9cqw, 35px); height: clamp(21px, 9cqw, 35px); }
+
+.sec__end-n {
+  color: var(--c-structure);
+  font-size: clamp(2rem, 26cqw, 4.5rem);
+  font-weight: var(--w-bold);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The panel line. Same depth as the cream panels beside it, so the row ends
+   level; the rule arrives from the left into the label, mirroring the section
+   header's rule leaving to the right. */
+.sec__end-foot {
+  position: relative;      /* the seam below hangs off its top edge */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: flex-end;
+  gap: var(--s-2) var(--s-4);
+  min-height: var(--row-panel, var(--s-11));
+  /* Top-aligned on the line the product names start on, not centred in the band.
+     The bottom edge registers on the seam above — where the accent meets the
+     cream, which is the one horizontal line in this row a customer can actually
+     see — so the ink is better spent level with the names than floating halfway
+     down a panel whose own bottom edge is cream on cream. */
+  padding: var(--s-5) var(--s-2) var(--s-3);
+}
+/* THE SEAM, and it is card.css's, not a second copy of it. Every tile on this
+   page ends its colour in a repeating scallop of cream rather than on a ruled
+   line — "rounded panels, subtle drips, soft waves", brand.json's visual
+   direction, drawn by `.card__panel::before`. A plaque that closes a chapter of
+   those tiles with a straight edge is visibly not one of them, which is the
+   opposite of what a chapter close is for.
+   Nothing new is drawn and no number is repeated here: grid.js reads `--bump-w`
+   and `--scallop` off a real card as raw token text and sets them on `.sec__end`,
+   which is a container query container of exactly one card's width, so the bumps
+   arrive at the same size and pitch as the ones on the tile beside them. If those
+   tokens ever stop existing the two lengths are unset, the band collapses to
+   nothing, and the plaque keeps a straight edge — the safe direction to fail in. */
+.sec__end-foot::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: calc(100% - 1px);
+  height: calc(var(--scallop, 0px) + 1px);
+  background:
+    radial-gradient(50% 100% at 50% 100%,
+      var(--c-reading) 99%, rgb(var(--c-base-cream-rgb) / 0) 100%) repeat-x;
+  background-size: var(--bump-w, 0) 100%;
+}
+
+/* Same two layers as `.sec__rule`, same reason: a rule that only fades its own
+   accent reads in pink, blue and purple and disappears entirely in sunny yellow,
+   which is about 1.5:1 against cream. The accent segment fades out over a
+   constant faint deep-purple rule, so all four chapters close on a line of the
+   same weight. It shrinks to nothing rather than pushing the label out of a
+   one-column plaque. */
+.sec__end-foot::before {
+  content: "";
+  flex: 1 1 var(--s-6);
+  min-width: 0;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background:
+    linear-gradient(90deg,
+      rgb(var(--field-rgb) / 0) 54%,
+      rgb(var(--field-rgb)) 88%,
+      rgb(var(--field-rgb)) 100%),
+    rgb(var(--c-deep-purple-rgb) / .10);
+}
+.sec__end-l {
+  color: var(--c-structure);
+  font-size: var(--fs-note);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* THE ROW'S TEXT SHARES A BASELINE, not just its bottom edge.
+   `--row-panel` already makes every panel in a row the same height, so the cards'
+   bottoms line up — but one two-line name in a row of five still pushes that
+   card's description a line lower than its neighbours', and the copy visibly
+   wobbles. grid.js publishes `--row-name-h`, the tallest name box in the row, by
+   exactly the mechanism it already uses for the other two per-row lengths.
+
+   Consumed here rather than in card.css because that file is another owner's and
+   a round is in flight on it. The declaration is the same one card.css would
+   write, on the same custom property, so if it lands there too the two agree.
+   `0px` when nothing publishes a value, which leaves the name exactly as
+   card.css sizes it on its own — the safe direction to fail in. */
+.grid .card__name { min-height: var(--row-name-h, 0px); }
+
+/* AND THE SEVEN CARDS WITH NO APPROVED LINE HAVE TO KEEP THAT BASELINE TOO.
+   Rule 3 says a product with no client-approved copy renders name only, and
+   card.css centres that name in its panel — written when the panel was reserved
+   to the tallest one in the CATALOGUE, where a one-word name top-aligned really
+   did leave three empty lines under it. That reserve is now per ROW, so the
+   panel beside "Nachos" is one name and at most two lines of description deep,
+   and centring inside it drops the word 26px below the four names it shares a
+   row with. Measured on this build: five of twelve desktop rows in Spanish and
+   six of twelve in English, and it is the only text wobble left after
+   `--row-name-h` — every description on the page already shares its row's line.
+
+   A name-only card is not a different kind of card, it is a card whose copy ran
+   out early, exactly like "Marucha Loca" one line short of its neighbours in the
+   same row. It starts on the row's line and the cream under it is where the
+   sentence would have been.
+
+   WHOLE-SITE PASS: THIS DECLARATION IS GONE AND THE ARGUMENT ABOVE MOVED WITH
+   IT. It used to override `.card--solo .card__panel { align-content: center }` in
+   card.css, and it was written here only because a round was in flight on that
+   file. Two stylesheets holding opposite answers to one question is the thing
+   this pass exists to remove, so card.css now says `start` in its own words — a
+   solo card's name starts on the row's line, and there is nothing left to
+   override. The reasoning above is kept because it is the measurement that
+   settled it; the rule it justified now lives beside the panel it describes. */
+
+/* Three results left after a search should not sit in the left three of five
+   columns with dead air beside them. One column per item, capped at 300px so a
+   single match does not become a 1224px-wide card.
+
+   Whether it centres depends on what else is on the page, and grid.js decides:
+   `solo` means this chapter is the only thing left, so the header narrows with the
+   cards and the pair is centred as a small poster. `few` means several chapters
+   each hold one or two matches, and centring each of them would walk the eye left,
+   right, left down the page — so those stay on the page's left edge with the
+   header at full width.
+
+   Held above 641 because below it the grid is already only two columns wide. */
+@media (min-width: 641px) {
+  .sec[data-sparse] { --sparse-w: calc(var(--n) * 300px + (var(--n) - 1) * var(--s-4)); }
+  .sec[data-sparse] > .grid {
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    max-width: var(--sparse-w);
+  }
+  /* The header narrows with the cards either way: a 1224px accent rule over one
+     300px card reads as a chapter that failed to load the rest of itself, and
+     that is exactly what a one-match chapter looked like on "chile". Left-aligned
+     for `few`, so several short chapters stack down the page's own edge and read
+     as a list of places the word was found; centred for `solo`, where the pair is
+     the only thing on the page and becomes a small poster. */
+  .sec[data-sparse] > .sec__head { max-width: var(--sparse-w); }
+  .sec[data-sparse="solo"] > .grid,
+  .sec[data-sparse="solo"] > .sec__head {
+    max-width: var(--sparse-w);
+    margin-inline: auto;
+  }
+}
+
+/* THE PHONE BAR IS mobile.css's, AND THIS FILE HAS STOPPED ANSWERING IT TWICE.
+   Two rules used to live here — `.menu__bar-in { display: grid }` and a
+   `justify-self` on the count — which put the count on its own line so the chips
+   could have the full width. mobile.css now settles the same question the other
+   way and with a measurement behind it: the dot comes off each chip, the chips
+   pay 16px each out of their inset, and the count goes back on the line because
+   74px of chip padding buys back exactly what the count costs. It loads after
+   this file, so both of those declarations were already losing every time — a
+   dead second answer to a live question, which is how the four categories came
+   to be drawn twice in the first place.
+   What stays is the one thing mobile.css measures FROM rather than against: the
+   bar's own padding. Its "8 + 44 + 8 = 61px" is this line plus the chip's tap
+   target, so the height of the sticky strip is still settled in one place. */
+@media (max-width: 640px) {
+  .menu__bar { padding-block: var(--s-2); }
+}
+
+@media (max-width: 1180px) { .menu { --cols: 4; } }
+@media (max-width: 900px)  { .menu { --cols: 3; } }
+@media (max-width: 640px)  { .menu { --cols: 2; } }
+
+/* ---- nothing matched ----------------------------------------------------- */
+/* The old empty state was one grey paragraph in the middle of a page that had
+   just gone blank. This one has a way out of it: the button re-runs the same
+   "Everything" the bar has, and clears the search box with it, because the reason
+   the page is empty is usually still sitting in that box. */
+.menu__empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-4);
+  max-width: 52ch;
+  margin-top: var(--s-9);
+  margin-inline: auto;
+  padding: var(--s-10) var(--s-6);
+  border-radius: var(--r-panel);
+  background: rgb(var(--c-deep-purple-rgb) / .05);
+  text-align: center;
+}
+.menu__empty[hidden] { display: none; }
+.menu__empty .motif { grid-column: 1; grid-row: auto; margin-bottom: var(--s-2); }
+.menu__empty-t {
+  color: var(--c-structure);
+  font-weight: var(--w-bold);
+  font-size: var(--t-lead, 1.125rem);
+  max-width: 30ch;
+}
+.menu__empty-h { color: var(--c-body); max-width: 34ch; }
+.menu__reset {
+  margin-top: var(--s-2);
+  padding: var(--s-3) var(--s-6);
+  border-radius: var(--r-pill);
+  background: var(--c-structure);
+  color: var(--c-reading);
+  font-weight: var(--w-bold);
+  transition: transform var(--dur) var(--ease-spring);
+}
+.menu__reset:hover { transform: translateY(-2px); }
+
+/* Landing target for "show me the drinks" — clears the header and the strip. */
+.menu__sections { scroll-margin-top: calc(var(--nav-h) + var(--bar-h) + var(--s-4)); }

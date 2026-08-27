@@ -1,0 +1,162 @@
+/* ============================================================================
+   VISIT US, and the FOOTER.
+   b.html sections 8 and 9.
+   ========================================================================== */
+
+/* ══ 8. VISIT ═══════════════════════════════════════════════════════════ */
+.visit {
+  position: relative; background: var(--c-accent); overflow: hidden;
+  padding: clamp(58px, 6.4vw, 104px) 0 clamp(52px, 5.6vw, 88px);
+}
+.visit__bulbs {
+  position: absolute; top: 0; left: 0; right: 0; height: clamp(20px, 2.4vw, 34px);
+  display: flex; justify-content: space-between; align-items: center;
+  padding-inline: clamp(10px, 2vw, 26px); z-index: 2;
+}
+.visit__in {
+  position: relative; z-index: 3;
+  max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter);
+  text-align: center;
+}
+.visit__h { margin-top: var(--s-3); font-size: var(--t-h-big); color: var(--c-reading); }
+/* Cream on electric blue is 3.11:1, which is legal for large text. 19px bold
+   clears the 18.66px threshold; anything smaller on this field gets its own
+   cream area instead, which is what the three fact panels below are. */
+.visit__place {
+  margin-top: var(--s-4);
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(1.1875rem, 1.7vw, 1.625rem); letter-spacing: var(--tr-caps);
+  color: var(--c-reading); text-transform: uppercase;
+}
+
+/* THE THREE FACTS WE DO NOT HAVE.
+   The street address, the opening hours and the phone number are in no file in
+   this project. Each panel prints the interface's own missing-value token and a
+   line saying so. A shop's real website carrying an invented address is worse
+   than one with a visible hole in it, and a visible hole is the only kind that
+   gets filled. */
+.facts {
+  margin-top: clamp(28px, 3.6vw, 52px);
+  /* Four facts now, not three — seating joined address, hours and phone once the
+     client confirmed there is seating inside and outside. `auto-fit` with a
+     minimum rather than a hard count, so the row reflows to 2x2 on a tablet and
+     one column on a phone without a breakpoint per arrangement. */
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: clamp(12px, 1.5vw, 20px);
+  max-width: 1140px; margin-inline: auto;
+}
+.fact {
+  background: var(--c-reading); border-radius: var(--r-tile-lg);
+  padding: clamp(20px, 2.2vw, 30px); text-align: left;
+  box-shadow: 0 4px 0 rgb(var(--c-deep-purple-rgb) / .22);
+}
+.fact__l {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  letter-spacing: var(--tr-wider); text-transform: uppercase;
+  font-size: var(--fs-chip); color: rgb(var(--c-deep-purple-rgb) / .82);
+}
+/* Hot pink on cream is 3.85:1 — large text only — so this is never below 19px
+   bold, and it never carries a sentence. */
+.fact__v {
+  margin-top: 10px;
+  font-family: var(--font-display); font-weight: var(--w-display); text-transform: uppercase;
+  font-size: clamp(1.1875rem, 1.9vw, 1.75rem); color: var(--c-brand); letter-spacing: var(--tr-caps);
+}
+.fact__n { margin-top: var(--s-2); font-size: var(--fs-tag); line-height: 1.45; color: rgb(var(--c-deep-purple-rgb) / .82); }
+
+/* THE ADDRESS AND THE PHONE ARE LINKS NOW — tap to open Maps, tap to call. Which
+   makes them tap targets, and a 23px line of type is not one: smoke.mjs caught
+   them at 23px on a phone against a 40px floor. `min-height` plus a flex centre
+   rather than padding, so the panel above them does not grow on desktop where
+   the type is already 28px tall. */
+.fact__link {
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: 44px; color: inherit; text-decoration: none;
+  text-decoration-color: rgb(var(--c-hot-pink-rgb) / .4);
+}
+@media (hover: hover) { .fact__link:hover { text-decoration: underline; text-underline-offset: 4px; } }
+/* Seven days grouped into four rows by build-site.mjs. A definition list because
+   that is what it is — a day, and what happens on it. */
+.hours { margin-top: 10px; display: grid; gap: 6px; }
+.hrow {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3);
+  font-size: var(--fs-tag); color: var(--c-structure);
+}
+.hrow dt { font-weight: var(--w-bold); }
+/* Deep purple, NOT hot pink. Pink on cream is 3.85:1 — the comment fifteen lines
+   up says so, and these times are 13px, which is nowhere near the size that
+   buys. The times are the thing you are actually reading here, so they get the
+   colour that can carry small text. */
+.hrow dd {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  color: var(--c-structure); white-space: nowrap;
+}
+.visit__note {
+  margin-top: clamp(22px, 2.6vw, 34px);
+  font-size: clamp(0.8125rem, 1.1vw, 0.9375rem);
+  color: var(--c-structure); background: var(--c-highlight);
+  display: inline-flex; align-items: center; gap: var(--s-3);
+  padding: 12px 20px; border-radius: var(--r-pill); font-weight: var(--w-display);
+}
+@media (max-width: 760px) { .facts { grid-template-columns: 1fr; } }
+
+/* ══ 9. THE FOOTER ══════════════════════════════════════════════════════ */
+.foot {
+  position: relative;
+  background: var(--c-structure); color: var(--c-reading);
+  padding: 0 0 34px;
+}
+.foot .dripstrip { margin-bottom: clamp(48px, 5.6vw, 92px); }
+.foot__in {
+  max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter);
+  display: grid; grid-template-columns: auto 1fr; gap: clamp(28px, 4vw, 64px); align-items: start;
+}
+/* Below brand.json's 250px digital minimum, so it takes the guidelines' own
+   escape hatch: the complete mark, unmodified, on a clean cream area. The
+   padding is larger than the radius so all four corners of the mark's box land
+   on cream — which is what scripts/brand-check.mjs samples. */
+.foot__mark {
+  background: var(--c-reading); border-radius: var(--r-panel-lg);
+  padding: 22px 26px; display: inline-flex;
+}
+.foot__mark img { width: clamp(150px, 14vw, 190px); }
+
+.foot__navs { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.4vw, 40px); }
+.foot__t {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  letter-spacing: var(--tr-wider); text-transform: uppercase;
+  font-size: var(--fs-chip); color: var(--c-highlight); margin-bottom: var(--s-3);
+}
+.foot__col ul { list-style: none; display: flex; flex-direction: column; }
+.foot__col a {
+  text-decoration: none; font-size: 0.9375rem; color: rgb(var(--c-base-cream-rgb) / .88);
+  /* 44px in BOTH directions. "Inicio" is a six-letter word and its box measured
+     38px wide on a phone, which is a target smaller than a fingertip even though
+     it was tall enough. The extra width is invisible — the text stays flush left
+     inside it. */
+  min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; gap: var(--s-2);
+}
+.foot__col a:hover { color: var(--c-highlight); }
+/* 0.62 alpha, not 0.5: cream at half strength on deep purple measures 4.32:1
+   and this numeral is 13px, which needs 4.5. */
+.foot__c { color: rgb(var(--c-base-cream-rgb) / .62); font-size: var(--fs-tag); }
+.foot__where {
+  list-style: none; display: flex; flex-direction: column; gap: var(--s-2);
+  font-size: 0.9375rem; color: rgb(var(--c-base-cream-rgb) / .88);
+}
+.foot__where b { font-family: var(--font-display); font-weight: var(--w-display); color: var(--c-highlight); }
+
+.foot__end {
+  max-width: var(--maxw); margin: clamp(34px, 4vw, 58px) auto 0; padding-inline: var(--gutter);
+  border-top: 1px solid rgb(var(--c-base-cream-rgb) / .18); padding-top: 22px;
+  display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: space-between;
+  font-size: var(--fs-tag); color: rgb(var(--c-base-cream-rgb) / .78);
+}
+@media (max-width: 860px) {
+  .foot__in { grid-template-columns: 1fr; }
+  .foot__navs { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 460px) { .foot__navs { grid-template-columns: 1fr; } }
+/* The footer's address and phone are links now — tap to open Maps, tap to call. */
+.foot__fact { color: inherit; text-decoration: none; }
+@media (hover: hover) { .foot__fact:hover { text-decoration: underline; text-underline-offset: 3px; } }

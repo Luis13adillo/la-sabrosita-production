@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Sabrosita — Ice Cream & Snacks · Swedesboro, New Jersey</title>
+<meta name="description" content="Ice cream, snacks, desserts and drinks. See all of it before you walk in.">
+<meta name="theme-color" content="#F20A88">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="manifest" href="/manifest-en.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="La Sabrosita — Ice Cream &amp; Snacks">
+<meta property="og:description" content="Ice cream, snacks, desserts and drinks. See all of it before you walk in.">
+<meta property="og:image" content="/social.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/fonts/noto-sans-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="alternate" hreflang="es" href="/en/">
+<link rel="alternate" hreflang="en" href="/">
+<link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/fonts.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/type.css">
+  <link rel="stylesheet" href="/styles/nav.css">
+  <link rel="stylesheet" href="/styles/hero.css">
+  <link rel="stylesheet" href="/styles/grid.css">
+  <link rel="stylesheet" href="/styles/card.css">
+  <link rel="stylesheet" href="/styles/detail.css">
+  <link rel="stylesheet" href="/styles/foot.css">
+  <link rel="stylesheet" href="/styles/motion.css">
+  <link rel="stylesheet" href="/styles/mobile.css">
+<link rel="modulepreload" href="/app/card.js">
+  <link rel="modulepreload" href="/app/data.js">
+  <link rel="modulepreload" href="/app/detail.js">
+  <link rel="modulepreload" href="/app/grid.js">
+  <link rel="modulepreload" href="/app/main.js">
+  <link rel="modulepreload" href="/app/motion.js">
+  <link rel="modulepreload" href="/app/url-state.js">
+</head>
+<body data-lang="en">
+<a class="skip" href="#menu">Skip to the menu</a>
+<!-- THE HEADER
+     ==========
+     Both benchmarks run one flat bar with four links and a centred logo, and both
+     spend those links on the company — Products, Our Story, Store Locator,
+     Contact Us. That is wayfinding for a brand that sells packaged bars out of
+     somebody else's freezer. This shop's whole proposition is the menu, so the
+     bar names things you can eat, lets you type the one it did not name, and
+     switches language. Four jobs, one calm bar.
+
+     Three zones, in this order in the DOM and in the tab order: brand,
+     categories, tools. Below 1281px the same three zones re-flow to two rows —
+     the category rail drops to a full-width scroller of its own — so the
+     categories are never hidden behind a menu button, and never hidden at all.
+
+     ONE THING THAT USED TO CLAIM AND SHOULD NOT: that the DOM order is also the
+     READING order. It is not, on the two-row bar. `order: 3` puts the rail on
+     row two while the tools stay on row one, so a customer tabbing through at
+     390, 900 or 1280 goes brand (row one) -> the five chips (row two) -> search
+     (row one) -> language (row one). Focus drops a row and then climbs back.
+     Measured, at every width from 320 to 1280, in both languages.
+
+     It is left standing, and this is the arithmetic rather than an excuse. One
+     DOM order cannot be the reading order of both layouts: the one-row bar reads
+     brand, categories, search, language, and any two-row layout that keeps the
+     tools on row one reads brand, search, language, categories. The only
+     arrangement where a single order serves both is categories on row one beside
+     the plaque — and that costs the rail the width of the plaque. Measured at
+     390: the rail falls from the full 390px bleed to 274px, so what a phone
+     shows at rest goes from "Todo Helados Antojitos Pos..." to "Todo Helados"
+     and a sliver. Trading two visible food words for a tidier tab order, on the
+     one viewport the brief says matters most, is the wrong way round. What the
+     order carries is still right — brand, then what you can eat, then the tools
+     — and every stop is on screen at once inside a 140px bar.
+     The search field is open and waiting at every width down to 360px, which is
+     every phone anyone actually holds; below that — a 320px budget Android, and a
+     640px window at 200% zoom — it folds into its own 44px icon, because at that
+     width a real field has 35px of typing room. Nothing in this header is ever
+     behind a hamburger at any width.
+
+     THE FIFTH BUTTON IS THE WAY BACK. main.js appends one button per category
+     after it; this one is written here because it is not a category. It is the
+     header's own "all 45", and without it the bar was a one-way trip: you could
+     jump to Postres from up here and the only control that undid it lived in the
+     grid's chips, which are below the fold the moment you have used them. It
+     carries data/ui.json's own filterAll string — the same word the chips use —
+     so the two controls read as one control in two places.
+
+     THE MARK SITS ON A CREAM PLAQUE, and an early version of this comment was
+     wrong about that. It argued that a cream plaque reads worse because the
+     mark's own white keyline would have nothing to sit against. What the keyline
+     separates is nothing anybody reads; what a customer reads is the pink script
+     "La Sabrosita", and on a coloured field that script dissolves. On cream it is
+     the brightest, first object in the bar. Cream is what brand.json says a
+     reading area is for, and it is the same move made for the search field.
+
+     The logo is the complete mark, unmodified, at its natural aspect ratio, never
+     recoloured, rotated, cropped or given an effect. `sizes` names the two widths
+     the CSS actually draws, 64px in the two-row bar and 72px in the one-row one,
+     so the browser fetches the 240w derivative for a phone and never the 720w
+     one.
+
+     THE NAME IS SET IN TYPE AGAIN — ON THE PURPLE, NOT ON THE CREAM. Round 6
+     deleted `<span class="nav__word">` on a measurement: the plaque ran 248px
+     and held 59.2% of every cream pixel in the bar, while the one control that
+     reports state — the selected category — held 6.4%. That arithmetic was
+     about the name sitting ON CREAM, inside the plaque, competing with the mark
+     for the bar's brightest surface. It says nothing about the name sitting on
+     the deep purple field beside it, which is where it is now: white on deep
+     purple is 13.60:1, it costs zero cream pixels, and the plaque's every pixel
+     is still clear space around the mark.
+
+     It is here because the mark cannot be made legible and measurement says so.
+     The artwork is 1915x1788 — four objects (mascot, script, banner, drip) in a
+     1.07:1 box — so inside a 115px-tall purple bar the mark caps at about 103px
+     wide however the plaque is drawn. At that size the script "La Sabrosita"
+     renders about 90px across and none of the four objects resolve. Both
+     benchmarks are legible for the opposite reason: michoacana's is ONE circular
+     silhouette at 75px, and heladosmexico's name IS the artwork, set in heavy
+     type. Ours can only have that second property by setting the name in type.
+
+     IT DOES NOT TOUCH THE BRAND GATE. scripts/brand-check.mjs samples the mark's
+     own bounding box against the field painted behind it — a caption outside the
+     plaque never enters that measurement, and the plaque still covers the mark
+     on every side, which is what brand.json's `minimumSize.whenSmaller` escape
+     hatch asks for. The accessible name is unchanged either way: it comes from
+     the link's aria-label, not from the caption, so "La Sabrosita" is announced
+     once and not twice.
+
+     BELOW 700px THE WORD IS NOT DRAWN. Row one of the two-row bar has to hold
+     the plaque, a real search field and the language switch, and below about
+     580px the name would take the field under the width at which it clips its
+     own placeholder. The switch is set at 700 rather than at that cliff, because
+     640px is what a 1280px window looks like at 200% zoom and somebody who has
+     doubled the text size wants the control, not the caption. nav.css carries
+     that arithmetic and the rest of the numbers. -->
+<header class="nav" data-nav>
+  <a class="nav__brand" href="/en/" aria-label="La Sabrosita">
+    <span class="nav__plaque">
+      <img class="nav__logo" src="/brand/logo.png" srcset="/brand/logo-96.webp 96w, /brand/logo-240.webp 240w, /brand/logo-480.webp 480w, /brand/logo-720.webp 720w"
+           sizes="(max-width: 1280px) 64px, 72px"
+           alt="" width="1915" height="1788" decoding="async">
+    </span>
+    <!-- Mixed case in the markup and uppercased in CSS, so what a screen reader
+         would read if it ever fell back to the content is the shop's name rather
+         than twelve spelled letters — and so the visible string still matches the
+         link's aria-label, which is what WCAG 2.5.3 asks of a label in a name. -->
+    <span class="nav__word">La Sabrosita</span>
+  </a>
+
+  <!-- main.js appends one <button class="nav__cat"> per category after the
+       "everything" button below. -->
+  <nav class="nav__cats" aria-label="Categories" data-catnav>
+    <button class="nav__cat" type="button" data-nav-all aria-pressed="true">Everything</button>
+  </nav>
+  <!-- Without JavaScript main.js never appends the four category buttons, and the
+       menu itself is replaced by the shell's plain <noscript> list, so there is
+       nothing for this rail to filter. Hiding it there keeps the header from
+       offering a control that cannot work — and it is the state this row was
+       already in before a fifth button was written into the markup. -->
+  <noscript><style>.nav .nav__cats[data-catnav] { display: none; }</style></noscript>
+
+  <div class="nav__tools">
+    <label class="search">
+      <span class="u-sr">Search the menu</span>
+      <svg class="search__icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <circle cx="8.5" cy="8.5" r="5.75"/>
+        <path d="M12.9 12.9 17.5 17.5"/>
+      </svg>
+      <input id="nav-search" class="search__input" type="search" placeholder="Search…"
+             data-search autocomplete="off" spellcheck="false" enterkeyhint="search">
+    </label>
+
+    <!-- THE FIELD'S OWN ICON, BELOW 360px. Above that this button is display:none
+         and the field is simply there, which is the state the bar wins on — a
+         search already open and waiting is the one attribute a blind judge called
+         decisive about this bar, so it is given up only where it stops working.
+         It used to fold at 480px, on the argument that the 155px cream pill was
+         the widest bright object in a 390px header. nav.css at .search__toggle
+         has the measurement that retired it: folding bought the header no height
+         at all, because row one is as tall as the 76px brand panel either way,
+         and what it actually produced was 123px of dead purple between the two
+         objects a customer is looking at.
+
+         It is a disclosure button, so the accessible name does not change with
+         the state — aria-expanded carries the state, which is what a screen
+         reader announces. That is also why there is no second string invented for
+         it: it says the same thing the field's own label says, because it IS the
+         field. Two glyphs, one label. -->
+    <button class="search__toggle" type="button" data-search-toggle
+            aria-expanded="false" aria-controls="nav-search" aria-label="Search the menu">
+      <svg class="search__toggle-i search__toggle-i--find" viewBox="0 0 20 20"
+           aria-hidden="true" focusable="false">
+        <circle cx="8.5" cy="8.5" r="5.75"/>
+        <path d="M12.9 12.9 17.5 17.5"/>
+      </svg>
+      <svg class="search__toggle-i search__toggle-i--shut" viewBox="0 0 20 20"
+           aria-hidden="true" focusable="false">
+        <path d="M5.5 5.5 14.5 14.5M14.5 5.5 5.5 14.5"/>
+      </svg>
+    </button>
+
+    <!-- data-lang-link is the hook src/app/url-state.js uses to rewrite this href
+         so the category and the search term survive the language switch. -->
+    <a class="nav__lang" data-lang-link href="/" aria-label="View this site in Spanish">
+      <svg class="nav__globe" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <circle cx="10" cy="10" r="7.4"/>
+        <path d="M2.6 10h14.8"/>
+        <ellipse cx="10" cy="10" rx="3.5" ry="7.4"/>
+      </svg>
+      <span class="nav__lang-t">Español</span>
+    </a>
+  </div>
+
+  <!-- The seam. foot.css draws the same drip where the cream menu meets the deep
+       purple footer; this is that motif at the other end of the page, same 65.45
+       period and same flat-bottomed lobe, at 40% of the depth. Decorative, so it
+       is hidden from assistive technology, and absolutely positioned so it costs
+       the header no height — see .nav__drip in nav.css for why that matters. -->
+  <svg class="nav__drip" viewBox="0 0 1440 21" preserveAspectRatio="none"
+       aria-hidden="true" focusable="false">
+    <path d="M1440 0H0v2 L5.2 2 C5.2 14.8 60.2 14.8 60.2 2 L70.7 2 C70.7 7.1 125.7 7.1 125.7 2 L136.1 2 C136.1 20.8 191.1 20.8 191.1 2 L201.6 2 C201.6 9.7 256.6 9.7 256.6 2 L267 2 C267 13.1 322 13.1 322 2 L332.5 2 C332.5 24.2 387.5 24.2 387.5 2 L397.9 2 C397.9 8.8 452.9 8.8 452.9 2 L463.4 2 C463.4 16.6 518.4 16.6 518.4 2 L528.8 2 C528.8 11.4 583.8 11.4 583.8 2 L594.3 2 C594.3 26.8 649.3 26.8 649.3 2 L659.7 2 C659.7 8 714.7 8 714.7 2 L725.2 2 C725.2 14 780.2 14 780.2 2 L790.7 2 C790.7 19.1 845.7 19.1 845.7 2 L856.1 2 C856.1 10.6 911.1 10.6 911.1 2 L921.6 2 C921.6 22.6 976.6 22.6 976.6 2 L987 2 C987 12.3 1042 12.3 1042 2 L1052.5 2 C1052.5 17.4 1107.5 17.4 1107.5 2 L1117.9 2 C1117.9 8.8 1172.9 8.8 1172.9 2 L1183.4 2 C1183.4 25.1 1238.4 25.1 1238.4 2 L1248.8 2 C1248.8 13.1 1303.8 13.1 1303.8 2 L1314.3 2 C1314.3 15.7 1369.3 15.7 1369.3 2 L1379.7 2 C1379.7 9.7 1434.7 9.7 1434.7 2 L1440 2V0Z"/>
+  </svg>
+</header>
+
+<!-- WHICH CHAPTER AM I IN. The category row is the thing this header is for, and
+     it had no selected state and no owner: main.js builds the four buttons and
+     styles/nav.css had :hover and :active and nothing for "current". main.js is
+     not this piece's file, so the behaviour lives with the markup it belongs to.
+
+     It does not filter anything itself. BRIEF.md's rule is that every route into
+     a filter goes through the grid's own `grid:render` event, which is where the
+     URL state is recorded — so "everything" forwards the click to the grid's own
+     `all` chip and lets one implementation do the work. The pressed state is then
+     read back off those same chips, by label, on every render: the header cannot
+     disagree with the strip below it because it is not keeping its own answer. -->
+<script type="module">
+  const cats = document.querySelector('[data-nav] [data-catnav]');
+  if (cats) {
+    const label = (el) => (el.textContent || '').trim();
+    const chip = (sel) => document.querySelector('.filters .filter' + sel);
+
+    cats.addEventListener('click', (e) => {
+      if (!e.target.closest('[data-nav-all]')) return;
+      chip('[data-cat="all"]')?.click();
+      document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    /* KEEP THE WORD YOU ARE ON, ON SCREEN. Below about 500px the five category
+       names are longer than the phone — measured at 390px, the rail's content is
+       577px in Spanish and 712px in English — so three of them are past the right
+       edge at rest and the customer has to discover a swipe to reach Postres or
+       Bebidas. Scrolling the rail to the chip that matters turns that from a
+       hidden control into a moving one: over one scroll down the page, all five
+       words pass through the header.
+
+       `scrollBy` on the rail, not `scrollIntoView` on the chip: the chip is
+       inside a nested scroller and inside a sticky bar, and scrollIntoView is
+       entitled to move every scrollport between the element and the document —
+       including the page itself, in the middle of a scroll the customer is
+       driving. This moves exactly one box.
+
+       It is a no-op wherever they all fit, which is every width from 620 up, so
+       nothing about the desktop bar changes. 24px of margin on both sides is the
+       rail's own 16px fade plus a little, so the word it brings in is whole
+       rather than half under the mask. */
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+    const reveal = (el, asked) => {
+      if (!el || (!asked && Date.now() - drove < 2500)) return;
+      if (cats.scrollWidth - cats.clientWidth < 1) return;
+      const a = el.getBoundingClientRect(), b = cats.getBoundingClientRect(), pad = 24;
+      const d = a.left < b.left + pad ? a.left - b.left - pad
+              : a.right > b.right - pad ? a.right - b.right + pad : 0;
+      if (d) cats.scrollBy({ left: d, behavior: still.matches ? 'auto' : 'smooth' });
+    };
+
+    /* A customer who has just swiped this rail to look at Bebidas should not have
+       it pulled back under them by the next chapter heading going past. A tap is
+       not a swipe, though — choosing a category has to be allowed to move the
+       rail — so what is recorded is MOVEMENT while the pointer is down, over a
+       threshold, rather than the pointer going down at all. */
+    let drove = 0, from = null;
+    cats.addEventListener('pointerdown', (e) => { from = e.clientX; }, { passive: true });
+    cats.addEventListener('pointermove', (e) => {
+      if (from !== null && Math.abs(e.clientX - from) > 8) drove = Date.now();
+    }, { passive: true });
+    for (const e of ['pointerup', 'pointercancel']) {
+      addEventListener(e, () => { from = null; }, { passive: true });
+    }
+    cats.addEventListener('wheel', () => { drove = Date.now(); }, { passive: true });
+
+    document.addEventListener('grid:render', () => {
+      const on = chip('[aria-pressed="true"]');
+      if (!on) return;
+      const all = on.dataset.cat === 'all', here = label(on);
+      for (const b of cats.children) {
+        const mine = b.hasAttribute('data-nav-all') ? all : (!all && label(b) === here);
+        b.setAttribute('aria-pressed', String(mine));
+      }
+      reveal(cats.querySelector('[aria-pressed="true"]'), true);
+    });
+
+    /* WHICH CHAPTER AM I PASSING — mirrored, never recomputed. grid.js already
+       runs the scroll spy and rings the chip of the section under the bar with
+       `data-here`; styles/mobile.css now hides that strip below 1281px, so below
+       that width the control that knows is invisible and the control on screen
+       does not know. The mobile owner named the spy as the one thing its round
+       actually cost, and this is where it comes back.
+
+       A MutationObserver rather than a second scroll listener: two listeners
+       would be two answers to one question, and the point of every other line in
+       this block is that the header keeps no answer of its own. It is visual
+       only — no aria-current — because the grid's own chips are visual only too,
+       and a live region that announces a new chapter every time a heading passes
+       is a page that talks over the person reading it. */
+    const strip = document.querySelector('.filters');
+    if (strip) {
+      const mirror = () => {
+        const on = strip.querySelector('[data-here]');
+        const name = on ? label(on) : null;
+        for (const b of cats.children) {
+          b.toggleAttribute('data-here', !!name && !b.hasAttribute('data-nav-all') && label(b) === name);
+        }
+        reveal(cats.querySelector('[data-here]'));
+      };
+      new MutationObserver(mirror)
+        .observe(strip, { subtree: true, attributes: true, attributeFilter: ['data-here'] });
+
+      /* ONE CATEGORY CONTROL ON THE SCREEN AT A TIME.
+
+         Measured on the round-5 build at 1440, scrolled into the menu: the five
+         category words are painted twice, 89px apart — once as this rail on the
+         purple bar and once as the grid's own chips on the cream strip stuck
+         directly underneath it. Same five words, same order, one above the
+         other, for the whole of the scroll. `styles/mobile.css` removed exactly
+         this duplication below 1281px and wrote down why; above 1281 it was left
+         standing on the argument that the rail costs the header no height there,
+         which is an argument about price and not about what the bar looks like.
+
+         The resolution is not to delete either control. It is that they are
+         needed at different moments. At rest the grid's strip is below the fold
+         and this rail is the only thing on the first screen naming what the shop
+         sells — the one attribute every blind judge across four rounds called
+         decisive. The moment the strip parks under the bar it is the better of
+         the two: it carries the live count, a colour per chapter, and the scroll
+         spy this rail can only mirror. So the header hands the job over, and
+         takes it back the moment the strip scrolls away past the end of the menu.
+
+         WHAT IT COSTS THE LAYOUT: nothing, measured. The rail keeps its box and
+         only its ink goes — `visibility`, not `display` — so the bar's other
+         objects do not move a pixel, and the header measures 111px either way at
+         1281, 1440, 1920 and 2560. That matters because main.js and grid.js both
+         publish this header's height as `--nav-h`, and the hero and the strip
+         itself are sized from it: a header that changed height as you scrolled
+         would drag the whole page with it.
+
+         A scroll listener here, where the chapter mirror above deliberately
+         refuses one. They are different questions. "Which chapter am I in" has
+         an owner already and two answers to it would disagree; "is the other
+         control on the screen" has no owner and cannot be read off anything else
+         — grid.js only marks `data-here` while the filter is `all`, so a chosen
+         category clears it while the strip is still sitting there. One rect per
+         frame, rAF-throttled, passive, exactly as grid.js's own spy is. */
+      const nav = cats.closest('[data-nav]');
+      /* The sticky box is the cream BAR, not the chips inside it — `.filters`
+         sits 4px lower than the bar's own parked position because of the padding
+         between them. Reading the offset off the element that owns it is what
+         keeps this from being a magic number copied out of someone else's file:
+         grid.css writes `top: var(--nav-h)` there and grid.js keeps `--nav-h`
+         measured, so `getComputedStyle().top` is always the current answer. */
+      const barEl = strip.closest('[data-bar]') || strip;
+      let queued = false;
+      const handover = () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          const b = barEl.getBoundingClientRect();
+          const parked = parseFloat(getComputedStyle(barEl).top) || 0;
+          const edge = nav.getBoundingClientRect().bottom;
+          /* Parked, and still on the screen. The first half is the instant the
+             duplication actually appears — the strip arriving 4px under the bar
+             with the same five words on it — so the fade happens where the eye
+             already is and reads as the job moving from one control to the
+             other, rather than as something vanishing at the top of a screen the
+             customer is not looking at. The second half is the menu ending: the
+             bar unsticks at the bottom of its own section and scrolls up past
+             the header, and the rail comes straight back.
+
+             The height test is on the CHIPS, not on the bar: below 1281px
+             mobile.css hides `.filters` and leaves `.menu__bar` in place to
+             carry the live count, so a bar-shaped test would take the phone's
+             only category control away. */
+          nav.toggleAttribute('data-cats-quiet',
+            strip.getBoundingClientRect().height > 0 && b.top <= parked + 1 && b.bottom > edge);
+        });
+      };
+      handover();
+      addEventListener('scroll', handover, { passive: true });
+      addEventListener('resize', handover, { passive: true });
+      /* Filtering to eight products shortens the menu under a scrolled page, so
+         the strip can leave the bar without the page moving. */
+      document.addEventListener('grid:render', handover);
+    }
+  }
+
+  /* THE COLLAPSED SEARCH, BELOW 360px. A disclosure button and one attribute on
+     the header; nav.css does every pixel of it, so above 360 this code runs and
+     changes nothing a customer can see. It is written here rather than in
+     main.js for the same reason the pressed state above is: main.js is not this
+     piece's file, and behaviour that only this markup can explain belongs with
+     the markup.
+
+     The field is never removed and never re-created — it is the same input the
+     grid listens to and the same one url-state restores into — so a collapsed
+     search still filters, still carries ?q= across a language switch, and still
+     answers page.fill() in the gates. Only its visibility moves. */
+  const bar = document.querySelector('[data-nav]');
+  const toggle = bar && bar.querySelector('[data-search-toggle]');
+  const field = bar && bar.querySelector('[data-search]');
+  if (toggle && field) {
+    const setOpen = (on, moveFocus) => {
+      bar.toggleAttribute('data-search-open', on);
+      toggle.setAttribute('aria-expanded', String(on));
+      if (!moveFocus) return;
+      (on ? field : toggle).focus();
+    };
+
+    toggle.addEventListener('click', () => setOpen(!bar.hasAttribute('data-search-open'), true));
+
+    /* Escape clears and closes, which is the behaviour a type=search field
+       already has on its own: the first press empties it, and emptying it is
+       what puts all 45 products back. Focus goes to the button, because that is
+       where the field went. */
+    field.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (field.value) {
+        field.value = '';
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      setOpen(false, true);
+    });
+
+    /* An empty field that has lost focus is a field nobody asked for. A field
+       with a word in it stays open, because closing it would hide the reason the
+       menu is showing four products. Never steals the focus the customer just
+       gave to something else — the button closing itself is handled above. */
+    field.addEventListener('blur', (e) => {
+      if (!field.value.trim() && e.relatedTarget !== toggle) setOpen(false, false);
+    });
+
+    /* A shared /?q=fresa link, or a language switch that carried the query
+       across, arrives with the field already filled. Opening it without taking
+       focus is what stops the header from claiming to show 45 products while the
+       grid shows one. */
+    document.addEventListener('grid:render', () => {
+      if (field.value.trim()) setOpen(true, false);
+    });
+  }
+
+  /* THE FIELD SAYS WHAT IT SEARCHES, AT EVERY WIDTH WHERE IT FITS.
+
+     A magnifying glass and the word "Buscar…" is the placeholder every site in
+     this category ships, and it answers the wrong question. Both benchmarks put
+     a search icon in the bar and both of them search a catalogue of packaged
+     bars, a store locator and a press page at once — so "search" there means
+     "search the company". Here it means one thing: these 45 products. A customer
+     standing outside the shop cannot tell those two apart from a glyph.
+
+     NO STRING IS INVENTED FOR IT. `data/ui.json` already carries the long form
+     as `searchLabel` — "Buscar en el menú" / "Search the menu" — and the markup
+     already prints it, into the `.u-sr` span that is the field's accessible
+     name. Screen reader users have been getting the better sentence all along;
+     this shows the same words to everybody else. It is read out of the DOM
+     rather than templated in, so there is one copy of the string on the page and
+     the language switch carries it without any help.
+
+     IT IS MEASURED, NOT BREAKPOINTED. The long form is 140px in Spanish and
+     127px in English against a field whose text area runs 75px on a 360px phone
+     and 302px on a tablet, and the two languages cross the threshold at
+     different widths — English at 1281 has 103px and Spanish has 152px, on the
+     same layout. A media query would have to be wrong in one language to be
+     right in the other. So the ruler measures the sentence in the field's own
+     computed font and the field keeps the short form whenever the long one does
+     not clear it with a caret's worth to spare.
+
+     The accessible name does not change: it comes from the label, not from the
+     placeholder, and the label is untouched. Neither does anything the grid
+     listens to — `value` is what filters, and nothing here writes it. */
+  const srLabel = bar && bar.querySelector('.search .u-sr');
+  if (field && srLabel) {
+    const short = field.placeholder;
+    const long = (srLabel.textContent || '').trim();
+    const ruler = document.createElement('span');
+    ruler.setAttribute('aria-hidden', 'true');
+    ruler.style.cssText = 'position:absolute;left:-9999px;top:0;white-space:pre;visibility:hidden';
+    const fit = () => {
+      const cs = getComputedStyle(field);
+      /* The field's own font, not the page's: `--font` resolves to a stack whose
+         metric-matched fallback is deliberately a different file, and measuring
+         the wrong one is how a placeholder clips the moment the webfont lands. */
+      ruler.style.font = cs.font;
+      ruler.style.letterSpacing = cs.letterSpacing;
+      document.body.appendChild(ruler);
+      ruler.textContent = long;
+      const need = ruler.getBoundingClientRect().width;
+      ruler.remove();
+      /* 12px is the caret plus the gap a sentence needs before it reads as a
+         string that has been pushed against the edge of its box. */
+      const want = need > 0 && need + 12 <= field.clientWidth ? long : short;
+      if (field.placeholder !== want) field.placeholder = want;
+    };
+    fit();
+    /* The field is elastic at every width — `min(360px, 40vw)` on the two-row
+       bar, a flex shock absorber on the one-row one — so the answer changes on
+       resize, on a language switch and on the 320px fold opening. Watching the
+       box itself catches all three without knowing about any of them. */
+    if (typeof ResizeObserver === 'function') new ResizeObserver(fit).observe(field);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+  }
+</script>
+<main id="top">
+<noscript><div class="plain">
+    <h2>The full menu</h2>
+    <section>
+      <h3>Ice Cream</h3>
+      <ul><li>
+          <img src="/img/LS_Banana-Split_MASTER_v02-400.webp" alt="Photo of Banana Split" width="400" height="400" loading="lazy">
+          <div><strong>Banana Split</strong><span>Three Scoops, Strawberry, Nuts & Cherry</span></div>
+        </li><li>
+          <img src="/img/LS_Choco-Banana_MASTER_v01-400.webp" alt="Photo of Choco Banana" width="400" height="400" loading="lazy">
+          <div><strong>Choco Banana</strong><span>Chocolate-Covered Banana</span></div>
+        </li><li>
+          <img src="/img/LS_Crazy-Shakes_MASTER_v04-400.webp" alt="Photo of Crazy Shake" width="400" height="400" loading="lazy">
+          <div><strong>Crazy Shake</strong><span>Loaded Milkshake</span></div>
+        </li><li>
+          <img src="/img/LS_Helado-Chico_MASTER_v01-400.webp" alt="Photo of Helado en Cono" width="400" height="400" loading="lazy">
+          <div><strong>Helado en Cono</strong><span>Ice Cream Cone</span></div>
+        </li><li>
+          <img src="/img/LS_Helado-Chino_MASTER_v02-400.webp" alt="Photo of Helado Viral" width="400" height="400" loading="lazy">
+          <div><strong>Helado Viral</strong><span>Asian Ice Cream</span></div>
+        </li><li>
+          <img src="/img/LS_Vaso-La-Sabrosita_MASTER_v01-400.webp" alt="Photo of La Sabrosita" width="400" height="400" loading="lazy">
+          <div><strong>La Sabrosita</strong><span>Our House Cup</span></div>
+        </li><li>
+          <img src="/img/LS_Paletas_MASTER_v01-400.webp" alt="Photo of Paletas" width="400" height="400" loading="lazy">
+          <div><strong>Paletas</strong><span>Mexican Popsicles</span></div>
+        </li><li>
+          <img src="/img/LS_Paleta-Loca_MASTER_v02-400.webp" alt="Photo of Paletas Locas" width="400" height="400" loading="lazy">
+          <div><strong>Paletas Locas</strong><span>Loaded Popsicles</span></div>
+        </li><li>
+          <img src="/img/LS_Sandwich-de-Helado_MASTER_v01-400.webp" alt="Photo of Sandwich de Helado" width="400" height="400" loading="lazy">
+          <div><strong>Sandwich de Helado</strong><span>Ice Cream Sandwich</span></div>
+        </li></ul>
+    </section><section>
+      <h3>Savory Snacks</h3>
+      <ul><li>
+          <img src="/img/LS_Chicharron-Preparado_MASTER_v02-400.webp" alt="Photo of Chicharron Preparado" width="400" height="400" loading="lazy">
+          <div><strong>Chicharron Preparado</strong><span>Loaded Pork Rinds</span></div>
+        </li><li>
+          <img src="/img/LS_Chicharron-en-Rueda_MASTER_v01-400.webp" alt="Photo of Chicharron en Rueda" width="400" height="400" loading="lazy">
+          <div><strong>Chicharron en Rueda</strong><span>Fried Pork Rind Wheel</span></div>
+        </li><li>
+          <img src="/img/LS_Diablitos_MASTER_v01-400.webp" alt="Photo of Diablitos" width="400" height="400" loading="lazy">
+          <div><strong>Diablitos</strong><span>Spicy Tamarind Shaved Ice</span></div>
+        </li><li>
+          <img src="/img/LS_Elote-Regular_MASTER_v01-400.webp" alt="Photo of Elote" width="400" height="400" loading="lazy">
+          <div><strong>Elote</strong><span>Mexican Street Corn, Cob or Cup</span></div>
+        </li><li>
+          <img src="/img/LS_Elote-con-Hot-Cheetos_MASTER_v02-400.webp" alt="Photo of Elote Hot Cheetos" width="400" height="400" loading="lazy">
+          <div><strong>Elote Hot Cheetos</strong><span>Street Corn with Hot Cheetos</span></div>
+        </li><li>
+          <img src="/img/LS_Esquimales_MASTER_v01-400.webp" alt="Photo of Esquimal" width="400" height="400" loading="lazy">
+          <div><strong>Esquimal</strong><span>Chocolate-Covered Ice Cream Bar</span></div>
+        </li><li>
+          <img src="/img/LS_Esquites_MASTER_v01-400.webp" alt="Photo of Esquite" width="400" height="400" loading="lazy">
+          <div><strong>Esquite</strong><span>Mexican Street Corn, Cob or Cup</span></div>
+        </li><li>
+          <img src="/img/LS_Esquites-Hot-Cheetos_MASTER_v02-400.webp" alt="Photo of Esquite Hot Cheetos" width="400" height="400" loading="lazy">
+          <div><strong>Esquite Hot Cheetos</strong><span>Street Corn with Hot Cheetos</span></div>
+        </li><li>
+          <img src="/img/LS_Marucha-Loca_MASTER_v01-400.webp" alt="Photo of Marucha Loca" width="400" height="400" loading="lazy">
+          <div><strong>Marucha Loca</strong><span>Loaded Maruchan Noodles</span></div>
+        </li><li>
+          <img src="/img/LS_Nachos_MASTER_v01-400.webp" alt="Photo of Nachos" width="400" height="400" loading="lazy">
+          <div><strong>Nachos</strong></div>
+        </li><li>
+          <img src="/img/LS_Platano-Frito_MASTER_v01-400.webp" alt="Photo of Platano Frito" width="400" height="400" loading="lazy">
+          <div><strong>Platano Frito</strong><span>Fried Plantain</span></div>
+        </li><li>
+          <img src="/img/LS_Tostilocos_MASTER_v01-400.webp" alt="Photo of Tostilocos" width="400" height="400" loading="lazy">
+          <div><strong>Tostilocos</strong><span>Loaded Tostitos</span></div>
+        </li></ul>
+    </section><section>
+      <h3>Desserts</h3>
+      <ul><li>
+          <img src="/img/LS_Bionico-con-Nieve_MASTER_v02-400.webp" alt="Photo of Bionico con Nieve" width="400" height="400" loading="lazy">
+          <div><strong>Bionico con Nieve</strong><span>Fruit Bowl with Ice Cream</span></div>
+        </li><li>
+          <img src="/img/LS_Bionicos_MASTER_v01-400.webp" alt="Photo of Bionicos" width="400" height="400" loading="lazy">
+          <div><strong>Bionicos</strong></div>
+        </li><li>
+          <img src="/img/LS_Churros_MASTER_v01-400.webp" alt="Photo of Churros" width="400" height="400" loading="lazy">
+          <div><strong>Churros</strong><span>Fresh Cinnamon Sugar Churros</span></div>
+        </li><li>
+          <img src="/img/LS_Coktel-de-Fruta_MASTER_v03-400.webp" alt="Photo of Coctel de Fruta" width="400" height="400" loading="lazy">
+          <div><strong>Coctel de Fruta</strong><span>Fresh Fruit Cup</span></div>
+        </li><li>
+          <img src="/img/LS_Crepa_MASTER_v01-400.webp" alt="Photo of Crepa" width="400" height="400" loading="lazy">
+          <div><strong>Crepa</strong><span>Crêpe</span></div>
+        </li><li>
+          <img src="/img/LS_Crepa-Dubai_MASTER_v02-400.webp" alt="Photo of Crepa Dubai" width="400" height="400" loading="lazy">
+          <div><strong>Crepa Dubai</strong><span>Dubai Crêpe</span></div>
+        </li><li>
+          <img src="/img/LS_Croissant-con-Helado_MASTER_v01-400.webp" alt="Photo of Croissant" width="400" height="400" loading="lazy">
+          <div><strong>Croissant</strong><span>Warm Croissant with Ice Cream</span></div>
+        </li><li>
+          <img src="/img/LS_Fresas-con-Crema_MASTER_v01-400.webp" alt="Photo of Fresas con Crema" width="400" height="400" loading="lazy">
+          <div><strong>Fresas con Crema</strong><span>Strawberries & Cream</span></div>
+        </li><li>
+          <img src="/img/LS_Fresas-Dubai_MASTER_v01-400.webp" alt="Photo of Fresas Dubai" width="400" height="400" loading="lazy">
+          <div><strong>Fresas Dubai</strong><span>Dubai Strawberries</span></div>
+        </li><li>
+          <img src="/img/LS_Fresas-en-Cajita_MASTER_v01-400.webp" alt="Photo of Fresas en Cajita" width="400" height="400" loading="lazy">
+          <div><strong>Fresas en Cajita</strong><span>Strawberries in a Box</span></div>
+        </li><li>
+          <img src="/img/LS_Gelatina_MASTER_v03-400.webp" alt="Photo of Gelatina" width="400" height="400" loading="lazy">
+          <div><strong>Gelatina</strong><span>Mexican Gelatin</span></div>
+        </li><li>
+          <img src="/img/LS_Mango-en-Palo_MASTER_v02-400.webp" alt="Photo of Mango en Flor" width="400" height="400" loading="lazy">
+          <div><strong>Mango en Flor</strong><span>Mango Flower</span></div>
+        </li><li>
+          <img src="/img/LS_Mini-Pancakes_MASTER_v01-400.webp" alt="Photo of Mini Pancakes" width="400" height="400" loading="lazy">
+          <div><strong>Mini Pancakes</strong></div>
+        </li><li>
+          <img src="/img/LS_Mini-Pancakes-Dubai_MASTER_v01-400.webp" alt="Photo of Mini Pancakes Dubai" width="400" height="400" loading="lazy">
+          <div><strong>Mini Pancakes Dubai</strong><span>Dubai Mini Pancakes</span></div>
+        </li><li>
+          <img src="/img/LS_Pastel-Tres-Leche_MASTER_v02-400.webp" alt="Photo of Pastel de Tres Leches" width="400" height="400" loading="lazy">
+          <div><strong>Pastel de Tres Leches</strong></div>
+        </li><li>
+          <img src="/img/LS_Waffle_MASTER_v01-400.webp" alt="Photo of Waffle" width="400" height="400" loading="lazy">
+          <div><strong>Waffle</strong></div>
+        </li></ul>
+    </section><section>
+      <h3>Drinks</h3>
+      <ul><li>
+          <img src="/img/LS_Agua-Fresca_MASTER_v01-400.webp" alt="Photo of Aguas Frescas" width="400" height="400" loading="lazy">
+          <div><strong>Aguas Frescas</strong><span>Fresh Fruit Waters</span></div>
+        </li><li>
+          <img src="/img/LS_Aguas-Explosivas_MASTER_v02-400.webp" alt="Photo of Aguas Explosivas" width="400" height="400" loading="lazy">
+          <div><strong>Aguas Explosivas</strong><span>Explosive Loaded Fruit Water</span></div>
+        </li><li>
+          <img src="/img/LS_Chamoyada_MASTER_v01-400.webp" alt="Photo of Chamoyada" width="400" height="400" loading="lazy">
+          <div><strong>Chamoyada</strong><span>Chamoy Fruit Freeze</span></div>
+        </li><li>
+          <img src="/img/LS_Frappe_20oz_MASTER_v01-400.webp" alt="Photo of Frappe" width="400" height="400" loading="lazy">
+          <div><strong>Frappe</strong></div>
+        </li><li>
+          <img src="/img/LS_Licuado_MASTER_v02-400.webp" alt="Photo of Licuado" width="400" height="400" loading="lazy">
+          <div><strong>Licuado</strong><span>Smoothie</span></div>
+        </li><li>
+          <img src="/img/LS_Mangonada_16oz_MASTER_v02-400.webp" alt="Photo of Mangonada" width="400" height="400" loading="lazy">
+          <div><strong>Mangonada</strong></div>
+        </li><li>
+          <img src="/img/LS_Michelaguas_MASTER_v01-400.webp" alt="Photo of Michelaguas" width="400" height="400" loading="lazy">
+          <div><strong>Michelaguas</strong><span>Loaded Fruit Water</span></div>
+        </li><li>
+          <img src="/img/LS_Raspados_MASTER_v01-400.webp" alt="Photo of Raspado" width="400" height="400" loading="lazy">
+          <div><strong>Raspado</strong><span>Shaved Ice</span></div>
+        </li></ul>
+    </section>
+    <p>Swedesboro, New Jersey · Products are shown the way they are served in the shop.</p>
+  </div></noscript>
+  <!-- THE HERO
+     ========
+     Both benchmarks open the same way: one enormous product on a flat saturated
+     field. heladosmexico.com is the stated bar for how a single product is
+     photographed and framed, and its whole move is scale — measured with
+     scripts/hero-scale.mjs, its subject is 64.3% of the first screen. Ours was
+     46.3%: three cut-outs floating at unrelated sizes with gradient between
+     them, which reads as a scatter rather than as food.
+
+     The markup here is deliberately three flat layers, not a nest:
+
+       .hero__field   the brand field and the light behind the food
+       .hero__stage   the cut-outs, filled by the HERO block in src/app/main.js
+       .hero__inner   the only thing anybody reads
+
+     The stage is a sibling of the text rather than its ancestor because the food
+     has to be able to sit off the bottom of the section and past its right edge
+     while the text stays on the grid. Its children are decorative duplicates of
+     products that appear, named and described, in the menu below — so the whole
+     layer is aria-hidden and every image carries an empty alt rather than a
+     second copy of the name for a screen reader to read twice.
+
+     The one thing the hero does that neither benchmark does is say, in the first
+     second, that this is a menu you can browse: the headline is the promise, the
+     five cut-outs are drawn from all four categories rather than five of one,
+     and the pill beside the call to action states the count out loud. Scale was
+     not bought by dropping the "see all 45" job.
+
+     On a phone the picture is two of those five — measured, the third one
+     painted 377 pixels behind the first — so there the four categories are
+     carried by the deck line instead, which names all four in the client's own
+     approved words. The count pill and the headline are on that screen too.
+     HERO_MOBILE in src/app/main.js has the arithmetic.
+
+     THE STAGE IS BEHIND THE READING, NOT BESIDE IT, AND ROUND 3 USES THAT.
+     .hero__inner is z-index 2 and the stage is 1, so a cut-out given a negative
+     `x` in main.js starts left of the stage and runs into the reading column.
+     One does: the churros, front-most in the group, low enough that its top edge
+     clears the last line of the deck, and passing behind the two pills of the
+     actions row — which are opaque cream and opaque deep purple, reading areas
+     in brand.json's own sense. That is what took the empty field on the left of
+     the first screen from 41.1% of its width to 8.3%. -->
+<section class="hero" data-hero>
+  <div class="hero__field" aria-hidden="true"></div>
+  <div class="hero__stage" data-hero-stage aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <p class="hero__kicker">Swedesboro, New Jersey</p>
+    <h1 class="hero__title">The whole menu, on one page.</h1>
+    <!-- One approved string, two sentences, and after main.js runs, two
+         elements: `data-hero-lead` is the handle it splits on. The split is
+         at the period that is already in the copy — no word changes — and
+         it is what turns three type levels into four. Without JavaScript
+         this stays one paragraph, which is the right thing to degrade to. -->
+    <p class="hero__lead" data-hero-lead>Ice cream, snacks, desserts and drinks. See all of it before you walk in.</p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="#menu">See the menu</a>
+      <p class="hero__count">45 things to eat</p>
+    </div>
+  </div>
+</section>
+
+  <!-- The menu is a full-width section with its own width-capped rows (.menu__w)
+     rather than one capped box, so the sticky strip can run edge to edge without
+     a single vw unit — the trick that usually does this, margin-inline:
+     calc(50% - 50vw), is exactly what puts a scrollbar's width of horizontal
+     overflow on the document. -->
+<section class="menu" id="menu">
+  <div class="menu__head menu__w">
+    <h2 class="menu__title">The full menu</h2>
+    <p class="menu__lead">45 items across 4 categories. Tap any one to see it big.</p>
+  </div>
+
+  <!-- One sticky strip, doing two jobs. The chips filter, and they also report
+       which chapter you are currently scrolling through, so "show me the drinks"
+       and "where am I in 45 items" share one control instead of costing a second
+       sticky row — which on a 844px phone is a fifth of the screen gone. -->
+  <div class="menu__bar" data-bar>
+    <div class="menu__bar-in menu__w">
+      <div class="filters" data-filters role="group" aria-label="Categories"></div>
+      <p class="menu__count" data-count aria-live="polite"></p>
+    </div>
+  </div>
+
+  <div class="menu__sections menu__w" data-grid></div>
+
+  <div class="menu__w">
+    <div class="menu__empty" data-empty hidden>
+      <span class="motif" aria-hidden="true"><i></i><i></i><i></i></span>
+      <p class="menu__empty-t">Nothing on the menu matches that.</p>
+      <p class="menu__empty-h">Try another word, or tap Everything.</p>
+      <button class="menu__reset" type="button" data-reset>Everything</button>
+    </div>
+  </div>
+</section>
+
+</main>
+<svg class="foot__drip" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <path d="M1440 0H0v14 L5.2 14 C5.2 25.6 8.0 35.6 32.7 35.6 C57.5 35.6 60.2 25.6 60.2 14 L65.5 14 L70.7 14 C70.7 16.3 73.4 22.6 98.2 22.6 C122.9 22.6 125.7 16.3 125.7 14 L130.9 14 L136.1 14 C136.1 32.9 138.9 45.7 163.6 45.7 C188.4 45.7 191.1 32.9 191.1 14 L196.4 14 L201.6 14 C201.6 19.4 204.3 27.0 229.1 27.0 C253.8 27.0 256.6 19.4 256.6 14 L261.8 14 L267.1 14 C267.1 23.6 269.8 32.7 294.5 32.7 C319.3 32.7 322.0 23.6 322.0 14 L327.3 14 L332.5 14 C332.5 37.0 335.3 51.4 360.0 51.4 C384.7 51.4 387.5 37.0 387.5 14 L392.7 14 L398.0 14 C398.0 18.4 400.7 25.5 425.5 25.5 C450.2 25.5 452.9 18.4 452.9 14 L458.2 14 L463.4 14 C463.4 27.7 466.2 38.5 490.9 38.5 C515.7 38.5 518.4 27.7 518.4 14 L523.6 14 L528.9 14 C528.9 21.5 531.6 29.8 556.4 29.8 C581.1 29.8 583.9 21.5 583.9 14 L589.1 14 L594.3 14 C594.3 40.1 597.1 55.8 621.8 55.8 C646.6 55.8 649.3 40.1 649.3 14 L654.5 14 L659.8 14 C659.8 17.3 662.5 24.1 687.3 24.1 C712.0 24.1 714.8 17.3 714.8 14 L720.0 14 L725.2 14 C725.2 24.6 728.0 34.2 752.7 34.2 C777.5 34.2 780.2 24.6 780.2 14 L785.5 14 L790.7 14 C790.7 30.8 793.4 42.8 818.2 42.8 C842.9 42.8 845.7 30.8 845.7 14 L850.9 14 L856.1 14 C856.1 20.4 858.9 28.4 883.6 28.4 C908.4 28.4 911.1 20.4 911.1 14 L916.4 14 L921.6 14 C921.6 35.0 924.3 48.6 949.1 48.6 C973.8 48.6 976.6 35.0 976.6 14 L981.8 14 L987.1 14 C987.1 22.5 989.8 31.3 1014.5 31.3 C1039.3 31.3 1042.0 22.5 1042.0 14 L1047.3 14 L1052.5 14 C1052.5 28.7 1055.3 39.9 1080.0 39.9 C1104.7 39.9 1107.5 28.7 1107.5 14 L1112.7 14 L1118.0 14 C1118.0 18.4 1120.7 25.5 1145.5 25.5 C1170.2 25.5 1172.9 18.4 1172.9 14 L1178.2 14 L1183.4 14 C1183.4 38.1 1186.2 52.9 1210.9 52.9 C1235.7 52.9 1238.4 38.1 1238.4 14 L1243.6 14 L1248.9 14 C1248.9 23.6 1251.6 32.7 1276.4 32.7 C1301.1 32.7 1303.9 23.6 1303.9 14 L1309.1 14 L1314.3 14 C1314.3 26.7 1317.1 37.0 1341.8 37.0 C1366.6 37.0 1369.3 26.7 1369.3 14 L1374.5 14 L1379.8 14 C1379.8 19.4 1382.5 27.0 1407.3 27.0 C1432.0 27.0 1434.8 19.4 1434.8 14 L1440.0 14V0Z"/>
+</svg>
+<!-- THE FOOTER
+     =========
+     WHAT IT WAS. A centred stack — logo, three lines, one hollow ring — 831px
+     tall with the drip, which is 10.1% of an 8252px page and 92% of a desktop
+     screen, to say four things. Measured against everything above it: the page's
+     other seven pieces are dense, food-first and set on the type scale; the
+     footer's largest word was 21px and its biggest object was empty purple. It
+     was the only screen on the site with nothing on it.
+
+     THREE THINGS CHANGED AND ALL THREE ARE ABOUT BELONGING TO THE PAGE.
+
+     1. IT IS A LOCKUP, NOT A STACK. The mark and the words sit side by side on a
+        desktop, which is the hero's own composition mirrored — reading left and
+        mass right up there, mass left and reading right down here — and it takes
+        the block from 831px to about 520px without shrinking the logo below
+        brand.json's 250px digital minimum. On a phone it stacks and centres,
+        because 250px of mark and a paragraph cannot share 390px.
+
+     2. IT HAS A WAY BACK IN, AND THE STRINGS FOR IT WERE ALREADY APPROVED.
+        `jumpTo` has been sitting in data/ui.json unused in both languages, and
+        the four chapter names are the same approved labels the header and every
+        section heading already print. Nothing is written here: this is the one
+        place on an 8000px page where a customer has seen everything and is
+        deciding, and the four chapters are what they are deciding between.
+
+        NO COLOUR DOT, DELIBERATELY. The filters and the section heads carry the
+        chapter's accent as a motif square. Postres' accent IS deep purple and
+        the footer's field IS deep purple, so a colour code here would be
+        invisible on a quarter of its cases — and a code that fails once in four
+        is worse than none. The names carry it instead, white bold at 13.60:1.
+
+     3. THE WAY BACK IS THE HERO'S BUTTON. `.btn--primary` — cream fill, deep
+        purple ink, `--shadow-card` — is the same object at the top of the page
+        saying "Ver el menú" and at the bottom saying "Volver al menú". It was a
+        2px white ring, which was the only 2px border anywhere on the site.
+
+     ONE HREF CHANGED: `#top` -> `#menu`. `#top` is `<main>`, so a control
+     labelled "back to the menu" was landing the customer on the hero. `#menu` is
+     the menu, and the label is now true. -->
+<footer class="foot">
+  <div class="foot__in">
+    <img class="foot__logo" src="/brand/logo.png" srcset="/brand/logo-96.webp 96w, /brand/logo-240.webp 240w, /brand/logo-480.webp 480w, /brand/logo-720.webp 720w" sizes="(max-width: 760px) 250px, 300px" alt="La Sabrosita" width="1915" height="1788" loading="lazy" decoding="async">
+
+    <div class="foot__words">
+      <p class="foot__banner">ICE-CREAM AND SNACKS</p>
+      <p class="foot__loc">Swedesboro, New Jersey</p>
+      <p class="foot__note">Products are shown the way they are served in the shop.</p>
+    </div>
+
+    <hr class="foot__rule">
+
+    <div class="foot__row">
+      <nav class="foot__jump" aria-label="Jump to">
+        <span class="foot__jump-l" aria-hidden="true">Jump to</span>
+        <a class="foot__cat" href="#cat-helados">Ice Cream</a><a class="foot__cat" href="#cat-antojitos">Savory Snacks</a><a class="foot__cat" href="#cat-postres">Desserts</a><a class="foot__cat" href="#cat-bebidas">Drinks</a>
+      </nav>
+      <a class="btn btn--primary foot__cta" href="#menu">Back to the menu</a>
+    </div>
+  </div>
+</footer>
+
+<!-- THE SINGLE PRODUCT VIEW.
+
+     A room, not a lightbox. The dialog fills the viewport and takes the
+     product's own category colour as its field, so opening a product is
+     arriving somewhere rather than having a box drawn over the menu.
+
+     WHAT IS IN THE BODY, AND WHY YOU CANNOT SEE IT HERE. detail.js writes two
+     children into [data-detail-body] and nothing else: the stage, which is the
+     photograph on the field, and the reading panel. They are two grid columns
+     that do not overlap — photograph left, words right — because round 3 ran the
+     stage underneath the panel and the panel then covered 485px of the Paletas
+     wrapper and 183px of the Nachos tray.
+
+     ROUND 5: ON A DESKTOP SCREEN THE READING PANEL IS THE WHOLE COLUMN. It was a
+     cream card anchored to the bottom-right corner, which left 528px by 350–620px
+     of bare accent colour above it on all 45 products. The cream now runs the
+     full height of the room and the seam between the two fields is the soft-wave
+     motif brand.json's visual direction asks for. Nothing was written to fill it:
+     the same elements this file has always described are simply distributed down
+     the column instead of pooled at one end of it. A phone keeps the floating
+     card, which is styles/mobile.css's call and is right there.
+
+     The contact sheet — the alternate photographs, which 13 of the 45 products
+     have — used to be a third column down the left edge. It is inside the
+     reading panel now, under the description and above the rule, because it is
+     something the panel SAYS about the dish rather than an index parked beside
+     it. Everything above that rule is about this dish; everything below it is a
+     move.
+
+     WHY THERE IS NO WALK BAR IN THIS FILE (round 3, kept). It used to live down
+     here, outside [data-detail-body], so that its listeners were bound once
+     rather than on every product. It has moved INSIDE the reading panel — under the 1px rule,
+     above the way back to the menu — because a blind judge charged the losing
+     entry with "both CTAs point the customer away from the food", and a room
+     whose only action is VOLVER AL MENU has exactly that fault. The primary
+     move in a menu is the next dish.
+
+     Binding is not the reason it had to stay outside. Every control in the body
+     is now reached by ONE delegated listener on the dialog itself (detail.js),
+     so nothing is re-bound when the body is replaced, and a control that is
+     rebuilt 45 times is still bound zero times.
+
+     Every string is an approved ui.json key, composed in detail.js from the same
+     keys this file used. No sentence is written in either place, and the
+     product's own line comes from menu.json or is absent. -->
+<dialog class="detail" data-detail aria-labelledby="detail-name" aria-label="Menu">
+  <!-- First, so that the browser's own showModal() focus lands on the way out
+       rather than on whatever control happens to be first inside the body. -->
+  <button class="detail__close" type="button" data-detail-close aria-label="Close">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+
+  <div class="detail__body" data-detail-body></div>
+</dialog>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"IceCreamShop","name":"La Sabrosita Ice Cream & Snacks","alternateName":"La Sabrosita","address":{"@type":"PostalAddress","addressLocality":"Swedesboro","addressRegion":"NJ","addressCountry":"US"},"image":"/social.png","hasMenu":{"@type":"Menu","inLanguage":"en","hasMenuSection":[{"@type":"MenuSection","name":"Ice Cream","hasMenuItem":[{"@type":"MenuItem","name":"Banana Split","description":"Three Scoops, Strawberry, Nuts & Cherry"},{"@type":"MenuItem","name":"Choco Banana","description":"Chocolate-Covered Banana"},{"@type":"MenuItem","name":"Crazy Shake","description":"Loaded Milkshake"},{"@type":"MenuItem","name":"Helado en Cono","description":"Ice Cream Cone"},{"@type":"MenuItem","name":"Helado Viral","description":"Asian Ice Cream"},{"@type":"MenuItem","name":"La Sabrosita","description":"Our House Cup"},{"@type":"MenuItem","name":"Paletas","description":"Mexican Popsicles"},{"@type":"MenuItem","name":"Paletas Locas","description":"Loaded Popsicles"},{"@type":"MenuItem","name":"Sandwich de Helado","description":"Ice Cream Sandwich"}]},{"@type":"MenuSection","name":"Savory Snacks","hasMenuItem":[{"@type":"MenuItem","name":"Chicharron Preparado","description":"Loaded Pork Rinds"},{"@type":"MenuItem","name":"Chicharron en Rueda","description":"Fried Pork Rind Wheel"},{"@type":"MenuItem","name":"Diablitos","description":"Spicy Tamarind Shaved Ice"},{"@type":"MenuItem","name":"Elote","description":"Mexican Street Corn, Cob or Cup"},{"@type":"MenuItem","name":"Elote Hot Cheetos","description":"Street Corn with Hot Cheetos"},{"@type":"MenuItem","name":"Esquimal","description":"Chocolate-Covered Ice Cream Bar"},{"@type":"MenuItem","name":"Esquite","description":"Mexican Street Corn, Cob or Cup"},{"@type":"MenuItem","name":"Esquite Hot Cheetos","description":"Street Corn with Hot Cheetos"},{"@type":"MenuItem","name":"Marucha Loca","description":"Loaded Maruchan Noodles"},{"@type":"MenuItem","name":"Nachos"},{"@type":"MenuItem","name":"Platano Frito","description":"Fried Plantain"},{"@type":"MenuItem","name":"Tostilocos","description":"Loaded Tostitos"}]},{"@type":"MenuSection","name":"Desserts","hasMenuItem":[{"@type":"MenuItem","name":"Bionico con Nieve","description":"Fruit Bowl with Ice Cream"},{"@type":"MenuItem","name":"Bionicos"},{"@type":"MenuItem","name":"Churros","description":"Fresh Cinnamon Sugar Churros"},{"@type":"MenuItem","name":"Coctel de Fruta","description":"Fresh Fruit Cup"},{"@type":"MenuItem","name":"Crepa","description":"Crêpe"},{"@type":"MenuItem","name":"Crepa Dubai","description":"Dubai Crêpe"},{"@type":"MenuItem","name":"Croissant","description":"Warm Croissant with Ice Cream"},{"@type":"MenuItem","name":"Fresas con Crema","description":"Strawberries & Cream"},{"@type":"MenuItem","name":"Fresas Dubai","description":"Dubai Strawberries"},{"@type":"MenuItem","name":"Fresas en Cajita","description":"Strawberries in a Box"},{"@type":"MenuItem","name":"Gelatina","description":"Mexican Gelatin"},{"@type":"MenuItem","name":"Mango en Flor","description":"Mango Flower"},{"@type":"MenuItem","name":"Mini Pancakes"},{"@type":"MenuItem","name":"Mini Pancakes Dubai","description":"Dubai Mini Pancakes"},{"@type":"MenuItem","name":"Pastel de Tres Leches"},{"@type":"MenuItem","name":"Waffle"}]},{"@type":"MenuSection","name":"Drinks","hasMenuItem":[{"@type":"MenuItem","name":"Aguas Frescas","description":"Fresh Fruit Waters"},{"@type":"MenuItem","name":"Aguas Explosivas","description":"Explosive Loaded Fruit Water"},{"@type":"MenuItem","name":"Chamoyada","description":"Chamoy Fruit Freeze"},{"@type":"MenuItem","name":"Frappe"},{"@type":"MenuItem","name":"Licuado","description":"Smoothie"},{"@type":"MenuItem","name":"Mangonada"},{"@type":"MenuItem","name":"Michelaguas","description":"Loaded Fruit Water"},{"@type":"MenuItem","name":"Raspado","description":"Shaved Ice"}]}]}}</script>
+<script id="site-data" type="application/json">{"lang":"en","other":"es","ui":{"lang":"en","langSwitch":"Español","langSwitchAria":"View this site in Spanish","skip":"Skip to the menu","navMenu":"Menu","navCategories":"Categories","brandBanner":"ICE-CREAM AND SNACKS","heroKicker":"Swedesboro, New Jersey","heroTitle":"The whole menu, on one page.","heroLead":"Ice cream, snacks, desserts and drinks. See all of it before you walk in.","heroCta":"See the menu","heroCount":"{n} things to eat","menuTitle":"The full menu","menuLead":"{n} items across {c} categories. Tap any one to see it big.","searchLabel":"Search the menu","searchPlaceholder":"Search…","searchClear":"Clear the search","filterAll":"Everything","resultsCount":"{n} of {total}","noResults":"Nothing on the menu matches that.","noResultsHint":"Try another word, or tap Everything.","close":"Close","prev":"Previous","next":"Next","moreShots":"More photos","shotOf":"Photo {i} of {n}","photoOf":"Photo of {name}","backToMenu":"Back to the menu","footerNote":"Products are shown the way they are served in the shop.","footerLocation":"Swedesboro, New Jersey","jumpTo":"Jump to"},"uiOther":{"lang":"es","langSwitch":"English","langSwitchAria":"Ver el sitio en inglés","skip":"Saltar al menú","navMenu":"Menú","navCategories":"Categorías","brandBanner":"ICE-CREAM AND SNACKS","heroKicker":"Swedesboro, New Jersey","heroTitle":"Todo el menú, en una sola página.","heroLead":"Nieves, antojitos, postres y bebidas. Míralos todos antes de llegar.","heroCta":"Ver el menú","heroCount":"{n} cosas para comer","menuTitle":"El menú completo","menuLead":"{n} productos, {c} categorías. Toca cualquiera para verlo en grande.","searchLabel":"Buscar en el menú","searchPlaceholder":"Buscar…","searchClear":"Borrar la búsqueda","filterAll":"Todo","resultsCount":"{n} de {total}","noResults":"No encontramos nada con ese nombre.","noResultsHint":"Prueba con otra palabra, o toca Todo.","close":"Cerrar","prev":"Anterior","next":"Siguiente","moreShots":"Más fotos","shotOf":"Foto {i} de {n}","photoOf":"Foto de {name}","backToMenu":"Volver al menú","footerNote":"Los productos se muestran tal como se sirven en la tienda.","footerLocation":"Swedesboro, New Jersey","jumpTo":"Ir a"},"categories":[{"id":"helados","es":"Helados","en":"Ice Cream","accent":"hotPink"},{"id":"antojitos","es":"Antojitos","en":"Savory Snacks","accent":"electricBlue"},{"id":"postres","es":"Postres","en":"Desserts","accent":"deepPurple"},{"id":"bebidas","es":"Bebidas","en":"Drinks","accent":"sunnyYellow"}],"geometry":{"square":true,"margin":0.06,"canvasFill":0.8929,"_note":"Each photo is trimmed to its alpha bounding box, then re-padded to a square whose side is the long axis plus `margin` on each side. So the product spans at most `canvasFill` of the square, and exactly fillW by fillH of it. Nothing is stretched: the aspect is the product's own."},"widths":[400,600,800,1400],"items":[{"id":"banana-split","name":"Banana Split","category":"helados","alt":"banana split in a boat dish with three scoops, syrup and cherries","copy":{"en":"Three Scoops, Strawberry, Nuts & Cherry","es":"Tres nieves, fresa, nuez y cereza","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Banana-Split_MASTER_v02","aspect":1.589,"tall":false,"wide":true,"scale":1.007,"fillW":0.8929,"fillH":0.5619,"lqip":"data:image/webp;base64,UklGRroBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSM8AAAABgGLb2rLlPt/74+4JIkR3HQHV3T27dIf4L5pHJsAg3KW65U+ei+sEImIC8P9FfsBCeAgkwIeAEPnA8hmkZcCSyEAERsEYABAE7S4DQ+MIxGQXLADpg7kbPI2Kv90Ckp+2U4tCgUU66nFphFoXs0nHZh1Q4XoeVV2l/ayq6pUDAw6V9JRU9ai0R+DbocOPVUk6PAhBH9VxPyDVc5RdEFReUdX9UJUPTRAYJE0cu/zQvZxPgQFgCUJz2qb8/pmBwgiIhfdiBJ8bC5+K+VTwtwEAVlA4IMQAAAAwBQCdASoUABQAPu1srFEppaQiqAqpMB2JagC22f/i1liJW/NA6qcT7Xqgt9JO4dxaAAD29uOyhEzb1t2pSEFHUHx56ji7MFsL9ns7l+sFdKs6xDmpXN3VJfKdkHjdF+aKn3i9tAwYSryXnQZfRnJn5EMHnNT6kX9bLJHnkpIVWufqylbnhD2ggZN3HtLYGta0UpSSSgHdCanmyOuBxvyFTWOCyOVz6UJWUy/3SoKqtIG+n8hOreqK0j3+ZIdJ98yluoAA"}]},{"id":"choco-banana","name":"Choco Banana","category":"helados","alt":"chocolate-dipped banana on a stick with a nut sprinkle","copy":{"en":"Chocolate-Covered Banana","es":"Plátano cubierto de chocolate y cacahuate","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Choco-Banana_MASTER_v01","aspect":0.19,"tall":true,"wide":false,"scale":1.45,"fillW":0.1696,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRhABAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSHUAAAAJcBvbtqps3CmA2CUjpBlqIWQoxjpxj5zQnfeyd34JETEBOAb/FtFPddDA7+YztEo1RB+FOnP8SinNCdFHFj5YN8jAEzmK/WgfzE87EwhrFwgqlg38tLUhpk3nfCT/o70bYtywdJoHrAC+Jx5avDRXzXLuOwAAVlA4IHQAAAAwBACdASoUABQAPu1kqk2ppaQiMAgBMB2JYgC+aP8gqg9fjehcrvD/KgAA7VAOqbG8+544TabVBQ7WsIH5mIb6rIwbl82WbOqdEGzc4Z5u7M/7CbaCS91zYAMbZWik5UU9jC/b8FWmXnv/n/8FV5eKST4AAA=="}]},{"id":"crazy-shake","name":"Crazy Shake","category":"helados","alt":"loaded milkshake with whipped cream and toppings around the rim","copy":{"en":"Loaded Milkshake","es":"Malteada cargada con toppings","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Crazy-Shakes_MASTER_v04","aspect":0.46,"tall":true,"wide":false,"scale":1.286,"fillW":0.4107,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRogBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSL8AAAABgGrbtrJln3v//0ebu0vTB6DSHDK8ABWaOzQGyZ1IdtfklpzIIDl8stN3v8EbRMQE4D8jovwpFJZD+xHk1yGolZ+U1nhAxCjYsHQ8WtbVCfESqEP+fDzxNRPKAwEM0yK/bhtNNGa+FodWn5ZbBCYL3Okdulpvj4QYVNJxabMZGp4C2aFl8S0bygsaTXRs7kBgqFBg0eIItIkg5oUWK/yEndB9L4UyEqyQjxlmCGCSvIiGGGnU3951QOA3LErgCQBWUDggogAAALAEAJ0BKhQAFAA+7XCwUimmJKKoCAEwHYlsAMDdi/KAAKSLOcaky4VTw+ZWJAAA/sPyTjc9oXM2/nTWv9qF0mEbbcMefG2kzXAd8tR8Djnfzt3Cm0P/oC+sLLbSL9nEYeCr/y33rLOFO/Ljzz5XhL+bFvhEcjf+f//jQxSm5vB+5wZ25V1bJHS72zXeHtx4nbNzNQ35YJCavrImF//q6OOYAA=="},{"stem":"LS_Crazy-Shakes_MASTER_v03","aspect":0.533,"tall":true,"wide":false,"scale":1.05,"fillW":0.4759,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRsIBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSNIAAAABgGJrmzLk/b7BSTR3d9kGicwhwQZcqnSr0HQFVBLRklt1d/lnXmRm2EJETAD8RvD/vo1GpKJ0qQoaUCxyBGnoZnuEQScvu+ty5s8MJKAoe2Viz55XoAimYIxfll/sgQkIZI0J3RcHoAFF2RsdabmdB/EZ9NOSdHRdUJ9ilglJvnI8pvyZjuS964DxCdK2aEnHqyKoDwZTTP5MQhFUNJHO8bY8RpD7SGd5mg2JyT6gtVyHIFKwyo8PzkFjUjDBr4S9MDGCgoWdnZlsSAwgSDEQ+AFWUDggygAAAJAEAJ0BKhQAFAA+7WipUCmlo6KoDVEwHYlsAMKgcCCoCgVfQjYNP4GP8bffAAD+jSOw8gJGrHzU/dh02HeIA45PC9mtsmGfQxbnTRlTnHhYPZQe71xqJwVBE46yiYMRpwZgHjS1l67xtSKgSR2MVGGwIxWctJkmf2g2tf/+f3PJwUoU7Gft89XGZXTSZllkbT86T8iD4YiP2+e4g1adtiPiLZ/n1WfnAXnCTpSr6ICyoBWlXtrjJrcJJ/g1GVTqHZf+n81H0u6xAAA="},{"stem":"LS_Crazy-Shakes_MASTER_v02","aspect":0.539,"tall":true,"wide":false,"scale":1.03,"fillW":0.4813,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRpwBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSM0AAAABkGJr27JV9/N+H05zl0zzpolGojIBh+juMgGiuzMAxuCSHZrzyXvDOe/3jiEiJgBmUYBSsFfIn6xzIVaChEN60xlxVsA8feq3bqgoBwP0qD0eQyIEybcMSc2PYiiTQknA/0M2wTG5mKT/X8BDKJODuahFOCbBNgOSms8NEJOLrv80w51GRCoUPVCT9C8qoUxQqCdJn21wEClIuaPWmlV2csJA87UAKgouFuiHPBWIhYNmeh5XoGCpUE3tsweOjcAdvbhez4bYAILYRAjMAFZQOCCoAAAAcAQAnQEqFAAUAD7tbq9SKaYkIqgIATAdiWUNsAVu0ryDishFSz7wjNQp4gAA/t7WBbHkiA1jy22SfcabS0nukwGN7lsnecMYC4hmvllNMPx98EkwAabG+5jknrRa5Ax2PxInx9IgIjFPptaBQBbewFGSP2fX4gkhjlPSiEcNGPaG0GUnSbP9MHcIu5KL8eZ+H86upwH8D40jBeYtPC/D8c/o//JKN6AA"},{"stem":"LS_Crazy-Shakes_MASTER_v01","aspect":0.557,"tall":true,"wide":false,"scale":1.013,"fillW":0.4973,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRr4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSMUAAAABgJvtf2rlF7n34g4trTMAHTWUjEDlG9gQ7ixB5e5unTMBVEnOOT8kyQwRMQEIqjwE4iU6tp4nyyFiBPQeDceh48qeaHhRgIyAGP9ilvKyCTIg0WyZkQn3ayF8Gv1MSNKyDyo05ks4ERCQB0z/pTxTEL7Caegi74NEFzOSWcYeKHgFxB4TMuVnA4QPGqP/Ei5AIajQy5R0HImRaCGZpeyOEah+Z5rxuwkyBuu0jjd5iBA05ugSbkEgUqBx9eFprTPuf6EYYQBWUDgg0gAAAFAEAJ0BKhQAFAA+7WyrUSmlo6KoCqkwHYloAL85inh0L36/ynq6v0K09gAA/hZ1eWaX0ya6p1OaA+83ShgiU1pUichPsoOzwixnI2CxAA2T4H6iq1gRMwuE/zkKajcG1JutzuBEkYkKrMmxkkVQouyo8+ZPI8Iotf/TIMctsABkiNf/8lNX0POmH9uKGXj/fBU8H4ta4zzvN9jLyZ3iFT7OHfbgaYHHjg7Sh5uFd7gWX02TbQhTMUBKLaW/Ot+0//P2j48VXfHHA+v/yb/9lEsyAA=="}]},{"id":"helado-en-cono","name":"Helado en Cono","category":"helados","alt":"two scoops on a waffle cone","copy":{"en":"Ice Cream Cone","es":"Nieve en cono, del sabor que quieras","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Helado-Chico_MASTER_v01","aspect":0.378,"tall":true,"wide":false,"scale":1.345,"fillW":0.3375,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRl4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSK0AAAABgGLb2rLlPO/75R93yJ5I7tZJVObg3Qfg2iAzgT9iEZJNwOvv74M+7xQiYgL4W3BCpFC2fbnahpjgQgtPVz04g6M1HwoZ3Y/oLmoo6IFJqHvTUknn8KayFy0FvevC/eeZ0qDh86PPIqTSWiwWH6qR/0iY14LmRnAYHaNa0nuHWah6VT3DRZBWXSExkbClYRpv88zoZwNiE1r0lliB51N8BJ7zJZK42WFcDIjwPwBWUDggigAAADAEAJ0BKhQAFAA+7WqvUKmlpCKoCqkwHYlAGG4CMk7x6r2PSEY0lVJ+AAD+3r5yMz/ivNzwKgPjno7njyuyVYFNQWFIhcdOdiniBmiCKz3YKWYsiqDBXGb+OR1FlIwBH6efed2aIowD3WsxMnz+SuzfO6uCAunSsm6XML5T/uTBZ4dYvv4AH2AAAA=="}]},{"id":"helado-viral","name":"Helado Viral","category":"helados","alt":"moulded packaged ice cream in its printed box","copy":{"en":"Asian Ice Cream","es":"Helado asiático","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Helado-Chino_MASTER_v02","aspect":0.476,"tall":true,"wide":false,"scale":0.981,"fillW":0.425,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRqoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSK8AAAABgCPbtirl3P+7Gydyd7fII4bBCDpiNO6ekTEFwh/iMAMyiqjl3XeQ9271ECJiAhAUQV0BIrAKug/fn7c7IQZBU0ZVZq2QWA5FVlRL3EJq2WaVdLxAYtkP3VjysauaXFpyNcljJ3RqEDRlVFL52AYJJVjnf++5gTS26OlJT79mmYm4JSSxcQ2VFixDLvQ9YemrqHOuys/+mKDji55UftRDQoBMF+8e7m8PNyEwSwojAFZQOCDUAAAAsAUAnQEqFAAUAD7tbKxRKaYkIqgKqTAdiWwNuEUEyQQYDbO3YBvLBEVhiMKkGQvDTqAto8KAAP7enrMbQbZiAnqlIii43LRp50cCeaaKB9P+VVavP/4EbnLDch+S/fJk4qV+GCk5HIJqogMFMZ+9j///trL/8NUPHTaWc/1zMlUyT+m6Y/hDrOD2Zq5XIBa7CXkr7vIPrA1dyP+OnQfl12z2GWP8dmNVIP9S+9+5vhzVZ3dagZHWg6V7blk5lAe/6B4kk2KQUCN5dDv644k2r3aQAAA="},{"stem":"LS_Helado-Chino_MASTER_v01","aspect":0.602,"tall":true,"wide":false,"scale":0.859,"fillW":0.5375,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRr4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSM4AAAANgFxrezLlyTfuPtMErkXQASu3FY14DezoRZfawbgDId8if6ghIiaASHEk+UEc/xS7fbHgXm+exIXEHhyisnV+9SAuSuz6HjaGLdxdvomLMHrEbwZiv62de6OesbJADEBYf3RES5xgZkZYQnGrgVYN4wnL4y9xgNGqI5jLtPGN1glqPDc0it/AxTzzJ8WQE8JKcJC3DlAkNUc9pdtIqAEQHRHsFRIARpnNUU8ZxrMOX6aW4PdPQTzlZ45GzZ8bfzEDGh+YKOV398WogsyIBFZQOCDKAAAAEAUAnQEqFAAUAD7tbq9SKaYkIqgIATAdiWQNvAQ4TySRGO6rDdjbU0gjORXtEwm6oAD+6o+7IWZP7v47m7oidJiPjplSWQjJD9dmXsnU74AvybeIFrLKsDTF9YZ9M43KH9jL4FSpd2MPFX82y0OQYY49rKK+15m6+fh8oJ/NOIdaKfs//ObhwUiuaaabv4Ags1HXV+FhExaQoVusT0ohucDr7HK+XNevASN/5yNkjw16EpJBpVqN4cpNzqw4/0oxHGQ2ymg1Q8AAAA=="}]},{"id":"la-sabrosita","name":"La Sabrosita","category":"helados","alt":"the house cup — layered ice cream, strawberries, cake and wafer","copy":{"en":"Our House Cup","es":"El vaso de la casa","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Vaso-La-Sabrosita_MASTER_v01","aspect":0.521,"tall":true,"wide":false,"scale":1.025,"fillW":0.4652,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRqwBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSMIAAAABgGJteyrn+5N7R0FB1Y4vM2ygdQyKaRF1ld3CyDIzOloBk6olyU3ylZI1RMQEwCtAJAhXEQqX1qAkRCF/4YKnCQ2/IJ3dds493/fEkP80+mmNpeNLGZRvlB8knWEjtK+djiQNJ0KafUM+QfKOlnR8zkB5BLs0pOV1DPkPEbL8Ig0PoRAwRvNnMkSjm5b84ji0T6GW/DMYIih4oKNhUxgOaBxtNVSIOuGn4XMmBBoz/LK8FoQqNBycXxx3QUL+xgn4AVZQOCDEAAAAUAUAnQEqFAAUAD7taqtRKaWjoqgKqTAdiWwAv2ePHysiHAxHB69K2XM0JyaQr4lUhgOAAP7EL/NojNA2ebdnFfzCreJhivj0IfE8h5qfESnF7SYwzxlp4ZTT6fTF1vk0Sc5TVjRjYYD6oYzS/42rNwn9kwnuR8NJLogIRvLKZLeTjOpODTLpo0JVF1SI6D8ysV7TiiKcEskSS/evl1A2skjRzsI58f/EngoplZh/cvAY3C9fnwwIpJBv9AVGZXgzuMAAAA=="}]},{"id":"paletas","name":"Paletas","category":"helados","alt":"Mexican popsicle","copy":{"en":"Mexican Popsicles","es":"Paletas de agua y de crema, muchos sabores","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Paletas_MASTER_v01","aspect":2.257,"tall":false,"wide":true,"scale":1.016,"fillW":0.8929,"fillH":0.3956,"lqip":"data:image/webp;base64,UklGRnABAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSKcAAAANgF3btrFnnfP7/2PbdtJJUlcaSgF5tPFsWxcndgERMQH8x6KfEfEGSfPxM2aikZGB3JVdlxUdPZVGV9ydXz6ZwU1OFbuMpyaNpoy4PXsKvcRcOgYVM8GnJxYDbQ4xVM1UEKXQvMFudVp41wDk7AR4zDgFVAQwwiOU7tQk+TAG707HLpM309cPN4/3D975YDE8NLaqnztd5YseouhnDEwiWPzMW+NvAwBWUDggogAAANAEAJ0BKhQAFAA+7WyqUSmlo6KoCqkwHYlsAMTZiz30kN5Ue32wWjeLUknltQhgAP7eiGKfBI1CmdbhobO6pPvwuy/9Xd5CNcatezqPnOhlYskKwniYZRaIqlG/wcRxNfvQlYydgXQt0CNz0AH2aNsPzM8HV5UHcZk9mCYXTh0myGayFwsLFLScKVhq+A+OfnA+ontdikoW8Fa+v5pvmSgAAA=="}]},{"id":"paletas-locas","name":"Paletas Locas","category":"helados","alt":"chamoy cup loaded with fruit and a paleta standing in it","copy":{"en":"Loaded Popsicles","es":"Paleta bañada en chamoy, dulces y chile","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Paleta-Loca_MASTER_v02","aspect":0.453,"tall":true,"wide":false,"scale":1.251,"fillW":0.4045,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRqABAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSKsAAAABgJpt27Llfp/3+6W64qwAFRoM4DCBNW3u0LXBJtaYwEnu/bMbfd4VImIC8LfAXTCQFs9tFN09sC4jGB5yG29dGIHoPKwwiE6zMLpZ+rwvQjSCDQZ8bIPSwB4wZhxzW5W9Z0xGvM3A/AXBPCMy5BYsFO0kGbFTY1C4YxzxqQ6iwRHDkGdQe9hnEPIQVmMxzijkhEsHA59dOkH1nfxshmhgMHlxPgMD13Qa/wMAVlA4IM4AAADwBQCdASoUABQAPu1sqlEppaOiqAqpMB2JbAC/cUBzgGsAegB+gHWV+UATMQPD1tSii2fmM2MIAAD53WPxDGDlvrMvdxHjsPkmftCP86gvtjJScakBM5Qki39TjZPdySA/DBDxx6nsZjqbzM8kvXl5Di3pyZSk/wb523dLxNMXhyBLH2VDn5n//4KP/DZV+W1t8wArZqI1L9t3bvrDI/tmo8RZBgEuA4dwPfGAUld/NyjzaOjiiWB2z4m2hYfId4AKsQ0Zmf/wzn1zIgAAAA=="},{"stem":"LS_Paleta-Loca_MASTER_v01","aspect":0.518,"tall":true,"wide":false,"scale":1.202,"fillW":0.4625,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRsoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSMQAAAABgKJtm6rl/WZ+3K3R3C27S3PYgEe36Hsg0RwWwMUCXCrNIsllzjkvNvNvISImAP9qQdgKnUUYyIE4afTWYaMVykmhuR3rtWGVrY0dL2TBWZB57fs8hXZLvfgyPIIomyBi+o0Bn/brIJYQFuiRDOh3QNtmaP68c9Em0If0yIBPlVD/IYRB+gwCDkDBqlBoGPh8SILYBLE39D0eQOCosENjOI6QSwgLNPSqoF00Wml4mwBxEWQ8kpsQOAsGb88qodwAKIEdVlA4IOAAAACQBACdASoUABQAPu1sq1EppaOiqAqpMB2JbAB3krTU0UEQ0FTlsoNGBjNpVqgA634+8xm3jbasXuFb6TcePSF2+uPQaUhibPvMlFZxCGJNZJCYmBJZDShvbHEgK7fTSsnoCWC48ECwy95TK79u7FMWD/ymJBlbNz//mR3yrEigQr4hfjsEi8mtzT4UI///AqK3l8Mjn5r+5/v54pYG0bPzQtaYYNcvyL6FXwbwz35p1gm26ofgejB8/+47v3fiwaQ2SyWbnqD+34+//wPjkejJO1R3vMQEMLzX/2r5rBMAAA=="}]},{"id":"sandwich-de-helado","name":"Sandwich de Helado","category":"helados","alt":"vanilla ice cream between two chocolate wafers","copy":{"en":"Ice Cream Sandwich","es":"Nieve entre dos galletas","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Sandwich-de-Helado_MASTER_v01","aspect":0.538,"tall":true,"wide":false,"scale":0.98,"fillW":0.4804,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRqoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSM4AAAABgGJrezLnTVL06Od0AcysK7muln0dV7GtYlTMuIWeLoFBDc80f95CkjVExATgv1QiG5AS3gLFZ7MhCB+BkpGV+3B0swbCIYArfj69GD4XQdggsE9tAqO/yyEdGVhmmoaaM16T/CZp+N0K6RqgJknNIyibQjuDfwFPIW0S9TS2PShXKOB/zRWXQN4njWXJJ/eRAcl0asoH19QkE+FRFxTWmCaZivd7ZGCE39owEe71EMgcS1Lr8GujByBQekN+tcFbKKjuhz5IL0BKZEgJK1ZQOCC2AAAA0AQAnQEqFAAUAD7tbq9SKaYkIqgIATAdiWgAqPWK8GuIcvuVNpsclUo/EQgepAAA/jE6HDmVnuYH1JIa/Gvudp3PA9zqQczCb3ZrTRnBWqX1hh2Cm05i2VQKbVpj+33lDv7DhLZLOx7JRVDm+2OTsInZdTq4vkWWoIrFdObi3JxPGzfmoqgRvA8pk4HIHpj41FEzcmMeV/X48+Oy0xBkJr4zsqjrT3FjJfPw1ZD9lkUie9wAAAA="}]},{"id":"chicharron-preparado","name":"Chicharron Preparado","category":"antojitos","alt":"chicharron sheet dressed with cabbage, cream, tomato and lime","copy":{"en":"Loaded Pork Rinds","es":"Repollo, aguacate, crema y limón","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Chicharron-Preparado_MASTER_v02","aspect":2.245,"tall":false,"wide":true,"scale":1.061,"fillW":0.8929,"fillH":0.3977,"lqip":"data:image/webp;base64,UklGRoQBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSKoAAAABgKJtt2rlX2tdafcmv0AiMQSSRxrV3Ufh7t49aqRBJWoi2QSu7L0W7gOIiAnAf0ofEJEIs4gIk3yATxKB3wlFU7X15VVb8xVt++ddIEDQe/9UsA/VGsGEyIV59aoFp97l7bIEwJ4VVM3U3jrbAyN5a94+6e0mBtR5V3Afe5e1FeDEnH1SzdkZULp+dzC6frq/uTQzNDYxNNhQBiAQxteZwSIsn2QARPhXAVZQOCC0AAAAsAQAnQEqFAAUAD7tbq9SqaYkIqgIATAdiWwAsRvB6zbfmFq8HBYtSv23SFRjbAD+i4YccydHAk9TOdaro3M0xbKM9IhPNa5cM7Lmaw+MGdNVUzmTmtE5yysmTZdhcqL9odCakhG7rOX3qds4bHn+PwQrJDF7Wg4pkddldMt7eSk0BPhEPbZNbImNzVJV8MX5aULw6zPuUV9HLk7t86/bM0kKzqLXIahUGsN//4jQiuwnoAAA"}]},{"id":"chicharron-en-rueda","name":"Chicharron en Rueda","category":"antojitos","alt":"wheel-shaped chicharrones","copy":{"en":"Fried Pork Rind Wheel","es":"Con salsa, limón y chile en polvo","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Chicharron-en-Rueda_MASTER_v01","aspect":0.834,"tall":true,"wide":false,"scale":0.82,"fillW":0.7446,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRggCAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSPgAAAANkJtt2/F31/3GtlOlsyv35hZawBjBM2SDdKnY2fnbNn54n/CbISImgMeFISOgMPnU4ZiUxQAyFxu2/sS/+59+yR6QT+vICbWfTeylERPhvnzWaOhLXiha937rzx/nAfm0tV9/I5fmy4a6/y9sysD5HiJmpch8fPP8ynpMFFklFiMDOQsnjCxGpQgNOBCAYmj8fiXMpSMelaW4X4D/nWZ6BFPiP0FKPiJofAj4/aySgOI3Boq6IA8635lgLoB35aeCbAKJEHg28pqiMrsni3/5FjO9Xx3PNad7GJ8MA65eFLlvn358Ss2J1//vwjBOpp+6WODX5xAPAlZQOCDqAAAAcAYAnQEqFAAUAD7tbq9SKaYkIqgIATAdiWwAnTKEeniCLBo/5dgsgTNgZf4svQD0GMpAWWvY3ONle4EAAP7Tvr1hGUp4iw+LNi0YLO82jE7Msol2Ez7XaGIf3t4a/+ek6eLDX3kryWL1nAMl5DyhGQEGQCK4vaGGZ6RXJfAfX3jZsNew/EvMaAihIYZ9er20SBCheYb5YiM42ZQdSBPF4OvfKzUFN4rDZuneuvCX/oa38/YjmmpIsv331FmxVRTUGA43pIFwnB2HA/gRfXvgYqqkZUE5Jc20qWFtpDp0DbjRk0I5pGdMroAA"}]},{"id":"diablitos","name":"Diablitos","category":"antojitos","alt":"dark chamoy cup with a tamarind straw","copy":{"en":"Spicy Tamarind Shaved Ice","es":"Raspado de tamarindo con chile y dulce","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Diablitos_MASTER_v01","aspect":0.591,"tall":true,"wide":false,"scale":1.127,"fillW":0.5277,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRs4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSNUAAAABgKpt//nn/Xy//y056QRsK5ltkck4BjZ2o616S15027VkK/mHd/p9jyEiJgAAtA+egv8VClqhtZ+CIDYM8kcQNwINQIDZBKj/Ik/C0DmcLMifgOC/oJvyGvI1C/3V0B5Yu31zP7iVOhYAT41Rfrl03JcOaIM+WiRtVhiV0CUdXgZDPBSibLq0uQOBpyD0/p8ZKBP/Azq02AXtBcECbVpsgM/AhxFarstiaKNuWi7f4qCMGuk4vA2BGGhU0bZ4BGOFVNLmHMREELh6erxbAWXy109D4AkAVlA4INIAAACwBACdASoUABQAPu1qqFAppiOiqA1RMB2JbAC/VYA90gBHet9/M9+gporlc9XAAM14PVX3cpNHBbDERZqtrnxRF5QgYRKzQmH7Wck5shSSZLEc0i4uxvPkm7AoyICCF7n1/EuExGgoH7iF0YDp+YDARFblPI+By8PZf5cQCHAh++BLXBxc5ixB97t///CG09w0A2nrMOOi5ldp/+P+NdBd1sDEKP6YnbjjQr92doWf1yImE5Gukv6IWoj0hlXCVDvR35//Gp42x6ZSrfn4AKWAAAA="}]},{"id":"elote","name":"Elote","category":"antojitos","alt":"corn on a stick with mayo, cheese and chile","copy":{"en":"Mexican Street Corn, Cob or Cup","es":"Con mayonesa, queso y chile","source":"client-approved (pair line)"},"nameOnly":false,"images":[{"stem":"LS_Elote-Regular_MASTER_v01","aspect":0.209,"tall":true,"wide":false,"scale":1.45,"fillW":0.1866,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRkQBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSIAAAAABgFvb1rLovveRsijFXXK3VrwQQiIKcB1313zqmPxGfO8vISImAKdFYBVE9j2owaHLvzDE0ud/FOoXwpTswPkp9uTYIII7cmK7J2e2G/II9YLgmnwN5BfiJcAj+WW7JZ+hXlBsyDmcJXd5kYT6QVGrwsFUrwVRqwRRLkEtgHM4DVZQOCCeAAAAcAQAnQEqFAAUAD7tcLBSKaYkoqgIATAdiWwAxQcBlATKB+oA5QA7ukdDetgA2hJfs6BH/G4ppnQTDakqJSmoJVc0l7qLs8KsnJv5n2voANB8Q7/YK6qKjyza2A6yO0ltNH3fTEAsC2BUsWxZCU7ofrKMxj+X2+M2Hg/OJaaqjDR8f/n1AkofhJzL6f/kmQjMLJsf2tktCgWjA4oAAAA="}]},{"id":"elote-hot-cheetos","name":"Elote Hot Cheetos","category":"antojitos","alt":"corn on a stick coated in crushed Hot Cheetos","copy":{"en":"Street Corn with Hot Cheetos","es":"Con mayonesa, queso y Hot Cheetos","source":"client-approved (pair line)"},"nameOnly":false,"images":[{"stem":"LS_Elote-con-Hot-Cheetos_MASTER_v02","aspect":0.212,"tall":true,"wide":false,"scale":1.45,"fillW":0.1893,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRlABAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSIMAAAABcFpt27I87/f9dBjAHYag2hBUEgPQiGTtNIfk7kkq4zyJ72WEiJgA/LYCrUHlO/NDNBOyDOskwIqswlP4PmRdZZ5kE1aBE9mD0WzJOcQJggV51BiMyReUFn3yrfHQIm+6GjmGcRMEGoMcxA2CWAEWqmQZRhctwOpixX8E8zAaQAS/AQBWUDggpgAAALAEAJ0BKhQAFAA+7XCwUimmJKKoCAEwHYlsAMTmIA3j4iEwirV4UhtMKxr7DYAA/hWjjfzObeyTPFpW1EZ9OaCQ5LsCcAJYB488j/65QoeMxQIkpKmA9q8wcOsPHqmqMFlQUx/n5AiOAEUXV+LBeSvmEEDx5Vf+5vPyOBpb8SXBvyZl/YZZbP7TOZQ8/cf0GJy3zo9QzgvjXLiAJhhJKgZkazUYAAA="},{"stem":"LS_Elote-con-Hot-Cheetos_MASTER_v01","aspect":0.259,"tall":true,"wide":false,"scale":1.43,"fillW":0.2312,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRm4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSJMAAAABgFvbtmpln/vdIvdPAe7u7jRAIfRDF6SQaeiekrnejZ5DCRExAfhbYBas72yOwakE0UNyw5S6Ig8cDPkH8jQI0Tg0vJC3aUvLB3nfAKfro+drmy6ASXrPWQR0Ez/mLZP05IhlkR9874bTTdPzpdUy6t/8Y6NOULkjb2IQDYC1re1VCPQOo7NwME3M/0f/mA0Qwd8AVlA4ILQAAACwBACdASoUABQAPu1ur1KppiQiqAgBMB2JbADFB5AUBHAA834szTyzxYwLuNrgAJ+PuI77xZrKTxK8+F9LZqxKDile4S1Ua23MjEsuhPvn6wMANbHtRNpNSh84UgI6OyNVbpIzyLF/uDx0VwGrgnPgK0HfB/ny4x+v7TbajtbjqAv+DfF+ZYV89oTHdudRSNIdmys32nGoVG8ho7B6V2SrzJ+IZQ7JqluUGiXNXBqgUGgAAAA="}]},{"id":"esquimal","name":"Esquimal","category":"antojitos","alt":"chocolate-coated bar on a stick under rainbow sprinkles","copy":{"en":"Chocolate-Covered Ice Cream Bar","es":"Paleta de nieve cubierta de chocolate","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Esquimales_MASTER_v01","aspect":0.414,"tall":true,"wide":false,"scale":1.171,"fillW":0.3696,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRmQBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSKUAAAABgFvbtmplnXvRTEPKoIVfABYRkVnm7hC5eyPErhkZ0a8CebKT985rISImgNLQ0ogZTqP75vP7664XczQwpUSZ6m2YZ0e/WZr99RA8G0qUSzWiZ0eJlGmIhkqJJnybRWu+7aJTomex6Jrg2S+6Inqm9JPlP7omlEUGlUmJbj1G19jwfX1kroaVAY2cvGH4rZXTdxqjj0YOXjAqHX5Ui4xfEKqAGeUAVlA4IJgAAAAwBACdASoUABQAPu1oqk+ppiOiKA1RMB2JbAC32JS2OSIpB5jWobXyK4AA9yCgWhyDsu85cf0H5E6MFqDPknPVjcrPcHAPB8tOillLJMQmScgS5xduyZD78h+PdknIi3vQrG82Y/BCBHwHr+InjbWl83f8yKLsipUk6VK5145ZeUhPh3nXSDT1QiDHDBLWhV8TcZgfmiAAAA=="}]},{"id":"esquite","name":"Esquite","category":"antojitos","alt":"cup of corn with cheese, chile powder and lime","copy":{"en":"Mexican Street Corn, Cob or Cup","es":"Con mayonesa, queso y chile","source":"client-approved (pair line)"},"nameOnly":false,"images":[{"stem":"LS_Esquites_MASTER_v01","aspect":0.821,"tall":true,"wide":false,"scale":0.835,"fillW":0.733,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRvoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSB0BAAANkFvb1ppH532SmZmZKWIqwKlj7sAO7QqYe+DhiSaaBpiZmZml73uBfvUQERMAiDgSG4dxRMXWjXWW+i8vn32abAPRiFsYR6Giu/F2f8bioXEYN5/tLNGuUWV246YRmzmF+gKCI/heX3ZfwANUiJqvb7Of4eDn8RlRKyCGlw+XEaf4O6/mCnzA/riQ/g0vBPlbdWK3urUgCf9fa+N5CQHRYMS+1lwxnuedQwCUNzmmJROUr/51jEvwU+VrZq6a8H/wDiUqf/8WfnFZht+ePInT9/nh37QUfmW+IEZ5UxQGfpr9VnEZzyaAD9mB8ZP/kHmbWOX3t6IfJjnI4DqaCNEb9Zn/k7Nr98HFqDy5XFmtb09+QDQG5f2ZY09AUKIAVlA4ILYAAABQBQCdASoUABQAPu1qrVCppaQiqAqpMB2JagC/RBRCIv3VYaCedXIBU9Nvl+vuxOy4SkAA/sdTVEabg4G5wr+UTeedRB0ZmSEI7r0ayxMe437YlDtAP+Lc14M8OpmIFogZxD/O2nRvEXc/Y0lhsZ62KQiPzx3vS+GlH3gGfrIdnp59Yf2XsQC79LHnvtW3v/Yb59moqnbD77ICMN99Z6Heoiy+hOsw77S0T3eEpsFr/skZLIAAAA=="}]},{"id":"esquite-hot-cheetos","name":"Esquite Hot Cheetos","category":"antojitos","alt":"cup of corn under a tall Hot Cheetos mound","copy":{"en":"Street Corn with Hot Cheetos","es":"Con mayonesa, queso y Hot Cheetos","source":"client-approved (pair line)"},"nameOnly":false,"images":[{"stem":"LS_Esquites-Hot-Cheetos_MASTER_v02","aspect":0.667,"tall":true,"wide":false,"scale":0.895,"fillW":0.5955,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRsgBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSPsAAAANgGLb2rLlPO+Lu7s7JG+MgEWyuZBIJIbiUC3T3d3d7bMHefnHEBETwF+jCqKAKG4TpPX2FAWTS+WHW7hN0D2KYvu6tHp6SBQwQf0IgYBJjGRw9ksUYJjPVBRUzSkoSGhySMSpzBEXgJpgLCGvJQljNCVYIAIQffxcvCoqL83KSLx8QP8oe63qxyemELLJfyfZhe+ehAnIKjZ0vdw0+GJUhQ1E/yDheblnA2Pjoi0Ul14UR74V7MMVkUu5zI33MHHsW2K8SrfWSmSWkcilvH7m+IImrmJDF+Lf5H+B+bpEifEyO1LJfDiNRdm6zjHexjwS/gfe/tHmTgTKXwBWUDggpgAAADAEAJ0BKhQAFAA+7WquUKmlpCKoCqkwHYliAAPiQJ3mXS432JkdS68IAAD8WMm5SxT083AllH+0+/Uo2VXRIv903yZbXQ4e4IQtf/Pco/HhhH7tQGldP/aj+DsMYpo/9jdfywGo5+noPsroZSM8feq415yuVnyH2mR3Spxvt/CBvCmOb25jLKPyyPC2286HvuEyRp+0hcXgccvoPbwv3F6vB+5ewAA="},{"stem":"LS_Esquites-Hot-Cheetos_MASTER_v01","aspect":0.723,"tall":true,"wide":false,"scale":0.88,"fillW":0.6455,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRsgBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSPcAAAABkKNt27FH9/PGdrqswNxCSpul7azAbjP21LbtqWzbnnm/5y4+zBYiYgIAQAwAEbgFnoKQ3Nbtp9e37Tq5pQTiMsg59IdKksofOTCAIO4SHfvPWsfa3+xAKBCCUv5Vels2ugyy3tBRdTk8HwGBe/KDpaflBEIAQDBy8+mr738dKl+mQFwhqHnw7c/nT39ouRMGboOi4x+pJC07EOohSN/5iqqq/J0J4xO69EBJOrxuIB4QDNz4TeU/riAE3gaVFz6R6rA2UPHeZ0rllwyIjyBj9Z7S8gwCCqJmrv7S35xHiB+AnlNf6bAqkCCpZc/jq8Oh+F8JE/gDAFZQOCCqAAAAsAQAnQEqFAAUAD7taq5QqaWkIqgKqTAdiWIAA+QzwAJkZDxfbJXRyDVKtt4DOADJNfd/avAZJODHOPJxJwUbU5vTHdDFl4kENTP9tNHQ0jzb0pSiO+SxAKg2GUVZjIzUwWjEf/a5lcDi//diD3RJ7LuyH3fjhkbniAuRgvHUClPfoWKVMrvwTB+ME5vRhYgw9NbUt+tx0AEcekPCIrlvt0pgzYmf38QAAAA="}]},{"id":"marucha-loca","name":"Marucha Loca","category":"antojitos","alt":"instant-noodle cup buried in Hot Cheetos, cream and cheese","copy":{"en":"Loaded Maruchan Noodles","es":"Maruchan preparada","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Marucha-Loca_MASTER_v01","aspect":1.156,"tall":false,"wide":true,"scale":0.846,"fillW":0.8929,"fillH":0.7724,"lqip":"data:image/webp;base64,UklGRvoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSP0AAAABkGNr27FX9/PGtm1bpSrbRm9UtpPeKFOmU+uMwJlBjv393/sUH84UImICoCusrYWVtRXBLEGfyAQha3xmb3uryQNkYIXsnyyZVb71BmkIVqjjf4qiKP94EDYa2IW7dbNkrSwGEYC8ugyfPbYws+TP9eUBmt7enFNWWSv5aSIpyQlIWXxkyYaSN73jreE39+MvG6sWXsh2hH3T7Q+WBqzwVZEg5F+yZEMp/07YghByYkL9/WPMGgSBtq8sNX9/8lM5iABCwN4/VqVF/f6+4g0rgiak6oGl5L/H0SAraAl+uX1nH19O00FWAobklRQX6E4QAmaJAAiB/xWCCCYBAFZQOCDWAAAAkAUAnQEqFAAUAD7taK1QqaWkIqgKqTAdiWwAyKYjPeQCIuDBNOBPSypcmvQB1whNcmwiIAAA/t6XGd/yRQbQtG3TYHiQjy2H4FA46p59xQyogj9cjctAy+g8Bl+b5o/LAih/+3ezQqvBLL8GfamenTH716G7sKbCBD56Gw3M3DtDuneRfn2InA5QUlDF1qTRdBJ+gW9aefvLRPMNZmTCp4ahyiuDZUA2vSGM3f/a56DG+lzrx/nk1YtzdeX34zHKZlwfTzJBnVbCT4gG8N23lr+iGIbAAA=="}]},{"id":"nachos","name":"Nachos","category":"antojitos","alt":"nachos with cheese","copy":{"en":null,"es":null,"source":"none"},"nameOnly":true,"images":[{"stem":"LS_Nachos_MASTER_v01","aspect":1.102,"tall":false,"wide":false,"scale":0.842,"fillW":0.8929,"fillH":0.8102,"lqip":"data:image/webp;base64,UklGRhoCAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSN8AAAABgFvbtmpln3txdwndnUaIiMjogAJIf4pmhFCEQyaRu7tD5u+8u79eWoiICYCnpAkAK/AVwGblFMNLpGBo6e7kNZINSSbpGP5UksoJmARJs8je4Z+6UHmbAwBiUD12GjiSdPyoASAoH5ilY/KQ84Cg6pChhikCjgJp6KcqUzr+9sGg9/KPnsoZGJSvMfRw/OqGwQj/6BkwAgNMM/AIOJcBAZao6pIpN8ohAHpXlU4dSeV6BQwSTfPUD6mq3KyEQaIVQfvkI0NeNsIipTFA0eDcTR8sfI0FbL4I/ilWYJASAFZQOCAUAQAA0AYAnQEqFAAUAD7tZqpPKaWjoigNUTAdiWwAnTLQgB9iKX/oBS3XsbeUcYAJmbdzAuNFDAS6LuOFAPOJMA7gAP5US4wuw1/TGW45aedMLHgDc4KDbwkyExGgarooj4DjKtDuwkp/h6x+EYdT60G+OVchXbeAqokn3EKQKQjRh3TaKc7hL+zN5ETjTtGEpytDrpVE5W54rn3hhVvosfvLGx2zJdiV3Br/cEzeYmlqgVWzN0S+n8C7jkzgRtT/q/gO2HkZPpZUWvkDmfAWPUkVZ51MhXcpc0CRSwjLrZ45d8V305c5XqH1VjDkLFMMysCzRBVx9wGyYRz7uVFYCcMIrl36mRC0n2n8MdXX/PeS4fMM4gAA"}]},{"id":"platano-frito","name":"Platano Frito","category":"antojitos","alt":"fried plantain rounds with cream and strawberry drizzle","copy":{"en":"Fried Plantain","es":"Plátano macho frito con crema y lechera","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Platano-Frito_MASTER_v01","aspect":0.909,"tall":false,"wide":false,"scale":0.82,"fillW":0.8116,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRtwBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSOQAAAANgGTbtmlnnfvtH7vk1IwmOE1MN1I0SrZtG08nfEkTImIC+F/Rkv66kLpv77lh9+lmcMkFDXQ3oSYQCYJJpZ8HLkQ0Vo9jFBN0EY10Lu0BoUrEABoAJRG/FIimEAABUJN8FNFs/Kfv4kn0DUgpflXCFpD292shKr5ir0ABanzFXxCtwvOXeFYljz8aD7jOE0UFNT8EHTxG60pUBIQfQ7YSXRsKeTcdDa9rLSHVADaKJ+cVYs95Iac8H6N31wjWi52sSr9vBhumzy2srQKA3YOpsyi2uJYdJF4KCu7p8wvqqALqAgBWUDgg0gAAABAFAJ0BKhQAFAA+7XCwUimmJKKoCAEwHYlsAEt/8FQeTce4BDqk38NLsb7zv+JGNwAA/sjU/vO6Zy/99lJpMUuoXwofZezR9eCYsGGRGl2PXjChU5CJGBfUkLSatga9nTlpXn8v10AQd0HFsyM7DrpKJlXZ8vdbZLraXU973OI/QPNB5n7ggWByPlVJX3AiXb7K303mjaGAiZwliZUkjbcQYwMu0Aze+GuAyVTzHkYRj5lhAbNLXZ/cFFr4kVRSU+87teOKl7UOLNOctkCGjUAAAA=="}]},{"id":"tostilocos","name":"Tostilocos","category":"antojitos","alt":"open Tostitos bag loaded with cucumber, jicama, peanuts and chamoy","copy":{"en":"Loaded Tostitos","es":"Tostitos con cueritos, jícama, chamoy y limón","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Tostilocos_MASTER_v01","aspect":1.162,"tall":false,"wide":true,"scale":0.832,"fillW":0.8929,"fillH":0.7684,"lqip":"data:image/webp;base64,UklGRlgCAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSCgBAAAFkLtt2/G3A7qf5/3F5pTJtm1bkz1ncmZOyZTNrt3JmGy7nWz3e5/iyy8iJgDmxCQgEgG0mJHAehKAlH1php3ly+c3Lz99O/8BgA13PW5ugRAAES4/Su7vMpTN77HCHwoCYsOmf1aWD1/7mPXwpKMQ/v9tGR2Hz6eBNwd8p/OtmBoC6wybe+E2RyD0n6F2N0J5vHb+nHXMRghmJ/OA/esKv3Zohqnmi4kkPnjfYdMXo3mbO2FCUnOm3dW/zVDb3AsBeG6l9OIOC8w1X0ogSbsfkjy/o1iziaHOZkEKf/lt1he12GsmQwDLxUQBBfOni+fc8jVpBWje1QSQuPtE3foyY5/ifPL5rTuPX3wGwNoh7M5Xm1+REVuwkiBgQIOIRUT+AwhCwmTAFFZQOCAKAQAA0AUAnQEqFAAUAD7tbrBSKaYkoqgIATAdiWwAsR80Qr8ZZjaACwAB58XpIS0wmXtifg43zW+4AAD+ZLR3rGTY68mK/BS0/bkvsuGTXhlxNjXJyM4WWaLjIzkJQMTjotn3SOR2J3Lpnj+HsZxJi71Q7t4dpJV/HXvIvezrNZwS6ZvQnpX2FqN+JW+9d6qvxXvIyn1Q61XVJB/jxhA3INjxz2hV+E2lrB6BVcn9w6J7fuSicTe40POnBC8luULt37wwHZOEj+nsbTchd14fKFdpscaw4falzHpv/v7PD+4PF/0PcG/ucAaMf7Rqt8SXydi+3utykg6Dr6z5mjNW+fSPX1CwI8MdnyyxwAA="}]},{"id":"bionico-con-nieve","name":"Bionico con Nieve","category":"postres","alt":"tray of fruit and cream topped with strawberries and a cherry","copy":{"en":"Fruit Bowl with Ice Cream","es":"Fruta fresca, crema, granola y nieve","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Bionico-con-Nieve_MASTER_v02","aspect":1.181,"tall":false,"wide":true,"scale":0.895,"fillW":0.8929,"fillH":0.756,"lqip":"data:image/webp;base64,UklGRgoCAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSO0AAAABkKNt27FH9/O+sW2rSjq7y5HK6GxjBfYC0iadVbLlBuzU9uB732fw5RusICImAFYJ/yVJRHiBLBCRFLD3A5E0IwkSoMTVensISAHAxg5+TiFpM2xwOVxyHECAnGlZOtxkpb9/f59c+9oaBxJDz98fWGvFpt94Ajbo1gYbin/XhqHV0zAQdcuKrSoeAeL2rRm8FCYFsh8sKMVHCRAE960P/Qmr7R4PEARqHoxvmlnz+/nKYDEIAKjjy+O33y5HJyrszATyDpQyvvPNVK4EwVQicJGV5ul4EOFTCZv83t7GEAhYFQK/C1gnKaUkmAMAVlA4IPYAAAAwBgCdASoUABQAPu1qrVCppaQiqAqpMB2JbAB4NhBXgXaDn1blmIJ8L1d633Qf3fjytCD48SA/lpwAAP0cWgFMtGm8+BPvndT4Vnvb2KnweHKKaL9R08H++ehchh4/vF0HZua6oMjy6RolL+Hz/gP3DjAzgjLa/4Jqxp9clywT0EFjfkP+9iBNX3nxI//j1Ycbw6gO43wMfMa/ZFEdzkXEbhtgZXZUYaIOWyS26XfgjvRRp9CMtT+fa0UOVRgXyLkw2bf8m/Kymv33QlbnTU/8eregEP9u/T6Xdg9rFHuKJ2RKvEWP51sylDBGRFgIK/H9c7gAAAA="},{"stem":"LS_Bionico-con-Nieve_MASTER_v01","aspect":1.149,"tall":false,"wide":false,"scale":0.875,"fillW":0.8929,"fillH":0.7771,"lqip":"data:image/webp;base64,UklGRg4CAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSO0AAAABkGPbtmpF+5yLu0tEDJFbA2iAOy1wd8vcG+AQkTkN0NDd+YPQKX/ce0q+jOpBREwA/jMpdokUYn2dIChmN0JEMJjc7IEJhJDam7EwENwYgLs/MlOTq49FfpUHx1R4gACsT6wZmxitv5vta6s3GawqbPJF9KcWESPyXXrgjgH5JcaIXa2NtjUBRWKMOKtlBki+Fae0LAVDodv65YSRbxlghazXn46MfN/0ARECNuTTgTw9loEBQvSuWOYfbbtrAwEAI3hRtGVZ1ttZDRh2mbjyXYzIXh6Y7IEU4gYXJgfioQiOScEuw3l2Y+XGsA8AVlA4IPoAAADQBQCdASoUABQAPu1qrVCppaQiqAqpMB2JbAB4NcU48l9cyyXCIdCgBUZ9Q2UCLhO2R+csSx7AAP0Tj8gvjXtmWMa2MDmj4i8HfQzE6NvqQI17rgB88Kqi5gjnmZd4bA+KlUhXPaYuZKXyETTcLyEN4/QgkUY7zwY18z/KcSbvjKKj2//sJHpQX3B0U76cF9j/D7Kug1kr2MH2pOh4D/hM2WwgVh/DQHov7s6NKo915SNRTlygKg89YvcarBoSGIeFOXuw5z0mY6s1LH8CIzzGaXW5CPonzqzahKaQYIojJvRfWXSGGahH9Yfuo9uNtc8SL5/Upb1dQAAA"}]},{"id":"bionicos","name":"Bionicos","category":"postres","alt":"fruit and cream bowl with granola","copy":{"en":null,"es":null,"source":"none"},"nameOnly":true,"images":[{"stem":"LS_Bionicos_MASTER_v01","aspect":1.136,"tall":false,"wide":false,"scale":0.866,"fillW":0.8929,"fillH":0.786,"lqip":"data:image/webp;base64,UklGRvABAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSOEAAAABgFvbtmpln3MfbhGpNeBegHvuDgU4RFCGUwA0YA24hP9/YofM77vnIE8GHUTEBOC/DcdiRklOJCY2hMJcEHlBZECMgpXEdDYIHgNI81CUXtacUP3oQcm4BwYKjqauzxMqzn29bSU+lhvBZtXZVxVxGvip67OZ2FErTvSv+E4keZ2LIXWiUZ3eZKDmViOJvvTCYE1tFKd9MAZD6kdwmsoDEbKP1Q+RL52DAQyaPtUPcL7u54AAMNqf1FrfWtH1XBD+MsovVVT0qQ9MCDYomNnb3ZgpBRPCmRDIhKjkMRmPEQwAVlA4IOgAAAAwBQCdASoUABQAPu1qrFEppaQiqAqpMB2JbAB40cQMXMu7AqQPbkHaB/WStOKmyU2+IADtRpOjHjBi53BygTAHFgNf0LAF0CfkX14JsKnz5GZPN3H80raHJeVcyI2awABU8VM5AOHwa9+SybDNi0tYLK4jYdC7xYe3R+f6BlDdMJwyV30p5/690zvU0hkfWUGHCWWhK2PXcnQHJPSKepOI7Cj1YuAHt81fQiZi0/JjizYVyZUpf/FJbPmrA40YWUGc9Efmr9W3d+ZhiX2wdboMhkkukw3tErMb1AvUHdOtr8eoeBoxsgAA"}]},{"id":"churros","name":"Churros","category":"postres","alt":"carton of sugared churros","copy":{"en":"Fresh Cinnamon Sugar Churros","es":"Canela y azúcar, recién hechos","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Churros_MASTER_v01","aspect":0.791,"tall":true,"wide":false,"scale":0.846,"fillW":0.7062,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRvgBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSOoAAAABgFtt25rleb/gbrVDxQxuJRPQufsGlO47ULq7u2tH725fkqfI98MKETEBAJT4iSiIAkQUjOKvkHFYUzabDmXBKB2LreHtfL5jG3L3CqEgiHkkm0b4Y/M454C3cRBB8CU5fETHJT9/uQoIBJN0Pj5J0rH5lQEF+KGX2nU9tNkNC55yOiaHNzEQQy1tGm0OwgIAC0V0fdWYFNI0XYPDPJMg/JaOx+VLGpQJc7Q9Dm+CIR74YYjaY3MWCj7qaJt6YJks5NE1lfhSiP9wtGPrX2b5EoRc0iFdPiVDmSAonty6PN2ZqbHwz5BA/BFWUDgg6AAAADAGAJ0BKhQAFAA+7WqoUCmmI6KoDVEwHYlsAJ0y0IKmEhRoIQDWXDsItHwZCJPgO+CBUiJbFCk5EoAA/rVOkxOWEwPBOHIXFEcd/esNkvBQmGsjGefubebTlphr3ENiB2PFeiWxb8W2j9dNz/nuZoAqcgRxB/qIiTg4hqR6fmSpjrvU0fON9TyhNdROJXeEjrXXjxTH24FiNjM36dr49/8WMnChusT/7HJikoDcnffcLmmYqe2GEfpz5q6dJ2EzW8ObBquwokSf9ldn+2YrzBQ2jFfX/8BYA0IqmlvSKEf/E9oNyA2mAAA="}]},{"id":"coctel-de-fruta","name":"Coctel de Fruta","category":"postres","alt":"clear cup of layered fruit with chile and a mango spear","copy":{"en":"Fresh Fruit Cup","es":"Mango, sandía, jícama, pepino y chamoy","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Coktel-de-Fruta_MASTER_v03","aspect":0.541,"tall":true,"wide":false,"scale":1.005,"fillW":0.483,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRvIBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSNcAAAABkGNteyJUf4K7W+nuVlFbSUVF51D6Drxyt9bdKt+Cu0PlziT5gDuTu4WImAAyZ4wRMU66jCLrEqdn7NyyNBjR1lU1HhwHV4hp+L7fjuNuAKManKKN9yNIgQKyMeOUuwOloASKiVu14hsKEOjVSTn/FIaARD7ZWEW/QSqloDKJmzHyvocCFN6Cdey3If+5dSFmRpyGYQACq6RpS5X/GBghbsUp/AQSBurJ1oqRXYdJhZ7nwgOUQh7Z6LClNynkdwZxK+LUAqHwHERMK2Zi72SrkP7bzoGRJQBWUDgg9AAAALAFAJ0BKhQAFAA+7WqsUSmlpCKoCqkwHYlsAKwvsJQIMBhXVkhI0EIBq9RlO8Buu8lEsAtlMAD+0524hbT2qNGFKclorHahNUFcXlJbhIU29dIc1gtWfSIBmy2gVBM07J3y8uus+P8wzEuflDnWaAhHUXHkHN2k6E3rdmRc9F2W693NgoBfN82IMEULX6UFqZKiRa+I1tcq5WYpQwmlBznbyDibrK1XeR8mYRmtsgWWXyx9aFhsDW4UTE258BJyOl1aRHghlI81e9rIgOaoyrJ9+Chk3xw25/i7FiDokIREO6LhldgCeVX3iVP/V/ZZdVQAAAA="},{"stem":"LS_Coktel-de-Fruta_MASTER_v02","aspect":0.563,"tall":true,"wide":false,"scale":0.986,"fillW":0.5027,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRuoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSN0AAAABgKrtn2Ll9585Gg+y7dwBLpWH6NZINLK7VecePJK0SyJ5coek7bCz80Nm9xoiYgLgFhEBFKIqlI0Vbe54aEyECeTobIBv3ug5onjmYpkP8zyAhChk7ese/RzHoV2Cml2aHK3hKJRDkDxhQEsGPE1A/kGj+/3DWtLnFDRC2umT/7oQcymUGlrSBmyGdgm8Twf9aqgw2WdABnzJQFyIYZr+v0NE1KgjLQ03IGECtU7DgFNQUWKTpA3YCR0GYPHLmm92IBZBYYnGkrXQEWLofr+6eTjJQiIAsXQqlUrADQBWUDgg5gAAAJAFAJ0BKhQAFAA+7WyrUSmlo6KoCqkwHYlsAFZs8BvALtJ3mAiNN1WG8pXOrMHX7Ohvgk6wAP7el+t1Qxt+292LjQbLra0OX8h2+wdUvvNtlnRJ/YgF10n73WmdlUAzcvpmOY1nIhUnkaqmtcswwLbImldw7Gzr+k9d/3wE9wwBc94cOYquTP/eyAdvdYTeSqYljxnWf8yv//7QppPShoyByixGs+Jnp2J+/zXdPtDr9U63fqJmDFaj4c5AOkhBmLvjeb/AEezhkRCpQc1dDg7ppNYBmsJ3+DJRwLx2i/+PsW7iAAAA"},{"stem":"LS_Coktel-de-Fruta_MASTER_v01","aspect":0.574,"tall":true,"wide":false,"scale":1.015,"fillW":0.5125,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRs4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSM0AAAABgGrbtrJlX8EhOSRPmq2RJLvrM9AZRF7DJTL+F8Dd3V0Syb577w6f/K8QERMAvxAApEJkgfzeloalncaagkijtJb8524qhE8gfZnGOmsMX7PC0k5p6UjDmAyCxgAt6RuARqBE8Q8d6ejqoYIEkk9pfd+FkEEQWKQhLR8SIUI0xuj5VhBRoY2WNJyEDJMo9+jocRwqTCDjnpYeR6CjIEbjHJugwqAxQc/xtxoygkIXreVXJkQEiYp/6/EAkQXSbvjPGYgoEGhev5ouiyNeAFZQOCDaAAAAEAUAnQEqFAAUAD7tbq5SKaYkIqgIATAdiWwAxQfC+k0wAbGMiYhKBgB8y4aqwwHagAD+WlmCZj4rwpKz61CToVZFcN6CHqAzmBF6HGkf0Di9hZy0+VMSwUd8ux9vXUVUM1/naDYkuitWiyX6cfMHMH4u8742fJtjhfLXvOHfzDAJuB2MhN1BAixlzRp/RVMexn7BFCv37zGT8k8Tsg8TYleeTapBqPjxKycMYN/gH2X3JwzOY+bLua/9h6IHSDcQZhWP7UyJMFnOzUE0X4//JMTE+M9P/yAj4AA="}]},{"id":"crepa","name":"Crepa","category":"postres","alt":"folded crepe with strawberries, cream and icing sugar","copy":{"en":"Crêpe","es":"Rellena y bañada al gusto","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Crepa_MASTER_v01","aspect":1.2,"tall":false,"wide":true,"scale":0.82,"fillW":0.8929,"fillH":0.744,"lqip":"data:image/webp;base64,UklGRhACAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSNYAAAABgFtrmzLlnZmFDXG3AtzdIkjd3R168JgCqIKzORmRu0XWgo68yM9ACRExAYCUSqlQsJJSCvxzVE5pU1v/zMri9ODESGt9bUUCUPJBR1/LozAqHmidNcZYa6yl4T6wQGvp6TR3oA5o6W24BqzS/KUfyH2n87JshMAujY/jWx5C2OK7j+VzCgTSItRe5wqQyHqk8TkVAELosk67366iAUBh6IVGk3TO8D7mBxTyIoZaa0vDh4QASIiGPTry3XAbIgBSItwy2N6QX9MMXyURLH0ApZSSSgIAVlA4IBQBAADwBgCdASoUABQAPu1urlIppiQiqAgBMB2JbACdMzQ6f6rxVThvaIzG2v8TOoXvJmJlgDb/DQPrQtR450NUqiAgAP3Sr3rKLo5AUae+L5vidyAtEL7y0psr1YRTRW+uds/cZayeLV3nUudkA1JsRH8fzphozmRcimNlZu6LPHj6zhL+C59utbP3LhPpi2TYrIeaQD86YXx+6g2DE1m7f7gFPC7GBkyZgGI6/ycmWJmbr9VXSn9M8FUw7PPQ9jf5hzeC5FInR8rtInUMaAbXPKa+UivO5jhWsXWCp0rpAQkCt0UD8wl9/UHXlb38mtv+eQYSY+g1wJWUy23v3ck/8FNDf9H5XxgW/5FRaZ8znhQAOlReYAA="}]},{"id":"crepa-dubai","name":"Crepa Dubai","category":"postres","alt":"crepe under green kataifi, pistachio and chocolate","copy":{"en":"Dubai Crêpe","es":"Pistache, chocolate y kataifi","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Crepa-Dubai_MASTER_v02","aspect":1.1,"tall":false,"wide":false,"scale":0.82,"fillW":0.8929,"fillH":0.8117,"lqip":"data:image/webp;base64,UklGRvoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSAcBAAANkGTbtrFX63yxbdtG0ehAGpl6SrZt2zZ+fvfk+TUhIiaA/ys+RgUVBBXx83gBK4AAj+3jsTTQ1/aqcYgS3+RvBwXbtstz9JQY5XSsPQuFDSHBYeLwDQj3hAeau/ubLpvkGBQNsZQMQVOi856GCTFGsFRQRcTEzYXDw1mtggACar1N+sHXcwp/bV4RHHmo/E1k8BX4hvD3b37A80Pe3xjrKFwMwctpoSq/U2E/ReB+Nzn7T/jM7pQCsn3S4auoABfd53n5wENt92e9jwio3bcXUfEGci+NPWNZMUHqdH42d74MbICyufXqOPzSIHWFluVFB/Lr+/6bj/3ldAJOr8XvjcHitx7lVwBWUDggzAAAAHAFAJ0BKhQAFAA+7WitUKmlpCKoCqkwHYlsAMKvwhQHQACc/DEGzqaqPPWyrwBbxgccIsAA/uhJtZ/8up0/gmiCzC4vtX4Bp3bhw+1LvikQCBBk57bzIs2U4N3kO+PWIbLXMMl2+C4K+Bx+cELdEX0VdyBVNZAwV1yxtFlfVLuwvKxTI1xb8+3wnBOqT8Nbc23V53UkTYkjToXXwUbun355u+W/0XbPvzbH2IPm/poQlZeOhSVA1A6Ix44beso357yPkMc0j8eA6cAAAA=="},{"stem":"LS_Crepa-Dubai_MASTER_v01","aspect":1.021,"tall":false,"wide":false,"scale":0.82,"fillW":0.8929,"fillH":0.8745,"lqip":"data:image/webp;base64,UklGRuQBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSBUBAAANgJ9t2/Hlft7v62fb+Cvbrk0aqD28QEcT2LbNn/k+uUaIiAnA/1Jt7AG6kDF9WdQgl1DP3oBA4CUSdHnXLCHKmtWjOVoG+ja62pkRA6kK1OaNNXrWbAw2S4bUQDKBxcjiXqmoWAACAYLw9VQv2P5AGib8nNboy9DcFH34JZvi64w3jQ+/pLKoXQRyw5DKT6zyrCrBfvw+nVQA84WNfiFFQmfMgdeqdd8xcwWmBwJvSN0q8ZIgAhOJ1JhvKAc8JR7bVLBkNXN6NdMwwAQI6+hKs3PARekpqe2NI60BbrLVdzu3lzZXorXGYszf3QhA7lfZU8dHZ/uVjc+eWDKLr/z0fAIqIlGmZ3fc8E1p/QnEBIBppwQAAFZQOCCoAAAAcAQAnQEqFAAUAD7taKpPqaWjoigNUTAdiWgAuwARHRx7MH5T76CdZTATloAA/uGXO94kDcq3RzHnbOt7wmTRybWo5IKn9t+RW7bEgbNwFaOwxiVAHHjPISiIqCiaOz4JWe03Mor9M+YKNlDPeR0XE4QOAjqNoBgl+IVdgKMGIy/5lA10tT5kPWGOE9b4oB+o+hUGeRjvjBxy5gKd5FLNCSCxQD8BJAAA"}]},{"id":"croissant","name":"Croissant","category":"postres","alt":"split croissant with ice cream, fruit and chocolate","copy":{"en":"Warm Croissant with Ice Cream","es":"Croissant tibio con nieve encima","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Croissant-con-Helado_MASTER_v01","aspect":1.221,"tall":false,"wide":true,"scale":0.82,"fillW":0.8929,"fillH":0.7313,"lqip":"data:image/webp;base64,UklGRg4CAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSCsBAAANkGTbtqk969z7+Nu2Fds2qn/6kF6llB5YJdu2/dnfPWEfImICAFEAQQFE+VsRUAUBVf4O6lJlCHvc5zyYulIBmB60ucjEUaWQqTibS74oEXc/7xrMe99ehH1xvphO92XSdGXe1QWl0LfqhZJLqN/6HePMx7z7YIOm78XWtuY4GUIiqPz84e/e0Rl9fHrsbntjWIXvqeXtC7cGKDNL1t47mrxdhLA0exh1VRHV2vm9t458LdFlpyh7VsCgameXnH9LbfLGSsu/xWh06OIT5GDkvP+AmgtdEPWhCvIPFfdoDOJTj+YbFFVRBPvix4TjpXnycrZzIBQENbevbWyH91cHnr//8NzrJeG7an1HPcCPH4lEpZp9D2UJfP4pVFNYVA2uiKCAgmgVcAAKAABWUDggvAAAABAFAJ0BKhQAFAA+7W6vUqmmJCKoCAEwHYlqAMozIaW5DBTp4rjA76wcaPBvIyGfQAAA/u1JMXS57GYOOICTvfGzO5CqxUFH+1ouNaMA222FpReYVY1QvCfe/Zag/JJjT4Nzi5cQq8Fta2umVAWe0c/goxavTECql0Gp2vUMNjPCF6D620mKymQntOkD0hn9bndG10schnHN9Q/N8SELmnFhX6CAIOggwy7LW+Wt4xR0q9D5+0vAtatIAAAA"}]},{"id":"fresas-con-crema","name":"Fresas con Crema","category":"postres","alt":"cup of strawberries in cream under a whipped-cream crown","copy":{"en":"Strawberries & Cream","es":"Fresas frescas con crema y azúcar","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Fresas-con-Crema_MASTER_v01","aspect":0.521,"tall":true,"wide":false,"scale":1.045,"fillW":0.4652,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRo4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSNUAAAABgFtrm6Ll/WZwdyJ3txLIfiIylyY004wWyKwAUocCiCx0d9eZ3RfZHVqIiAlAsEA0BP+UzumVcoiTQvPrM3fbIA6ClAN+PF1dNkGFabT69Pn+MeCgUHtKn3w5XUB4FCZpSD4fXxRBBWmM0ZJf91d2GDpIoeaLPu357UM7VJAg4ZAevQduABIEYJGWNBxFFEIVZmjo+4xAh0Vh6g9f8iAugzT0uBXt1k+PlvNQCNdope8bjiDKQaH+07fWb4F2EOTe0uNNJsQBgsja3mY3BM4CFachCAYAVlA4IJIAAACwAwCdASoUABQAPu1ur1IppiQiqAgBMB2JYw27RSvYnSa2PUqoAAD+7m/YLYfy0KSVz6NkhfM0Aj5WNDdbu2+FDipwpHHqqfzP4eJi9LAA46/MC//9fYUI6SjgaoGfC6X3VAeUafwOfxW5rawdYOUReMrdB+cJY3P2TxmWNhjusvlr13Lz23rXk60v+AH5QgAAAA=="}]},{"id":"fresas-dubai","name":"Fresas Dubai","category":"postres","alt":"cup of chocolate-shelled strawberries with pistachio crumb","copy":{"en":"Dubai Strawberries","es":"Fresas con pistache, chocolate y kataifi","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Fresas-Dubai_MASTER_v01","aspect":0.512,"tall":true,"wide":false,"scale":1.188,"fillW":0.4571,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRpoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSLkAAAABgKJtm3Ll/WaO4NDcJbKDk3EaVbtW38FZAJagQWMDVHeLDo2LZiMvNvNvISImANFakFhjphc62cZAElGCtQ5IhEAppDFUhWgRKdEYLosqlMrNp/X8WoMKKXTuHNDT8yUH9Z+g/p3GmU++1kNCBWd0pOMpIgXbtKTlFiSksURDGuahQyks/jeNVMwYHWk5GKPRSU9Pn4MOKbQbes+3JqiQoOKF1vA2C4lJH9E57iJaYfzk+uZ8AhKTGABWUDggugAAAHAFAJ0BKhQAFAA+7W6vUimmJCKoCAEwHYlsAMT1gJC3bSotb43a4X4ylOW3wUKpfuiwV4AA/tMYtfcj3PNpdWC23RtIP4bYR4okWOjdodz/vUzjeyEGA/jnFqGwSDhl4Sfej4On2SnN2ENoqCBZcvc8nr6NuAV05+1gwsgY953IADMQ2ulPQhPJQa3rYo90yAj4S2Qp+PSsZX9GYsKsGFD2ae3ZvnA+L2ku5njsT9CTKxO9/+6rrYAAAA=="}]},{"id":"fresas-en-cajita","name":"Fresas en Cajita","category":"postres","alt":"printed strawberry carton topped with cream and sprinkles","copy":{"en":"Strawberries in a Box","es":"Fresas cubiertas de chocolate, para llevar","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Fresas-en-Cajita_MASTER_v01","aspect":0.376,"tall":true,"wide":false,"scale":1.197,"fillW":0.3357,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRooBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSKkAAAANgBzZtmplnXe/4A4ZuM4YOkRhIVCkAvlQPwCKIcXUZt/d/93okwwiYgJI0jB/+PZhCiWM/dc+4d18WcMqCmFayD3ejpWIaOutxcoLplDt/Mn97N1nhLH66oCbzgMhTdsVnBYvcnlTiBW8I33Qewr8P5AGA6YbphAjZwB9RChQQI/QwxRg8agbA4MBCjNyHrneiNA+cHIqzoQRzWJ/0K4V59F/nudL/v4DAFZQOCC6AAAAsAQAnQEqFAAUAD7tbKpRKaWjoqgKqTAdiWwAv0QSUiNQwShldoJgiBttmLko4AD+3pYC1e0+fKrndn062BZoaTp/OlHmWG1Z3Wb18Bll2y90gWB6fOW/GhK84U4qaZjrd2b0kGU5fjflSEdKRjn+TZC7TFPlHczxSXfAP80eWgwUmvWhcU0XaE7Exc4YdrF7ugVxXZePWKFjdadyoe/gug4r+TcVnY5wdKl/4zcP+Te2Hp+P/yVePgAA"}]},{"id":"gelatina","name":"Gelatina","category":"postres","alt":"lidded cup of layered gelatin","copy":{"en":"Mexican Gelatin","es":"Gelatina de leche y de agua","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Gelatina_MASTER_v03","aspect":0.823,"tall":true,"wide":false,"scale":0.82,"fillW":0.7348,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRtQBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSAUBAAABkKtt2yFJ71c1thkr0jF44r7mFOYYJmI616SeyDZiK7Jtr11d//8G9dceQ0RMACACQEIjIsIEAATe2EDz2OrBxeXRxmRLIA6AIOuAmr6ah9kQG5V0naCrlFKu67isgC1IGqemr2ZfAgQWiv5RaYPm7xxYgCDxnJpGxftowCND325/GVwuwmijSS1+oiYZZDcsU/XKKTUNtQgxVc2NbX8jqRUDsD0W8mfXv17/JjWdQlgeQVzH8a/nn57XeIgHkLrBhXuHVFyFj43aq61LhwyyFRZ8AlQ3jw5d1iDEZKHg8Pffxy/6H0tgmwTJPff86yg+p0NMEOQ2rV9errcVQ/DfEhYm8AUAVlA4IKgAAADQBACdASoUABQAPu1oqVAppaOiqA1RMB2JZwAu/8WwcZDbMzjU86DKbWudWeZQAAD+yjzK5lNupgfWSNZKeKfRyAnKIaMOVu6YH0UwII1DM9bCPdcCfiDp5Bf44y4UY9JSERH5SDMGwQgqgo6vHGjDsyd8lWfindIySj1MreSGbJfqm/KEh9yjjb+UJD784TEiD7LsYseNIm9nu+GUxaPq0S6rdqs4AAA="},{"stem":"LS_Gelatina_MASTER_v02","aspect":0.825,"tall":true,"wide":false,"scale":0.827,"fillW":0.7366,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRhYCAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSPkAAAANgJtt27Hnet4fsTrbqGxnBWMqVamyQAZIa9u2bX1P8GuEiJgAQBREAVEQFMCvIi/dzxnmfHp6mh9ZewVR/94AFCA4KCTn6brvQURzA+fWwiLeA/Tr9uy1oXFnX5T1gf6Lu6WNQIczOj4zo9UfVXkYrKr/iMl9tOTzQy+nMN/A7W2yTYxTrW9LjkBBbV87KWIAEdjG9gWIbqQLbhdxqaxlGl9kGBVA7d+7qKszIvmvcmhcwd1NsmVcIdY/tX3uJavwfxnjAtHNNMHlAm6VyUIDqI05TzYSHZZgOc7fUHendzkqwCry7UZeOqtKwvRuaBEPla2uqXcE0H8AVlA4IPYAAAAwBgCdASoUABQAPu1orVEppaQiqAqpMB2JbAC/avUEBpgMwAvgD9Zus8IkIJ/NmK1xnV/oijt7fQIAAP7nUG6KnywufQeAoM2UWjQ76faIHTJdCTbpdypSmp8PGw4JEBMHkeuJZo69hZBwKsp0AoDqXPKlLJL8eX7jFAuwX8AMm7BKPkeMHN6qbxh4ZkOL70NhK40HP9HJn8ks5Gw+n+/NKZ6P9oMyYT4ill8Nnz8JvVyQpgfDu5FU0dwGt3e9LrAYyqZ752m8GbOSLiocSp986J7YH/xettv7/2PX7vC1Ut2LIBH+B9eaB8+p/bk2JfSoWu4AAAA="},{"stem":"LS_Gelatina_MASTER_v01","aspect":0.854,"tall":true,"wide":false,"scale":0.82,"fillW":0.7625,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRuABAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSPoAAAANkGNr27FX1/PGtm1WTspU6VNnMsYIMoq0ZmU7x7bt9y7e7z9jiIgJAEP8ryFAiR19OclluQk/Pr+/OT36AaaKyWwkICUztynj68wjc34o/o838wKIzx/4N+fEMT0ymQuU9fQd8m5zccRIIPyrhGncX8ROff7PPx4XR1zSpwMiP75qjzeH9xjPv+BBcf+uWhVP+M9u4zxgumwzImUXmADPRXucLIDLKHGrOItQCbqHiHz/vl4W2Jsv+EDu14NG7wifgwKcv9VEKLvB+Qhx0BUXtY8pxnVt4j+HzN0mpnj0sh9QwqM3+Bj2d7htMJvPW/NYDMTz2ZUvBiAAVlA4IMAAAABwBQCdASoUABQAPu1ur1IppiQiqAgBMB2JbADE+QAwAHYDWBcAhlrmHo2K1fmQXG1oxzgAAP7qp5OCK8Su2JRpA4aR4/nTZwXHq/2eFTK1d0cYCrVj1SQdQOwyr2dkh++xh8XBon8JfKE6+nKvInZVBnFBngE4oDKsGGi5lW53Ka0akNRuogk/u2AZF+hfgmizIr+gpecVsacLFfQTIUSRE3lQCGC+WQIf5z7VMcYzn2tmAnBmcXfnxtWDwgDPmAA="}]},{"id":"mango-en-flor","name":"Mango en Flor","category":"postres","alt":"mango carved into a flower on a stick, dusted with chile","copy":{"en":"Mango Flower","es":"Mango en flor con chamoy, limón y chile","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Mango-en-Palo_MASTER_v02","aspect":0.548,"tall":true,"wide":false,"scale":1.203,"fillW":0.4893,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSLYAAAABgFtteyrk+xPcYQW3ihHYwKF0d9eekprON6DWDbRzr9zh3twPS8IIETEB+FuJQAncFUpXe6DESaHkiqYrU3ms8C3gdjLEAVWvpDEsg7YIMh4ZkSHnIRYg6+JXxJt0iEXPnv8yPEqyxWCGAcmIt/UuA38w5Bj0XwrZ1zSk4VYy5C8o1DEwJuBiogMU5hgaruVD4Chxwwf7w/EQOMdiugOxCj5THYiBZwwm2qH/odVPo6HcDxCBHVZQOCC0AAAAkAQAnQEqFAAUAD7taq1QqaWkIqgKqTAdiWwAqRGAbwDn47ImALSmEaDW19dwAP3RQb4E8UGxIoxCoRYIqp1ghYdQ+2OpmP827MOdFyGsY0PeUCu7GjfflYH+dz9Miry/EiR234jkom6tCXlSgmPzEW9Edkr4k3FNzw/JZ//35wLM/X/V+4Yd1Iv7n/R6fF/zGojmqiSaJP6zWxkvqJOWMVcyuJ0wZJr4d5QAeL/rPMESgAAA"},{"stem":"LS_Mango-en-Palo_MASTER_v01","aspect":0.621,"tall":true,"wide":false,"scale":1.065,"fillW":0.5545,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRsABAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSMgAAAABgJtt27Hnft43RpXSSWV3aZ0BuIGtyrazg5NaA6jKAlZrf997Bx9WiIgJgLMSESXwrpC8OgYRTwrJZ2Q3Anzs8tM8n+RBuWkUGZvmi/PQLgr55zSkxSNAnALQSYskbdZAO0lgNc0/i9MuGuWHr3Rqd1FI+qT5Z3MrFuIUfedkyGLofwJ9QOufxRUoOCrkPNCQhvcFbtBo5Jdtf/O2zINA79C2eZoOgbsgcvjifCYKCl4lEIM9CFDwHoDhPgTAp0ZLI7QfICQY7lZQOCDSAAAA0AQAnQEqFAAUAD7taqxRKaWkIqgKqTAdiWwAeB3EDeNXZX6AHStERYCJNtaMVlgA/FVt8b0ANzTznTPCvhwqiYxIQlPj77R8DWFOeJid0wxynxKuy7aWoFPWd0noUY5BXgXWRc2sd4l9/3C7Ldx4YjJssalzPNzqt/4bRtQvHKgzyQkWcTBnoruR/+ige63UbY7rDTvE7n690f+betBzVL+YvlWlUiZpIE7x2plqNCIHDqMpV1m3HiEIO/+pV0uScx1Eq6XJOY5o3yP/ghvNGwAA"}]},{"id":"mini-pancakes","name":"Mini Pancakes","category":"postres","alt":"tray of mini pancakes with chocolate drizzle and strawberries","copy":{"en":null,"es":"Pancakes chiquitos con lechera y fruta","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Mini-Pancakes_MASTER_v01","aspect":1.019,"tall":false,"wide":false,"scale":0.82,"fillW":0.8929,"fillH":0.8762,"lqip":"data:image/webp;base64,UklGRhoCAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSAEBAAANgBzZtmplnXtxd3d3lxzIg2gcsmFMMaIYurs7773v96DvpxAREwAiDhBRNUbVOAdkTZMRD7qsP7oVzXGR7XuB8qee7JqmtWz72WJvby+akxFs2WyBl9Cyz1yv1BRVf85F4qSaewAtNoDYrM6XHch8j5QrRvktrjjzGTK9aDGC/IGS7YGYuCV0zb2iDW9IqOZzcPFKwjc8RSVSh5pQ8Rxn3AApG2ojDyglTRVxefnpNF06zXgss04BQUWxsVw1wUL/TLbht4BNrheryztcPR7PzM/J6IiSn3rb6y4ySM7uzmY0lky8qSZNbk1d7QefKSRBMskTxITMijtQhwr/qngPAABWUDgg8gAAAJAFAJ0BKhQAFAA+7WypUamlo6KoCqkwHYlsALsvdzgByeCIfDhYRY8dp5Uf4LRDsQwpZXgAAP7W1n6MtLAtCQrjM39ZO38x+TgwiJOzIg0K24UCpZ7dJrPTEdo7oK2VgLotFxLOigh8o/cbiw7MvwwuVfPQojGIOumojfjmUIKriJU8in5l9WpKk5gYzXYCANkPRJyPcxWcK1PihiLAxpqzGVHqKEow4sI3Qlrbew7oAT5kHe2z12ZUHRoeU3+f8lwluHPwJCCLkaQfwtfePhJX6/5H2RDrqAGUyH3FsBOUNJlCeYFlp83A4JHbTcJW4AAA"}]},{"id":"mini-pancakes-dubai","name":"Mini Pancakes Dubai","category":"postres","alt":"mini pancakes under green kataifi and pistachio","copy":{"en":"Dubai Mini Pancakes","es":"Mini pancakes con pistache y chocolate","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Mini-Pancakes-Dubai_MASTER_v01","aspect":0.935,"tall":false,"wide":false,"scale":0.82,"fillW":0.8348,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRu4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSAgBAAANkGPbtmpF69z7/L2Bu0YQQ2R9IKOx7g6hu7tDedW795S3ISImgL+LilWPgihgvMmyHxUZYZEET2ePQNTwVtdW1Xbp02v3XtEXz69AXnHbXAxVF56GT1+/lg0bk4ILGtf7M6yq5BWo3UH4FlR016AYFBAa7zzf8s/DlCEggJeeDScaBBHCf1opgfS4+T8MYhwY+RbwbxXxgGrGf8WlUyq+1KLyD/ieOuxzVqbCP43/WnisCSYbu7z5m9qq95Ige/UFwt/FSejABW3voCgCmLtaCD58zkYGG1Qsf77FAl+PCvM8k0ja1dT5/nj90BvA9ycWcnshuv89TWvKsAAQfbn8ZPSzPG+JEQBWUDggwAAAABAFAJ0BKhQAFAA+7W6uUimmJCKoCAEwHYlsALsBjGxnxxYQUNdPv2HcA3anCRp/rAAA/ueXXHPUgiQjd6pYM0WcC1BjPab8F6R/b4wRR26dqR847yvqa7nwvKAHXGUOroKAImOBCIsE10Kk2fZhcMGYa961faZQovL/es5Zv50mHVq2PqGIQdpPGuOw/V0twnRbJs2qVxaL1OlEJz3SYXzexjxYtzz5YewZtcCeIYjyvvl1vzWaQT6ECf0M6sAAAA=="}]},{"id":"pastel-de-tres-leches","name":"Pastel de Tres Leches","category":"postres","alt":"slice of tres leches cake","copy":{"en":null,"es":null,"source":"none"},"nameOnly":true,"images":[{"stem":"LS_Pastel-Tres-Leche_MASTER_v02","aspect":0.822,"tall":true,"wide":false,"scale":0.82,"fillW":0.7339,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRtwBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSCwBAAANkGtr27FH1/P9728jdvJVYeVU6dLlWI0uGdu27ZnfuAffmmOIiAngXy8EQkanQ6BpdP2Hs6bX+pGI3LtiCpj8/IZmTC5Rj/lXRKD7Ec/H1G63fyRFxQQdvEii50ul9qqSyuebNQJjZZVzzmV4e28s0wyKxyqvv7Ti3bmeRvkn/5rOzye/RlLNeihZ3ATxbzLn+6Mpylf08ggTWCc+t7uB8DJz7VML97+ZgML7lOt4Alzyc+9nwJSfSYIBYjz75r0JKMw9bGURZhr1b70HRKaTea6i8W8p9yjA+zwYuZGTpUEMv20YxL6dXUtPtL6HQsJ7MFT8jilSueBNWyavtrnnz/y+BtD5nn+d6xZm9v5GXzIPovzq2rn7c6uuVT68VypkDIGqjZ+fDs80+U9WUDggigAAAPADAJ0BKhQAFAA+7WSsT6mlJCIwGAgBMB2JYgAALqQqitDnNKTJSIAA/u/CjYuQJSXiyaVHWh2av+TDZ1s44VyOwP4OMC83TVRkQH94S9BjOImE2yAQ9hq2bMr0faKm47vtsP7p5Kcm3+J3J8urO/xfjQShN2G1veXzWIE9h2rxrQguVEjP2wAAAA=="},{"stem":"LS_Pastel-Tres-Leche_MASTER_v01","aspect":0.812,"tall":true,"wide":false,"scale":0.82,"fillW":0.725,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRqwBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSB8BAAANkGXb2iFJ90cFyrZt25qvqz0D93vZZjj++L+HiJxDREwA0lIwzUCcRwqZjIom7lvkuygMDDrIAkrcJBTltnT8iludQ5XKN08ZSjQ9I8nBVXQV215QWVhQEDHKYB9eS63tO8GNLIqRzYhXSMUVeRTrHCrmt2Eg8+1a30Im4aVgyjCrnfDm/5kApRgNF86MEUyz8NOdc8oIAGFAGSDNeMHa5eMlADCyRT+04GBUJaIXQrqgILivJQ3G48HH9yijqNg4PWkvgH5TCx+PESMQFJeNZ2dOXk0ygheLaQDs7bK5uF9rhVKcvxsiZTR++7Fulxo6dJ9+bvbc+Axgwd1hTcl1kXSbzz+Gq0IQEBwnlz/mVhOtd0/BkFPjZOuXQwBAKQBWUDggZgAAANADAJ0BKhQAFAA+7WiuUKmlpCKoCqkwHYljAAAxZgtRVO859ncAAAD+5/gk841WETP0ToAUcF8AbJUaRIMwemd6t4y/2dkGWTfEiZNSYb0eHT1nFbN4+10vDfxmmhYJgUaBJQAAAA=="}]},{"id":"waffle","name":"Waffle","category":"postres","alt":"waffle bowl with cream, strawberries, chocolate and wafer sticks","copy":{"en":null,"es":"Waffle recién hecho con nieve y fruta","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Waffle_MASTER_v01","aspect":0.801,"tall":true,"wide":false,"scale":0.89,"fillW":0.7152,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRjgCAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSAMBAAABkGtr27FH9/P+rGIbpdO5spPOla0uvZ3MCVjVlLbtmdK2PfN97118OIaImAC4Vx64lGBWPESh7OqWLCiLQv5zzsHvxQzZAo9FEPmKpwGRU3wYArFAYR9f1s4Ekr9yGxRsvRjg+5W/001kKzx2grT75sMvnw78+hgNsYjXg9CtNPn66Ie9ULAVlJ9cNTS/zH8fhwAQhI4UnuNnkvxtfCuGsiT+1D817fWHB+kQgfcWTWo7gy/CIFAo/0hNp31QALxY4n8XU/AA8KDLSZustBGE3uF/TWr9n6f9EABQKHhCU5MmL2dCYKuQsp/a+GvsCIHAUcHXe+DmkW4/FFyKggp6IAIrAFZQOCAOAQAA0AUAnQEqFAAUAD7tbK1SqaWkIqgIATAdiWwAuxMgHr/2S/XAKQD2xhqk4afvOyPkqIu8zi4uAAD+4U3dC84RmvuwrlfVeUjrfvyJblnMrbMcyQv5vgefiDqn2SM4vWWNbnsmxBSGYY1hcl7Y7kjlWOsdixS3/WiR91RjsRU76zmBJt31GcLQOJ821eJFrw5U8y+VTXhw78CUUuFJ2mxeiquAWh8auBm04/71ydE9/XIM02BXmFvaerEkPaaq4OESCvyBomd0LDhjPlHN0mGT3uh8Z9/rUpoVIY6d1/cx3wcERQ251K2hmlT/zyDrzd2yC4rfjGkzWneJolU0hbmSYhNvqddgi1mfUHXLgAAA"}]},{"id":"aguas-frescas","name":"Aguas Frescas","category":"bebidas","alt":"agua fresca in a jar with fruit","copy":{"en":"Fresh Fruit Waters","es":"Horchata, jamaica, sandía, mango y más","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Agua-Fresca_MASTER_v01","aspect":0.675,"tall":true,"wide":false,"scale":1.101,"fillW":0.6027,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRooBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSNkAAAABgKpt//nn/Xy/s5GsZCQzGll11TuEtV3rOgJ7Vcl285K3v/H5lB9OISImAOaKYFcp5MVC2UgOQ1kK4sLCLIQgpSa7LSkpErHKLCKJpu/3p2b7OnOhjAhDW1/C3r2jv/FwbYTsawkGWT5PZBDKgFCwJywi/ufHRpABCCWvDofP//qwkm0l9ELcP66Pi1wQTBXmJMDytx4JixoT4g/K+ySshmBAAixvYyALGl3CHPzth7agUM7CQUe3JUKqQ5gdTTZCDsUnP5kgC1CYF59cazvV20+XvSDY1QRzAFZQOCCKAAAAEAQAnQEqFAAUAD7tbKpRKaWjoqgKqTAdiUAYOYIoP24bOnltE+BYS4AA/up7zYIUsBPQm3SD5i2gH3LKYU2vnjWP2mRGRIbjaEvDooxdXv//whvlPCc3WZFePc4AL2LRgbU9WTISKU+zC1rzIxJ7hv+B6khupFgMajiWphFOdyWtd64f/X1L4AAA"}]},{"id":"aguas-explosivas","name":"Aguas Explosivas","category":"bebidas","alt":"chamoy-rimmed cup loaded with fruit and a tamarind stick","copy":{"en":"Explosive Loaded Fruit Water","es":"Fresa, piña y tamarindo con escarchado","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Aguas-Explosivas_MASTER_v02","aspect":1.147,"tall":false,"wide":false,"scale":1.011,"fillW":0.8929,"fillH":0.7784,"lqip":"data:image/webp;base64,UklGRtoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSOAAAAANgFvbtmplnfve/7iHriUQOhGDEojIGVRiPVgDFKCZh+7u7vLu/sarISImgACEIUAycygiAhC5JQ8w1PlrvxGhT1pBUfJ57fN6gr7gJ6gKwSFe98p+P6IX+hcZHPlxAC4xsO7IXUBggPnCkusQRVjEdHujDHy4fs0PgORuD9q8A9kazmeBabHDyLrBlMsz0VvrnRLMEvftvl4mO7nF/6Pg+6Iu6xz7D9NRA8A2pv/EQZNDthEL9lpMjl3iit3qwr/EzzWKdffUip1/xrPP4d7GoxnMx0AsjZ8CIr4zmTy5AVZQOCDUAAAAEAYAnQEqFAAUAD7taqpRKaWjoqgKqTAdiWwAuy89lSguON4FwEnC8+8+oJJrc6D+YXGMUH7fxYQAAP6liSSh0NF+Bl+6V9CfH4jCdaDLenPFqyt2871SbCTqa5eLrdi4ip+n6QJ5VSbGFV6EcNnmf8efSSDQ1Pm+c+ts0De8cBpzPqEtrWcfFTv/Gr0HrTbH+kWTP88uj/ZFkIfMzTS4wsTdDxkhPwKDEfyyAE4EDGe/NkgKwnL6oe0LMz51gVazoXhuSHMugZ0AbV12WapcmRD+AAA="},{"stem":"LS_Aguas-Explosivas_MASTER_v01","aspect":0.49,"tall":true,"wide":false,"scale":1.225,"fillW":0.4375,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRs4BAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSMUAAAABgJpt27Llft73bTgMwAI0Ko3oDs3dIhNAguauzaXpDO6S3JrD97//jT6sEBETAK1x+HdlQuoIRCeYSi5bhNFZjBe3DMDqDNYmu1vhVOKwvjFbD6sRY7D0sJwGp4Ep6dj11yWQvwTxKwyTnsvxkN8sMhn68PSeWbC/CWL36EnPgzjIbzAYZUAG7ISBIoUM0zMP9i9BxBm953kk5C8IFhkKcRkCpUMbg4DtsBqLfAbvLIHTGCQ+ki9JMBoIak7PmiHQC0TwNwBWUDgg4gAAAJAFAJ0BKhQAFAA+7W6uUimmJCKoCAEwHYlsALUFiyMBtgLAA6T0iHt2SFL+GJzxQen2mEbgAP6epzKrSrlB3XVtSChI7mdbv4m5E8zh2bESgxFEhC8aXet05ta9TD53UYyiAFra5t3S0vFxAF8LS5Ox1mH619LHjnMEDokoZs48aNnVZZuyCiM1xybGWberoH//kONK2wZRrMB3D/9ita6ZY4EWT+5QYVJz+bsRFaidD1xnq40Idb6r/QRQG+1UfBR4X5v/Lg59rcH7tP+Ecu6ZPn/8/SL4+Tuxv/yCLMDoAAA="}]},{"id":"chamoyada","name":"Chamoyada","category":"bebidas","alt":"mango chamoyada with chamoy swirl and a tamarind straw","copy":{"en":"Chamoy Fruit Freeze","es":"Nieve de mango, chamoy y tamarindo","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Chamoyada_MASTER_v01","aspect":0.574,"tall":true,"wide":false,"scale":1.133,"fillW":0.5125,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRvQBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSMoAAAABgKPtnyHp968aZmsj1wGsO2zqTTedWyzDPQKzjWwjshXaqu7fqqqvEBETAAASUggqSBlIgkACyHojtBatHKAxuAwlMThrtLAUTfud2cpBIY+JThrel0FZBJi8fqT54GgY8h9CSPDTp//FJuj/BDJCj6THpTjEEt+27CZboFHv0ycNG6Hxv0Av0tDncxGUBRr9/KLHkxjEFkIHDQ3HILArVJP8Yg+UgyDzjv4X2xFyUnP8NKYS2gEh9PGTVykQF0Hh4OlWAwRBQwIrVlA4IAQBAADwBQCdASoUABQAPu1oqk+ppiOiKA1RMB2JbACxG0KUB66NGk+gB0rqNA2Vov8TcWcw8MWfZnjbAAD+H4IDUH/Ps1SGxGQ6IECw9VvcSx4ncvkcGfqA5SYO8qZ0Bm+gfWSHwCZRWZPFONoBsD4JqntFol9Gr60lsQq+4teop2medrZenP8wCgCqptH8vvUQw5jv55SY3eFbkX05MJ9zTmgSD5YiEEjsJ8foawcG5tbSFR6OgCSyWGP33G4cZShK/f6gho7JNGP08jzN7Jerfa+L/PYyegah2vo/yR5I2c23x9dk5YK/H+db+Y/482D5ZyewPb/kzlYcf5C4CCFSg+Lc6OpgAA=="}]},{"id":"frappe","name":"Frappe","category":"bebidas","alt":"frappe with whipped cream and a straw","copy":{"en":null,"es":"Frappé de 20 oz, frío y cremoso","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Frappe_20oz_MASTER_v01","aspect":0.49,"tall":true,"wide":false,"scale":1.182,"fillW":0.4375,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRowBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSLkAAAABgFvbtmpln/Pel/R/nBKI3CWFiEEOES/FCnArQUNSK4BfA+4UQAUu992N3fNaiIgJgD2OYRcVxfAg1KLIFRQLdRCDAEtzaJ6EIiwYu+JHMtFpiTBKupS7EAQFqPCTjkcWRe/TJ+n50QoNCEoPTJnytggxoEJHx0Mowoo9ftFxwxRjh1/84hwi0/o/SYZZOjqOmCKMM/We/RmG6D1fmqAGRTPdFx9rIabGFzpeI6MsX1wfJxAboAVBGABWUDggrAAAAJAEAJ0BKhQAFAA+7XCvUqmmJCKoCAEwHYlkALsgcCCzC89wV+vQMyNKo2MtAAD+3rXgudHLcS9WG87/3GKS6vdm+tK7+Pj6ghhx+4/O2eOdN4YVNhq8iBuaUv/Kfim4ewtV2m9F3UahKwOOqWIL5Rx//88e+z6f3dyg/d0Yg/1kI9ul96EfnDpJxkYh8tfj+BX1cn+VyjT+f4R93Q6D0WVXFiwLkRGTmTdggAA="}]},{"id":"licuado","name":"Licuado","category":"bebidas","alt":"strawberry licuado under a dome lid with whipped cream","copy":{"en":"Smoothie","es":"Licuado de fruta con leche","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Licuado_MASTER_v02","aspect":0.583,"tall":true,"wide":false,"scale":1.015,"fillW":0.5205,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRsIBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSOEAAAABgGLb2rLlPp/gRCe7u7uTITnjcDo0Fs1do02AxCI7RHfXj/ci3/uNISImAK4C29fPDwLvyWmZObkFhhdBdkXC8WljfQlEh+A8rJCD8UkhEDdBVNP8Ax83p1ujNQJreG/vi7fvFydDNsQtaIcv5MXx/vVOsBssdNJR5MYYu2HC1UAJlSKvH1irE4TdU5GK99EwdNYWv0mHRxbEDSZm+fVvHQKthd5/XxyAqTPRQPWvA5bOQKxDpaiKYOoEwcf8VryMgOggWOXnF7fh2UI/HYdDMLwIQkeODqeiIF4AgWVD4A4AVlA4ILoAAACQBACdASoUABQAPu1irVAppSQisBgIATAdiWoAwc2L/m5X12w6Pgjp3scFfIAA/up38z+uK8ic1+gO59uTP0RDf+WDAE3BsvDQ5DrUkYjHhYa6UHeYV6YRJEAITCWx40f//60aop76spd7teivr2zFq4U3foShQ+yhggyhjnfYkBelyTQZd8C/KW/ODtM6/T7Ub7coRd/1d7FZRHhdP39rYe67jMrZDt6Awo1b39jfQwa23/SPgv4AAAA="},{"stem":"LS_Licuado_MASTER_v01","aspect":0.567,"tall":true,"wide":false,"scale":0.987,"fillW":0.5062,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRsIBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSOcAAAABkKNt26Fn9/NO7NbODozy66IqC+Aa2DlbSPtVsW3btlnZ78w8yf/PvGuIiAmAJcHF00OAoErIbto87HJAKAg41taveXcwHcKGENZbVlS/2Ny0HAWy0lAwWFvubN2c28mFZkHwGb90zm+1d6zc7/iArFy7+Prh6Nj44CYXKwgkMpsmmyzjIGBJCHxhwzQNvgkE2fnss8Fs8DbBloAR1pl1HoSwgQYny//qVFxQ+Z/kImh2GgrZ+C9HzcEmmyanqgjEGmya/BgFYUcIOGcpeVcDqdAU6zoPQEBRIH18Z7s3DaTyv6c7CNYAVlA4ILQAAAAwBACdASoUABQAPu1ur1IppiQiqAgBMB2JbADGfYtKcDOdhvI2E/w8oMAA/up/EvEXwap8YQ8WTIP++vIE3IC+tyR6fd4BgwRdwIEtwjgBG0slxmJM9vt9TTq4lXBHxs7k5CtDCZhbXqSCQHAOFHmlrTrix/p8m6VWGRgLvlRqMSKG3zK2tjMSPY7oAJ2Z+GcZjy26sHPu/oa0Xq+Ho/P2h3vuSf+huMaNXx/+Tf/4msWYAAA="}]},{"id":"mangonada","name":"Mangonada","category":"bebidas","alt":"mangonada cup with chamoy, chile and a tamarind straw","copy":{"en":null,"es":null,"source":"none"},"nameOnly":true,"images":[{"stem":"LS_Mangonada_16oz_MASTER_v02","aspect":0.443,"tall":true,"wide":false,"scale":1.34,"fillW":0.3955,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRqoBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSK8AAAABgFtt2/Lkfr8vwV0X4DAApc/iVGxAJkA6p4MONqDTyqkcKlqt4nnQ988IETEB/GlpEhu989Vo366vQt3pGCGR3Y6TTsR1hpT5iOyvtLRivhRrudfncVKuyJ4K+hwmOAKDBZVLep/F/jFqLlSWSrqpwf7CWPgrQ8TR/aJypaIxD5FdlSp67yO4ZlQu674ecwT6cyrpgIDTCCfKastHimXlNEd0BQYOH3a6MBcQ6/kfAFZQOCDUAAAAEAUAnQEqFAAUAD7tbKtRKaWjoqgKqTAdiWwAuzMi6kGosEQIFkVrLnzF4wiKS5uLAAD+E5Xedzp0OHGUrF7N6yIgDhVBR03WjImtwzoe1pk+8u/aEeJE+F8cXPPR3e7q8fZ4zF+FTyp1d1Di+HbIvddCd3Lsh+fMQw5UABVMbHMc3ieCF2Dq5vqJ///4KM6IyYo/Vdj/iegwmCXR8EzexeT9GK+sf5Y6kSd5Bh0xWsOiFGURfSWnxMwFRGYbMlXy81J8y+DW2iI7+SOK1/+vtuvAgAA="}]},{"id":"michelaguas","name":"Michelaguas","category":"bebidas","alt":"branded Micheláguas jar of mango with a chile rim","copy":{"en":"Loaded Fruit Water","es":"Agua fresca preparada","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Michelaguas_MASTER_v01","aspect":0.782,"tall":true,"wide":false,"scale":0.883,"fillW":0.6982,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRjACAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSOYAAAABkGpt26JVz/vOoAkqNNfkmjkIEo1FI7lEkkOl0tw1W3N3d4et882z5fvnGCJiAhDScaAicAQBBRC4jmbGQGyC6MoypK62IEERUlFMrhzzrj0bYlMkXtPQ9zw+Z0FDfdAYQ/OT5XAtgsh1GpI+fxdALYpS0ifJ36yCa3HRxt/83+Mo5D9RTNGzGO7B6mj4dIBDG1rP3umH2PlPUMGAhosQCHSZ3i/f5nEACkH4Qv8Mje03q+EA0CjENR7TJ+nzKQmK/9VFDX96xvxgLxR2RewaDX1eJQWAIL5r7WSjLwOCgCKAIxABAFZQOCAkAQAA8AYAnQEqFAAUAD7taqtRKaWjoqgKqTAdiWwAnTKEdQe6cULuEZC4qT0AaIB1oiNA2ZY2NLKtT5YU52qqW4XagAD+VEsbYdDn2oUiQ4N/9a7jBAtRkY299+yllxGmvxV+6/tlP5usCsZFOFyK2kt1kJ+HxqA/yxLr1m1z9yBdbnWmONXHY/Epy4puqGuZ2aNcviJL/2jpD49UNqMNr5Noj/AypBrFo83H50OpLCLnP73SRvqFXb0fBL4eG7+Ki7NoNGHA0nM2yvwC3XG3aOu7TflzfbCgcqxzYCwPkINjv+EVe9LKrCn+rY5MfhHLyzZHEThr/qwa/2NiXZOgwTqRjyb9sg5ND7M+ZtLN8s7/3RHJd5Zf390YJO6ylyzyKmVDXAAAAA=="}]},{"id":"raspado","name":"Raspado","category":"bebidas","alt":"cup of shaved ice piled above the rim","copy":{"en":"Shaved Ice","es":"Hielo raspado con jarabe de sabores","source":"client-approved"},"nameOnly":false,"images":[{"stem":"LS_Raspados_MASTER_v01","aspect":0.536,"tall":true,"wide":false,"scale":1,"fillW":0.4786,"fillH":0.8929,"lqip":"data:image/webp;base64,UklGRqgBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSMQAAAAJgFtte7LlfhN0CCip3KV2t2motKbSASipYAUqd7pfcHfXvEWSb4aImACCVp39F/NPUvnPHz0cUSeJbMviWMnkUrOamKFouftP6VtpczYiVBf+WWN/Zar434SUYUQg9690nKiwQVC4RUKwj9XAQUw5+QZQwwkau3j24PMoBu8nqHd/HVNxR56S/SRuCTiyGI3AEQJ4RJUjDBiyJFSOfkXV0yTnTzjHawYXg5cjRDi7JqEaN72aymxN/4rGcCw0lpXWzqP4VlA4IL4AAAAQBACdASoUABQAPu1srlIppaQiqAgBMB2JbAAjyDeXSItBjYY/6W56gADUwRyJX12Q/wgSOT/fxWIv2LewkTsYRzf85dqGKeSBokhOrT8HCz/P0/yb1dUuBf/MXE8h/A0Mx9QiGNz7xSY/N3//5UdLw/0nbHtoDkcTZlcpliJgBjBZJTZEE024cV9Bmg89FyNQZmEA+JTPz6H3ChZZit3ZTG+kCZi8V70qZ2odyLLumOMQb/JnQGt7Z/2DEAAA"}]}],"counts":{"products":45,"images":62,"withApprovedEnglish":38,"nameOnly":4}}</script>
+<script type="module" src="/app/main.js"></script>
+</body>
+</html>

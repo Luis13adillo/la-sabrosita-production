@@ -1,0 +1,83 @@
+/* Reset and page frame. Owned by the build, not by a single piece. */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+/* ...except a dialog. A modal <dialog> is centred by the UA's own `margin: auto`
+   against `inset: 0`, and the universal reset above silently replaces that with
+   `margin: 0` — which pins the dialog to the top-left corner of the viewport and
+   makes a perfectly correct stylesheet look broken. This is the one element the
+   reset must not touch. */
+dialog { margin: auto; }
+
+/* A closed dialog must stay out of the way. The UA gives it `display: none`, but
+   any component stylesheet that sets `display` on the dialog itself — to lay out
+   its own insides — overrides that, and the closed dialog then covers the page.
+   It is invisible, so nothing looks wrong; it just eats taps aimed at whatever is
+   underneath. `:not([open])` outranks a plain class selector, so this holds
+   wherever the component rule lives in the cascade.
+
+   This is a reset, not a fix for one component: any dialog added later inherits
+   the same guarantee. scripts/smoke.mjs checks both halves of it — that the
+   closed dialog is not displayed, and that nothing under it is blocked. */
+dialog:not([open]) { display: none; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  font-family: var(--font);
+  font-weight: var(--w-body);
+  color: var(--c-body);
+  background: var(--c-reading);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+button, input { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; }
+
+.u-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.skip {
+  position: absolute; left: var(--s-4); top: -100px; z-index: 100;
+  background: var(--c-structure); color: #fff; padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-pill); font-weight: var(--w-bold); text-decoration: none;
+}
+.skip:focus { top: var(--s-4); }
+
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 3px;
+  border-radius: var(--s-1);
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-4) var(--s-6);
+  border-radius: var(--r-pill);
+  font-weight: var(--w-bold); text-decoration: none;
+  transition: transform var(--dur) var(--ease-spring), box-shadow var(--dur) var(--ease);
+}
+.btn--primary { background: var(--c-reading); color: var(--c-structure); box-shadow: var(--shadow-card); }
+.btn--primary:hover { transform: translateY(-2px) scale(1.02); box-shadow: var(--shadow-lift); }
+
+/* The no-JavaScript menu. The grid is built client-side, so without this the
+   page is an empty cream field. This is the same data, the same photographs and
+   the same approved copy set as a plain list — not a second design — and it is
+   inert the moment JavaScript runs. A menu that renders nothing is worse than a
+   menu that renders plainly. */
+.plain { padding: var(--s-9) var(--gutter); max-width: var(--maxw); margin-inline: auto; }
+.plain h2 { font-size: var(--fs-section); color: var(--c-item); margin-bottom: var(--s-6); }
+.plain h3 {
+  font-size: var(--t-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps);
+  color: var(--c-category); margin: var(--s-8) 0 var(--s-4);
+}
+.plain ul { list-style: none; padding: 0; display: grid; gap: var(--s-4); }
+.plain li { display: flex; gap: var(--s-4); align-items: center; }
+.plain li img { width: 84px; height: 84px; object-fit: contain; flex: none; }
+.plain li strong { display: block; color: var(--c-item); font-size: var(--fs-item); }
+.plain li span { display: block; color: var(--c-body); font-size: var(--t-desc); line-height: var(--lh-desc); }
+.plain > p { margin-top: var(--s-8); color: var(--c-muted); font-size: var(--t-desc); }

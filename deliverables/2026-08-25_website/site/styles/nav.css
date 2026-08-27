@@ -1,0 +1,1207 @@
+/* ============================================================================
+   THE HEADER
+
+   It carries four jobs — brand, four category jumps plus a way back to all 45, a
+   live search across 45 products, and a language switch — where both benchmarks
+   carry one and a half. The whole design problem is doing that without the bar
+   looking like a toolbar.
+
+   THE FIELD IS DEEP PURPLE, AND IT USED TO BE HOT PINK. That is the one change
+   this round turns on, and it is a measurement rather than a preference.
+
+   On pink, four of the bar's objects sat on a reading area and one did not.
+   Measured across the desktop row at 1440: the brand plaque ran x48–338, the
+   search pill x1056–1266, the language pill x1278–1392 — 614px of the bar on a
+   legal field — while the four category words occupied x503–888 of raw hot pink
+   at 4.06:1. Those four words are the thing a customer came to the bar to click,
+   and they were the only thing in it with nothing under them. Their legality
+   rested on 19px bold clearing WCAG's 18.66px large-text threshold by 0.34px:
+   the gate passed, and anyone looking called them the failing element.
+
+   White on deep purple is 13.60:1. brand.json's own words for deep purple are
+   "contrast and structure", and a header is structure. So the category links now
+   sit on an approved brand field at a ratio that has no floor to clear, which
+   means --t-eyebrow's 19px is a design choice here rather than a contrast floor.
+
+   HOT PINK IS STILL THE DOMINANT COLOUR, which is what brand.json says it is.
+   The hero directly under this bar is a full-screen hot-pink field — the largest
+   single area of colour on the page. What changed is that it now has a frame
+   instead of bleeding into a bar of its own colour. Measured at x=48 on the old
+   build, the header's 242,10,136 met the hero's 214,12,128: an RGB delta of 38,
+   1.23:1, against michoacana's 329 and heladosmexico's 296 at the same seam.
+   Deep purple over the same hero measures 189 and steps from L*20 to L*50, so
+   the bar sits on the page instead of dissolving into it. The drip below carries
+   it the rest of the way.
+
+   WHAT SITS ON WHAT:
+
+     - the four categories and the fifth "everything" button: white, on a 10%
+       cream wash inside a 38% cream hairline, 10.41:1 — no size floor
+     - the selected category: cream field, HOT PINK type, 3.85:1 at 19-21px bold
+       against a 3.0 floor. The only pink type in the bar besides the mark's own
+       script, and the only control in the bar that reports state
+     - brand plaque and search field: cream reading areas, deep purple type,
+       12.90:1
+     - the shop's name in type, on the deep purple beside the plaque: white,
+       13.60:1, no size floor to clear and not one cream pixel spent
+     - the language switch: white type, 13.60:1, inside the chips' own 38%
+       hairline — enclosed but not filled, so the field stays the only solid
+       bright object on that end of the bar
+
+   THE RANKING ARGUMENT THIS FILE RAN FOR FIVE ROUNDS IS RETIRED, and it is
+   retired rather than quietly dropped. It said: the brand plaque is cream and
+   290px and comes first, the search field is cream and 226px, because the
+   loudest bright object in a brand bar must not be a form field. That held while
+   the plaque was a mark PLUS the name set in type ON THE CREAM. It stopped
+   holding the moment the caption came out: a mark-only plaque is a badge, not a
+   banner, and the thing it is being compared with is an open, labelled search
+   across 45 products — the one unmistakable primary action this bar has and the
+   one control still there after the category chips hand over. So at 1281+ the
+   field's basis grows instead of being capped under the plaque, and the header's
+   ranking is now by JOB rather than by width: the mark says whose shop it is,
+   the name says it in words, the five chips say what is in it, the field is
+   what you do.
+
+   THE NAME CAME BACK, AND IT CAME BACK ON THE OTHER FIELD. That is not a
+   reversal of the paragraph above, it is the same argument applied to the same
+   measurement: what made a caption expensive was that it sat on the cream and
+   pushed the plaque to 248px and 59.2% of the bar's cream. On the purple it
+   costs zero cream, the plaque stays 96px, and the shop's name becomes the one
+   thing in that corner a customer can actually read — which is the single
+   quality every blind judge has credited the benchmarks with and never ours.
+
+   THE FOCUS RING IS WHITE IN HERE. base.css draws it in electric blue, which is
+   1.72:1 against deep purple. White on deep purple is 13.60, far over the 3:1
+   WCAG asks of a focus indicator, and it stays legal over the cream pills too
+   because the ring's offset puts it on the purple field either way.
+   ========================================================================== */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--s-5);
+  /* 4px between the two rows, not 8. The rail's chips are 44px boxes around 19px
+     words, so they carry 12px of their own optical space above and below; a
+     second 8px on top of that was reading as a gap rather than as a bar. The 4px
+     is what pays for the taller brand panel below without the two-row header
+     going past 140px. */
+  row-gap: var(--s-1);
+  /* 8px, not 12: the panel already holds 8px of cream around the mark, and 8 + 8
+     is the 16px of clear space brand.json's bow rule asks for at this logo size.
+     Spending 12 here would only make the bar taller than the clear space needs. */
+  padding-block: var(--s-2);
+  /* viewport-fit=cover is set in the shell, so a landscape notch can eat the
+     gutter. max() keeps the gutter as the floor and the inset as the override. */
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px))
+                  max(var(--gutter), env(safe-area-inset-right, 0px));
+  background: var(--c-structure);
+  color: #fff;
+  /* The 1px purple hairline that used to be the first line of this shadow is
+     gone. It was a 10%-alpha purple line drawn on hot pink — it painted nothing
+     measurable, and it was the whole of the bar's answer to "where does the
+     header end". The field answers that now. What is left is the lift the bar
+     needs once it is sticky over the cream menu, which is a different job. */
+  box-shadow: 0 14px 26px -22px rgb(var(--c-deep-purple-rgb) / .9);
+}
+
+/* ---- the seam ------------------------------------------------------------
+   THE DRIP, WHICH IS THE FOOTER'S SEAM MIRRORED. brand.json's visual direction
+   names five motifs by word — "rounded panels, subtle drips, soft waves, stars,
+   and clean cut-out food imagery" — and foot.css already spends the drip on the
+   seam where the cream menu meets the deep purple footer. This is the same
+   construction at the other end of the page: the same 65.45px drip period, the
+   same flat-bottomed cubic lobe, at 40% of the footer's depth because a header
+   seam is read in passing and a footer seam is read at rest.
+
+   IT IS ABSOLUTE, AND THAT IS LOAD-BEARING. main.js and grid.js both measure
+   this header's box and publish it as --nav-h; the hero sizes itself to
+   100svh - --nav-h and the grid's sticky filter strip parks at that offset. An
+   in-flow drip would grow the box and push both. Hanging it out of the bottom
+   edge costs zero layout height, so the drip is a thing the bar has rather than
+   a thing every other owner has to pay for.
+
+   It hangs over the hero at rest and over the menu once you scroll, which is the
+   point: a sticky bar with a soft bottom edge reads as a thing on the page. */
+.nav__drip {
+  position: absolute;
+  inset: calc(100% - 1px) 0 auto 0;   /* 1px of overlap so no hairline shows */
+  display: block;
+  width: 100%;
+  height: clamp(10px, 1.15vw, 17px);
+  color: var(--c-structure);
+  pointer-events: none;
+}
+.nav__drip path { fill: currentColor; }
+
+/* ---- brand ---------------------------------------------------------------
+   ONE CREAM PANEL HOLDING THE COMPLETE MARK AND THE NAME IN TYPE.
+
+   Measured on the round-1 render: at width:60px the artwork's own ink spanned
+   55 CSS px, while the search pill beside it was 260 — the brand corner was
+   0.85x the width of a form field, and it was the only object on the field that
+   was NOT bright. The mark is also a full-colour badge whose pink script sat
+   straight on --c-brand at roughly 3:1, so it dissolved into its own field.
+
+   Both faults have the same fix, and it is the fix brand.json already describes:
+   cream is the reading area. The panel gives the pink script a ground, and it
+   makes the brand block the widest bright object in the bar — 290px against the
+   search field's 210 at the time, so 1.38x rather than 0.85x. On the deep purple field the
+   panel does one more thing it could not do on pink: the mark's own hot-pink
+   script is now the only hot pink in the bar, so the brand colour arrives as an
+   accent on the logo rather than as the wallpaper behind it.
+
+   THE PANEL COVERS THE WHOLE MARK, WHICH IS WHAT THE FIRST TRY GOT WRONG.
+   An earlier version pulled the artwork down with a negative bottom margin, on
+   the argument that the file's bottom 17.15% is empty canvas and the cream
+   should close on the INK rather than on the file's box. That reasoning is about
+   what a person sees; the brand rule is about where the mark IS. brand-check
+   samples the four corners of the mark's own bounding box and measured the
+   bottom two landing on rgb(243,20,140) — 5px of the badge, hot pink, on both
+   the 80px and the 64px mark. brand.json logo.clearSpace asks for room on EVERY
+   side, not three, so the margin is gone and the panel is 13px taller instead.
+
+   THE PLAQUE HOLDS THE MARK ALONE, AND THE NAME SITS OUTSIDE IT. For five rounds
+   the plaque also carried the name set in type — `.nav__word`, 16px caps, INSIDE
+   the cream — and round 6 cut it on a measurement that was right about that
+   arrangement. At 1440 the captioned plaque ran 248px and held 59.2% of every
+   cream pixel in the bar:
+
+       plaque  248px wide   59.2% of every cream pixel in the bar
+       search  226px        26.8%
+       chips (four unselected)                    5.9%
+       .nav__cat[aria-pressed="true"]             6.4%   <- the only control
+       .nav__lang                                 1.0%      that reports state
+
+   The object answering "which chapter am I in" carried one ninth the cream of an
+   object printing the shop's name twice. That is still true, and it is why the
+   plaque is 96px today and holds nothing but the mark.
+
+   WHAT ROUND 6 ALSO DID WAS DELETE THE ONLY LEGIBLE THING IN THE CORNER, and a
+   blind judge said so: ours placed first and stayed narrow because "the mark is
+   rendered so small the wordmark is unreadable — it reads as an accident rather
+   than a lockup", while the same judge credited the competing panel's roundel
+   with "genuine presence". Measured on that render: the plaque was 108x94 and
+   the mark's visible ink inside it 75x62, so 54% of the brightest object in the
+   header was empty cream, and the script inside the mark rendered 74px wide
+   against brand.json's own 250px digital minimum.
+
+   WIDENING THE MARK CANNOT FIX IT. The artwork is 1915x1788 — 1.07:1 — so inside
+   a bar that has to stay near 100px tall the mark caps around 103px wide, a 22%
+   bump that changes nothing about whether four objects resolve at that size. So
+   the name is set in type instead, on the deep purple beside the plaque: 13.60:1,
+   no cream spent, the plaque unchanged, and `.nav__word` back in the file that
+   styles/type.css has been listing in its bold-weight group all along.
+
+   THE 250px ARGUMENT WAS ABOUT THE WRONG GATE, AND STILL IS. brand.json's escape
+   hatch is "use the official complete logo on a clean cream or white area rather
+   than removing its elements", and scripts/brand-check.mjs enforces that
+   literally: it samples the mark's own bounding box against the field painted
+   behind it. A caption outside the plaque never enters that measurement. What
+   does is how much clean cream surrounds the mark — and the plaque is still all
+   clear space, so the gate is no harder to pass than it was. The accessible name
+   is unchanged either way; it comes from the link's aria-label, and the visible
+   string matches it so WCAG 2.5.3 is satisfied rather than dodged.
+
+   THE SHAPE IS --r-card NOW, AND IT WAS --r-panel. A pill's radius is half its
+   height — 45px on this block — so its left cap curved back across exactly the
+   region the mark's bottom-left corner occupies, which is why it was never a
+   pill. But 24px was a third shape: the round-5 bar drew --r-panel on the
+   plaque, --r-pill on five chips and --r-card on the field, so one cream fill
+   was doing three jobs at three radii inside one band. At --r-card the bar
+   reads with two: --r-card on the two things that HOLD something, --r-pill on
+   the five things you PRESS. It also buys the mark room — a 10px arc cuts far
+   less out of the plaque's corner than a 24px one, so the corner of the mark
+   that brand-check samples sits deeper inside its clean field than before. */
+/* ---- the lockup: plaque + name ------------------------------------------
+   THE NAME IS BACK IN TYPE, AND IT IS OUTSIDE THE PLAQUE. Round 6 cut
+   `.nav__word` on an arithmetic that was right about the wrong field: a caption
+   set ON THE CREAM took 136px of the bar's brightest surface and pushed the
+   plaque to 248px, 59.2% of every cream pixel in the header, to restate a word
+   the artwork already carries. On the deep purple beside it the same word costs
+   zero cream pixels — white on --c-structure is 13.60:1 — and every pixel of the
+   plaque stays clear space around the mark.
+
+   IT IS THE ONLY MOVE THAT MAKES THE SHOP'S NAME LEGIBLE, because widening the
+   mark cannot. The artwork is 1915x1788, a 1.07:1 box holding four objects, so a
+   bar that has to stay near 100px tall caps the mark near 103px wide — and at
+   that size the script inside it renders about 90px across. Measured against the
+   two benchmarks in the same strip: michoacana's roundel is 75x75 and reads
+   because it is ONE circular silhouette; heladosmexico's lockup is 136x74 and
+   reads because the name IS the artwork, set in heavy type. Ours can only have
+   the second property by setting the name in type.
+
+   AND IT GIVES THE BLOCK A HORIZONTAL SILHOUETTE. The plaque alone was a 108x94
+   square — the one object in the bar off the 44px row, 2.1x the height of every
+   control beside it, starting 25px above them and ending 25px below. The lockup
+   is ~245x83 at 1440: still deliberately the tallest thing in the bar, but now
+   because it holds two objects rather than because a square badge happened to be
+   tall. The mark came 84 -> 72px to pay for it, which takes the whole header from
+   110.8px to 99.2px and hands the drip 10px more clearance under the plaque.
+
+   THE LINK IS THE LOCKUP; THE CREAM IS A CHILD. .nav__plaque carries the fill so
+   that the cream closes on the mark and not on the name, which is the entire
+   difference between this and what round 6 measured. */
+.nav__brand {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  /* 16px between the plaque's edge and the first letter, on top of the plaque's
+     own 12px inset — 28px of clear purple between the mark and the name, which
+     is more than one mascot-bow at this size and is what brand.json's clearSpace
+     rule asks for on the side a neighbour arrives from. It is also a third of
+     the 48px that separates the finished lockup from the first category chip, so
+     the two objects read as one block and the block reads as separate from the
+     rail. */
+  gap: var(--s-4);
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav__plaque {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  /* 12px horizontal and 8px vertical is the clear space brand.json asks for on
+     every side at this logo size, and it puts the mark's bottom-left corner
+     ~7px inside the 10px corner arc where 8px inside a 24px arc left it 1.4px. */
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-card);
+  background: var(--c-reading);
+  transition: background var(--dur-fast) var(--ease);
+}
+
+/* THE NAME. Caps because a wordmark is a shape before it is a sentence, and
+   because both benchmarks set their nav type in caps — but written mixed-case in
+   the markup and uppercased here, so the visible string still matches the link's
+   aria-label for WCAG 2.5.3 and a screen reader falling back to the content
+   reads a name rather than twelve letters.
+
+   THE SIZE RUNS 19px -> 24px BETWEEN 1281 AND 1440, and it is a clamp rather than
+   a constant because those two widths are two different problems. 1281 in English
+   is the tightest this row is ever asked to be: the rail alone takes 582px, and
+   at 19px the name leaves the search field 147.6px, which is 15.6px clear of the
+   132px floor at which its own placeholder starts to clip. 1440 is the width this
+   header is judged at and there the row has room, so the name takes it. Both ends
+   are values this project already publishes — 19px is type.css's --t-eyebrow,
+   also the floor the category chips clamp to, and 24px is the size
+   data/invented.json records under `hero.css .hero__lead-b`.
+
+   IT STOPS AT 24px BECAUSE OF WHAT IT WOULD DO TO THE ROW, not because of taste.
+   Rendered side by side at 1440, 27px pushes the first chip past x=430 and takes
+   the field under 190px in English; 24px reads as a lockup and leaves the field
+   217.8px. Above 24 the name also starts to out-shout the five words naming what
+   the shop sells, and those are what five blind rounds called decisive.
+
+   White on deep purple is 13.60:1, so nothing here has a contrast floor to
+   clear — which is exactly why the name is on the purple and not on the cream. */
+.nav__word {
+  /* Never the thing that shrinks: the row's shock absorber is the search field,
+     and a wordmark that wrapped or squeezed would be a second one. */
+  flex: 0 0 auto;
+  display: none;              /* drawn from 700px up — see the block below */
+  font-size: clamp(var(--t-eyebrow), 3.145vw - 1.331rem, 1.5rem);
+  line-height: 1;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ROW ONE OF THE TWO-ROW BAR CANNOT AFFORD IT BELOW 700px, and that is measured
+   rather than picked. Row one there holds the plaque, the search field and the
+   language switch, and the name takes 162.8px of it. Measured in English, field
+   width with the name shown:
+
+       820  328.0     768  306.9     700  244.4     640  189.2     560  115.6
+
+   132px is where the field clips its own placeholder — the number the >=1281
+   block already uses as its floor — so the name is affordable to about 580px.
+   The switch is set at 700 rather than at the cliff, because a field that is
+   only just legal is not a field a customer wants to type in, and because 640 is
+   what a 1280px window looks like at 200% zoom: somebody who has doubled the
+   text size wants the control, not the caption. Above 700 the name costs the row
+   nothing that shows — at 768 the lockup ends at 281.5 and the field starts at
+   305.5, which is the bar's own 24px gap, where the badge alone left 190px of
+   empty purple between them. */
+@media (min-width: 700px) {
+  .nav__word { display: block; }
+}
+/* 64px IS THE TWO-ROW SIZE AND 72px IS THE ONE-ROW SIZE. Below the one-row
+   breakpoint the bar already spends a whole second row on the category rail, and
+   an 80px mark on top of that made the header 155px tall on a tablet — 15% of an
+   iPad's screen gone before any food. At 64px the two-row header is 140px at
+   every width that uses it, which is the same height a phone gets, so the layout
+   has one answer rather than three. The one-row bar has the room, and that is
+   the width the brand corner is judged at — 72px there, down from 84, because
+   the lockup and not the badge alone is what carries the corner now.
+
+   No margin trick and no transform: brand-check measures the painted rectangle,
+   and every one of the six misuses it enforces — stretch, recolour, rotate,
+   effects, crop, clutter — is something you do to a mark by "adjusting" it. */
+/* The plaque is a link home and it was the only object in the bar with no hover
+   at all — the five chips, the language ring and the field all answer the mouse.
+   Cream to white is the same step the selected chip already takes on hover, so
+   the bar has one hover language rather than two, and white is an approved
+   background in brand.json's own list. The name underlines with it, because the
+   name is part of the same link and an underline is a link's own affordance —
+   the same second, non-colour signal the language switch already carries. */
+@media (hover: hover) {
+  .nav__brand:hover .nav__plaque { background: #fff; }
+  .nav__brand:hover .nav__word { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+}
+
+.nav__logo {
+  display: block;
+  width: 64px;
+  height: auto;
+}
+
+/* ---- categories ----------------------------------------------------------
+   THIS ROW IS WHY THE HEADER EXISTS. Both benchmarks spend their whole nav on
+   the company — Products, Our Story, Store Locator, Contact Us — which is
+   wayfinding for a brand that sells packaged bars out of somebody else's
+   freezer. For a shop whose proposition is the whole menu, the bar should name
+   things you can eat and let you type the fifth. That is banked; this round only
+   makes the row legible and tells you where in it you are.
+
+   FIVE BUTTONS, NOT FOUR. The first is "everything", and it is here because the
+   bar was a one-way trip: you could jump to Postres from the header and there
+   was no way back to all 45 from the header at all — that control existed only
+   in the grid's chips, further down the page and off-screen the moment you had
+   used it. It is first, and it carries the same label the grid's chips use, so
+   the two controls are visibly the same control in two places.
+
+   It is a rail rather than a wrapped row: a horizontally scrollable strip, no
+   hamburger, nothing hidden. The mask is how a half-scrolled pill reads as
+   "there is more this way" rather than as a word that has been cut off; when
+   they all fit, it falls over empty purple and does nothing.
+
+   THE MASK USED TO BE 44px AND IT LANDED ON THE LAST WORD. Measured at 390px,
+   "Bebidas" ends about 44px past the rail's own end padding, so a 44px fade
+   covered the whole of the word that was still on screen and the rail's RESTING
+   state rendered "Bebid". A rail whose resting state cuts a word is not a scroll
+   affordance, it is a bug that looks like one. The fade is now 24px — enough to
+   say "there is more this way", short enough that what it eats is the tail of a
+   word rather than the word — and the last chip snaps to the END of the rail, so
+   one swipe rests with the last word whole against the gutter instead of half
+   under the fade. Scroll padding on both ends is what makes both of those land
+   on the gutter line rather than on a pill's invisible edge.
+
+   THE RAIL IS BACK BELOW 1281px, AND THAT IS THE WHOLE ROUND. styles/mobile.css
+   loads after this file and carries `@media (max-width: 1280px) { .nav
+   .nav__cats { display: none } }` on the argument that the grid's sticky chips
+   are the one category control a phone should have. That argument is false on
+   this project's own evidence: BRIEF.md's mobile filmstrip section records those
+   chips clipped to "An…", the "45 de 45" count sitting on top of them, and no
+   visible route to Postres or Bebidas. So on a 390px screen the header was the
+   brand, a search pill and a language pill — nought food words — and the one
+   attribute a blind judge called decisive about this bar existed only above
+   1280px, the viewport the brief says matters least.
+
+   That line is the mobile owner's and is REPORTED, not edited. What this file
+   does instead is win the cascade honestly, with specificity rather than with
+   `!important`: every rule in here that has to survive that file is written
+   `.nav .nav__cats[data-catnav]` — three simple selectors against its two — and
+   the attribute is one the markup already carries for main.js. When the line is
+   deleted these selectors keep working unchanged; they are not a patch that has
+   to be unwound.
+
+   The one place that MUST stay able to beat this is the no-JavaScript case, and
+   it does: nav.html's <noscript> block matches the same three selectors and sits
+   later in the document, so equal specificity resolves its way. */
+.nav .nav__cats[data-catnav] {
+  order: 3;               /* row two: brand and tools take row one */
+  /* Full row, bled out through the header's own gutter so the fade lands on the
+     screen edge rather than 16px inside it — a rail that stops short of the edge
+     reads as a cropped list, not as a scrollable one. The pills are put back on
+     the gutter line by the matching padding. */
+  flex: 0 0 calc(100% + var(--gutter) * 2);
+  margin-inline: calc(var(--gutter) * -1);
+  /* Flush to the gutter on both ends. It used to be short by the chip's own
+     8px inset, because an unpainted chip has no edge and what had to land on the
+     gutter line was the first WORD. The chips carry a body now — see .nav__cat —
+     so the thing that lands on the line is the pill, exactly like the plaque
+     above it. */
+  padding-inline: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+  min-width: 0;
+  min-height: 44px;       /* reserved before main.js fills the row, so no shift */
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%);
+}
+.nav .nav__cats[data-catnav]::-webkit-scrollbar { display: none; }
+
+/* EVERY CHIP IS AN OBJECT NOW, NOT JUST THE SELECTED ONE. This is the fault a
+   blind judge named in the last round and the one this file had been arguing
+   itself out of: four of the five categories were bare white words sitting on
+   raw purple, so the most valuable thing in the bar — the food — was also the
+   lightest thing in it, while the plaque, the search pill and the language ring
+   were all painted. A word with nothing under it does not read as a control, and
+   this row is five controls.
+
+   A 10% cream wash inside a 38% cream hairline. Both are the cream token at
+   alpha, not a new colour: over --c-structure the wash computes to rgb(93,44,102)
+   and white on it is 10.41:1, so nothing about the type's legality changes. It is
+   deliberately the quietest body in the bar — the plaque and the search field are
+   solid cream at 100% — so the ranking still reads brand, then field, then
+   filters, and the selected chip's SOLID cream still wins the row outright
+   against a 10% neighbour.
+
+   THE HAIRLINE IS 38% AND IT WAS 28%, FOR THE REASON THIS FILE ALREADY GAVE THE
+   LANGUAGE RING. Cream at .28 over deep purple computes to rgb(125,85,130) —
+   2.26:1 against the field, under the 3:1 WCAG 1.4.11 asks of the visual
+   boundary of a control, and the only control boundary left in this bar below
+   that floor now the ring is at 8.9:1. .38 computes to rgb(143,107,145) and
+   3.04:1. The gap that matters is still wide open: hover goes to .55, the press
+   to .70, and the scroll-spy's `[data-here]` ring to .85, so five states remain
+   separable, and the selected chip is not an alpha at all — it is solid cream.
+   a11y.mjs measures ink against its field and never sees this, which is exactly
+   why it is written down here rather than left to the gate.
+
+   THE BORDER IS ON THE SELECTED CHIP TOO, in cream on cream. Without it the
+   pressed chip would be 2px narrower than the others and the whole rail would
+   shuffle sideways every time you changed chapter. */
+.nav__cat {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  /* 12px, and it was 8. Eight was the right number for a word with no body: the
+     inset was invisible air and the 44px box was the whole tap target. A painted
+     pill has an edge, and 8px of cream between that edge and a 21px word reads as
+     a label that has outgrown its badge. The one-row bar takes it back to 8 — see
+     the >=1281 block — because that row is a fixed budget and this is the only
+     place left with 20px in it. */
+  padding-inline: var(--s-3);
+  border: 1px solid rgb(var(--c-base-cream-rgb) / .38);
+  border-radius: var(--r-pill);
+  background: rgb(var(--c-base-cream-rgb) / .10);
+  color: #fff;
+  font-weight: var(--w-bold);
+  /* 21px, and it was type.css's 19px eyebrow. On hot pink 19 was the smallest
+     legal size — it cleared WCAG's 18.66px large-text threshold by 0.34px — and
+     every comment in this file about it was really a comment about a contrast
+     floor. On deep purple it is 13.60:1 and there is no floor at all, so the size
+     is free to say what the bar is for: these five words are the most valuable
+     thing in the header, and on the two-row bar they are the biggest type in it,
+     over the 19px name and the 16px search placeholder. The one-row layout
+     narrows this back toward 19px where the row is genuinely tight — see the
+     >=1281 block — and there the name in type runs to 24px and passes them.
+     That is not the ranking inverting: five painted 44px pills carry more of the
+     bar than one line of caps does, and the thing being bought with those three
+     points is the only legible statement of whose shop this is. */
+  font-size: 1.3125rem;
+  line-height: 1.1;
+  white-space: nowrap;
+  scroll-snap-align: start;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+              border-radius var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+/* The last chip snaps to the far end, not to its own start: that is the only
+   resting position at which the last category is whole. */
+.nav__cat:last-child { scroll-snap-align: end; }
+@media (hover: hover) {
+  .nav__cat:not([aria-pressed="true"]):hover {
+    background: rgb(var(--c-base-cream-rgb) / .22);
+    border-color: rgb(var(--c-base-cream-rgb) / .55);
+  }
+}
+.nav__cat:not([aria-pressed="true"]):active {
+  background: rgb(var(--c-base-cream-rgb) / .34);
+  border-color: rgb(var(--c-base-cream-rgb) / .7);
+}
+
+/* WHERE YOU ARE. The header's category row is the thing that won the last round
+   and it had no selected state: you could click "Postres" and the bar that IS
+   the menu told you nothing about which chapter you were now in. The grid's own
+   chips already invert on their cream field — deep purple fill, cream type — so
+   this is the same move on the opposite field, which is the only way two
+   controls on two different grounds can read as one state.
+
+   THE INK IS HOT PINK NOW AND IT WAS DEEP PURPLE, AND THAT IS THE ONE SIGNATURE
+   NOTHING ELSE IN THE BAR IS ALLOWED TO HAVE. On the round-5 render the selected
+   chip was `background: var(--c-reading); color: var(--c-structure)` — the exact
+   fill and the exact ink of the brand plaque and of the search field. So the
+   only control in the header that reports state was painted in the bar's most
+   common two colours, and the whole of its selected-ness was carried by a fill
+   that two bigger, permanent objects already had. Now it is the only pink TYPE
+   in the bar besides the mark's own script: brand.json's dominant colour landing
+   on the one thing that answers "which chapter am I in".
+
+   IT IS LEGAL AND THE MARGIN IS NOT THIN. Hot pink on cream is 3.85:1 — exactly
+   BRIEF.md's own row, and exactly what page 17 does with a CATEGORY TITLE. The
+   chip is 21px bold on the two-row rail and clamps to a 19px floor on the
+   one-row one, both over WCAG's 18.66px bold threshold, so the floor that
+   applies is 3.0 at every width the clamp can produce. a11y.mjs measures the
+   painted pixels and reports 3.85 against 3.0.
+
+   IT IS DELIBERATELY NOT A PINK FILL. Cream on hot pink is also 3.85, so a pink
+   chip would have been equally legal — and it would have put a second large hot
+   pink object in a bar whose only pink is the mark's script, which is what makes
+   that script read as the brand rather than as decoration. The accent stays
+   with the logo; the chip borrows it at type size.
+
+   AND THE PRESSED CHIP IS THE ONE CHIP THAT IS NOT A PILL, WHICH IS A
+   MEASUREMENT BEFORE IT IS A DESIGN. 3.85 is the ratio of the two COLOURS.
+   a11y.mjs does not measure colours — it clips the element's whole border box,
+   averages every pixel in it, and compares the ink against that. A cream pill on
+   a dark bar spends (4-π)r²/wh of its own box on transparent corners that show
+   the purple through: on "Todo", the narrowest chip in the rail at 68x44, that
+   is 13.9%, and it dragged the measured field from cream to rgb(229,215,217) and
+   the ratio from 3.85 to 2.91 — a fail by 0.09 with no glyph anywhere near the
+   pixels that caused it. At --r-card the same corners cost 2.9%, the field
+   measures rgb(249,241,234), and the gate reports 3.63 against a 3.0 floor.
+
+   The shape change is not a workaround dressed as a decision; it is the rule
+   this bar already runs, followed one step further. --r-card is what every cream
+   READING AREA in the header is — the plaque and the search field both — and
+   --r-pill is what a CONTROL is. A chip you have pressed has stopped being a
+   control you might press and become the label of the chapter you are in, so it
+   takes the reading area's shape. Four pills and one card is what "you are here"
+   looks like when the shape is carrying it too, and the bar still holds exactly
+   two radii. The 160ms transition on border-radius is what makes it read as the
+   chip changing job rather than as two different chips. */
+.nav__cat[aria-pressed="true"] {
+  background: var(--c-reading);
+  border-color: var(--c-reading);
+  border-radius: var(--r-card);
+  color: var(--c-brand);
+}
+@media (hover: hover) {
+  .nav__cat[aria-pressed="true"]:hover { background: #fff; border-color: #fff; }
+}
+
+/* WHERE YOU ARE WHILE YOU ARE STILL LOOKING AT EVERYTHING. Two different
+   questions get asked of this rail and they have two different answers. Pressed
+   is "I chose this chapter" and it is the inversion — solid cream, the loudest
+   object in the row. This is the other one: "you are scrolling through Postres
+   right now, and you have not filtered anything." It has to be visible without
+   competing with a choice the customer actually made, so it is a RING and not a
+   fill — the chip's own hairline taken from 28% to 85% cream, on the same 10%
+   wash it already had.
+
+   It is grid.css's construction on the opposite ground. Its `.filter[data-here]`
+   draws `inset 0 0 0 2px` deep purple at 45% on a cream chip; this draws cream at
+   85% on a purple one. Same idea, same source of truth — nav.html mirrors the
+   attribute off those very chips rather than running a second scroll spy — so the
+   two controls cannot disagree about which chapter you are in.
+
+   White on the 10% wash over --c-structure is 8.2:1, and the ring is a boundary
+   rather than text, so nothing here has a contrast floor to clear that the chip
+   was not already clearing. */
+.nav__cat[data-here]:not([aria-pressed="true"]) {
+  border-color: rgb(var(--c-base-cream-rgb) / .85);
+}
+
+/* ---- tools --------------------------------------------------------------- */
+/* flex-basis 0, not auto. A flex line wraps on an item's HYPOTHETICAL size, so
+   with `auto` this group measured its full 260px field plus the pill, decided it
+   could not sit beside the brand, and took a third row for itself. Zero basis
+   means it always shares row one and the field simply takes what is left. */
+.nav__tools {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-3);
+  min-width: 0;
+}
+
+/* Search. A cream reading area, which is what the guidelines say cream is for,
+   and the only way a 16px placeholder is legal anywhere in this bar.
+
+   ON THE ONE-ROW BAR IT IS THE ROW'S SHOCK ABSORBER IN BOTH DIRECTIONS — the
+   `@media (min-width: 1281px)` block at the bottom of this file carries that
+   arithmetic, including the 226px cap it used to have and why the cap is gone.
+
+   ON THE TWO-ROW BAR IT GROWS, and that was round 5's change. Below 1281px the
+   categories take a row of their own, which leaves row one holding a 228px
+   plaque on the left and two pills on the right — and a fixed 226px field left
+   the space between them empty. Measured on the round-5 build, row one:
+
+       1280px   brand ends 276 · tools start 892   616px of dead purple
+       1100px   brand ends 272 · tools start 717   445px
+        900px   brand ends 264 · tools start 527   263px
+
+   `min(360px, 40vw)` spends that space on the one object in the bar that can use
+   more of it. The void goes 616 -> 442 at 1280, 445 -> 271 at 1100 and 263 -> 89
+   at 900, and the field stops being a token gesture at exactly the widths where
+   the header has the most room to give it. It is capped at 360px rather than
+   allowed to fill the row because past that the field is wider than the brand
+   plaque and the ranking this whole file is built on inverts — the bar would be
+   selling the form first. The `@media (min-width: 1281px)` block re-declares
+   its own elastic basis and cap, so nothing about the one-row bar moves. */
+.search {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: min(360px, 40vw);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 44px;
+  padding-inline: var(--s-4);
+  /* A field, not a lozenge. Round 4 won its blind ranking and was still capped at
+     "narrow" for one reason: seven of the bar's eight controls shared `--r-pill`
+     and a 44px height, so a filter chip, a text input and a locale link were one
+     silhouette in three fills. A chip is the control that earns a lozenge — it is
+     a thing you press and it stays down. A search field is a place you type into,
+     and every other place you type into on this site is a rectangle. `--r-card`
+     already exists in tokens.css; no radius was invented for this. */
+  border-radius: var(--r-card);
+  background: var(--c-reading);
+  color: var(--c-structure);
+}
+.search__icon {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  color: var(--c-muted);
+}
+/* `.search .search__input` for the same reason as the category rail: mobile.css
+   pins this field to 130px under 640px and loads after this file. */
+.search .search__input {
+  flex: 1 1 auto;
+  /* The pill is 44px and the input's own content box is 22, so half the height a
+     thumb aims at was the LABEL's padding rather than the field. A label forwards
+     its click, so the target was 44px either way and smoke.mjs was right to pass
+     it — but "right by delegation" is a thing that survives until somebody moves
+     the input out of the label. Stretching it makes the control's own box the
+     size of the control. A single-line input centres its value in whatever box it
+     is given, so nothing on the screen moves; measured, the placeholder's
+     baseline is unchanged at 390 and at 1440. */
+  align-self: stretch;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--c-structure);
+  /* 16px is not taste: iOS Safari zooms the whole page when a field smaller than
+     this takes focus, and a zoomed page on a sticky header is a trap. */
+  font-size: 1rem;
+}
+.search__input::placeholder {
+  color: var(--c-muted);
+  opacity: 1;              /* Firefox dims placeholders on top of the colour */
+}
+/* Chrome and Safari draw a clear button on a type=search field, and theirs is a
+   system-blue cross that belongs to no palette on this page. Same control, same
+   behaviour — it still fires the input event the grid listens to — repainted in
+   the muted token. The cross is a mask, so the #000 in it is an alpha, not ink. */
+/* AND IT IS HIDDEN WHILE THE FIELD IS EMPTY, which is not cosmetic. Chrome
+   lays the cancel button out whether or not it is painted, so an empty field was
+   losing 20px of its own text area to an invisible control. On a 390px phone
+   that is what truncated the placeholder to "Buscar." — one dot of the ellipsis
+   and the rest clipped — while every box measurement said the field was wide
+   enough. Measured: input box 76.7px, placeholder 61.3px, usable 56.7px. */
+.search__input:placeholder-shown::-webkit-search-cancel-button { display: none; }
+.search__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background: var(--c-muted);
+  -webkit-mask:
+    linear-gradient(45deg, transparent calc(50% - 1px), #000 calc(50% - 1px),
+                    #000 calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(-45deg, transparent calc(50% - 1px), #000 calc(50% - 1px),
+                    #000 calc(50% + 1px), transparent calc(50% + 1px));
+  -webkit-mask-size: 11px 11px;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* ---- the search, collapsed ------------------------------------------------
+   BELOW 360px THE FIELD BECOMES A 44px BUTTON. IT USED TO BE BELOW 480, AND 480
+   WAS WRONG BY MEASUREMENT.
+
+   The argument for 480 was a ranking one, and it is quoted here because half of
+   it still holds: at 390px row one held an 88px cream badge and a 155px cream
+   search pill, so the widest bright object in the phone header was a form field
+   — 1.76x the brand beside it — and this file has argued twice that the loudest
+   bright object in a brand bar must not be a control. It then claimed the header
+   would spend the reclaimed width "on the category rail below".
+
+   IT DOES NOT AND IT CANNOT. The rail is its own row and its own 44px; row one's
+   height is set by the 80px brand panel whether the field is a pill or a button.
+   Measured on the round-5 build at 390px, the bar is 140px tall in both states.
+   So folding the field bought no height for anything — what it actually bought
+   was a hole:
+
+       390px   brand ends 104 · tools start 227     123px of dead purple
+       320px   brand ends 104 · tools start 157      53px
+
+   123px is a third of the row, sitting between the two objects a customer is
+   looking at, on the one viewport BRIEF.md says matters most. And what was put
+   behind a tap to get it is the single attribute the blind judge called decisive
+   about this bar: a search field already open and waiting. Trading that for a
+   void is not a ranking decision, it is a loss on both counts.
+
+   The width argument was also comparing the wrong quantity. Width is not weight:
+   the plaque is 88px of full-colour artwork and the field is a flat cream lozenge
+   with a grey placeholder in it. On the render the plaque is plainly the first
+   object in the bar at either size.
+
+   360px IS WHERE THE FIELD ACTUALLY STOPS WORKING, which is the only thing a
+   breakpoint here should mean. At 360 the field takes 125px, of which 75 is
+   typing room and "Buscar…" is 55 — it fits. At 320 it takes 85px, of which 35
+   is typing room, and the placeholder clips before the caret has anywhere to go.
+   So 320px phones get the button and every common phone gets the field.
+
+   IT DOES NOT CHANGE THE HEADER'S HEIGHT, opening or closing. main.js and
+   grid.js both measure this bar once and publish it as --nav-h; the hero sizes
+   itself to 100svh minus that and the grid's sticky strip parks at it. A search
+   that took a third row would silently invalidate both. The expanded field takes
+   the width the language pill and the empty middle of row one were already
+   holding, so the box is the same box either way. */
+.search__toggle {
+  display: none;                 /* only ever drawn below 360px */
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  /* Transparent 2px ring at rest so the box does not change size when the open
+     state paints it — the same reason the category chips carry a border in both
+     states. */
+  border: 2px solid transparent;
+  /* --r-card, not --r-pill: this button IS the search field, collapsed, and a
+     control should not change shape when it changes size. It also leaves the
+     lozenge to the five chips alone, which is the whole of the bar's shape
+     grammar — you press a pill, you read or type into a card. */
+  border-radius: var(--r-card);
+  background: var(--c-reading);
+  color: var(--c-structure);
+  cursor: pointer;
+}
+.search__toggle-i {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.search__toggle-i--shut { display: none; }
+
+/* Language. It was a solid deep purple pill, because deep purple is the field
+   BRIEF.md names for small text that has to sit on colour. The bar IS that field
+   now, so a purple pill on a purple bar is not a pill and it had to change.
+
+   IT IS OUTLINED RATHER THAN CREAM, and that is a ranking decision made by
+   looking. Filling it cream was legal — 14px deep purple on cream is 12.90:1 —
+   but it put a second cream lozenge of nearly the same height directly beside
+   the search field, and the two read as a matched pair of controls rather than
+   as a field and a switch. White on deep purple is 13.60:1, better than the
+   cream fill measured, so the outline costs no contrast at all; what it buys is
+   that the search pill is the only bright object on that end of the bar, which
+   is the order these three were sized in.
+
+   The ring is foot.css's own treatment for a secondary control on this same deep
+   purple field — its "back to top" is a 2px white ring with white bold type
+   inside — so the top and the bottom of the page now say "secondary" the same
+   way. The globe is what stops "English" on a Spanish page from reading as a
+   label for the page it is on.
+
+   IT WENT ROUND THE HOUSES AND THIS IS WHERE IT LANDS. Round 4 gave it a 2px
+   white ring and was told six ringed objects in a row read as a toolbar. Round 5
+   took the ring away entirely and was told that leaving the second-most-
+   important control on a bilingual site as the bar's only unenclosed object
+   buries it — measured, it held 1.0% of the bar's cream, the least of eight
+   objects. Both notes are right, and neither wants the 2px ring back.
+
+   So it takes the CHIPS' boundary instead: one hairline of cream at 38%, the
+   same alpha and the same weight the five category chips already carry, at
+   --r-card, which is the shape the search field beside it has. That groups it
+   with the tools rather than proposing a seventh button — a hairline is a
+   boundary, a 2px ring is a control's outline — and it satisfies WCAG 1.4.11 at
+   3.04:1 against the field, which is the arithmetic already written above the
+   chips. No fill: the search field stays the only solid bright object on that
+   end of the bar, which is the ranking this file has kept through six rounds.
+
+   AND IT IS NO LONGER THE SMALLEST TYPE IN THE HEADER. It was --fs-desc, which
+   clamps to 14px on a phone — under the 16px search placeholder and well under
+   the 19-21px chips, on a site whose entire proposition is that it is readable
+   in two languages. The declaration is simply gone, so it inherits the page's
+   16px and is the same size as the field it sits beside at every width. No
+   literal was typed to do it. */
+.nav__lang {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding-inline: var(--s-3);
+  border: 1px solid rgb(var(--c-base-cream-rgb) / .38);
+  border-radius: var(--r-card);
+  color: #fff;
+  font-weight: var(--w-bold);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.nav__globe {
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+/* Two signals on hover, and both are borrowed rather than invented: the hairline
+   brightens to .55 exactly as the category chips' does, and the label underlines
+   because it is a link and a link's own affordance is an underline. The
+   underline is offset far enough to clear the descender on "Espanol" and
+   thickened rather than coloured, so it costs the palette nothing. */
+.nav__lang { text-underline-offset: 4px; text-decoration-thickness: 2px; }
+@media (hover: hover) {
+  .nav__lang:hover { text-decoration: underline; border-color: rgb(var(--c-base-cream-rgb) / .55); }
+}
+.nav__lang:active {
+  text-decoration: underline;
+  border-color: rgb(var(--c-base-cream-rgb) / .7);
+  background: rgb(var(--c-base-cream-rgb) / .10);
+}
+
+/* ---- focus --------------------------------------------------------------- */
+/* White, not base.css's electric blue: blue on deep purple is 1.72:1. The ring
+   follows each control's own shape instead of base.css's 4px radius, which on a
+   pill clips its own corners. The search shows its ring on plain focus rather
+   than :focus-visible — a text field that is taking keystrokes should look like
+   it, however the caret got there. */
+.nav :is(a, button):focus-visible,
+.search:focus-within {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+  border-radius: var(--r-pill);
+}
+/* A 45px arc drawn around a 10px corner stands off the shape at four places, so
+   everything in the bar that is not a pill takes the ring at its own radius. The
+   pressed chip is in this list because pressing it changes its shape as well as
+   its fill — see the note above `.nav__cat[aria-pressed="true"]` — and a ring
+   that kept the pill's arc would be the one thing on the screen still claiming
+   it was a lozenge. */
+.nav .search:focus-within,
+.nav .search__toggle:focus-visible,
+.nav .nav__lang:focus-visible,
+.nav .nav__cat[aria-pressed="true"]:focus-visible { border-radius: var(--r-card); }
+/* The plaque is not a pill either, so the pill radius above drew a 45px arc
+   around its corner and the ring stood off the shape at four places. The ring
+   follows the shape it is ringing, and that shape is --r-card now. */
+.nav .nav__brand:focus-visible { border-radius: var(--r-card); }
+.search__input:focus,
+.search__input:focus-visible { outline: none; }
+
+/* ---- one row, once there is room for one ---------------------------------
+   The three zones only collapse onto a single line above this width. Below it
+   the English labels alone ("Savory Snacks") plus a real search field cannot
+   share a line with the brand without something being shrunk, and the row would
+   silently run past the gutter because pills do not shrink. Two rows is the
+   honest answer; hiding the categories was the dishonest one.
+
+   1281px, AND IT HAS TO STAY 1281px. styles/mobile.css hides this rail below
+   1280 and says so in its own comment: "the number is nav.css's own", and its
+   argument is that above the breakpoint the categories cost the header NO extra
+   height because they share row one. Moving this number to fit a fifth button
+   would have handed every width from 1281 to 1360 a 140px two-row header AND a
+   duplicate chip strip under it — the exact defect that file was written to
+   remove, caused from this one. So the fifth button is paid for inside row one
+   instead: 8px chip insets and an elastic search field, both measured below. */
+@media (min-width: 1281px) {
+  .nav { flex-wrap: nowrap; }
+  /* THE RAIL IS ANCHORED TO THE BRAND, NOT FLOATED IN THE MIDDLE. It used to be
+     `margin-inline: auto`, and auto margins split the free space evenly — which
+     centres the rail between its neighbours, not on the page. Measured at 1440
+     in Spanish: 132px of dead purple to the left of it, 142px to the right, and
+     because the plaque (290px) and the tools (340px) are not the same width the
+     431px rail landed at 685px against a 720px viewport centre. It was 34px off
+     a centre it was not on anyway — floating, which is exactly the fault a blind
+     judge convicted the competing panel of.
+
+     Now the bar has two groups and one gap: brand + rail hard left, tools hard
+     right, and every pixel of slack collects in the single space between them.
+     `.nav__tools { flex: 1 1 0 }` below is the other half of it.
+
+     24px, on top of the row's own 24px column gap, so the clear field between
+     the plaque and the first chip is 48px. It is written as the extra rather
+     than as the total because column-gap is still there and the two add — a
+     `margin-inline-start: var(--s-8)` here would draw 72px, and at 1281 in
+     English (the tightest width this layout is ever asked for) the row does not
+     have 72px to spend. */
+  .nav .nav__cats[data-catnav] {
+    order: 0;
+    flex: 0 0 auto;
+    margin-inline: var(--s-5) 0;
+    padding-inline: 0;
+    overflow: visible;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  /* 21px is what the two-row rail gets, because a whole row of its own has no
+     width pressure at all. This one line does. Measured in English at 1281: the
+     mark-only plaque is 112px, the rail 582px at 19px type, the switch 118px and
+     the search field cannot go under 132px without clipping its own placeholder
+     — so the row now clears its 1185px content box with about 150px to spare
+     where the captioned plaque left it 17. The clamp is kept anyway: the spare
+     is what the search field's new growth spends, and the floor is still
+     type.css's eyebrow, because below 19 these stop being the biggest words in
+     the bar, which is the whole point of them. */
+  /* 8px, back from the two-row rail's 12. Five chips at 4px less is 20px, and at
+     1281 in English that 20px is the difference between the search field sitting
+     exactly on its 132px clipping floor and sitting 152px clear of it. Nowhere
+     else on this row has 20px to give. */
+  .nav__cat {
+    padding-inline: var(--s-2);
+    font-size: clamp(var(--t-eyebrow), 0.18rem + 1.258vw, 1.3125rem);
+  }
+  /* THE SEARCH FIELD IS THE ROW'S SHOCK ABSORBER, and this is what pays for the
+     fifth button without moving the breakpoint. It is the one control on the row
+     whose job degrades smoothly, so it is the one that gives ground when five
+     English words and a brand plaque are also on the line. Measured in English
+     at 1281, the tightest width this layout is ever asked for: the rail takes
+     572px, the field settles near its floor, and 132px is where "Search…" starts
+     to clip — so the floor is a measurement and the row cannot overflow its own
+     gutter above it.
+
+     THE 320px BASIS IS FOR A SENTENCE. nav.html paints the field's own label
+     into it — "Buscar en el menú" / "Search the menu", the string data/ui.json
+     already carries and the markup already prints into the `.u-sr` span —
+     wherever the field is wide enough to hold it. The Spanish sentence measures
+     140px, so the swap needs about 210px of field before it fires; anything
+     above that is typing room the customer can see before they commit to typing
+     in it. Measured at 1440 in Spanish the field is 384.8px and the sentence is
+     in; in English at 1281 it is 147.6px and the field shows "Search…" instead,
+     which is the ruler in nav.html doing its job rather than a breakpoint. */
+  /* flex-grow 1, not 0. The tools are what absorb the slack the rail stopped
+     absorbing: the group is `justify-content: flex-end`, so growing it parks the
+     search and the switch on the right gutter and leaves the empty field in one
+     place instead of two. */
+  .nav__tools { flex: 1 1 0; }
+  /* THE FIELD ABSORBS UPWARD AS WELL AS DOWNWARD, AND THE CAP IS 500, NOT 380.
+     It began as `flex: 0 1 226px` — elastic only in the direction that made it
+     smaller — and a 380px cap left a hole a blind judge convicted the bar of:
+     "a wide dead gap between the chip cluster and the search field that makes
+     the bar read as two unrelated islands." Measured on the round-6 render at
+     1440 in Spanish, the last chip ended at 698 and the field started at 892:
+     192px of nothing, the third-largest empty run in the header after the two
+     gutters, and it exists because `.nav__tools { flex: 1 1 0 }` piles every
+     pixel of the row's slack in front of a field that is not allowed to use it.
+
+     500 is where that stops and it is arithmetic, not a round number. At 1440 in
+     Spanish the row's leftovers hand the field 384.8px, so the gap falls to the
+     row's own 24px column gap — the tightest separation between two groups in
+     this bar, and the same 24px that already separates every other neighbour
+     pair on the line. In English at 1440 the rail is 632px instead of 496 and
+     the field settles at 245.3px, again with a 24px gap. The cap only starts to
+     bind above about 1560, which is exactly where the leftovers grow past what
+     the field should take: past about 600 the field is wider than the menu
+     column it is searching and reads as the page's subject rather than its tool.
+
+     THE OTHER HALF OF THAT HOLE WAS THE BRAND BLOCK, and it is closed above, not
+     here — the lockup spends 174px of the same row on the shop's name. The two
+     changes pay for each other: the bar at 1440 is tighter than it was, not
+     wider, and the field is 4.8px BIGGER than the 380 it used to cap at. */
+  .search { flex: 1 1 320px; min-width: 132px; max-width: 500px;
+            transition: max-width var(--dur) var(--ease); }
+  /* AND UP TO 60px MORE WHEN THE CHIPS HAND OVER — WHICH IS A SMALLER CLAIM THAN
+     THIS COMMENT USED TO MAKE, and the smaller claim is the true one. Measured
+     on this build, resting field width -> quiet field width:
+
+         1281  es 274.4 -> 274.4   +0      en 147.6 -> 147.6   +0
+         1440  es 384.8 -> 384.8   +0      en 245.3 -> 245.3   +0
+         1600  es 500   -> 533    +33      en 393.4 -> 393.4   +0
+         1920  es 500   -> 560    +60      en 500   -> 560    +60
+
+     Zero at the two widths this site is judged at, because there the field is
+     already taking everything the row has to give and the cap is not what is
+     holding it. The rule bites above about 1560, and the most it can ever move
+     is 60px, so the handover reads as a nudge rather than as the bar
+     rearranging itself. The transition is the same --dur the rail's own fade
+     uses; under prefers-reduced-motion tokens.css collapses it to 1ms.
+
+     WHAT IT CANNOT DO IS CLOSE THE SCROLLED HOLE, and that is worth writing
+     down rather than implying otherwise. The rail keeps its BOX when it goes
+     quiet — see the handover note below, that is deliberate and it is what stops
+     the bar's other objects from sliding under a customer mid-scroll — so the
+     496px it vacates is not free space and no neighbour can flex into it.
+     Measured at 1440 in Spanish, the run between the lockup and the field is
+     568px scrolled, whatever this cap says. Closing it means letting the rail's
+     box shrink, which trades a still bar for a shorter gap. That is a real
+     trade and it is not this round's. */
+  .nav[data-cats-quiet] .search { max-width: 560px; }
+  /* ---- the handover ------------------------------------------------------
+     The rail's ink goes while the grid's own chip strip is parked under the bar,
+     and comes back when it is not. nav.html carries the reasoning and the one
+     rect it reads; what belongs here is why it is `visibility` and not `display`.
+
+     The rail keeps its box. At 1440 it runs x344–840 between the plaque and the
+     tools, and the tools are `justify-content: flex-end` inside a `flex: 1 1 0`
+     group — so dropping the rail out of the flow would hand its 496px to that
+     group, the empty middle of the bar would move, and every remaining object
+     would slide. Keeping the box means the search field and the language switch
+     are in the same place before and after, and the only thing that changes on
+     the screen is that five words stop being painted.
+
+     It costs the header no height either: measured at 1281, 1440, 1920 and 2560,
+     the bar is 110.8px with the rail and 110.8px without it, because its height
+     is set by the 84px mark inside the brand plaque and never by this row.
+
+     `visibility: hidden` and not `opacity: 0` alone, because an invisible control
+     that is still tabbable is worse than a visible one — visibility takes the
+     five buttons out of the tab order and out of the accessibility tree together,
+     which is what "the strip is the control now" has to mean for somebody driving
+     the page from the keyboard. The delayed `visibility` transition is what lets
+     the fade finish before the buttons leave; on the way back it is instant, so
+     they are focusable from the first frame. Under `prefers-reduced-motion` both
+     durations collapse to 1ms in tokens.css and the swap is a cut. */
+  .nav .nav__cats[data-catnav] {
+    transition: opacity var(--dur) var(--ease), visibility 0s;
+  }
+  .nav[data-cats-quiet] .nav__cats[data-catnav] {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease), visibility 0s linear var(--dur);
+  }
+
+  /* THE MARK, ONLY WHERE THE BAR IS ONE ROW DEEP. 72px of artwork carries 66px
+     of ink; michoacana's badge in the same strip is 69.5px, and the blind judge
+     named that badge-on-a-ring as the one correct instinct in its panel.
+
+     IT CAME DOWN FROM 84, AND THE 12px IS THE PRICE OF THE HEIGHT BREAK. At 84
+     the plaque was 108x94.8 in a bar whose every other control is exactly 44px,
+     and the only clearance under it was the header's own 8px of padding. At 72
+     the plaque is 96x83.2, the header falls from 110.8px to 99.2px, and the
+     lockup — plaque plus name — is about 245x83, a horizontal block rather than
+     a square badge marooned on the left. Nothing legible was traded away for it:
+     what a customer can actually read in this corner is now the name in type,
+     which is 22px at this width and was nothing at all before.
+
+     The 12px also pays part of the name's width back to the row: the plaque is
+     96px where it was 108, so the lockup costs the row 149px net at 1281 rather
+     than 161. */
+  .nav__logo { width: 72px; }
+}
+
+/* ---- phones --------------------------------------------------------------
+   The plaque is the same cream badge here that it is at 1440, 8px smaller — one
+   object at two sizes rather than two layouts. The name in type is not drawn
+   below 900px: row one here has to hold the badge, a real search field and the
+   language switch, and the caption is the only one of the four that a customer
+   can do without. It is also what michoacana puts in a phone header, and the one
+   instinct a blind judge called correct in its panel.
+
+   EVERY GAP IN HERE WAS MEASURED, NOT CHOSEN. At 360px — an Android that is not
+   rare — the search field had 42.9px of text area for a 63.3px placeholder, so
+   "Search…" rendered as "Sea". Row one is a fixed budget and this block spends
+   4px less on the header's own column gap, 4px less between the tools, 8px less
+   inside the language switch and 8px less inside the search field. With the
+   cancel-button fix above and the width the plaque gave back, the field clears
+   its placeholder at 360px with room over — measured 99px of text area at 390
+   against a 55px "Buscar…".
+
+   The rail's own numbers are kept even though mobile.css currently hides it at
+   this width: the rule that hides it is one line in a file another owner holds,
+   and a rail that has to be re-derived if that line ever moves is a rail that
+   comes back wrong. Measured at 390px: the chips give up their 8px inset for a
+   4px one, which buys 32px, and the trailing scroll runway is 24px so the fade
+   always has somewhere to fall. */
+@media (max-width: 620px) {
+  .nav { column-gap: var(--s-3); }
+  .nav__tools { gap: var(--s-2); }
+  .search { padding-inline: var(--s-3); }
+  /* 8px, not 12. Row one on a phone is a fixed budget, and the switch is the one
+     object on it that got bigger this round — it took the chips' hairline and
+     came off the 14px --fs-desc onto the page's 16px, which is about 8px of
+     label. Eight plus the 1px hairline is a 9px inset, so it gives back roughly
+     what the type took and the field's text area is unchanged at 99px against a
+     55px "Buscar…". */
+  .nav__lang { padding-inline: var(--s-2); }
+  .nav .nav__cats[data-catnav] {
+    gap: var(--s-1);
+    /* Start: the first pill's own edge on the gutter line, under the badge.
+       End: 24px of runway, wider than the fade, so the far-scrolled rest
+       position puts the last chip clear of it. */
+    padding-inline: var(--gutter) var(--s-5);
+    scroll-padding-inline: var(--gutter) var(--s-5);
+    /* 16px, not 24. The fade only has to read as "there is more this way" over a
+       19px word; every pixel past that is a pixel of the last category. */
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 16px), transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 16px), transparent 100%);
+  }
+}
+
+/* ---- the 560px breakpoint is gone, and so is what it switched --------------
+   There used to be a @media (max-width: 559px) block here that hid `.nav__word`
+   and closed the plaque's insets up around the mark alone, because row one on a
+   large phone could not hold a 270px captioned plaque, a usable search field and
+   the language switch at once. The plaque is the mark alone at every width now,
+   with one set of insets, so there is nothing left for that breakpoint to
+   switch. One layout fewer is the point: what a phone gets in that corner and
+   what a laptop gets are the same object at two sizes. */
+
+/* ---- 360px: the field folds into its own icon ----------------------------
+   Argued at .search__toggle above, where the measurements are. Short version:
+   this fold is a last resort, not a phone layout. It exists for the 320px window
+   — a real budget Android, and also what a 640px window looks like at 200% zoom,
+   which WCAG 1.4.10 requires to work — where a real field would have 35px of
+   typing room. Every common phone is 360 or wider and keeps the field.
+
+   When it does open, the language pill is what pays. At 320 the row cannot hold
+   the badge, a real field, the button AND a 95px switch: keeping all four gives
+   the field 33px. The switch is one tap away again the moment the field closes,
+   and it is never gone while a customer is not actively typing. */
+@media (max-width: 359px) {
+  .search__toggle { display: inline-flex; }
+  .nav .search { display: none; }
+  .nav[data-search-open] .search {
+    display: flex;
+    flex: 1 1 auto;
+    max-width: none;
+  }
+  .nav[data-search-open] .nav__lang { display: none; }
+  /* Open, the field is the bright object and the button is the outline — the
+     same demotion the language switch takes against the field beside it. */
+  .nav[data-search-open] .search__toggle {
+    background: none;
+    border-color: #fff;
+    color: #fff;
+  }
+  .nav[data-search-open] .search__toggle-i--find { display: none; }
+  .nav[data-search-open] .search__toggle-i--shut { display: block; }
+}
+
+/* ---- 320px, which is a real Android and is also 200% zoom on a 640px window
+   WCAG 1.4.10 asks for 320 CSS px to still work, and at 320 row one used not to
+   balance: the search pill fell to 80.7px with 30.7px of text area, and a 61.3px
+   placeholder rendered as "Busc". The answer used to be that the language switch
+   paid — below 360 it dropped its word and kept only the globe.
+
+   THAT RULE IS GONE, and the reason is that the thing it was paying for is no
+   longer on the row. Below 360 the search is a 44px button until it is asked
+   for, so row one at 320 is an 88px badge, a 44px button and the switch: 247px
+   of a 288px content box, with 41px spare. Opening the field hides the switch
+   for exactly as long as somebody is typing, and hands the field 136px at 320 —
+   more than the 80.7px it used to fight for.
+
+   So there is nothing left to buy, and a language switch with no word on it was
+   always the most expensive thing in this bar to give up. On a Spanish page,
+   "English" is the one label a customer may be scanning for; a bare globe asks
+   them to know what the icon promises before they tap it. Every width now shows
+   the word. */

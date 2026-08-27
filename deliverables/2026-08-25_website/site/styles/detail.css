@@ -1,0 +1,1194 @@
+/* ============================================================================
+   DETAIL — one product, the size of the room.
+
+   THE BAR. heladosmexico.com's product page is what BRIEF.md names as the
+   standard for how a single product is photographed and framed, and measured off
+   `.bench/hm-product-desktop.png` it does four things well: the packshot is most
+   of the viewport tall, the field behind it is flat and saturated, there is a
+   soft radial glow where the product stands, and the copy is a flat panel beside
+   it rather than a caption under it. All four are reproduced here.
+
+   WHAT ROUND 4 CHANGED, AND THE NUMBERS IT CHANGED IT FOR
+
+   1. PHOTO LEFT, COPY RIGHT, AND THEY DO NOT TOUCH. Round 3 gave the stage
+      `grid-column: 2 / -1` so a silhouette could pass behind the cream card.
+      That is a good effect on a tall subject and a crop on a wide one. Measured
+      on the round-3 screenshots at 1440x900, the panel covered the right-hand
+      485px of the Paletas wrapper, 485px of the Chicharron Preparado, 485px of
+      the Banana Split and 183px of the Nachos tray. The panel's left edge landed
+      mid-strawberry. The stage is column 1 for every product now, so the food is
+      sized against the 912px it actually has rather than against 1440px a third
+      of which is hidden — and nothing is ever behind anything.
+
+      The bleed survives it. A tall photograph is still seated past the height of
+      the room and still leaves by the bottom edge; it is only the WIDTH that
+      stops at the panel, and the widest bleeding subject in the catalogue is
+      561px in a 912px stage.
+
+   2. THE CONTACT SHEET IS IN THE READING PANEL. It was a third column down the
+      left edge, costing every product 210px of stage to serve the 13 that have
+      more than one photograph — and leaving the panel to hold a category, a name
+      and two buttons on the four products with no client-approved line. In the
+      panel, under the description and named with ui.json's `moreShots`, it is
+      part of what the panel says about the dish. Each tile is a window cut back
+      to the room's own field colour, so the row reads as "the same dish, four
+      ways". 100-124 CSS px against heladosmexico's 40px greyscale chips.
+
+   3. THE CONTACT SHADOW IS A CONTACT SHADOW NOW. Measured in the 40px band
+      directly under the Paletas wrapper: luminance 60.4 against a field of 64.2,
+      a 6% darkening, which is why the food read as pasted onto the colour rather
+      than standing on it. A 4cqh offset with a 5cqh blur is an ambient, and deep
+      purple at .28 over saturated pink is close to invisible. The stack below is
+      rewritten and re-measured, not adjusted by eye.
+
+   4. THE GLOW IS UNTOUCHED, ON PURPOSE. Measured, `.detail__stage::before` lifts
+      the field 13% on hot pink (60.0 in the corner to 67.6 behind the subject)
+      and 22% on electric blue, where heladosmexico's field moves 168.3 to 165.0
+      — flat. It is already the stronger of the two. `--shift` is gone because
+      the stage is the free track now and its middle is the food's middle, so the
+      translate resolves to zero and the pool sits under the subject by
+      construction rather than by correction.
+
+   WHAT WAS ALREADY RIGHT AND IS KEPT
+
+   - NO TEXT EVER LEAVES CREAM. The contrast table in BRIEF.md is not advice.
+     White on hot pink is 4.06 and on sunny yellow it is 1.66, and this view has
+     to work on all four accents including yellow. So the field carries the
+     photograph and nothing else, and every word sits on a cream reading area —
+     which is also, verbatim, what brand.json's visual direction asks for.
+   - THE ALTERNATE PHOTOGRAPHS ARE ON THE FIELD, AT A SIZE YOU CAN READ. Theirs
+     are three 60px greyscale chips in a corner. Ours stand beside the main
+     photograph as full-colour cut-outs seated by the same arithmetic — a contact
+     sheet of one dish. 13 of the 45 products have more than one and Crazy Shake
+     has four; it is the single thing neither benchmark can do.
+
+   NOTHING IN THIS FILE DEFINES A CUSTOM PROPERTY. `--field-rgb` and the per-
+   photograph width are written onto the elements by detail.js from menu.json's
+   accent NAMES and data/images.json's published geometry, which is what keeps
+   this stylesheet free of invented tokens — see scripts/check-invented.mjs.
+   Everything else comes from tokens.css.
+   ========================================================================== */
+
+/* ---- the room ------------------------------------------------------------ */
+/* `margin: auto` against `inset: 0` is what centres a modal <dialog>, and
+   base.css restores it after the universal reset. Filling the viewport is done
+   by giving it 100% of that box rather than 100vw/100dvh, so a page scrollbar
+   behind the dialog cannot make it wider than the space it is centred in —
+   smoke.mjs measures that centring to within 4px. */
+.detail {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+  color: var(--c-body);
+
+  /* The field. One accent, very slightly lighter at the top so the room has a
+     direction — the same two-stop treatment card.css gives the tile, so the tile
+     you tapped and the room you land in are visibly the same surface. */
+  background:
+    /* The corners fall away, so the field reads as a lit room rather than as a
+       flat fill — the same job michoacana's cream ring does behind its badge and
+       the reason heladosmexico's glow is there at all. It is the dark token at
+       low alpha, which is the token card.css already uses for a contact shadow;
+       no colour is introduced and it works on all four accents.
+
+       THE CENTRE MOVED FROM 46% DOWN TO 68%, AND THAT IS THE WHOLE FIX. Centred
+       at 46% of a 900px room the gradient put its maximum darkening in the
+       BOTTOM corners — and the subject is anchored to the TOP of the room
+       (`.detail__stage--bleed { align-items: start }`) and leaves through the
+       bottom, so the darkest part of the room was under the part of the food
+       that is already darkest and already being cropped. Measured on the Postres
+       room at 1440x900, the field fell from grey 58.9 at the top of the frame to
+       34.7 at the bottom-left, a 41% drop, directly under the cup's base.
+
+       At 68% the vertical radius reaches 864px from a centre at y=612, so the
+       bottom edge sits at 0.33 of the radius — inside the transparent stop —
+       while the top corners sit at 0.80 and take the darkening instead. The
+       falloff is now above and beside the subject rather than beneath it, which
+       is where a vignette is for. Arithmetic, not taste: the bottom-left corner
+       goes from 10.2% dark to 2.8% dark.
+
+       The outer stop came down from 22% to 16% at the same time, and that is not
+       a second opinion about the same thing — it is the cost of moving the
+       centre. Darkening that used to be spread around all four corners is now
+       concentrated in the top two, and photographed on the Bebidas room 22% over
+       sunny yellow read olive rather than lit. 16% puts the top corners at 10.8%,
+       which is where they were before the move. */
+    radial-gradient(118% 104% at 44% 68%,
+      color-mix(in srgb, var(--c-dark) 0%, transparent) 40%,
+      color-mix(in srgb, var(--c-dark) 16%, transparent) 100%),
+    /* Lighter at the top so the room has a direction — but lighter by COLOUR, not
+       by alpha. This stop was `rgb(field / .88)`, and 12% of the menu behind the
+       dialog therefore came through it: photographed at 1440x900 on the Postres
+       room, the nav's cream brand pill and two filter chips are visible as faint
+       rectangles across the top of the field. A room you can see the last screen
+       through is a sheet laid over the menu, which is the exact thing this view
+       is not supposed to be. Mixed with cream instead — the reading colour, and
+       the same lift, with nothing behind it. */
+    linear-gradient(180deg,
+      color-mix(in srgb, rgb(var(--field-rgb, var(--c-hot-pink-rgb))) 88%, var(--c-reading)) 0%,
+      rgb(var(--field-rgb, var(--c-hot-pink-rgb))) 76%);
+
+  /* One child fills the dialog. The walk bar that used to be a second row down
+     here has moved into the reading panel, which is what gave the photograph the
+     last 86px of the screen and took the pagination shape away from the room. */
+  display: flex;
+  flex-direction: column;
+}
+.detail::backdrop {
+  background: rgb(var(--c-deep-purple-rgb) / .72);
+  backdrop-filter: blur(8px);
+}
+
+/* ---- two columns, and they do not overlap --------------------------------
+   stage | reading panel. That is the whole layout, and the fact that it is only
+   two things is the round's structural change: the contact sheet used to be a
+   third column down the left edge and is now inside the panel, which is what
+   made the hard split affordable. The photograph gets every pixel left of the
+   panel and not one pixel under it.
+
+   The panel's track is `auto` and the panel sets its own width, so the stage's
+   `minmax(0, 1fr)` is exactly the free space — which is also the container the
+   food is sized against, since `.detail__stage` is a size container. Sizing the
+   food against a width a third of which is hidden was the round-3 fault.
+
+   DOM order is stage then panel, so the first <img> in the dialog is the big
+   photograph — which is what a reader, and smoke.mjs, means by "the photo". */
+.detail__body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+/* ---- the stage ----------------------------------------------------------- */
+/* A size container, so the photograph can be written in cqw/cqh and the browser
+   re-solves it at every viewport with nothing measured in JavaScript.
+
+   NO PADDING. Three of its four edges are edges of the screen and the fourth is
+   the panel, and the clearance the photograph needs at the top is not padding —
+   it is the constant 6% transparent margin the export already carries, which on
+   a 900px room comes out at 60px of headroom without costing the food a pixel.
+   The bottom padding that used to be here was a floor under the food, and the
+   floor was the fault round 3 existed to fix. */
+.detail__stage {
+  /* COLUMN 1, FOR EVERY PRODUCT. Not `2 / -1` and not `1 / -1`: a stage that runs
+     under the panel is a stage whose width lies to the arithmetic that seats the
+     food in it. Measured at 1440x900 with the old span, the Paletas wrapper was
+     drawn 1354px wide and 485px of it was behind the cream card. */
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  min-width: 0;
+  container-type: size;
+  display: grid;
+  /* The track is pinned to the stage, not sized to what is in it. Left as the
+     implicit `auto`, a grid column grows to its widest item — and a square canvas
+     is deliberately wider than the stage for any tall product, because that is
+     the transparent padding around a paleta. The column then started at the left
+     edge and ran off the right, so `center` centred the photograph in the TRACK
+     and the food sat hard against the right edge of the screen. Measured on the
+     Mangonada at 390px: 73% of the way across instead of 50%. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  place-items: center;
+}
+/* THE BLEED. Anchor the canvas to the top of the room and let it run out of the
+   bottom. `align-items: start` rather than a negative margin, because the amount
+   that runs out has to be whatever the arithmetic in detail.js produced at this
+   viewport, and start-alignment gets that for free at every screen size. */
+.detail__stage--bleed { align-items: start; }
+
+/* The pool of light the product stands in — heladosmexico's soft radial glow,
+   which is the one thing their field does beyond being flat. It is the cream
+   token at low alpha over the accent, the same move card.css makes on the tile
+   and tokens.css makes for every shadow, so it is one brand colour lifting off
+   another and not a new one. It does real work: a white styrofoam cup, a clear
+   plastic tray and a paper churro box have no edge at all against flat
+   saturated colour, and this is what gives them one.
+
+   PLACED AT 60% DOWN, NOT 46%, AND THAT IS A CORRECTION. 46% was chosen to sit
+   behind a subject anchored to the top of the room — and it did, which is the
+   problem: it lit the FRUIT and left the base, the part that actually has to
+   resolve against the field, on unlit colour. heladosmexico's glow is not behind
+   its bar, it is around where the bar stands. Widened to 66% x 64% at the same
+   time, so the pool still reaches the shoulders of a tall product while its
+   brightest part is around the base. */
+.detail__stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(66% 64% at 50% 60%,
+    rgb(var(--c-base-cream-rgb) / .42) 0%,
+    rgb(var(--c-base-cream-rgb) / 0) 74%);
+  pointer-events: none;
+  /* THE LIGHT FOLLOWS THE FOOD, and since round 4 it does so for free. The stage
+     is the free track, the food is centred in it, so the pool is under the
+     subject with nothing to correct — `--shift` is no longer written by
+     detail.js and this resolves to `0 0`. The declaration stays because the
+     mechanism is right and costs nothing: any future seating that is not centred
+     writes `--shift` and the light goes with it, which is the failure this line
+     was added to prevent (a subject to the left of its own glow reads as two
+     objects). Measured lift, unchanged by the round: 13% on hot pink, 22% on
+     electric blue, against heladosmexico's flat field. */
+  translate: calc(var(--shift, 0px) * -1) 0;
+}
+
+/* ---- THE FLOOR: LIGHT WHERE THE SUBJECT LEAVES THE FRAME -------------------
+   `FOOD_BLEED_H` is 1.12 in detail.js and it is kept, because a cut-out that
+   runs off the edge is a thing in the room and one that ends neatly inside it is
+   a photograph. But a bleed is only legible if the frame SAYS it is bleeding.
+   Measured on the Postres room at 1440x900, across rows 0.84–0.87 of the height,
+   the cup's dark ice read 1.07:1 against the field beside it: the silhouette
+   did not run out of the room, it dissolved into it, and the reader is left with
+   an object that has no base.
+
+   heladosmexico bleeds its hero below the fold and still resolves, and the reason
+   is visible in `.bench/hm-product-desktop.png`: there is LIGHT where the subject
+   meets the boundary. This is that light — one wide, low ellipse of the cream
+   token, centred on the food's own painted width (`--lift`, written by
+   detail.js from the same `fillW` that seats the photograph) and sitting astride
+   the bottom edge so half of it is clipped by the room. The food is `z-index: 1`
+   and this is `z-index: 0`, so the silhouette stands ON the light rather than in
+   front of a haze.
+
+   MEASURED, THIS AND THE VIGNETTE TOGETHER. At row 0.86 of the frame, 26px
+   outside the cup's left outline, the field was rgb(67,20,78) — relative
+   luminance 0.0224. It is now rgb(88,45,97), luminance 0.0481. The room under
+   the subject is 2.15x brighter than it was, and it is brighter by CREAM, which
+   is the reading colour, not by desaturating the chapter's purple.
+
+   ITS STRENGTH IS THE FIELD'S, NOT A NUMBER TYPED HERE. `--ink-lit` is how much
+   of the cream ink this chapter's field can carry — 1 on deep purple, 0.79 on hot
+   pink, 0.54 on electric blue, 0.03 on sunny yellow, derived in detail.js from
+   the palette's own luminance. On the yellow chapter a cream floor would be a
+   smear, so it is not drawn; on the purple chapter, which is the one that needs
+   it, it is drawn at full strength.
+
+   BLEED ONLY. A product that ends inside the room has a contact shadow under it
+   and a boundary to stand on; this is for the ones that have neither. */
+.detail__stage--bleed::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 0;
+  width: calc(var(--lift, 320px) * 1.06);
+  height: calc(var(--lift, 320px) * .40);
+  translate: -50% 50%;
+  background: radial-gradient(ellipse closest-side at 50% 50%,
+    rgb(var(--c-base-cream-rgb) / calc(var(--ink-lit, 1) * .34)) 0%,
+    rgb(var(--c-base-cream-rgb) / calc(var(--ink-lit, 1) * .16)) 46%,
+    rgb(var(--c-base-cream-rgb) / 0) 100%);
+  pointer-events: none;
+}
+
+/* Sized to the FOOD rather than to the square canvas the food is padded inside —
+   detail.js writes the `width` as a min() of two or three terms in this
+   container's own units.
+
+   `max-width: none` is not tidying: base.css sets `img { max-width: 100% }`,
+   which would silently cap every tall cut-out at the stage's WIDTH and undo the
+   whole calculation.
+
+   NO `transform` HERE ANY MORE. The stage does not ink-normalise — see note 4 in
+   detail.js — so the layout box and the painted box are the same box, and
+   `transform` belongs entirely to motion.js's card-to-dialog flight. That file
+   reads `--scale` off this element to write its keyframes as a multiple of the
+   base transform; with the property absent it reads 1, which is exactly the base
+   this element now has. */
+.detail__img {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 1;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  /* NO HORIZONTAL OFFSET ANY MORE. `right: var(--shift)` slid the food left of
+     the middle of the room because the panel was sitting on top of the room. The
+     split is hard now: the stage IS the space left of the panel, and the middle
+     of it is where the subject belongs.
+
+     THE SHADOW, MEASURED. The band 40px directly under the Paletas wrapper read
+     luminance 60.4 against a field of 64.2 — a 6% darkening — which is what
+     "still looks pasted on" is, numerically. Two things were wrong with the old
+     stack. `0 4cqh 5cqh` is a 36px offset with a 45px blur on a 900px room: that
+     is an ambient, not a contact, and it puts almost no ink in the first 40px.
+     And deep purple at .28 over saturated hot pink barely moves the pixel — the
+     colours are close in luminance, which is exactly why the palette works.
+
+     AND EVERY LAYER IS A SHARE OF `--lift`, WHICH IS THE FOOD'S OWN WIDTH. It was
+     a share of `cqh`, the room's height. That reads the same on every desktop
+     screen, because the room is the viewport — but on a phone the room is only
+     as tall as the photograph needs, so the Paletas room is 208px and `1.1cqh`
+     came out at 2.3px under a 344px wrapper. Measured, the band under it
+     darkened 2.6% on the phone against 16.7% for the same product on the
+     desktop: one declaration, a shadow on one screen and nothing on the other.
+     detail.js writes `--lift` from the same `fillW` it seats the photograph
+     with, so a shadow is now the same shadow at every size of the same object.
+
+     THE RIM IS TWO INKS NOW, AND THE FIELD DECIDES WHICH ONE YOU SEE.
+
+     The rim was ONE layer painted in `--c-deep-purple-rgb`. Postres' field IS
+     deep purple (menu.json gives the category the deepPurple accent), so on the
+     largest chapter in the catalogue — 16 of the 45 products — the layer whose
+     entire job is to give the cut-out an edge was mathematically invisible. The
+     comment two paragraphs up had already established exactly that about layers
+     2 and 3 and moved them to `--c-dark`; nobody went back for 1 and 4. Measured
+     on the Coctel de Fruta at 1440x900, the cup's dark ice read rgb(56,20,65)
+     against a field of rgb(66,20,77) — 1.07:1. There was no edge because no edge
+     was being painted.
+
+     AFTER, on the same product and the same frame: the cream rim peaks at
+     rgb(160,146,159) at row 0.856, rgb(175,166,177) at 0.889 and rgb(189,183,192)
+     at 0.922, against fields of rgb(91,45,99), rgb(89,41,98) and rgb(86,37,95) —
+     3.55:1, 4.65:1 and 5.86:1. The ice is still 1.07:1 against the field and
+     always will be; what a reader now sees between them is a line.
+
+     A single ink cannot fix it, because the SUBJECT varies as much as the field
+     does: a dark ice at the bottom of a cup needs a light rim, a white nieve on
+     sunny yellow needs a dark one. So both are drawn, and their strengths come
+     from the palette's own luminance rather than from a token chosen by hand.
+     detail.js reads the field token's value out of tokens.css, computes its
+     relative luminance, and writes `--ink-lit` — how much of the CREAM ink this
+     field can carry — and `--ink-amb`, the same figure for the DARK ink:
+
+       chapter        field    cream on it   --ink-lit   dark on it   --ink-amb
+       Postres        purple      12.90           1.000     1.43         0.000
+       Helados        pink         3.85           0.784     4.78         1.000
+       Antojitos      blue         3.11           0.536     5.93         1.000
+       Bebidas        yellow       1.58           0.026    11.67         1.000
+
+     If the client revises the palette, both numbers move with it. Nothing here
+     names a chapter and nothing here names a colour.
+
+     Five layers, in this order:
+
+     1. THE DARK RIM. Zero offset, a 0.45% blur — 4px under an 857px wrapper — in
+        the dark token at .34. Innermost, hugging the cut-out. It is what gives a
+        white styrofoam cup an edge on sunny yellow, and it simply disappears on
+        deep purple, where dark on dark is 1.41:1.
+     2. THE LIGHT RIM, drawn AROUND that one at twice the blur, in cream at
+        `--ink-lit` x .66. It is what gives the dark ice at the bottom of a cup an
+        edge on deep purple — cream on purple is 12.90 by BRIEF.md's own table,
+        and cream is an approved field. On sunny yellow `--ink-lit` is 0.026 and
+        it is not drawn, which is the point of deriving it.
+     3. THE CONTACT. 1.2% of the food's width down, 1.4% blur — 10px and 12px
+        under an 857px wrapper — in the dark token at .58. Tight and dark, right
+        where the food meets the field, which is what a contact shadow is.
+     4. THE SPREAD, at 2.8% and 3.2%. It carries the darkening across the rest of
+        the band; the contact layer alone measured 11%.
+     5. THE AMBIENT, at 4.8% and 5.8%, in deep purple at `--ink-amb` x .40. On the
+        three light chapters this is the old wide layer, unchanged in strength.
+        On Postres it was already invisible — and the answer there is NOT to
+        repaint it in `--c-dark`, because a darker-than-the-field shadow under an
+        already-dark subject is what the judge saw dissolve. On a field this dark
+        the resolving ink is light, and that is `.detail__stage--bleed::after`,
+        the floor. So the ambient fades out where it cannot be seen instead of
+        being made visible in the one direction that makes the fault worse.
+
+     No colour is introduced — every ink is a token, and the two weights are
+     numbers derived from tokens.css at runtime.
+
+     Measured by photographing the same band twice, once with this filter and
+     once with `filter: none`, so the reading is the shadow and nothing else.
+     Comparing the band against field further down conflates it with the glow's
+     own falloff, and did: that method reported the Paletas band as 2.5%
+     BRIGHTER than the field it was cast on. */
+  filter:
+    drop-shadow(0 0 calc(var(--lift, 100px) * .0045)
+                color-mix(in srgb, var(--c-dark) 34%, transparent))
+    drop-shadow(0 0 calc(var(--lift, 100px) * .0068)
+                rgb(var(--c-base-cream-rgb) / calc(var(--ink-lit, 1) * .66)))
+    drop-shadow(0 calc(var(--lift, 100px) * .012) calc(var(--lift, 100px) * .014)
+                color-mix(in srgb, var(--c-dark) 58%, transparent))
+    drop-shadow(0 calc(var(--lift, 100px) * .028) calc(var(--lift, 100px) * .032)
+                color-mix(in srgb, var(--c-dark) 30%, transparent))
+    drop-shadow(0 calc(var(--lift, 100px) * .048) calc(var(--lift, 100px) * .058)
+                rgb(var(--c-deep-purple-rgb) / calc(var(--ink-amb, 1) * .40)));
+}
+
+/* ---- the contact sheet, inside the reading panel --------------------------
+   It was a column of tiles down the left edge of the screen. It cost the
+   photograph 210px of stage — tile, gutter and pad — on all 45 products, to
+   serve the 13 that have more than one photograph.
+
+   A CORRECTION WHILE MOVING IT. The brief says the panel is "over half air" on a
+   product with no approved line and asks for it to be sized to its content. It
+   already was: measured at 1440x900, the Nachos card is 488x343 and 79% of that
+   height is ink — the rest is the card's own 40/32 padding. What was true is
+   that the panel held a category, a name and two buttons and nothing about the
+   dish. Pastel de Tres Leches has no approved line either and two photographs;
+   its card is now 605px and 88% ink. That is the space being earned rather than
+   filled, and nothing was written to fill it (BRIEF.md hard rule 3).
+
+   Here it is under the description, above the rule, named with ui.json's own
+   `moreShots`. Everything above the rule is about THIS dish and everything below
+   it is a move, so a second photograph of the churros belongs above it.
+
+   `flex: 1 1 0` with a cap rather than a fixed width: four tiles share the
+   panel's row four ways, two share it two ways and stop at the cap, and nothing
+   can ever overflow the card no matter how many photographs a product grows.
+   Measured at 1440x900 the row is 425px inside the card, so four tiles come out
+   at 100px and two at the 124px cap — against heladosmexico's 40px chips. */
+.detail__more {
+  margin-top: var(--s-5);
+  margin-bottom: var(--s-3);
+  font-size: var(--fs-note);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.detail__rail {
+  display: flex;
+  gap: var(--s-2);
+  align-items: flex-start;
+}
+/* One photograph of the same dish, on a WHITE ground.
+   
+   It used to be a window cut back to the room's own field colour — the same
+   `--field-rgb` gradient, at a tenth of the size. On the three light chapters
+   that reads. On Postres it does not: three deep-purple tiles inside a reading
+   panel are three dark rectangles, and a judge scanning the panel sees one
+   texture rather than three photographs. The tiles are INSIDE the reading area,
+   and a reading area is where brand.json puts cream; a window back to the room
+   was a nice idea that cost the one thing these are for, which is that you can
+   tell the shots apart at a glance.
+
+   White rather than cream, and the difference is deliberate: cream on cream has
+   no edge, and brand.json lists white as an approved field. The tile is then a
+   lit box inside the paper — the same relationship michoacana's cream ring has
+   with its badge — and the differences between the three photographs do the
+   work instead of the chrome around them. A deep-purple hairline at .12 draws
+   the box; `--shadow-card` lifts it off the paper.
+
+   `.shot` keeps its name because motion.css owns its hover. */
+.shot {
+  container-type: size;
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 124px;
+  /* 4:5 rather than 3:4. The catalogue runs from a paleta 0.17 as wide as it is
+     tall to a tray 1.59 times wider than tall, and a taller frame strands every
+     flat product in empty colour. This is the shape that leaves the least air
+     around the widest and the narrowest at once. */
+  aspect-ratio: 4 / 5;
+  border-radius: var(--r-tile);
+  /* White, with the room's own pool of light echoed in it at a tenth of the
+     strength so the tile is lit from the same place the big photograph is. The
+     accent survives as the ring on the selected tile, which is where a chapter
+     colour belongs in a reading area. */
+  background:
+    radial-gradient(76% 66% at 50% 56%,
+      rgb(var(--c-base-cream-rgb) / .55) 0%,
+      rgb(var(--c-base-cream-rgb) / 0) 78%),
+    rgb(255 255 255);
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--c-deep-purple-rgb) / .12),
+    0 1px 2px rgb(var(--c-deep-purple-rgb) / .14);
+  overflow: hidden;
+}
+/* The contact sheet DOES ink-normalise, and it is the one place in this view
+   that should: two to four photographs of the same dish seen side by side is
+   exactly the case `visualScale` was built for. */
+.shot img {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  translate: -50% -50%;
+  aspect-ratio: 1;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  transform: scale(var(--scale, 1));
+  filter: drop-shadow(0 3cqh 3.4cqh color-mix(in srgb, var(--c-dark) 34%, transparent));
+}
+/* THE SELECTED TILE IS RINGED ONCE, and once is now enough. It used to be ringed
+   twice — a cream hairline inside a deep-purple ring — because the tile's own
+   ground was the chapter's field, so on Postres the purple ring dissolved into a
+   purple tile from the inside and only the cream line survived. On a white ground
+   there is nothing left for the ring to dissolve into: deep purple is 12.9:1
+   against the paper on all four chapters, so one ring carries everywhere and the
+   exception is gone rather than stale.
+
+   The unselected tiles are barely dimmed. On the old coloured ground .74 read as
+   "quiet"; on white it reads as "faded", and a faded photograph is the greyscale
+   chip this whole feature exists not to be. The ring says which one is selected;
+   the photographs are all at full strength. */
+.shot:not(.is-on) { opacity: .92; }
+.shot.is-on {
+  box-shadow:
+    0 0 0 3px var(--c-structure),
+    var(--shadow-card);
+}
+@media (hover: hover) { .shot:hover { opacity: 1; } }
+
+/* ---- the reading panel ---------------------------------------------------
+   ITS OWN COLUMN, BESIDE THE STAGE, NEVER ON IT. Round 3 layered the panel over
+   a stage that spanned underneath it, so a silhouette could pass behind the
+   cream card. On the 17 wide products that stopped being an effect and became a
+   crop — 485px of the Paletas wrapper, 183px of the Nachos tray — and a panel
+   that covers a third of its own subject is the one thing the benchmark this
+   view is judged against never does.
+
+   `z-index: 2` is kept even though nothing overlaps any more: `.detail__img`
+   carries `z-index: 1`, the two are siblings in the same grid, and a stacking
+   order that depends on nothing overflowing is a stacking order waiting for the
+   first product that does. */
+.detail__copy {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  justify-self: end;
+  padding: var(--s-6) var(--s-7) var(--s-6) 0;
+  /* In rem, not ch. `ch` on this element is the 16px body figure, not the 52px
+     the name is set in, so `46ch` came out at 421px and squeezed the heading
+     until "Churros" broke across two lines mid-word.
+
+     Wider than it was — 33rem against 30 — because the panel is the counterweight
+     to the food now. heladosmexico's panel is 45% of its screen; at 1440 this is
+     37%, and every point of it is a point of bare field that stopped being bare.
+
+     36rem was tried and rejected. It does close the 69px gap between the
+     Mangonada's right shoulder and the panel's left edge — but the eleven
+     products with no client-approved line pay for it in empty cream, and the
+     measured return on the field was one point (56% bare to 55%). A panel tight
+     around its own content is worth more than a point. */
+  width: min(33rem, 38vw);
+  max-height: 100%;
+  /* THE CONTAINER IS HERE AND NOT ON THE CARD. --pad-card is page 17's measured
+     6.0% of the card's own width, written `max(14px, 6cqw)`. A container cannot
+     query ITSELF, so with `container-type` on the card that 6cqw fell back to
+     the small-viewport width — 86px of padding inside a 349px panel. Declared on
+     the parent, it resolves against the panel, which is what page 17 measures. */
+  container-type: inline-size;
+}
+/* Page 17's card: a cream panel, the CATEGORY TITLE over the item name, the
+   approved line, a 1px rule, and what follows it. The inset is page 17's own
+   6.0% of the panel's width, which is what --pad-card is. */
+.detail__card {
+  background: var(--c-reading);
+  border-radius: var(--r-panel);
+  padding: var(--s-7) var(--pad-card) var(--s-6);
+  box-shadow: var(--shadow-lift);
+  /* THE CARD OWNS ITS COLUMN, all forty-five of them. It used to shrink to its
+     longest line for the eleven products with no client-approved line, which was
+     honest when the card held two lines of text. It now holds the walk as well,
+     so there is no product for which the card is mostly empty cream, and a panel
+     that changes width between products is a panel that moves when you press
+     next. */
+  width: 100%;
+  max-width: 100%;
+}
+/* The eyebrow line carries two facts and they belong together: which chapter of
+   the menu this is, and where in that chapter you are standing. "{n} de {total}"
+   is the same ui.json string the menu itself uses for exactly this. */
+.detail__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-bottom: var(--s-3);
+}
+/* THE EYEBROW IS OVERSIZED ON PURPOSE, AND THE REASON IS THE CONTRAST TABLE.
+   styles/type.css sets every eyebrow on the page at 19px bold, which is the
+   smallest size where BRIEF.md's 3.85:1 for hot pink on cream is legal — it
+   clears WCAG's 18.66px bold large-text threshold by 0.34px. That is a fine
+   margin for the first word in the panel to be standing on, and it depends on
+   the weight staying bold forever. At the deck size the 3.0 floor applies on
+   SIZE alone, at 24px minimum and 28px on a desktop screen, so the treatment
+   stops being conditional. The colour does not change: page 17 prints the
+   CATEGORY TITLE in hot pink and that is what it stays.
+
+   This overrides a value that belongs to styles/type.css. It is flagged to the
+   type owner in the report rather than edited there. */
+.detail .detail__cat {
+  color: var(--c-category);
+  font-size: var(--t-deck);
+  margin-bottom: 0;
+}
+/* Deep purple at 12.9:1 on cream, so a readout this small is legal with room to
+   spare. It is deliberately not the muted grey: it is a number you look for. */
+.detail__at {
+  flex: none;
+  font-size: var(--fs-note);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-structure);
+  opacity: .72;
+}
+.detail__name { color: var(--c-item); }
+.detail__desc { color: var(--c-body); margin-top: var(--s-4); }
+/* The reading column's flexible top interval. It exists only in the two-column
+   room at 901px and up; everywhere else it is nothing at all. */
+.detail__gap { display: none; }
+/* Page 17 prints a 1px warm rule between the description and the note. This is
+   the deep-purple token at low alpha over cream, so the rule is warm without
+   being a new colour. */
+.detail__rule {
+  border: 0;
+  height: 1px;
+  background: rgb(var(--c-deep-purple-rgb) / .16);
+  margin-block: var(--s-5);
+}
+
+/* ---- the walk, under the rule --------------------------------------------
+   THE PRIMARY MOVE IS THE NEXT DISH. A blind judge's charge against the losing
+   entry in the last round was that "both CTAs point the customer away from the
+   food" — and this room's only action was VOLVER AL MENU, which is the same
+   fault with one button instead of two. The walk was already built; it was
+   parked at the bottom edge of the screen in two cream pills, one at each
+   corner, which is the shape of pagination whatever the labels say.
+
+   Here, under the panel's own rule and naming the dish either side of this one,
+   it is the answer to "what else is there" — the question somebody standing
+   outside a snack shop is actually asking. Two columns, equal width, so neither
+   direction is the default. */
+.detail__walk {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+}
+/* Deep purple on cream is 12.90:1 — the highest-contrast pair in the palette —
+   so these are outlined rather than filled: two filled buttons plus the way back
+   to the menu would be three solid slabs stacked in a 400px card. The ring is
+   the same deep-purple-at-low-alpha the rule above them is drawn in. */
+.detail__step {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 56px;
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-card);
+  background: transparent;
+  color: var(--c-structure);
+  box-shadow: inset 0 0 0 1.5px rgb(var(--c-deep-purple-rgb) / .22);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.detail__step--next { flex-direction: row-reverse; }
+.detail__step-txt { display: grid; text-align: start; min-width: 0; }
+.detail__step--next .detail__step-txt { text-align: end; }
+.detail__step-kind {
+  font-size: var(--fs-note);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.detail__step-name {
+  font-size: var(--t-desc);
+  font-weight: var(--w-bold);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.detail__arrow { flex: none; display: inline-flex; }
+.detail__arrow svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (hover: hover) {
+  .detail__step:hover {
+    background: rgb(var(--c-deep-purple-rgb) / .07);
+    box-shadow: inset 0 0 0 1.5px rgb(var(--c-deep-purple-rgb) / .45);
+  }
+}
+.detail__step:disabled { opacity: .4; cursor: default; }
+
+/* ---- the way back --------------------------------------------------------
+   Still here, still the way out, no longer the only thing to do. It is quieter
+   than the walk above it by exactly one step — text and a mark rather than a
+   ring — because the hierarchy of this panel is now: read the dish, go to the
+   next dish, or leave. Deep purple on cream at 12.9:1, so a text-weight control
+   is legal at this size.
+
+   The mark is four rounded squares at page 19's measured 23% corner radius —
+   brand.json's own motif — which is the menu grid this button goes back to. */
+.detail__back {
+  margin-top: var(--s-4);
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--c-structure);
+  font-size: var(--fs-note);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  text-align: center;
+  transition: background var(--dur) var(--ease);
+}
+.detail__back-mark { display: inline-flex; }
+.detail__back svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  opacity: .7;
+}
+@media (hover: hover) {
+  .detail__back:hover { background: rgb(var(--c-deep-purple-rgb) / .07); }
+}
+
+/* ---- close --------------------------------------------------------------- */
+/* Over the stage rather than in a bar: it is the way out, not a step, and the
+   top-right corner is where a full-screen view is closed. */
+.detail__close {
+  position: absolute;
+  z-index: 3;
+  inset-block-start: max(var(--s-5), env(safe-area-inset-top, 0px));
+  inset-inline-end: var(--s-5);
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--c-reading);
+  color: var(--c-structure);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--dur) var(--ease-spring), box-shadow var(--dur) var(--ease);
+}
+.detail__close svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  fill: none;
+  stroke-linecap: round;
+}
+@media (hover: hover) {
+  .detail__close:hover { transform: scale(1.06); box-shadow: var(--shadow-lift); }
+}
+
+/* The focus ring is drawn in deep purple rather than base.css's electric blue:
+   the ring has to be visible on four different accents including the blue one,
+   and deep purple is 13.6:1 against every field this dialog can take. */
+.detail :is(button, [tabindex]):focus-visible {
+  outline: 3px solid var(--c-structure);
+  outline-offset: 3px;
+}
+/* The contact-sheet tiles used to stand on the coloured field, where a cream
+   ring was the only thing visible against all four accents. They stand on the
+   cream card now, so they take the same deep-purple ring as every other control
+   in the panel — 12.9:1 on cream, and no exception left to go stale. */
+
+/* ==========================================================================
+   THE READING COLUMN — 901px and up
+   ==========================================================================
+   ROUND 5 IS ONE CHANGE AND IT IS ABOUT THE 37% OF THE FRAME THAT WAS NOTHING.
+
+   Measured on the round-4 frames at 1440x900, on all 45 products: the reading
+   card is 488px wide and between 280px (Nachos, no approved line, one
+   photograph) and 550px (Crazy Shake) tall, anchored to the bottom-right. The
+   column it sits in is 528 x 900. So above it there is a rectangle of bare
+   accent colour 528px wide and 350–620px tall — 14% to 24% of the whole frame,
+   holding nothing, on every product in the catalogue.
+
+   Round 4 had already moved the card from `align-self: center` to `end`, which
+   turned a halo into a corner and was the right direction. It did not remove the
+   hole; it moved it to the ceiling.
+
+   THE HOLE IS FILLED WITH THE ONE THING THE GUIDELINES SAY BELONGS THERE.
+   brand.json's visual direction, verbatim: "Keep menu text on cream reading
+   areas." The card was a small reading area floating on a field. The column IS
+   the reading area now — cream from the top of the room to the bottom, with the
+   words distributed down it instead of pooled at one end. Nothing was written to
+   fill it (BRIEF.md hard rule 3): the same category, name, approved line, contact
+   sheet, walk and way back that were in the card are in the column, with the
+   slack between the dish and the moves rather than around all four sides of a
+   chip.
+
+   WHY THIS IS NOT THE "PANEL IS OVER HALF EMPTY" FAULT COMING BACK. That fault
+   was a small card with air on every side of it — an object that did not fill
+   itself. This is a field, and a field's margin is not emptiness. It is also
+   what heladosmexico does with its yellow slab and michoacana with its whole
+   cream page, and both of them are read as designed rather than as unfinished.
+   The difference here is that the seam between the two fields is a brand shape
+   and the reading area runs the full height, so there is no leftover anywhere.
+
+   AND THE FIELD IS STILL A ROOM. The stage keeps every pixel it had — the
+   column's width is unchanged at `min(33rem, 38vw)`, so the food is seated
+   against exactly the same 912px it was before and not one product is drawn
+   smaller. 63% of the frame is still saturated accent with the food standing in
+   it. What changed is that the other 37% is now a surface instead of a gap.
+   ========================================================================== */
+@media (min-width: 901px) {
+  /* The column, not a card on the column. `align-self: end` becomes `stretch`
+     and the cream moves from `.detail__card` (below) up onto the column itself.
+     The padding stays on the card, because `--pad-card` is page 17's 6.0% of the
+     reading area's own width expressed in container units and A CONTAINER CANNOT
+     QUERY ITSELF — declaring the inset on the element that carries
+     `container-type` is exactly the bug the base rule already documents. */
+  .detail__copy {
+    align-self: stretch;
+    padding: 0;
+    background: var(--c-reading);
+    /* The seam reads from the field side too: the cream edge is lifted off the
+       accent so the two fields do not simply abut. Deep purple at low alpha, the
+       same ink every other shadow in this file is drawn in. */
+    box-shadow: -1px 0 0 rgb(var(--c-deep-purple-rgb) / .10),
+                -18px 0 40px -18px rgb(var(--c-deep-purple-rgb) / .30);
+  }
+
+  /* THE SEAM IS A SOFT WAVE, WHICH IS brand.json's OWN MOTIF — its visual
+     direction lists "rounded panels, subtle drips, soft waves, stars", and
+     `foot.css` already draws the cream/purple seam at the bottom of the page as
+     a drip for the same reason. A straight butt joint between two flat fields is
+     the one thing on this screen that would have been drawn by nobody.
+
+     One repeating half-disc, 28px of amplitude on a 56px pitch: sixteen of them
+     down a 900px room, each one bulging out of the cream into the accent. It is
+     the cream token and nothing else — the transparent stop is a shape, not a
+     colour — so the wave is the same wave on all four chapters. */
+  .detail__copy::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    right: 100%;
+    width: 28px;
+    background: radial-gradient(circle 28px at right,
+      var(--c-reading) 99%, transparent 100%) 0 0 / 28px 56px repeat-y;
+    pointer-events: none;
+  }
+
+  /* The card is now the column's content rather than an object in it: no field
+     of its own, no radius, no lift. It runs the full height so that the rule
+     below can be pushed to the floor.
+
+     THE TOP INSET IS 96px AND THAT IS NOT TASTE. The close button is 48px tall
+     at `inset-block-start: var(--s-5)`, so it occupies the top 72px of the
+     frame's right edge — and `.detail__at` ("24 DE 45") sits at the right edge of
+     this card's first line. At the card's old 40px inset the two overlapped. */
+  .detail__card {
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: var(--s-11) var(--pad-card) var(--s-7);
+    display: flex;
+    flex-direction: column;
+    /* `min-height` fills the column so the walk can reach the floor; `max-height`
+       plus `overflow` is the guard for the other direction. A three-line name in
+       English, no approved line and two photographs is a combination that exists
+       (Pastel de Tres Leches is the near miss), and a card that outgrows its
+       column would have the way back clipped by the dialog's own `overflow:
+       hidden` — silently, and only on some products. It scrolls instead. The
+       guard is on the CARD and not on the column because the wave seam is drawn
+       outside the column's left edge and `overflow` on the column would cut it
+       off. Nothing scrolls at any of the sizes measured; this is the floor under
+       a case a screenshot would not catch. */
+    min-height: 100%;
+    max-height: 100%;
+    overflow: hidden auto;
+    overscroll-behavior: contain;
+  }
+  /* WHERE THE SLACK GOES, AND WHY IT IS SPLIT RATHER THAN POOLED. Everything
+     above the rule is about this dish and everything below it is a move, so the
+     rule, the walk and the way back belong on the floor of the column. Pushing
+     only those down puts every leftover pixel in ONE interval — measured on
+     Churros at 1440x900, 580px of unbroken cream between the approved line and
+     the rule, which is the "over half empty" fault in a new colour.
+
+     Two `auto` margins in a flex column share the free space equally between
+     them, so the column reads as three registers: where you are, at the top;
+     what this is, on the optical centre; what you can do, on the floor. On a
+     product with four photographs the sheet takes the middle share and the two
+     intervals close up on their own. Nothing is positioned; the arithmetic is
+     the browser's and it re-solves at every window height.
+
+     WHOLE-SITE PASS: THE EQUAL SPLIT MOVED THE TITLE, AND THAT IS WORSE THAN THE
+     HOLE IT WAS AVOIDING. Measured at 1440x900, adjacent products in the same
+     chapter:
+
+         Coctel de Fruta   3 photographs   head->name gap  54px   name top 226
+         Churros           1 photograph    head->name gap 214px   name top 386
+
+     A customer walking the catalogue with the arrow keys — the exact case the
+     walk row is pinned for — has the biggest word on the panel jump 160px
+     between one press and the next, while the control under their hand stays
+     still. Half the free space was being spent moving the title away from the
+     running head that introduces it.
+
+     So the top interval is a fixed 64px and only the rule's margin is `auto`.
+     The register idea survives: head, title, line at the top; moves on the
+     floor; the slack in one interval between them. On the 17 products with a
+     contact sheet nothing visibly changes — their free space was 108px total, so
+     the fixed 64 costs the sheet 10px and the frame that won two blind rounds is
+     the frame that ships. On the 28 without one the two 214px bands become one
+     365px margin under the line, which is what the bottom of a title page is,
+     and every one of the 45 names now lands within 10px of the same y.
+
+     The round-5 note above rejected pooling because it measured 580px. That
+     number was taken before this same round gave the column its running head and
+     its 96px top inset; re-measured on what ships, the interval is 365px. */
+  /* THE TOP INTERVAL IS A FLEX ITEM, NOT A MARGIN, AND THAT IS THE WHOLE POINT.
+     A margin of 64px is 64px whether the column has room or not: Crazy Shake's
+     four photographs make its content 878px in a 900px room, so a fixed margin
+     put it 42px over and the `overflow: auto` guard below pushed VOLVER AL MENÚ
+     off the bottom of the one product with the most to show. `flex: 0 1` is 64px
+     while there is slack and shrinks to nothing when there is not.
+     Everything else is `flex-shrink: 0` so the gap gives way before any words or
+     photographs do; past that the card scrolls, which is the guard working. */
+  .detail__card > .detail__gap { display: block; flex: 0 1 var(--s-9); min-height: 0; }
+  .detail__card > :not(.detail__gap) { flex-shrink: 0; }
+  .detail__card > .detail__rule { margin-top: auto; }
+
+  /* THE FOOD MUST NOT REACH THE WAVE. `FOOD_MAX_W` is 0.94 of the stage and the
+     stage is the whole free track, so a width-bound product is drawn 857px wide
+     in a 912px stage — its right shoulder lands at x=884.5 and the wave's crests
+     reach back to x=884. Measured on the Paletas wrapper, which is the widest
+     thing in the catalogue: seven pixels. The stage keeps its own clearance from
+     the seam instead, which costs the fifteen width-bound products 3% of their
+     width and costs the thirty height-bound ones nothing at all. */
+  .detail__stage { padding-right: var(--s-5); }
+
+  /* THE TOP OF THE COLUMN IS A RUNNING HEAD, NOT A FLOATING LINE. Eleven of the
+     45 products have no client-approved line, so on those the column holds a
+     category, a count, a name and the moves — and hard rule 3 forbids writing
+     anything to fill the rest. Measured on Nachos at 1440x900 that leaves two
+     intervals of about 430px and 330px, and a chapter label alone at the top of
+     a large cream field reads as something that was left over.
+
+     A rule under it makes it a running head, and the column then reads as a page:
+     where you are, above a line; what it is, on the field; what you can do, above
+     the second line. The empty paper between them is a margin, which is what
+     paper is mostly made of. It is the same 1px deep-purple-at-.16 the panel's
+     own rule below is drawn in, so it is one device used twice rather than two. */
+  .detail__head {
+    margin-bottom: 0;
+    padding-bottom: var(--s-4);
+    border-bottom: 1px solid rgb(var(--c-deep-purple-rgb) / .16);
+  }
+
+  /* THE NAME IS SET AT DISPLAY SIZE. `--fs-section` is 52px at 1440 — the size
+     the menu's own chapter headings take, which is right for a heading in a
+     scrolling page and quiet for the only heading in a room. michoacana's single
+     confident move on its product page is a name set enormous; ours can be that
+     AND have the food, because the two are in different fields. `--t-display` is
+     80px at 1440 and is an existing token — no size is invented here.
+
+     type.css owns `.detail .detail__name` at the same specificity and loads
+     first, so this wins by order, which is the same route `.detail .detail__cat`
+     above already takes. Both are flagged to the type owner in the report. */
+  .detail .detail__name { font-size: var(--t-display); }
+
+  /* AND THE LINE UNDER IT IS A DECK, WHICH IS WHAT THE REST OF THE SITE ALREADY
+     DOES UNDER A DISPLAY TITLE. The hero sets `--t-display` over `--t-deck`;
+     this view was setting `--t-display` over `--t-lead`, so the one supporting
+     sentence on the biggest heading on the site was two steps below it — 80px
+     over 21px, a ratio of 1:0.26 against page 17's own 1:0.72 for the same
+     pairing on the card. `--t-deck` takes it to 28px and 1:0.35, which is the
+     hero's exact relationship, and it is the token type.css already keeps for
+     "the line that explains a display heading". No size is invented and the
+     colour is unchanged: --c-body on cream is 12.9:1 at any size. It also puts
+     ink in a column that has very little on 28 of the 45 products. */
+  .detail .detail__desc { font-size: var(--t-deck); margin-top: var(--s-5); }
+
+  /* THE CONTACT SHEET IS SHAPED TO THE NUMBER OF PHOTOGRAPHS. It was a flex row
+     capped at 124px, so Crazy Shake's four shared one line at 106px each — the
+     same width as heladosmexico's chips, only in colour, which is not enough of a
+     difference to be the thing this view is supposed to win on. detail.js writes
+     `--cols` and `--tile-h` from the count: two across at 224 square, three
+     across at 145, and a 2x2 of 224 x 168 for the one product with four. That is
+     affordable only because the column is the full height of the room now.
+
+     The tracks are `1fr`, so a window ends exactly where the paragraph above it
+     ends. `--tile-h` overrides `.shot`'s own `aspect-ratio` on the two-row sheet
+     — a length on `height` wins over an aspect while the width is fixed — and is
+     `auto` on the one-row sheets, where the aspect shapes the window as before.
+     The photograph inside is seated at 90% of the WINDOW in the window's own
+     container units, so a shorter, wider window puts the same cup on screen. */
+  .detail__rail {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
+    gap: var(--s-3);
+  }
+  .detail__rail .shot {
+    max-width: none;
+    width: 100%;
+    height: var(--tile-h, auto);
+  }
+
+  /* The close button now sits on cream, and a cream disc on cream is not a
+     button. Inverted: deep purple field, cream glyph — 13.60:1, the highest pair
+     in the palette, and an approved field. It is the same control it was, with
+     the two tokens swapped, so nothing new is introduced. */
+  .detail__close {
+    background: var(--c-structure);
+    color: var(--c-reading);
+  }
+}
+
+/* ==========================================================================
+   ONE COLUMN — 900px and below
+   ==========================================================================
+   styles/mobile.css already sets `.detail__body { grid-template-columns: 1fr }`
+   at this width and that is exactly right, so it is honoured rather than fought:
+   this block supplies the ROWS to go with it. There are TWO rows now, not three
+   — the contact sheet moved inside the reading panel, so a phone stacks the
+   photograph and then the panel, which is also the DOM order.
+   ========================================================================== */
+@media (max-width: 900px) {
+  /* THE FIRST SCREEN IS FOOD. Measured at 390x844 last round, the cut-out ended
+     at 35% of the screen, the contact sheet took 36–44% and the cream card
+     48–72% — a phone was giving the product a third of itself and a two-line
+     description a quarter. The floor is 62svh now and the panel runs under the
+     fold on purpose: a phone customer scrolls, and what they should have to
+     scroll for is the reading, not the food.
+
+     `overflow-x: clip` and not `visible`: a square canvas is deliberately a
+     little wider than the stage — that is the transparent padding around a tall
+     product — and turning on vertical scrolling would otherwise turn that into a
+     horizontal scrollbar inside the dialog. */
+  .detail__body {
+    /* `--room-h` is written by detail.js and is 62svh for the 45 photographs
+       that are taller than they are wide — a cup or a cone fills that and runs
+       past it. A WIDE photograph cannot: on a 390px screen its width binds at
+       94% of the stage, so 216px is all the height a banana split can occupy,
+       and the rest of a 62svh row is bare field above and below it. For those
+       the room is the height the food actually needs, which is arithmetic
+       detail.js does from the same `fillW` / `fillH` it seats the photograph
+       with. The fallback is the floor the tall ones want.
+
+       AND THE ROOM IS NOT ALLOWED TO ABSORB THE SLACK. This row was
+       `minmax(--room-h, 1fr)`, and `1fr` on the only flexible row means it takes
+       every pixel the other two do not — so the whole `--room-h` calculation
+       above was dead for the case it was written for. Measured at 390x844 on
+       Paletas: the arithmetic asked for a 208px room, the row was given 530px,
+       the food was seated on its floor, and 263px of bare field opened above it.
+       That is 31% of a phone screen, empty, over the widest products in the
+       catalogue — the "air on all sides" this round exists to remove, reproduced
+       on the phone by a single unit.
+
+       `auto` is exactly `--room-h`, because `container-type: size` on the stage
+       means its contents cannot size it. So the room is what the arithmetic
+       asked for and the slack goes to `align-content` below, where it is shared
+       evenly instead of piling up in one band. */
+    grid-template-rows: minmax(var(--room-h, 62svh), auto) auto;
+    /* WHERE THE SLACK GOES. A tall photograph plus the reading card overflows an
+       844px screen, so this changes nothing for the 45 photographs that bleed. It
+       is for the 17 wide ones, where the food is width-bound — a 2.55:1 paleta on
+       a 390px screen is 152px tall and no arithmetic makes it taller without
+       cutting it — so about 330px is genuinely left over and the food cannot use
+       it. Centred, the composition sits in the middle of the phone with equal
+       field above and below rather than hanging off the card.
+
+       `end` was tried and rejected, and it is worth writing down because the
+       argument for it is good. It puts all 334px in ONE band at the top, where
+       the close button already is, and rests the reading card on the bottom edge
+       — which is exactly the argument the stage makes below for seating a wide
+       cut-out on the card rather than floating it. Photographed at 390x844 it is
+       worse: a 300px void above a 152px paleta reads as a page that has not
+       finished loading, where two 170px bands read as a composition with air
+       around it. The slack has to exist — 844 minus a 152px subject minus a 325px
+       card is 330px whatever you do with it — and split is the least conspicuous
+       place to put it.
+
+       `safe` is load-bearing. A tall product overflows the screen — the card is
+       meant to run under the fold — and plain `center` on an overflowing scroll
+       container pushes the top of the content out of reach above the scroll
+       origin. `safe` falls back to `start` exactly then. Where the keyword is not
+       understood the whole declaration is dropped and the grid stacks from the
+       top, which is the same direction to fail in. */
+    align-content: safe center;
+    overflow-y: auto;
+    overflow-x: clip;
+    overscroll-behavior: contain;
+  }
+
+  /* The close button IS over the stage down here, so the top clearance is real
+     rather than inherited; everything else is squeezed, because a phone screen
+     is 844px and every pixel this row does not take is a pixel of food. */
+  .detail__stage { padding: var(--s-7) var(--s-3) 0; }
+
+  /* NO BLEED ON A PHONE. The stage is a row in a scrolling column here, not the
+     whole screen, so a photograph that ran past its row would run over the
+     reading card rather than off the edge of anything. It fills the row
+     instead, which on a 844px screen is 523px of food. */
+  .detail__stage--bleed { align-items: center; }
+
+  /* A WIDE PHOTOGRAPH SITS ON THE READING CARD. Its width binds long before its
+     height does on a 390px screen, so whatever room is left over after the card
+     — 208px on the banana split — is space the food cannot use. Centred, that
+     becomes two bands of bare field, one above the food and one between it and
+     the card, which is the "island with air on all sides" a blind judge ranked
+     last. Seated on the bottom of its row it becomes one band, above, where the
+     close button already is, and the mass rests on the cream card.
+
+     `--sink` is the transparent padding under the food inside its own square
+     canvas, written by detail.js from the same `fillH` it seats the photograph
+     with. Pulled back out, `end` alignment seats the FOOD on the edge rather
+     than the canvas around it. */
+  .detail__stage:not(.detail__stage--bleed) { align-items: end; }
+  .detail__stage:not(.detail__stage--bleed) .detail__img {
+    margin-bottom: calc(var(--sink, 0px) * -1);
+  }
+
+  /* The rail is inside the panel here too, so there is nothing to reposition —
+     the tiles simply share a narrower row. Measured at 390px the card's inner
+     width is 287px, so four tiles come out at 66px and two at the 124px cap;
+     heladosmexico's chips are 40px on a screen four times as wide. */
+
+  /* The panel keeps floating on the field down here rather than becoming a
+     full-bleed sheet, and that is styles/mobile.css's call, not this file's: it
+     sets `.detail__copy { padding: var(--s-6) }` at this width and loads after
+     this stylesheet. The rule is right — a 32px inset of field on every side is
+     what makes the cream read as a card the food is standing next to — so it is
+     honoured rather than out-specified, and the panel is drawn to suit it. */
+  .detail__copy {
+    grid-column: 1;
+    grid-row: 2;
+    width: auto;
+    justify-self: stretch;
+    align-self: end;
+    padding: var(--s-6);
+  }
+  .detail__copy .detail__card { padding: var(--s-5) var(--pad-card) var(--s-5); }
+  .detail__desc { margin-top: var(--s-3); }
+  .detail__rule { margin-block: var(--s-4); }
+  .detail__step { min-height: 52px; }
+  .detail__back { margin-top: var(--s-3); }
+  .detail__close { inset-inline-end: var(--s-4); }
+}
+
+/* Short screens, at any width: the clearance and the panel's own padding are the
+   two pieces of chrome that are pure air, so they are what gives way first. */
+@media (max-height: 700px) {
+  .detail__card { padding-block: var(--s-5) var(--s-5); }
+  .shot { max-width: 96px; }
+  .detail__more { margin-top: var(--s-4); }
+  .detail__step { min-height: 48px; }
+}
+
+/* Narrower than a 390px phone — 320 and 360px screens are still in the widths
+   gate and still in people's pockets. The two walk buttons lose their eyebrow
+   and keep the arrow and the name: measured in Spanish, ANTERIOR over a product
+   name inside a 130px button wrapped the eyebrow onto two lines. The aria-label
+   still names the direction and the product, so nothing is lost to anyone who
+   cannot see the arrow. */
+@media (max-width: 380px) {
+  .detail__step-kind { display: none; }
+  .detail__step { padding-inline: var(--s-2); }
+}

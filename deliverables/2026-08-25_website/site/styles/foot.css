@@ -1,0 +1,164 @@
+/* THE FOOTER. Deep purple is an approved logo field (brand.json
+   logo.approvedBackgrounds) and white on it measures 13.6:1, so it is the one
+   brand field that can carry small text as well as large.
+
+   The logo rules are load-bearing here, not decorative:
+     - never cropped, so it is sized by width and allowed its full height;
+     - never below 250px wide for digital (brand.json logo.minimumSize);
+     - clear space on every side, which brand.json measures in mascot-bow
+       heights. The bow was not measured, so the value used is a deliberate
+       over-estimate — see INVENTED.md.
+
+   WHOLE-SITE PASS — WHY THIS FILE CHANGED. Nobody had ever owned the footer, and
+   measured against the rest of the page it showed: 831px with the drip (10.1% of
+   an 8252px page, 92% of a desktop screen) holding a 340px mark, three lines of
+   16–21px type and one hollow ring. Every other region of this site is dense and
+   food-first; this was the only screen with nothing on it. The reasoning for each
+   change is in src/partials/footer.html, next to the markup it produced. */
+.foot {
+  background: var(--c-structure);
+  color: #fff;
+  /* Top padding is one clear-space unit and change: brand.json wants room on
+     every side of the mark, and 80px clears the 68px over-estimate --foot-clear
+     carries. The other three sides are the gutter, the column gap and the row
+     gap, all of which are at or above it at every width this runs at: 64px
+     against 60px at 1440 and against 50px at 390. */
+  padding: var(--s-9) var(--gutter) var(--s-8);
+}
+
+/* THE LOCKUP. Two columns on a desktop — mark left, words right — which is the
+   hero's own composition mirrored, and which is what takes the block from 831px
+   to about 520px without taking a pixel off the mark. `auto minmax(0, 1fr)` and
+   not `1fr 1fr`: the mark is a fixed object and the reading takes what is left,
+   so the column gap never squeezes the logo below its 250px floor. */
+.foot__in {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(32px, 5vw, 72px);
+  /* The row gap IS the mark's clear space below it, so it is that token rather
+     than a spacing step that happens to be near it. */
+  row-gap: var(--foot-clear);
+}
+.foot__logo {
+  grid-column: 1;
+  width: clamp(250px, 22vw, 300px);   /* 250px is the brand's digital minimum */
+  height: auto;
+}
+.foot__words { grid-column: 2; display: grid; gap: var(--s-2); }
+.foot__banner { color: var(--c-highlight); }
+.foot__loc { color: #fff; }
+.foot__note { color: rgb(255 255 255 / .72); }
+
+/* The hairline between the shop's card and the way back into the menu. Same
+   device and same weight as the rule under the detail view's running head and
+   the one above its walk row — one line at low alpha separating "what this is"
+   from "what you can do". Drawn in white here because the field is purple; every
+   other instance is deep purple because its field is cream. */
+.foot__rule {
+  grid-column: 1 / -1;
+  border: 0;
+  height: 1px;
+  background: rgb(255 255 255 / .22);
+  margin: 0;
+}
+
+.foot__row {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+}
+
+/* THE FOUR CHAPTERS. Approved labels, already printed by the header and by every
+   section heading; the "Ir a" / "Jump to" label has been in data/ui.json in both
+   languages from the start and had no use until now.
+
+   Each link is a 44px tap target with its own hit area, because a row of words
+   set 19px apart on a phone is a row of misses. The affordance is an underline
+   on hover and on :active — a link's own signal, the same pair nav.css settled
+   on for the language switch, and it costs the palette nothing. */
+.foot__jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-5);
+}
+.foot__jump-l {
+  font-size: var(--t-eyebrow);
+  font-weight: var(--w-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: rgb(255 255 255 / .62);
+}
+.foot__cat {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--t-eyebrow);
+  font-weight: var(--w-bold);
+  color: #fff;
+  text-decoration: none;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+@media (hover: hover) {
+  .foot__cat:hover { text-decoration: underline; }
+}
+.foot__cat:active { text-decoration: underline; }
+
+/* The way back is the hero's button, not a second kind of control: `.btn` and
+   `.btn--primary` are base.css's, unchanged. Only the type size is set here, and
+   it is set to the same `--t-eyebrow` type.css already gives `.hero .btn` — the
+   two are the same object at the two ends of the page. */
+.foot__cta { font-size: var(--t-eyebrow); }
+
+/* One column, centred, below the width where 250px of mark and a paragraph stop
+   fitting side by side. Measured: at 760px the words column is 358px, which is
+   about 34 characters of the note at its own size — the narrowest a reading
+   column on this site is allowed to get. */
+@media (max-width: 760px) {
+  .foot__in {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+  }
+  /* `justify-items: center` above shrinks every cell to its content, and an
+     <hr> has none — the rule measured 0px wide on a phone until this line. */
+  .foot__rule { justify-self: stretch; }
+  .foot__logo { grid-column: 1; }
+  .foot__words { grid-column: 1; justify-items: center; }
+  .foot__row { flex-direction: column; }
+
+  /* TWO BY TWO, NOT A WRAP. At 390px the four names plus the label are 40px
+     wider than the measure, so a flex row breaks after "Postres" and leaves
+     "Bebidas" alone on a line of its own — which reads as a fifth thing rather
+     than as the fourth chapter. A 2x2 with equal tracks puts the label on its
+     own line and the four chapters in a block, and it is the same shape the menu
+     itself takes on a phone. */
+  .foot__jump {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: center;
+    column-gap: var(--s-5);
+    row-gap: 0;
+    width: min(100%, 300px);
+  }
+  .foot__jump-l { grid-column: 1 / -1; }
+  .foot__cat { justify-content: center; }
+}
+
+/* The seam between the cream menu and the purple footer, drawn with the drip
+   motif brand.json visualDirection lists. Decorative only, and hidden from
+   assistive technology. */
+.foot__drip {
+  display: block; width: 100%; height: clamp(30px, 4.4vw, 62px);
+  color: var(--c-reading);
+  background: var(--c-structure);
+  margin-bottom: -1px;   /* no hairline between the drip and the footer field */
+}
+.foot__drip path { fill: currentColor; }

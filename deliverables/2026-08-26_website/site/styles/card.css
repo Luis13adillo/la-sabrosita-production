@@ -1,0 +1,114 @@
+/* ============================================================================
+   THE PRODUCT CARD.
+
+   A cream tile on the chapter's colour field, with the food standing on a wash
+   of that same colour and the name and line underneath. brand.json page 17: the
+   name in deep purple above a regular-weight description, on cream.
+
+   THE ONE THING THAT MATTERS HERE, AND IT COST A FULL DAY THE FIRST TIME.
+
+   Every derivative in public/img is a SQUARE canvas. build-images.mjs trims each
+   master to its alpha box and re-pads it to a square with a 6% margin, so the
+   food sits centred inside transparent padding and spans at most 89.29% of the
+   square on its long axis.
+
+   Size the <img> box to the FOOD's aspect ratio and `object-fit: contain` fits
+   the whole SQUARE into that box — padding included — and everything renders
+   small. Measured: a 147x321 slot rendered the Crazy Shake at 147x147.
+
+   So `--s` is the side of the SQUARE, in `cqw` — a share of the card's own
+   width — and `--fw` is how much of that square is actually food, which is what
+   the contact shadow is drawn to. src/app/card.js publishes both. The square is
+   routinely WIDER than the card: 142% for every tall product. That is correct,
+   and it is why `max-width: none` is on the image and why base.css says out loud
+   that its global `img { max-width: 100% }` would silently undo it.
+   ========================================================================== */
+
+.card {
+  container-type: inline-size;
+  background: var(--c-reading); border-radius: var(--r-tile-lg);
+  padding: 34px 12px 18px; text-align: center; position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  box-shadow: 0 3px 0 rgb(var(--c-deep-purple-rgb) / .16), 0 16px 30px rgb(var(--c-deep-purple-rgb) / .22);
+}
+
+/* The whole tile is one button, so the tap target is the card and not the name.
+   `overflow: visible` matters twice: a square wider than the card has to be able
+   to hang out of it, and an ancestor with any other overflow would become a
+   scroll container and silently break the reveal (styles/motion.css). */
+.card__hit {
+  display: flex; flex-direction: column; align-items: center;
+  width: 100%; text-align: center; overflow: visible;
+}
+
+.card__stage {
+  position: relative; width: 100%; height: var(--stage-h); flex: 0 0 auto;
+  border-radius: var(--r-tile);
+  display: flex; align-items: flex-end; justify-content: center;
+  margin-bottom: var(--s-3);
+  background: var(--tint); overflow: visible;
+  --stage-h: 116cqw;
+}
+.card__img {
+  width: var(--s); height: var(--s);
+  object-fit: contain; object-position: bottom;
+  margin-bottom: 5cqw; position: relative; z-index: 1;
+  max-width: none;
+  filter: drop-shadow(0 14px 18px rgb(var(--c-deep-purple-rgb) / .3));
+  background-size: contain; background-repeat: no-repeat; background-position: bottom center;
+}
+/* The low-quality placeholder has to leave when the real file lands: the
+   photograph on top of it is a true cut-out, so every transparent pixel keeps
+   showing the blurred rectangle underneath. */
+.card__img.is-ready { background-image: none !important; }
+
+/* The contact shadow is drawn to the FOOD's width, not to the square's, so the
+   product stands on something instead of floating over an ellipse the size of
+   its padding. */
+.card__stage::after {
+  content: ''; position: absolute; left: 50%; bottom: 3cqw; transform: translateX(-50%);
+  width: calc(var(--fw) * .82); height: calc(var(--fw) * .18); border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%,
+              rgb(var(--c-deep-purple-rgb) / .3), rgb(var(--c-deep-purple-rgb) / 0) 70%);
+  opacity: 0; transition: opacity var(--dur) var(--ease);
+}
+.card.is-lit .card__stage::after { opacity: 1; }
+
+/* The wash under the food is the chapter's own accent, so a cut-out stands on
+   the chapter's colour rather than on bare cream. */
+.ch--helados   .card { --tint: rgb(var(--c-hot-pink-rgb) / .11); }
+.ch--antojitos .card { --tint: rgb(var(--c-electric-blue-rgb) / .12); }
+.ch--postres   .card { --tint: rgb(var(--c-deep-purple-rgb) / .1); }
+.ch--bebidas   .card { --tint: rgb(var(--c-sunny-yellow-rgb) / .34); }
+
+/* How many photographs this product has. A numeral, not a sentence: it needs no
+   translation, and the card's accessible name already says it in words. */
+.card__count {
+  position: absolute; top: 12px; right: 12px;
+  font-family: var(--font-display); font-weight: var(--w-semi);
+  font-size: var(--fs-tiny); letter-spacing: var(--tr-caps);
+  background: var(--c-structure); color: var(--c-reading);
+  min-width: 22px; height: 22px; border-radius: var(--r-pill);
+  display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+  padding: 0 6px; z-index: 4;
+}
+.card__count svg { width: 11px; height: 11px; }
+
+.card__panel { display: block; width: 100%; }
+.card__name {
+  display: block;
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(0.84375rem, 1.15vw, 1.0625rem); line-height: 1.16;
+  color: var(--c-item); text-transform: uppercase; letter-spacing: var(--tr-display);
+  overflow-wrap: break-word;
+}
+/* Deep purple at 0.68 alpha on cream is 5.0:1. Below about 0.64 it drops under
+   4.5 and this line is 13px, so the alpha is a legibility floor rather than a
+   shade. */
+.card__desc {
+  display: block; margin-top: 6px;
+  font-family: var(--font); font-weight: var(--w-body);
+  font-size: clamp(0.71875rem, .92vw, 0.8125rem); line-height: 1.42;
+  color: rgb(var(--c-deep-purple-rgb) / .68);
+  overflow-wrap: break-word;
+}

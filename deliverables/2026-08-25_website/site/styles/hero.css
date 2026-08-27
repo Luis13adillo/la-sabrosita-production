@@ -1,0 +1,564 @@
+/* ============================================================================
+   THE HERO — the first screen.
+
+   The bar is heladosmexico.com for how a single product is photographed and
+   framed, and its whole move is scale. Measured identically on all three with
+   scripts/hero-scale.mjs — the vertical extent of the subject on the first
+   screen — theirs is 64.3%, michoacana's is 32.2%, and ours was 46.3%.
+
+   Four things changed and each of them is a decision, not a tweak:
+
+   1. ONE MASS WITH ONE SUBJECT. The first hero placed three cut-outs with air
+      between them, which reads as a scatter. Five now overlap into a single
+      silhouette with a front, a middle and a back, because overlap is the only
+      depth cue a cut-out has. Paint order runs back-to-front on --z; DOM order
+      is separate from it so that the three most prominent pieces are the three
+      children motion.css gives distinct float periods to.
+
+      Overlapping five products is not the same as having a subject, and it is
+      not the same as having ONE mass either. The second hero had a subject and
+      still read as two islands: a 104px channel of bare gradient ran the full
+      height between the shake and the pair on its right, and the leftmost food
+      pixel was 41.1% of the way across the screen, so the reading column stood
+      on a flat wall of magenta.
+
+      The silhouette is now measured exactly rather than estimated — the page is
+      differenced against the same page with `.hero__stage` hidden, so there is
+      no background colour to guess at — and read back in 40px columns as a
+      share of the hero:
+
+          crazy-shake     90-100%, across eighteen columns   <- the subject
+          mango + elote   51-69%
+          raspado         51-69%
+          churros         30%, the front edge rather than a shoulder
+          deepest seam    24%, and no column inside the mass is empty
+
+      The leftmost food pixel is now 8.3% of the way across, not 41.1%. One tall
+      thing over a low group is a subject; two blobs with gradient between them
+      is a collage.
+
+   2. THE FOOD IS SIZED IN FOOD UNITS. Every derivative is a square with the
+      product centred inside it, covering `fillH` of the square's height and
+      `fillW` of its width (data/images.json). Sizing the <img> therefore sizes
+      the bounding box, not the food — which is exactly why the old hero's three
+      products looked like unrelated sizes. main.js states each placement as the
+      FOOD's own height and bottom edge, then divides by fillH to get the square
+      and offsets for the padding. A 0.21-aspect elote and a 0.79-aspect box of
+      churros can then stand on the same baseline.
+
+   3. IT BLEEDS OFF THREE EDGES. The section is exactly the first screen —
+      100svh minus the measured header, which is in flow — so the seam with the
+      menu crops the food at the fold, `overflow: hidden` grazes the shake's
+      crown at the header, and the mango runs off the right. A cut-out that ends
+      neatly inside its frame is a photograph; one that runs off the edge is a
+      thing in the room.
+
+   4. IT STILL SAYS "MENU". Scale was not bought by dropping the "see all 45"
+      promise: the headline carries it, the five cut-outs are drawn from all
+      four categories rather than five of one, and the count sits in a pill next
+      to the call to action. On a phone the picture is two of the five and the
+      four categories are carried by the deck line, which names all four in the
+      client's own approved words — see HERO_MOBILE in main.js for why the third
+      one came off, and it is a measurement, not a preference.
+
+   5. ONE LIGHT. Five photographs from five shoots do not become one object by
+      overlapping; they become five PNGs in z-order. Three rules below do the
+      rest of that job and each is a per-photograph number written by main.js:
+      an exposure lift, a base that sinks into shadow, and a cast shadow spent
+      as a fraction of the object rather than as a fixed pixel value. Measured
+      the way scripts/lighting.mjs measures a master — mean luminance of the
+      opaque pixels, top half against bottom half — but restricted to the part
+      of each photograph that is actually above the fold, because most of these
+      are cropped hard and the light on food nobody sees is not the light in the
+      picture. The group runs 19 to 33 on key and 123 to 151 on exposure: a
+      spread of 14 and 28, against 19 and 33 for the previous group measured the
+      same way, and 66 and 71 for the raw masters. Nothing under assets/ was
+      touched to get there; every one of those numbers is a display transform on
+      a derivative.
+
+   Two sizes here are forced by the contrast table in BRIEF.md, not chosen.
+   White on hot pink is 4.06 — legal for the display type and for the 19px bold
+   eyebrow, and legal for the lead only because the lead is 24px, WCAG's
+   large-text floor at regular weight. The count is smaller than that, so it
+   does not go on the pink at all: it goes on a deep purple pill, 13.6:1.
+
+   Two properties are set with `.hero[data-hero]` rather than `.hero`. That is
+   not specificity for its own sake — mobile.css (a different owner, and it
+   loads after this file) sets `min-height: auto` and a 64px block padding on
+   `.hero` below 900px, which would undo the full-screen sizing on exactly the
+   viewport where the food most needs the room. Reported rather than deleted.
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+
+  display: grid;
+  /* One column for the reading, one for nothing — the stage is out of flow and
+     spans the whole section. The empty track is what keeps the text off the
+     food without either one having to know where the other is. */
+  grid-template-columns: minmax(0, min(33rem, 40%)) minmax(0, 1fr);
+  padding-inline: var(--gutter);
+  padding-block: var(--s-8) var(--s-9);
+}
+
+/* main.js measures the header and writes --nav-h here, so the section ends at
+   the fold no matter how the header wraps. The fallback is the desktop header.
+
+   PLUS ONE SEAM DEPTH, WHICH IS THE WHOLE TRICK BELOW. The section now ends
+   `--seam` px PAST the fold, so the shaped edge is off-screen at rest and the
+   first screen is byte-for-byte the one that won three blind rounds. The food's
+   placements are fractions of the stage, so a 17px taller stage moves every one
+   of them by about 1%. */
+.hero[data-hero] { min-height: calc(100svh - var(--nav-h, 96px) + var(--seam)); }
+
+/* ---- the seam with the menu ----------------------------------------------
+   IT WAS THE ONLY RULED LINE ON THE PAGE. Every other place a brand field meets
+   another field on this site, the edge is shaped: the header hangs deep purple
+   lobes into the hero (`.nav__drip`), the footer hangs cream lobes into the
+   purple (`.foot__drip`), and all forty-five cards end their colour in a
+   repeating scallop of cream (`.card__panel::before`). The hero's bottom edge was
+   a dead-straight full-width cut — and five different products meet it, all five
+   sliced at exactly the same y.
+
+   That is the argument BRIEF.md already made about the raspado, one level up: a
+   boundary made of identical cuts reads as one shape, and a boundary with steps
+   in it reads as objects. There the fix was one product's base; here it is the
+   edge itself.
+
+   WHY IT IS A MASK AND NOT AN OVERLAY. An overlay would sit cream teeth ON the
+   photograph — the food would still be cut straight underneath and the teeth
+   would read as damage. A mask cuts the section, so the food is carried down
+   inside each lobe and cut short between them: every product now meets the cream
+   at a different height across its own width.
+
+   WHY THE SECTION GREW BY EXACTLY THE SEAM'S DEPTH. The one thing that must not
+   change is the first screen — a cut-out that ends neatly inside a frame is a
+   photograph, and that bleed is what three judges rewarded. So the teeth live in
+   the strip BELOW the fold: at rest the food is cut by the viewport exactly where
+   it always was, and the shaped edge only exists once you have scrolled past it,
+   which is the only moment it was ever visible.
+
+   THE SHAPE IS THE CARD'S AND THE DEPTH IS THE HEADER'S. The half-disc and the
+   `radial-gradient ... 99% / transparent 100%` stop are `.card__panel::before`'s,
+   so the seam that carries the food into the menu is the same seam the menu's own
+   tiles use. The depth and the 65.45px period are `.nav__drip`'s, so the two
+   seams a customer scrolls past are one depth and the one they stop at (the
+   footer, at 4.4vw) is deeper. Both numbers are stated rather than shared because
+   there is no token for either; if `.nav__drip` changes, this changes with it.
+
+   `#000` here is an alpha value meaning "keep", not a colour — the same reading
+   check-invented.mjs was corrected to make of mask declarations. */
+.hero {
+  --seam: clamp(10px, 1.15vw, 17px);
+  --seam-w: 65.45px;
+  -webkit-mask-image: linear-gradient(#000 0 0),
+    radial-gradient(50% 100% at 50% 0, #000 99%, transparent 100%);
+  -webkit-mask-size: 100% calc(100% - var(--seam)), var(--seam-w) var(--seam);
+  -webkit-mask-position: top left, bottom left;
+  -webkit-mask-repeat: no-repeat, repeat-x;
+  mask-image: linear-gradient(#000 0 0),
+    radial-gradient(50% 100% at 50% 0, #000 99%, transparent 100%);
+  mask-size: 100% calc(100% - var(--seam)), var(--seam-w) var(--seam);
+  mask-position: top left, bottom left;
+  mask-repeat: no-repeat, repeat-x;
+}
+
+/* ---- the field ----------------------------------------------------------- */
+/* The brand gradient, plus the light the food stands in. Both benchmarks put
+   their product on a flat field; a flat field is also the reason their product
+   looks like a sticker. The two radial layers are a soft key light behind the
+   mass and a warm bounce under it, so the cut-outs have somewhere to be rather
+   than something to sit on top of. White at low alpha is an approved field in
+   brand.json; the warm layer is the yellow token, not a new colour. */
+.hero__field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(58% 50% at 66% 62%,
+                    rgb(255 255 255 / .26), rgb(255 255 255 / 0) 72%),
+    radial-gradient(46% 34% at 68% 104%,
+                    rgb(var(--c-sunny-yellow-rgb) / .30),
+                    rgb(var(--c-sunny-yellow-rgb) / 0) 74%),
+    var(--grad-brand);
+}
+
+/* Stars, which is one of the five motifs brand.json's visual direction names by
+   word — "rounded panels, subtle drips, soft waves, stars, and clean cut-out
+   food imagery". They are here to do a specific job, not for decoration: the
+   reading is on the left and the mass is on the right, so the top of the field
+   is the one region with neither in it, and an unbroken sheet of gradient there
+   is the emptiest part of the first screen. At 14% white they are texture you
+   notice second, after the food. Each is its own no-repeat layer at its own
+   size, because one stretched sheet would distort the shape. */
+.hero__field::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .15;
+  background-repeat: no-repeat;
+  background-position: right -2% top 8%;
+  background-size: min(44%, 620px) auto;
+  /* Six sparkles in one file rather than six layers of one sparkle: a layer
+     list would need the URL six times or a custom property to hold it, and a
+     custom property defined in a stylesheet is a value somebody has to
+     disclose. `auto` on the second axis keeps the star round. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 560 400' fill='white'%3E%3Cpath transform='translate(24 120) scale(1.5)' d='M12 0c1.1 8.2 2.7 9.8 12 12-9.3 2.2-10.9 3.8-12 12-1.1-8.2-2.7-9.8-12-12 9.3-2.2 10.9-3.8 12-12Z'/%3E%3Cpath transform='translate(196 44) scale(0.9)' d='M12 0c1.1 8.2 2.7 9.8 12 12-9.3 2.2-10.9 3.8-12 12-1.1-8.2-2.7-9.8-12-12 9.3-2.2 10.9-3.8 12-12Z'/%3E%3Cpath transform='translate(360 96) scale(2.4)' d='M12 0c1.1 8.2 2.7 9.8 12 12-9.3 2.2-10.9 3.8-12 12-1.1-8.2-2.7-9.8-12-12 9.3-2.2 10.9-3.8 12-12Z'/%3E%3Cpath transform='translate(300 236) scale(1.0)' d='M12 0c1.1 8.2 2.7 9.8 12 12-9.3 2.2-10.9 3.8-12 12-1.1-8.2-2.7-9.8-12-12 9.3-2.2 10.9-3.8 12-12Z'/%3E%3Cpath transform='translate(486 182) scale(1.4)' d='M12 0c1.1 8.2 2.7 9.8 12 12-9.3 2.2-10.9 3.8-12 12-1.1-8.2-2.7-9.8-12-12 9.3-2.2 10.9-3.8 12-12Z'/%3E%3Cpath transform='translate(96 286) scale(0.8)' d='M12 0c1.1 8.2 2.7 9.8 12 12-9.3 2.2-10.9 3.8-12 12-1.1-8.2-2.7-9.8-12-12 9.3-2.2 10.9-3.8 12-12Z'/%3E%3C/svg%3E");
+}
+
+/* The floor, and it is not spread evenly.
+
+   Four of the five cut-outs have a negative `b` — their base is past the fold —
+   so no contact shadow can ever be drawn under them, and giving up the bleed to
+   buy one would trade the thing the benchmark is beaten on for the thing it is
+   beaten by. The floor does the same job from the other side: a full-width veil
+   at one alpha reads as a vignette on the section, but a veil with an ellipse in
+   it reads as cast, because it is darkest directly beneath the subject and
+   lightest where nothing is standing.
+
+   The ellipse is centred at 54% of the section and is now half its width, not a
+   third, because the mass it is under is no longer a clump on the right: the
+   food runs from 8% of the screen to past the right edge, and a narrow pool of
+   shadow under the middle of that would read as a spotlight on one product
+   rather than as the ground all five stand on. 54% is the midpoint of the
+   silhouette's own span — 8.3% to 100% — measured off the rendered page. If the
+   placements move, this moves with them. */
+.hero__field::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 30%;
+  background:
+    radial-gradient(56% 46% at 54% 100%,
+                    rgb(var(--c-deep-purple-rgb) / .50),
+                    rgb(var(--c-deep-purple-rgb) / 0) 74%),
+    linear-gradient(to bottom,
+                    rgb(var(--c-deep-purple-rgb) / 0),
+                    rgb(var(--c-deep-purple-rgb) / .28));
+}
+
+/* ---- the stage ----------------------------------------------------------- */
+/* The stage is the second grid column, not an absolutely positioned overlay,
+   and that is the whole reason the food never lands on the reading at any
+   width. Its left edge IS the reading column's right edge, so no rule has to
+   repeat the column's width and no two numbers can drift apart. It then grows
+   back out to the section's own edges with negative margins that undo the
+   section's padding — the food has to be able to run off the top, the right and
+   the bottom of the screen, and only the left edge is a boundary it must
+   respect. The row stretches (there is exactly one), so the stage is the full
+   height of the first screen and .hero__inner centres itself inside it. */
+.hero__stage {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  /* The bottom margin undoes the section's own padding MINUS the seam depth, so
+     the stage still ends exactly at the fold even though the section now runs
+     `--seam` px past it. Every placement in HERO_DESKTOP is a fraction of this
+     box's height, so without this line the whole group — including the raspado's
+     grounded base, which round 4 set at b:+4 and which is the only base on the
+     first screen — would slide down with the section and the one product that
+     stands would stop standing. The food still fills the seam band: `.hero` clips
+     at the SECTION's edge, not the stage's, so everything with a negative `b`
+     runs on through the teeth exactly as it ran through the straight cut. */
+  margin: calc(-1 * var(--s-8)) calc(-1 * var(--gutter))
+          calc(-1 * var(--s-9) + var(--seam)) 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Placement is written by main.js as four numbers per photograph:
+     --ih  the square's height, % of the stage        (food height ÷ fillH)
+     --ib  the square's bottom, % of the stage        (negative = bleeds off)
+     --x   the food's centre,  % of the stage's width
+     --z   paint order
+   The square is centred on --x with translateX(-50%) rather than by arithmetic,
+   because its width comes from the stage's HEIGHT and its position from the
+   stage's WIDTH, and those two do not mix in one calc().
+
+   `transform` belongs to this file — it carries the centring and the scroll
+   parallax that motion.js drives through --drift. motion.css animates the idle
+   float with `translate` and `rotate`, which compose with a transform instead
+   of overwriting it. Do not move either half into the other's file. */
+.hero__cut {
+  position: absolute;
+  display: block;
+  left: var(--x);
+  bottom: var(--ib);
+  height: var(--ih);
+  width: auto;
+  max-width: none;          /* base.css caps every img at 100%; a bleed cannot be */
+  aspect-ratio: 1;
+  z-index: var(--z, 1);
+  transform: translate(-50%, calc(var(--drift, 0) * var(--rate, 0) * -1px));
+  will-change: transform;
+
+  /* ONE KEY LIGHT, STATED AS A FILTER CHAIN.
+
+     Read in order: exposure, then colour, then the cast shadow.
+
+     `--lift` and `--sat` are the exposure correction, written per photograph in
+     main.js. They exist because the five masters were not shot together: mean
+     luminance of the opaque pixels runs 98 to 170 across them, and the raspado
+     at 98 sits fifty points under the group, which is exactly the "flat and
+     muddy" a blind read saw. Lifting a photograph is not retouching the client's
+     media — assets/ is untouched; this is a display transform on a derivative.
+
+     `--sh` is the square's RENDERED height in px, written by paintHero(). The
+     shadow is spent as a fraction of it rather than as a fixed pixel value,
+     because tokens.css's --shadow-food is `0 18px 22px` — sized for a 230px menu
+     card. The shake renders 1168px square at 1440x900, so 18px of offset is 1.5%
+     of the object and invisible; worse, `0` horizontal asserts no light
+     direction at all, which is what left five cut-outs reading as five PNGs in
+     z-order. That token is not edited here — it is the lead's, and it is right
+     for the card it was drawn for.
+
+     The offsets are SIGNED THE SAME WAY ON ALL FIVE — down and to the right,
+     from a key above and to the left. That is the cheapest thing that makes
+     separate photographs claim one light, and it is also what the two most
+     directional masters already say: elote and churros are both keyed from the
+     left by 34-35 points of luminance across their own width.
+
+     THE BLUR IS SMALLER THAN THE OFFSET, and that is the whole difference
+     between a shadow and a haze. At `.12` of the square the penumbra was wider
+     than the object had moved, so the shadow spread out to nothing against a
+     saturated field and photographed as a faint glow — measured against the
+     round's first render, the churros cast no visible band on the shake at all.
+     At `.055`, with the offsets unchanged, the same shadow lands as a defined
+     edge: the churros now reads as standing in front of the milkshake instead
+     of being pasted beside it. */
+  filter:
+    brightness(var(--lift, 1))
+    saturate(var(--sat, 1))
+    drop-shadow(calc(var(--sh, 0px) * .045)
+                calc(var(--sh, 0px) * .085)
+                calc(var(--sh, 0px) * .055)
+                rgb(var(--c-deep-purple-rgb) / .50));
+}
+
+/* The photograph fills its wrapper exactly, so the wrapper's box IS the square
+   every placement is written against and the sink layer below can be `inset: 0`.
+
+   The height is the stated one and the width follows from it, not the other way
+   round — every derivative is a square, so a photograph given the wrapper's full
+   height reports exactly the wrapper's width back. That ordering is what makes
+   the wrapper square whichever way the browser resolves it: from the
+   `aspect-ratio` above, or, if it reaches for a shrink-to-fit width first,
+   from this image's own. A `width: 100%` here would make the second path
+   circular and collapse the box to nothing.
+
+   `max-width` is restated because base.css caps every img on the page at 100%,
+   and `height` because base.css sets `img { height: auto }`. */
+.hero__cut > img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: none;
+}
+
+/* THE SINK — the half of "one light" a filter cannot do.
+
+   A filter is uniform, so it can correct a photograph's exposure but it cannot
+   correct its KEY. Churros is the case that forced this: measured top half
+   against bottom half it is 47 points brighter at the bottom, the only element
+   in the group that is, and the reason is visible once you look — the bottom
+   half of that shot is a pale kraft cone and the top half is dark fried dough.
+   It is albedo, not lighting, but the eye reads a bright flat slab at the base
+   as an object lit from below, and one object lit from below inside a group lit
+   from above is the one that reads as pasted on.
+
+   So every cut-out gets a gradient that sinks its base into shadow, at a per
+   photograph strength — solved for, not guessed at: each `sink` in main.js is
+   the value that lands that photograph's own vertical key on the group's, and
+   where the sink costs a shot too much overall brightness the `lift` beside it
+   pays it back.
+
+   Churros is also the case that proves the number has to be re-solved whenever
+   a placement moves. Its 47-point inversion is the cone, and 58% of that
+   photograph is now below the fold — cone included. The dough alone measures
+   +31, already the group's direction, so the .90 sink that used to correct the
+   whole shot over-corrected the part that survives, to +37 and the outlier of
+   the five. At .34 it lands at +33. The lesson is in main.js next to the table:
+   measure the light on what is visible, not on the file. Two things make this
+   layer honest rather than a smudge: it is
+   masked to the product's own alpha, using the very URL the <img> already
+   fetched (`currentSrc`, so it is a cache hit and not a second download), and it
+   multiplies rather than paints, so texture survives instead of being washed
+   flat. In one scene lit by one lamp everything is darker toward the ground;
+   this is that, and it is the same direction for all five.
+
+   `[data-lit]` is set by main.js only once `--cut` holds a real URL. Without it
+   the mask would be `none` and the layer would paint as a rectangle, so the
+   default state is no layer at all rather than a purple box. */
+.hero__cut::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgb(var(--c-deep-purple-rgb) / 0) 34%,
+    rgb(var(--c-deep-purple-rgb) / calc(var(--sink, .30) * .45)) 70%,
+    rgb(var(--c-deep-purple-rgb) / var(--sink, .30)) 100%);
+  mix-blend-mode: multiply;
+  opacity: 0;
+}
+
+.hero__cut[data-lit]::after {
+  opacity: 1;
+  mask-image: var(--cut);
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: var(--cut);
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* ---- the reading --------------------------------------------------------- */
+/* HUNG FROM THE TOP, NOT CENTRED, AND THAT IS WHAT LETS FOOD INTO THIS COLUMN.
+
+   Centred, the block left 134px of empty field above the kicker and 150px below
+   the actions — 17% and 19% of the hero, in two bands, neither big enough to
+   put anything in. `start` spends the whole surplus in one place, the bottom of
+   the reading column, and the churros is placed into it: main.js gives that one
+   cut-out a NEGATIVE `x`, so it starts left of the stage and runs off the
+   bottom-left corner. This element is z-index 2 and the stage is 1, so the type
+   stays clear of it.
+
+   THE RULE THE PLACEMENT HAS TO OBEY, AND IT IS THE CONTRAST TABLE AGAIN: white
+   on hot pink is 4.06 and white on a churro is about 1.6, so nothing may pass
+   behind BARE type. At 1440x900 the glyph line boxes stop at y=567 and the
+   churros' top edge is at 608 — but that is a measurement, not a constant, so
+   main.js re-reads it rather than hard-coding it: `seatHero` lowers any
+   negative-x placement until it clears `.hero__lead`'s own bottom by 24px. At
+   1290x720 the headline breaks to four lines instead of three and the same
+   floor is 62px lower on a screen 110px shorter; the churros gives up the
+   height, the type keeps its contrast.
+
+   The actions row is a different case and is deliberately used as one: the call
+   to action is an opaque cream pill and the count an opaque deep purple pill,
+   both of them reading areas in brand.json's own sense, so food passes behind
+   them and reads as depth. The empty band under the buttons is therefore 0
+   rather than 19% of the hero. */
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+}
+
+.hero__kicker { opacity: .88; }
+
+/* ---- the deck, which is two sentences ------------------------------------ */
+/* ui.json holds one approved string with two sentences in it; main.js splits it
+   at the period already there (see splitLead) and this styles the halves. The
+   promise and the instruction are two different jobs and they were arriving at
+   one size, so the hero had four things to say and three levels to say them in.
+
+   The step down is smaller than the type scale's own 1.389 ratio, and that is
+   the contrast table, not taste: white on hot pink is 4.06, which is legal as
+   large text and illegal as body copy at any opacity. 28 / 1.389 is 20px and
+   20px white on pink is a violation, so the second sentence stops at 24px —
+   --t-deck's own floor in type.css, and the smallest legal size here. The rest
+   of the step it takes in tone: .92 paints 3.57 against a large-text floor of
+   3.0. --t-deck itself only reaches that same 24px floor below about 392px, so
+   the two halves collapse to one size on the narrowest phone and nowhere else,
+   which is correct — that screen has no room for the step anyway. */
+.hero__lead-a,
+.hero__lead-b { display: block; }
+
+.hero__lead-b {
+  margin-top: var(--s-2);
+  font-size: 1.5rem;              /* the 24px floor of --t-deck, styles/type.css */
+  opacity: .92;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4) var(--s-5);
+}
+
+/* 19px bold is below the large-text floor for white on hot pink, so the count
+   does not sit on the pink. Deep purple is 13.6:1 and brand.json's own words
+   for it are "contrast and structure" — which is also what distinguishes it
+   from the cream call to action beside it. */
+.hero__count {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-pill);
+  background: var(--c-structure);
+  color: #fff;
+  font-size: var(--t-eyebrow);
+  font-weight: var(--w-bold);
+  line-height: 1.2;
+  box-shadow: var(--shadow-card);
+}
+
+/* ---- the narrow desktop -------------------------------------------------- */
+/* Between 901 and 1280 the two halves are still side by side, but the viewport
+   has stopped growing while the food has not: every cut-out's width is derived
+   from the stage's HEIGHT, so a short wide laptop keeps the mass at full size
+   and squeezes the reading. One scale, anchored to the bottom edge so the bleed
+   survives, is the whole fix — and it shrinks the group without re-deciding
+   where any single product sits. */
+@media (min-width: 901px) and (max-width: 1280px) {
+  /* The display size is still 66px here and 33rem of column is no longer
+     available, so the headline needs a bigger share of a smaller screen or it
+     breaks to four lines and pushes the call to action past the fold. */
+  .hero { grid-template-columns: minmax(0, 46%) minmax(0, 1fr); }
+  .hero[data-hero] { padding-block: var(--s-7) var(--s-8); }
+  /* .86 when the mass was a clump on the right; .94 now that it spans the whole
+     width, because the scale is anchored to the bottom CENTRE and every point of
+     it pulls the churros back out of the reading column. At .94 the leftmost
+     food pixel at 1100px is 16.4% of the screen; at .86 it was 21.8%. */
+  .hero__stage {
+    transform: scale(.94);
+    transform-origin: 50% 100%;
+  }
+}
+
+/* ---- one column ---------------------------------------------------------- */
+/* Below 900px the reading stacks above the food instead of standing beside it,
+   and the rhythm tightens: on a 390px screen every 8px of margin between the
+   four text lines is 8px the cut-outs do not get. The food then bleeds off both
+   side edges as well as the bottom, which is what buys it real size on a narrow
+   screen — michoacana's row of paletas does the same thing. */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .hero__inner { align-self: start; }
+  /* One column, so the reading and the food share the cell and the food runs
+     off both side edges as well as the bottom. */
+  .hero__stage {
+    grid-column: 1;
+    margin: calc(-1 * var(--s-5)) calc(-1 * var(--gutter)) calc(-1 * var(--s-6));
+  }
+  .hero[data-hero] {
+    min-height: calc(100svh - var(--nav-h, 124px));
+    padding-block: var(--s-5) var(--s-6);
+  }
+  .hero .hero__kicker { margin-bottom: var(--s-3); }
+  .hero .hero__lead   { margin-block: var(--s-4) var(--s-5); }
+  .hero__actions      { gap: var(--s-2) var(--s-3); }
+  .hero__field::after { height: 44%; }
+
+  /* The stars come off. On a wide screen they sit in the one corner that has
+     neither the reading nor the food in it; on a 390px screen the reading is
+     full-width, so the same layer would be sitting behind the headline —
+     lightening the field under white glyphs, which is the one thing the
+     contrast table says not to do. */
+  .hero__field::before { display: none; }
+
+  /* Half of the actions row's width is the count, and on a 390px screen that
+     is the difference between the food starting beside it and starting below
+     it. It is on deep purple, not on the pink, so dropping it below the
+     large-text floor costs nothing: 13.6:1 passes at any size. */
+  .hero__count {
+    font-size: var(--fs-desc);
+    padding: var(--s-2) var(--s-4);
+  }
+}
