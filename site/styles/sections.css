@@ -1,0 +1,491 @@
+/* ============================================================================
+   THE FOUR SECTIONS BETWEEN THE HERO AND THE MENU
+
+     .say      the typographic statement — four category words as one block
+     .story    the house cup on the purple field
+     .pick     four category panels
+     .antojos  three story beats on a dotted path
+
+   Every one of them is from site/.site/b.html, section for section. What is new
+   is that all colour comes through tokens, all tracking and fixed type through
+   tokens, and every decorative photograph is aria-hidden with an empty alt
+   because each one appears again — named, described, tappable — in the menu.
+   ========================================================================== */
+
+/* A floating cut-out. `--w` is the width of the SQUARE canvas, not of the food,
+   and `max-width: none` turns off base.css's global clamp for exactly the
+   reason base.css records: a tall product's square is wider than its slot. */
+.float {
+  position: absolute; z-index: 3;
+  width: calc(var(--w) * var(--s)); aspect-ratio: 1;
+  object-fit: contain; max-width: none;
+  filter: drop-shadow(0 14px 18px rgb(var(--c-deep-purple-rgb) / .34));
+  animation: bob var(--bob-cycle) ease-in-out infinite;
+}
+/* Three periods rather than one, so a group of four does not pulse in unison. */
+.float:nth-of-type(2n) { animation-duration: 8.6s; animation-delay: -2.2s; }
+.float:nth-of-type(3n) { animation-duration: 9.8s; animation-delay: -4.1s; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-11px); } }
+
+/* ══ 3. THE TYPOGRAPHIC STATEMENT ═══════════════════════════════════════ */
+.say {
+  position: relative; background: var(--c-highlight); overflow: hidden;
+  padding: clamp(48px, 6vw, 96px) 0 clamp(52px, 6.4vw, 104px);
+  --sayw: clamp(38px, 16vw, 244px);
+}
+.say__in {
+  position: relative; z-index: 2;
+  max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter);
+  text-align: center;
+}
+.say__in .kicker { margin-bottom: clamp(18px, 2.4vw, 36px); }
+.say__h { line-height: .93; }
+/* One common width for all four lines. `--m` is the ratio of ANTOJITOS's advance
+   width to this word's, in Fredoka 700 uppercase at this section's own tracking,
+   measured by scripts/build-say.mjs — so the four words stack as one solid block
+   of type rather than as a ragged centred list. ANTOJITOS is the reference in
+   English as well as Spanish, which is what keeps the longer English labels
+   inside the same block instead of overflowing it. */
+.say__l {
+  /* Never two lines. Two of the four English labels are two words — ICE CREAM
+     and SAVORY SNACKS — and a wrapped one turns a four-line statement into six.
+     The sizes below are measured so that every line renders at the same width in
+     both languages (scripts/build-say.mjs), so nothing here has to wrap. */
+  display: block; white-space: nowrap;
+  font-family: var(--font-display); font-weight: var(--w-display);
+  text-transform: uppercase; line-height: .93; letter-spacing: var(--tr-slab);
+  color: var(--c-structure);
+  font-size: calc(var(--sayw) * var(--m, 1));
+}
+/* Lines two to four are HOLLOW rather than faded: a 55%-alpha purple on yellow
+   falls under 3:1, while a full-strength outline is 8.3:1 and recedes just as
+   far. The outline is a double-width stroke with an opaque yellow copy of the
+   same word laid over it — stroking alone traces the font's internal contours as
+   well as its edge, which put a stray diagonal through the R of POSTRES.
+
+   `color` STAYS DEEP PURPLE. Only the fill is switched off. The ink a reader
+   actually sees is that purple stroke, and scripts/a11y.mjs reads `color` to
+   decide what colour the ink is; setting `color: transparent` — which is what
+   b.html does, because b.html has no such check — would report this heading as
+   invisible-on-invisible. Same picture, honest answer. */
+.say__l:not(:first-child) {
+  position: relative;
+  color: var(--c-structure);
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: clamp(5px, 1.04vw, 16px) var(--c-deep-purple);
+}
+.say__l:not(:first-child)::before {
+  content: attr(data-w); position: absolute; left: 0; right: 0; top: 0;
+  color: var(--c-highlight);
+  /* -webkit-text-fill-color is inherited, so the cover coat has to switch it
+     back on or it inherits `transparent` from the line it is covering and
+     paints nothing. */
+  -webkit-text-fill-color: var(--c-sunny-yellow);
+  -webkit-text-stroke: 0;
+  pointer-events: none;
+}
+.say__foot {
+  margin-top: clamp(22px, 2.8vw, 42px);
+  color: rgb(var(--c-deep-purple-rgb) / .82);
+  max-width: 44ch; margin-inline: auto;
+}
+.say .float { z-index: 4; }
+.say .sp { background: rgb(var(--c-deep-purple-rgb) / .5); }
+
+/* ══ 4. THE STORY ═══════════════════════════════════════════════════════ */
+.story {
+  position: relative; background: var(--c-structure); color: var(--c-reading);
+  overflow: hidden;
+  padding: clamp(54px, 6.4vw, 104px) 0 clamp(52px, 6vw, 96px);
+}
+.story__in {
+  max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 86px); align-items: center;
+}
+.story__in .kicker { justify-content: flex-start; }
+.story__h { margin-top: clamp(16px, 2vw, 26px); font-size: var(--t-h-big); color: var(--c-reading); }
+.story__h em { font-style: normal; color: var(--c-highlight); }
+.story__p {
+  margin-top: clamp(16px, 2vw, 28px);
+  color: rgb(var(--c-base-cream-rgb) / .9); max-width: 46ch;
+}
+.story__p + .story__p { margin-top: var(--s-3); }
+
+.big { position: relative; aspect-ratio: 1 / 1.02; }
+.big__disc {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 84%; aspect-ratio: 1; border-radius: 50%;
+  background: rgb(var(--c-hot-pink-rgb) / .34);
+  box-shadow: 0 0 0 clamp(8px, 1.2vw, 18px) rgb(var(--c-hot-pink-rgb) / .14);
+}
+/* Again the SQUARE, not the food: `--s` is the square's width as a share of its
+   slot, and it is over 100% for every product in this composition. */
+.big__img {
+  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: var(--s); aspect-ratio: 1; object-fit: contain; object-position: bottom;
+  filter: drop-shadow(0 26px 30px rgb(var(--c-deep-purple-rgb) / .5));
+  z-index: 2; max-width: none;
+}
+@media (max-width: 860px) {
+  .story__in { grid-template-columns: 1fr; }
+  .story__art { order: -1; max-width: 460px; margin-inline: auto; width: 100%; }
+  .story__in .kicker { justify-content: center; }
+  .story__words { text-align: center; }
+  .story__p { margin-inline: auto; }
+}
+
+/* ══ 5. THE FOUR CATEGORY PANELS ════════════════════════════════════════ */
+.pick { background: var(--c-reading); padding: clamp(50px, 6vw, 96px) 0 clamp(52px, 6.2vw, 100px); }
+.pick__head {
+  max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter);
+  text-align: center; margin-bottom: clamp(26px, 3.2vw, 48px);
+}
+.pick__head .kicker .dia { color: var(--c-brand); }
+.pick__h { margin-top: var(--s-3); font-size: var(--t-h-section); color: var(--c-structure); }
+.pick__lead {
+  margin-top: var(--s-3); color: rgb(var(--c-deep-purple-rgb) / .82);
+  max-width: 52ch; margin-inline: auto;
+}
+.pans {
+  max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter);
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(12px, 1.5vw, 22px);
+}
+.pan {
+  position: relative; display: flex; flex-direction: column;
+  border-radius: var(--r-panel-lg); overflow: hidden; text-decoration: none;
+  box-shadow: 0 4px 0 rgb(var(--c-deep-purple-rgb) / .1), 0 20px 40px rgb(var(--c-deep-purple-rgb) / .13);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.pan:hover { transform: translateY(-6px); box-shadow: 0 8px 0 rgb(var(--c-deep-purple-rgb) / .1), 0 28px 54px rgb(var(--c-deep-purple-rgb) / .2); }
+.pan__stage { position: relative; width: 100%; aspect-ratio: 1 / 1.2; flex: 0 0 auto; }
+.pan__p { position: absolute; object-fit: contain; object-position: bottom; max-width: none; }
+.pan__p--1 {
+  left: 50%; bottom: 0; transform: translateX(-50%); width: var(--s); aspect-ratio: 1;
+  filter: drop-shadow(0 16px 20px rgb(var(--c-deep-purple-rgb) / .44)); z-index: 2;
+}
+/* THE SECOND PRODUCT HAS TO READ AS A SECOND PRODUCT.
+   Two attempts failed before this one. It first sat at right:-9%, buried behind
+   the front item and cropped by the panel edge at once. Then it was pulled to
+   right:2% and shrunk — which LOOKED fixed and measured 67%, 70% and 86% of the
+   back product still hidden in three of the four panels. Only Antojitos read
+   correctly, at 18%, and that was luck: the Tostilocos bag happens to have very
+   little transparent padding.
+
+   The mistake both times was positioning by the BOX. Each derivative is a square
+   canvas with the food centred inside transparent padding, and the amount of
+   padding depends on the product's shape — a thin paleta is mostly padding, a
+   wide bag is barely any. So `right: 2%` moves the box to 2% and leaves the food
+   anywhere from 2% to 30% further in.
+
+   --pad is that padding, written per product by build-site.mjs. Offsetting by it
+   puts the FOOD where the box edge appears to be, and the two products then
+   overlap by a deliberate sliver instead of by whatever their shapes happened to
+   dictate. */
+.pan__p--2 {
+  right: calc(1% - var(--pad) * var(--s));
+  bottom: calc(-1% - var(--pad) * var(--s) * .5);
+  width: calc(var(--s) * .86); aspect-ratio: 1;
+  filter: drop-shadow(0 12px 18px rgb(var(--c-deep-purple-rgb) / .42)); z-index: 1;
+}
+.pan__body {
+  position: relative; z-index: 3; padding: clamp(16px, 1.7vw, 26px);
+  background: var(--panel-body); display: flex; flex-direction: column; gap: 4px;
+}
+.pan__k {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--fs-chip); letter-spacing: var(--tr-wider); color: var(--panel-k);
+}
+.pan__name {
+  font-family: var(--font-display); font-weight: var(--w-display); text-transform: uppercase;
+  /* 22px floor, 2.5vw, 40px cap — the approved page's own clamp. The floor was
+     19px here, which drew the panel name 3px small on every tablet. Below 560
+     the block further down takes it back to 19px, and that one IS a deviation
+     from b.html: see the contrast note there. */
+  font-size: clamp(1.375rem, 2.5vw, 2.5rem); line-height: 1;
+  color: var(--panel-fg); letter-spacing: var(--tr-display);
+}
+.pan__n { font-size: clamp(0.75rem, 1vw, 0.875rem); color: var(--panel-dim); }
+/* A SEPARATE INK FROM THE NAME, and that is a contrast rule rather than a
+   flourish. The name is display size, where 3:1 is enough and hot pink on cream
+   (3.85:1) is legal. This line is 13px, where the requirement is 4.5:1 and hot
+   pink fails. b.html used one colour for both and reached for a sixth hue to
+   make the blue panel work; there is no sixth hue here. */
+.pan__go {
+  margin-top: 10px; display: inline-flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(0.6875rem, .95vw, 0.8125rem); letter-spacing: var(--tr-wide);
+  text-transform: uppercase; color: var(--panel-go); min-height: 24px;
+}
+.pan__go .arrow { width: 17px; height: 17px; }
+.pan:hover .pan__go .arrow { transform: translateX(5px); }
+/* Every panel is one of the five colours, and every reading strip is cream or
+   deep purple. brand.json visualDirection. */
+.pan--helados   { background: var(--c-brand);     --panel-body: var(--c-reading); --panel-fg: var(--c-hot-pink); }
+.pan--antojitos { background: var(--c-accent);    --panel-body: var(--c-reading); --panel-fg: var(--c-electric-blue); }
+.pan--postres   { background: var(--c-structure); --panel-body: var(--c-reading); --panel-fg: var(--c-deep-purple); }
+.pan--bebidas   { background: var(--c-highlight); --panel-body: var(--c-structure); --panel-fg: var(--c-reading); }
+.pan--helados, .pan--antojitos, .pan--postres {
+  --panel-dim: rgb(var(--c-deep-purple-rgb) / .78);
+  --panel-k: rgb(var(--c-deep-purple-rgb) / .78);
+  --panel-go: var(--c-deep-purple);
+}
+.pan--bebidas {
+  --panel-dim: rgb(var(--c-base-cream-rgb) / .86);
+  --panel-k: var(--c-sunny-yellow);
+  --panel-go: var(--c-base-cream);
+}
+@media (max-width: 1080px) { .pans { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) {
+  .pan__stage { aspect-ratio: 1 / 1.02; }
+  .pan__body { padding: 13px 12px 15px; }
+  /* 19px, not 17px: electric blue on cream is 3.11:1, which is legal for large
+     text and illegal below 18.66px bold. The size is the contrast rule. */
+  .pan__name { font-size: var(--fs-lede); }
+  .pan__go { letter-spacing: var(--tr-caps); gap: 6px; }
+}
+
+/* ══ 6. THREE BEATS ON A DOTTED PATH ════════════════════════════════════ */
+.antojos {
+  position: relative; background: var(--c-accent); overflow: hidden;
+  padding: clamp(50px, 6.4vw, 104px) 0 clamp(66px, 8vw, 132px);
+}
+.antojos__head { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); text-align: center; }
+.antojos__h { margin-top: var(--s-3); font-size: var(--t-h-section); color: var(--c-reading); }
+.beats {
+  position: relative; max-width: 1180px; margin: clamp(44px, 6vw, 86px) auto 0;
+  padding-inline: var(--gutter);
+  display: flex; flex-direction: column; gap: clamp(28px, 4vw, 64px);
+}
+.beats::before {
+  content: ''; position: absolute; left: 50%; top: 4%; bottom: 4%; width: 0;
+  border-left: 5px dashed rgb(var(--c-sunny-yellow-rgb) / .72);
+  transform: translateX(-50%); z-index: 0;
+}
+/* A bead on the path, in the gap between two beats — the sign's bulb, reused. */
+.beat:not(:last-child)::after {
+  content: ''; position: absolute; left: 50%; z-index: 3;
+  bottom: calc(-1 * clamp(28px, 4vw, 64px) / 2 - 10px);
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--c-highlight); border: 4px solid var(--c-electric-blue);
+  transform: translateX(-50%);
+}
+.beat {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3.4vw, 56px);
+  align-items: center; background: var(--c-reading);
+  border-radius: var(--r-panel-lg); padding: clamp(20px, 2.6vw, 40px);
+  box-shadow: 0 5px 0 rgb(var(--c-deep-purple-rgb) / .22), 0 22px 44px rgb(var(--c-deep-purple-rgb) / .26);
+}
+.beat--r { direction: rtl; }
+.beat--r > * { direction: ltr; }
+.beat__art {
+  position: relative; aspect-ratio: 1 / .98;
+  margin-top: calc(-1 * clamp(12px, 3.2vw, 56px));
+}
+.beat__disc {
+  position: absolute; left: 50%; top: 48%; transform: translate(-50%, -50%);
+  width: 76%; aspect-ratio: 1; border-radius: 50%;
+  background: rgb(var(--c-hot-pink-rgb) / .16);
+  box-shadow: 0 0 0 10px rgb(var(--c-hot-pink-rgb) / .09);
+}
+.beat__k {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(1.875rem, 3.4vw, 3.375rem); line-height: 1;
+  color: var(--c-brand); display: block;
+}
+.beat__h { margin-top: var(--s-2); font-size: var(--t-h-beat); color: var(--c-structure); }
+.beat__p { margin-top: var(--s-3); color: rgb(var(--c-deep-purple-rgb) / .82); max-width: 42ch; }
+.beats .float { filter: drop-shadow(0 12px 14px rgb(var(--c-deep-purple-rgb) / .38)); }
+@media (max-width: 760px) {
+  .beat { grid-template-columns: 1fr; padding: clamp(18px, 4vw, 28px); }
+  .beat--r { direction: ltr; }
+  .beat__art { max-width: 340px; margin-inline: auto; width: 100%; }
+}
+
+/* ══ THE TOWN ═══════════════════════════════════════════════════════════
+   A neon sign, rendered as type. Deep purple is the darkest ground the
+   palette has, and neon only reads on dark — this is the one band on the
+   site that needs it, which is also why it is the only one that gets it.
+
+   The glow is built from stacked text-shadows rather than a filter: filter
+   blurs the glyph itself and makes 60px type look soft, while layered
+   shadows leave the letterform crisp and put the light AROUND it, which is
+   what a real tube does. Four stops, tightest and brightest first. */
+.town {
+  position: relative; overflow: hidden;
+  /* --c-dark, not deep purple. A pink glow on a purple wall is pink-on-pink:
+     the two sit close enough on the wheel that the bloom vanishes, which is
+     exactly what the first two attempts looked like. brand.json publishes
+     #0D0D0F under color.contrastFields.darkContrast, read off page 13 — it is
+     explicitly "not a sixth palette color", it is the dark contrast field the
+     guidelines provide, and a neon sign is what it is for. Deep purple stays as
+     the glow's own falloff, so the band still belongs to the palette. */
+  background:
+    radial-gradient(120% 90% at 50% 38%,
+      rgb(var(--c-deep-purple-rgb) / .85), rgb(var(--c-deep-purple-rgb) / 0) 70%),
+    var(--c-dark);
+  padding: clamp(64px, 8vw, 118px) var(--gutter);
+  text-align: center;
+}
+/* the wall behind the sign catching its light */
+.town__glow {
+  position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%);
+  width: min(1100px, 120vw); aspect-ratio: 1; pointer-events: none;
+  background: radial-gradient(circle,
+    rgb(var(--c-hot-pink-rgb) / .52), rgb(var(--c-hot-pink-rgb) / .16) 38%,
+    rgb(var(--c-hot-pink-rgb) / 0) 68%);
+}
+.town__in { position: relative; z-index: 1; max-width: 900px; margin-inline: auto; }
+.town__kick { color: var(--c-highlight); }
+
+.neon {
+  margin-top: clamp(20px, 2.4vw, 30px);
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(12px, 1.8vw, 26px);
+  font-family: var(--font-display); font-weight: var(--w-display);
+  text-transform: uppercase; letter-spacing: var(--tr-caps);
+  font-size: clamp(2.25rem, 7vw, 5.75rem); line-height: 1;
+  color: var(--c-reading);
+  /* Six stops, not four. At four the glow died before it reached the wall and
+     the line read as cream type on purple rather than as a lit tube. The first
+     two are the hot inner core, the next three are the tube's own colour falling
+     off, and the last is the bloom the wall picks up. */
+  text-shadow:
+    0 0 2px  rgb(var(--c-base-cream-rgb) / 1),
+    0 0 9px  rgb(var(--c-base-cream-rgb) / .95),
+    0 0 22px rgb(var(--c-hot-pink-rgb) / 1),
+    0 0 46px rgb(var(--c-hot-pink-rgb) / .85),
+    0 0 84px rgb(var(--c-hot-pink-rgb) / .60),
+    0 0 150px rgb(var(--c-hot-pink-rgb) / .40);
+}
+.neon__heart {
+  width: clamp(30px, 5.4vw, 74px); height: auto; flex: 0 0 auto;
+  fill: var(--c-brand);
+  filter:
+    drop-shadow(0 0 5px  rgb(var(--c-base-cream-rgb) / .55))
+    drop-shadow(0 0 16px rgb(var(--c-hot-pink-rgb) / 1))
+    drop-shadow(0 0 40px rgb(var(--c-hot-pink-rgb) / .80))
+    drop-shadow(0 0 80px rgb(var(--c-hot-pink-rgb) / .50));
+}
+/* One tube warming up, then holding. It runs once on load and stops — a sign
+   that flickers forever is a broken sign, and it would pull the eye away from
+   the copy for as long as the section is on screen. */
+@keyframes neon-on {
+  0%   { opacity: .25 }
+  8%   { opacity: 1 }
+  12%  { opacity: .35 }
+  18%  { opacity: 1 }
+  24%  { opacity: .55 }
+  30%, 100% { opacity: 1 }
+}
+.neon__heart { animation: neon-on 2.1s var(--ease) 1 both; }
+
+.town__h {
+  margin-top: clamp(26px, 3vw, 42px);
+  font-family: var(--font-display); font-weight: var(--w-display);
+  text-transform: uppercase; letter-spacing: var(--tr-caps);
+  font-size: var(--t-section); color: var(--c-reading);
+}
+.town__body {
+  margin-top: var(--s-4); margin-inline: auto; max-width: 52ch;
+  font-size: var(--t-prose); line-height: 1.6;
+  color: rgb(var(--c-base-cream-rgb) / .82);
+}
+.town__cta {
+  margin-top: clamp(24px, 2.8vw, 34px); display: inline-block;
+  min-height: 44px; padding: 13px 34px; border-radius: var(--r-pill);
+  background: var(--c-highlight); color: var(--c-structure);
+  font-family: var(--font-display); font-weight: var(--w-display);
+  text-transform: uppercase; letter-spacing: var(--tr-caps);
+  font-size: var(--fs-chip); text-decoration: none;
+}
+@media (hover: hover) { .town__cta:hover { background: var(--c-reading); } }
+
+/* ── SHOP PHOTOGRAPHS ────────────────────────────────────────────────────
+   Real rectangular photographs of the room, which behave nothing like the
+   product cut-outs everywhere else on this site: they need a frame, a crop
+   and a shadow rather than geometry. Rounded to the brand's own panel radius
+   so they belong to the same family as the cards.
+
+   `background-image` on the element carries the blurred placeholder, so the
+   space is coloured before the photograph arrives instead of flashing white. */
+.big__photo {
+  position: relative; z-index: 1;
+  width: min(100%, 560px); aspect-ratio: 4 / 5;
+  object-fit: cover; border-radius: var(--r-panel-lg);
+  background-size: cover; background-position: center;
+  box-shadow: 0 26px 60px rgb(var(--c-deep-purple-rgb) / .42),
+              0 0 0 6px rgb(var(--c-base-cream-rgb) / .10);
+}
+.visit__fig, .town__fig { margin: clamp(26px, 3.2vw, 40px) auto 0; max-width: 900px; }
+.visit__photo, .town__photo {
+  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  border-radius: var(--r-panel-lg);
+  background-size: cover; background-position: center;
+  box-shadow: 0 22px 50px rgb(var(--c-deep-purple-rgb) / .40),
+              0 0 0 5px rgb(var(--c-base-cream-rgb) / .14);
+}
+/* On the dark town band the frame is the neon's colour rather than cream. */
+/* Deep purple at a heavy alpha, not black. Black is not in the palette, and
+   every other shadow on this site is built from --c-deep-purple-rgb — matching
+   them keeps one shadow language rather than introducing a second. */
+.town__photo { box-shadow: 0 22px 60px rgb(var(--c-deep-purple-rgb) / .75), 0 0 0 5px rgb(var(--c-hot-pink-rgb) / .55); }
+@media (max-width: 900px) {
+  .big__photo { width: 100%; aspect-ratio: 1 / 1; }
+  .visit__photo, .town__photo { aspect-ratio: 4 / 3; }
+}
+
+
+
+
+/* ── PANEL OPTION C: ONE PRODUCT, ON BRAND SHAPES ────────────────────────
+   The client asked whether illustrated mock-ups should replace the product
+   photographs here. The answer is no — a drawn section on a page of 45
+   photographs reads as a different website, and brand.json's visual direction
+   asks for "clean cut-out food imagery", not illustration. It also would not
+   have solved anything: the collision came from two large objects in a small
+   panel, and drawn objects collide the same way.
+
+   What the panel actually wanted was COMPOSITION, and the brand kit already
+   supplies the vocabulary for it — "rounded panels, subtle drips, soft waves,
+   stars". So the second product is gone and its job is done by brand shapes
+   instead: a soft disc the product stands on, a scallop arc behind, and two
+   stars. Nothing to collide with, and the panel is more designed than it was
+   with two photographs fighting. */
+.pan--art .pan__p--2 { display: none; }
+.pan--art .pan__p--1 { width: calc(var(--s) * .88); }
+
+.pan__art { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+/* the disc the food stands on */
+.pan__art::before {
+  content: ''; position: absolute; left: 50%; bottom: 6%;
+  width: 78%; aspect-ratio: 1; transform: translateX(-50%);
+  border-radius: 50%; background: rgb(var(--c-base-cream-rgb) / .17);
+}
+/* a scallop arc behind it — the card's own half-disc, at panel scale */
+.pan__art::after {
+  content: ''; position: absolute; left: -6%; right: -6%; top: 14%; height: 26%;
+  background-image: radial-gradient(50% 100% at 50% 100%,
+    rgb(var(--c-base-cream-rgb) / .13) 99%, rgb(var(--c-base-cream-rgb) / 0) 100%);
+  background-size: 22% 100%; background-repeat: repeat-x;
+}
+.pan__star { position: absolute; fill: rgb(var(--c-base-cream-rgb) / .5); pointer-events: none; z-index: 0; }
+
+/* The visit band's two photographs: the street view and the room. Side by side
+   on desktop, stacked on a phone, both cropped to the same shape so the pair
+   reads as a pair rather than as two loose images. */
+.visit__pics {
+  margin: clamp(26px, 3.2vw, 40px) auto 0; max-width: 1140px;
+  display: grid; gap: clamp(12px, 1.5vw, 20px);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+.visit__pics .visit__fig { margin: 0; max-width: none; }
+.visit__front {
+  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  border-radius: var(--r-panel-lg);
+  background-size: cover; background-position: center;
+  box-shadow: 0 22px 50px rgb(var(--c-deep-purple-rgb) / .40),
+              0 0 0 5px rgb(var(--c-base-cream-rgb) / .14);
+}
+@media (max-width: 900px) { .visit__front { aspect-ratio: 4 / 3; } }

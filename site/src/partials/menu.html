@@ -1,0 +1,54 @@
+<!-- 7. THE FULL MENU — the only place all 45 appear
+     ===============================================
+     b.html section 7: a deep purple head with the count and four jump links,
+     then one chapter per category, each on its own saturated field with cream
+     cards standing on it. brand.json visualDirection: "Keep menu text on cream
+     reading areas."
+
+     WHAT THIS HAS THAT b.html DOES NOT. b.html prints 45 cards as static HTML.
+     This menu also has to filter, search, report how many are showing, and open
+     a product. So between the head and the chapters there is one sticky bar with
+     three things in it — the chips, the field, the count — and src/app/grid.js
+     builds the chapters into `[data-grid]` from the same catalogue.
+
+     ONE BAR, THREE JOBS, AND IT IS ONE ROW OF SCREEN. On an 844px phone a second
+     sticky row is a fifth of the viewport gone, so the chips, the field and the
+     live count share the strip rather than stacking.
+
+     THE JUMP LINKS ARE ANCHORS, THE CHIPS ARE BUTTONS, AND THAT IS DELIBERATE.
+     A jump link takes you to a chapter with all 45 still on the page; a chip
+     removes the other three chapters and says so in the URL. Two different
+     things, so two different controls. -->
+<section class="menu" id="menu">
+  <div class="menu__head">
+    <p class="kicker kicker--bright">{{dia}}{{d:menuKicker}}{{dia}}{{draft}}</p>
+    <h2 class="menu__title">{{t:menuTitle}}</h2>
+    <p class="menu__lead">{{t:menuLead}}</p>
+    <nav class="menu__jump" aria-label="{{t:jumpTo}}">{{jumpCats}}</nav>
+  </div>
+
+  <div class="menu__bar" data-bar>
+    <div class="menu__bar-in">
+      <div class="filters" data-filters role="group" aria-label="{{t:navCategories}}"></div>
+      <label class="search">
+        <span class="u-sr">{{t:searchLabel}}</span>
+        <svg class="search__icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <circle cx="9" cy="9" r="6"/><path d="M13.5 13.5 17 17"/>
+        </svg>
+        <input class="search__input" type="search" data-search autocomplete="off"
+               placeholder="{{t:searchPlaceholder}}" enterkeyhint="search">
+      </label>
+      <p class="menu__count" data-count aria-live="polite"></p>
+    </div>
+  </div>
+
+  <div class="menu__sections" data-grid></div>
+
+  <div class="menu__empty-wrap">
+    <div class="menu__empty" data-empty hidden>
+      <p class="menu__empty-t">{{t:noResults}}</p>
+      <p class="menu__empty-h">{{t:noResultsHint}}</p>
+      <button class="btn2 btn2--cream" type="button" data-reset>{{t:filterAll}}</button>
+    </div>
+  </div>
+</section>

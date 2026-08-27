@@ -1,0 +1,60 @@
+/* ============================================================================
+   THE PHONE, and the two widths either side of it.
+
+   Last in CSS_ORDER, so anything here wins. It is deliberately short: the
+   approved design is fluid rather than breakpointed — every size on it is a
+   clamp against the viewport — so most of what a phone needs has already
+   happened by the time this file loads. What is left is the handful of places
+   where a layout has to change shape rather than scale.
+   ========================================================================== */
+
+/* ---- the sticky bar has to know how tall the header is ------------------- */
+/* Published by src/app/main.js, which measures it rather than assuming it: the
+   header's height changes with the viewport and with the language. */
+.menu__bar { top: var(--nav-h, 64px); }
+
+@media (max-width: 900px) {
+  /* The sign's reading column is centred under the mark from 880px down
+     (styles/hero.css); the case gets shallower with it so the hero does not
+     become two full screens before the first word of the menu. */
+  .hero { --bay: clamp(104px, 17vw, 150px); }
+}
+
+@media (max-width: 760px) {
+  .menu__bar-in { flex-wrap: wrap; row-gap: var(--s-2); }
+  .filters { order: 2; flex: 1 1 100%; }
+  .search { order: 1; flex: 1 1 auto; }
+  .menu__count { order: 1; }
+}
+
+@media (max-width: 560px) {
+  /* Four category words plus a diamond between each pair does not fit on a
+     390px line, and wrapping it puts one word on a line of its own. The eyebrow
+     stays — it is the only place on the first screen that names all four — and
+     the gap closes instead. */
+  .hero__eyebrow { gap: 6px; }
+  .hero__eyebrow span { font-size: var(--fs-lede); letter-spacing: var(--tr-caps); }
+  .hero__eyebrow i { width: 5px; height: 5px; }
+
+  /* The deck is the approved sentence pair and it stays whole. Its 24px floor is
+     the contrast rule for cream on hot pink, so it does not get smaller here. */
+  .hero__deck { font-size: 1.5rem; }
+
+  .card { padding: 28px 10px 14px; }
+  .card__stage { --stage-h: 116cqw; }
+}
+
+@media (max-width: 420px) {
+  /* 250px is brand.json's floor for the complete mark and the sign has 268px of
+     inside width at 320px of viewport, so the mark holds its size and the
+     padding gives way instead. */
+  .sky { padding-inline: var(--s-4); }
+  .visit__note { text-align: left; }
+  .foot__end { justify-content: flex-start; }
+}
+
+/* ---- 200% zoom on a small laptop ---------------------------------------- */
+/* A 640px viewport at 200% zoom is a 1280px page with 32px type. Nothing here is
+   a phone rule: it is the same layout with less room, and the only thing it
+   genuinely needs is for the three-across fact panels and the two-across
+   category panels to give up and stack. Both already do, above. */

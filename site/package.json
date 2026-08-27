@@ -1,0 +1,37 @@
+{
+  "name": "la-sabrosita-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "catalog": "node scripts/build-catalog.mjs",
+    "say": "node scripts/build-say.mjs",
+    "images": "node scripts/build-images.mjs",
+    "serve": "node scripts/serve.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "disclose": "node scripts/check-invented.mjs",
+    "social": "node scripts/build-social.mjs",
+    "site": "node scripts/build-site.mjs",
+    "build": "npm run tokens && npm run catalog && npm run say && npm run images && npm run shop && npm run icons && npm run social && npm run questions && npm run site",
+    "a11y": "node scripts/a11y.mjs",
+    "perf": "node scripts/perf.mjs",
+    "fill": "node scripts/fill-check.mjs",
+    "browsers": "node scripts/browsers.mjs",
+    "check": "node scripts/check-all.mjs",
+    "questions": "node scripts/build-questions.mjs",
+    "brand": "node scripts/brand-check.mjs",
+    "widths": "node scripts/widths.mjs",
+    "handoff": "node scripts/build-handoff.mjs",
+    "assets": "node scripts/assets-untouched.mjs",
+    "icons": "node scripts/build-icons.mjs",
+    "keyboard": "node scripts/keyboard.mjs",
+    "lighting": "node scripts/lighting.mjs",
+    "shop": "node scripts/build-shop.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  },
+  "dependencies": {
+    "sharp": "^0.35.3"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_what": "Masters whose PIXELS are rotated, and the correction the build applies when it generates derivatives.",
+  "_why": "CLAUDE.md's first hard rule is that nothing under assets/ may be renamed, moved, regenerated or 'cleaned up' — those files are the client's approved media and Rubric records their exact paths. So a master that was photographed or exported on its side is NOT edited. The rotation is applied at derivative-build time instead: assets/ stays byte-identical, public/img comes out upright, and the correction is one line here rather than a silent transform buried in a script.",
+  "_ifTheClientSuppliesAFixedMaster": "Delete the entry. A corrected master would arrive as a new version (…_v02.png) per docs/naming.md, and build-catalog picks the newest, so the rotation must not then be applied twice.",
+  "_units": "Degrees clockwise. 90, 180 or 270.",
+  "rotate": {
+    "LS_Tostilocos_MASTER_v01": {
+      "degrees": 90,
+      "reported": "the client, 2026-08-26",
+      "note": "The bag lies on its side: the TOSTITOS logo reads bottom-to-top and the chips and toppings spill sideways instead of up out of the bag. 90 degrees clockwise stands the bag up and puts the spill where gravity says it should be."
+    },
+    "LS_Paletas_MASTER_v01": {
+      "degrees": 90,
+      "reported": "a review pass, 2026-08-26",
+      "note": "The wrapped paleta lies on its side: LA BONITA reads bottom-to-top down the left edge and STRAWBERRY WITH CREAM does the same on the right. Same defect as Tostilocos and missed when that one was fixed — the check then looked at a contact sheet where a horizontal package did not read as obviously wrong."
+    }
+  }
+}

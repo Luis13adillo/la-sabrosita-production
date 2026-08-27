@@ -1,0 +1,412 @@
+{
+  "_what": "Where the DECORATIVE product cut-outs sit in the four storytelling sections, taken verbatim from the design the client approved (site/.site/b.html). These are placements, not content: every product named here is in data/menu.json and appears again, named and described, in the menu below. Each one therefore renders with an empty alt and aria-hidden, so a screen reader reads the catalogue once rather than twice.",
+  "_units": "`w` is the SQUARE's width in its parent's terms. `s` is the square's side as a multiple of the slot it is measured against — see the note on card sizing in src/app/card.js: the derivative is a square with the food centred in transparent padding, so sizing the box to the food's aspect renders everything small. Positions are CSS lengths, written as they appear in the approved page.",
+  "say": [
+    {
+      "stem": "LS_Paletas_MASTER_v01",
+      "cls": "say__f1",
+      "pos": "left:-4%;top:3%",
+      "w": "min(17vw,230px)",
+      "s": 1.132
+    },
+    {
+      "stem": "LS_Churros_MASTER_v01",
+      "cls": "say__f2",
+      "pos": "right:-3%;top:-2%",
+      "w": "min(12vw,158px)",
+      "s": 1.008
+    },
+    {
+      "stem": "LS_Banana-Split_MASTER_v02",
+      "cls": "say__f3",
+      "pos": "left:-3%;bottom:1%",
+      "w": "min(16vw,210px)",
+      "s": 1.122
+    },
+    {
+      "stem": "LS_Aguas-Explosivas_MASTER_v02",
+      "cls": "say__f4",
+      "pos": "right:-5%;bottom:-3%",
+      "w": "min(13vw,172px)",
+      "s": 1.127
+    }
+  ],
+  "story": {
+    "hero": {
+      "stem": "LS_Vaso-La-Sabrosita_MASTER_v01",
+      "s": "137.1%"
+    },
+    "floats": [
+      {
+        "stem": "LS_Fresas-en-Cajita_MASTER_v01",
+        "cls": "story__f1",
+        "pos": "left:-7%;top:4%",
+        "w": "19%",
+        "s": 1.334
+      },
+      {
+        "stem": "LS_Paleta-Loca_MASTER_v02",
+        "cls": "story__f2",
+        "pos": "right:-9%;top:20%",
+        "w": "20%",
+        "s": 1.394
+      },
+      {
+        "stem": "LS_Churros_MASTER_v01",
+        "cls": "story__f3",
+        "pos": "left:-3%;bottom:8%",
+        "w": "19%",
+        "s": 1.008
+      },
+      {
+        "stem": "LS_Mango-en-Palo_MASTER_v02",
+        "cls": "story__f4",
+        "pos": "right:-5%;bottom:2%",
+        "w": "17%",
+        "s": 1.341
+      }
+    ]
+  },
+  "panels": {
+    "helados": {
+      "front": {
+        "stem": "LS_Banana-Split_MASTER_v02",
+        "s": "104%",
+        "_note": "Banana Split, chosen by the client 2026-08-26 over the Crazy Shake. The scale dropped from 129.9% to 104% at the same time and that is not a taste change: 129.9% was tuned for the Crazy Shake, which is TALL (aspect 0.57) and so overflows the panel vertically where there is room. The Banana Split is WIDE (aspect 1.59), so the same number ran it off both side edges and cut the ends off the banana. A front product's scale has to follow its shape."
+      },
+      "back": {
+        "stem": "LS_Paleta-Loca_MASTER_v02",
+        "s": "84%"
+      }
+    },
+    "antojitos": {
+      "front": {
+        "stem": "LS_Elote-Regular_MASTER_v01",
+        "s": "129.9%"
+      },
+      "back": {
+        "stem": "LS_Tostilocos_MASTER_v01",
+        "s": "60.5%"
+      }
+    },
+    "postres": {
+      "front": {
+        "stem": "LS_Fresas-con-Crema_MASTER_v01",
+        "s": "129.9%"
+      },
+      "back": {
+        "stem": "LS_Churros_MASTER_v01",
+        "s": "70.6%"
+      }
+    },
+    "bebidas": {
+      "front": {
+        "stem": "LS_Aguas-Explosivas_MASTER_v02",
+        "s": "107.5%"
+      },
+      "back": {
+        "stem": "LS_Chamoyada_MASTER_v01",
+        "s": "88.4%"
+      }
+    }
+  },
+  "beats": [
+    {
+      "key": "beat1",
+      "side": "l",
+      "hero": {
+        "stem": "LS_Helado-Chico_MASTER_v01",
+        "s": "116.9%"
+      },
+      "floats": [
+        {
+          "stem": "LS_Sandwich-de-Helado_MASTER_v01",
+          "cls": "float--b1",
+          "pos": "left:-9%;top:4%",
+          "w": "23%",
+          "s": 1.093
+        },
+        {
+          "stem": "LS_Paletas_MASTER_v01",
+          "cls": "float--b2",
+          "pos": "right:-7%;bottom:15%",
+          "w": "23%",
+          "s": 1.132
+        }
+      ]
+    },
+    {
+      "key": "beat2",
+      "side": "r",
+      "hero": {
+        "stem": "LS_Tostilocos_MASTER_v01",
+        "s": "100.8%"
+      },
+      "floats": [
+        {
+          "stem": "LS_Nachos_MASTER_v01",
+          "cls": "float--b1",
+          "pos": "left:-9%;top:4%",
+          "w": "23%",
+          "s": 1.008
+        },
+        {
+          "stem": "LS_Chicharron-en-Rueda_MASTER_v01",
+          "cls": "float--b2",
+          "pos": "right:-7%;bottom:15%",
+          "w": "23%",
+          "s": 1.008
+        }
+      ]
+    },
+    {
+      "key": "beat3",
+      "side": "l",
+      "hero": {
+        "stem": "LS_Chamoyada_MASTER_v01",
+        "s": "116.9%"
+      },
+      "floats": [
+        {
+          "stem": "LS_Raspados_MASTER_v01",
+          "cls": "float--b1",
+          "pos": "left:-9%;top:4%",
+          "w": "23%",
+          "s": 1.115
+        },
+        {
+          "stem": "LS_Michelaguas_MASTER_v01",
+          "cls": "float--b2",
+          "pos": "right:-7%;bottom:15%",
+          "w": "23%",
+          "s": 1.008
+        }
+      ]
+    }
+  ],
+  "case": [
+    "LS_Chamoyada_MASTER_v01",
+    "LS_Fresas-con-Crema_MASTER_v01",
+    "LS_Frappe_20oz_MASTER_v01",
+    "LS_Crazy-Shakes_MASTER_v01",
+    "LS_Vaso-La-Sabrosita_MASTER_v01",
+    "LS_Coktel-de-Fruta_MASTER_v03",
+    "LS_Licuado_MASTER_v02",
+    "LS_Aguas-Explosivas_MASTER_v02",
+    "LS_Diablitos_MASTER_v01",
+    "LS_Mangonada_16oz_MASTER_v02",
+    "LS_Raspados_MASTER_v01",
+    "LS_Michelaguas_MASTER_v01",
+    "LS_Agua-Fresca_MASTER_v01",
+    "LS_Paleta-Loca_MASTER_v02",
+    "LS_Esquimales_MASTER_v01",
+    "LS_Helado-Chico_MASTER_v01"
+  ],
+  "drips": [
+    {
+      "l": -2.87,
+      "w": 22,
+      "h": 20
+    },
+    {
+      "l": 0.72,
+      "w": 28,
+      "h": 9
+    },
+    {
+      "l": 6.9,
+      "w": 54,
+      "h": 5
+    },
+    {
+      "l": 12.21,
+      "w": 28,
+      "h": 8
+    },
+    {
+      "l": 19.54,
+      "w": 30,
+      "h": 17
+    },
+    {
+      "l": 25,
+      "w": 28,
+      "h": 10
+    },
+    {
+      "l": 29.02,
+      "w": 26,
+      "h": 16
+    },
+    {
+      "l": 32.9,
+      "w": 23,
+      "h": 27
+    },
+    {
+      "l": 37.14,
+      "w": 30,
+      "h": 15
+    },
+    {
+      "l": 40.73,
+      "w": 30,
+      "h": 14
+    },
+    {
+      "l": 46.19,
+      "w": 44,
+      "h": 10
+    },
+    {
+      "l": 53.52,
+      "w": 26,
+      "h": 18
+    },
+    {
+      "l": 60.7,
+      "w": 36,
+      "h": 10
+    },
+    {
+      "l": 64.73,
+      "w": 22,
+      "h": 16
+    },
+    {
+      "l": 69.61,
+      "w": 26,
+      "h": 14
+    },
+    {
+      "l": 74.07,
+      "w": 44,
+      "h": 9
+    },
+    {
+      "l": 82.54,
+      "w": 30,
+      "h": 19
+    },
+    {
+      "l": 88.86,
+      "w": 22,
+      "h": 17
+    },
+    {
+      "l": 93.03,
+      "w": 20,
+      "h": 31
+    },
+    {
+      "l": 101.08,
+      "w": 28,
+      "h": 10
+    }
+  ],
+  "sparkles": [
+    {
+      "x": 3.8,
+      "y": 49,
+      "z": 10,
+      "d": 1.7
+    },
+    {
+      "x": 90.7,
+      "y": 64,
+      "z": 22,
+      "d": 0.8
+    },
+    {
+      "x": 25.5,
+      "y": 18,
+      "z": 10,
+      "d": 3.9
+    },
+    {
+      "x": 42.7,
+      "y": 16,
+      "z": 17,
+      "d": 4.6
+    },
+    {
+      "x": 13,
+      "y": 20,
+      "z": 16,
+      "d": 0.4
+    },
+    {
+      "x": 86,
+      "y": 42,
+      "z": 20,
+      "d": 2.1
+    },
+    {
+      "x": 50,
+      "y": 4,
+      "z": 14,
+      "d": 3.4
+    },
+    {
+      "x": 8,
+      "y": 74,
+      "z": 18,
+      "d": 1.2
+    },
+    {
+      "x": 93,
+      "y": 80,
+      "z": 14,
+      "d": 4.2
+    },
+    {
+      "x": 6,
+      "y": 14,
+      "z": 18,
+      "d": 0.9
+    },
+    {
+      "x": 95,
+      "y": 68,
+      "z": 16,
+      "d": 2.6
+    },
+    {
+      "x": 47,
+      "y": 88,
+      "z": 14,
+      "d": 3.8
+    }
+  ],
+  "_sayLinesNote": "Per-line size multipliers for the four-word typographic statement: the ratio of the WIDEST word's advance width to this word's, in Fredoka 700 uppercase, so the four lines come out the same width and stack as one block. They are per LANGUAGE because the English labels are different words -- ANTOJITOS is the widest in Spanish, SAVORY SNACKS in English. Measured in a real browser with the real font by scripts/measure-say.mjs; run it again if brand.json ever changes the display face.",
+  "sayLines": [
+    {
+      "cat": "helados",
+      "m": {
+        "es": 1.186,
+        "en": 1.047
+      }
+    },
+    {
+      "cat": "antojitos",
+      "m": {
+        "es": 1,
+        "en": 0.695
+      }
+    },
+    {
+      "cat": "postres",
+      "m": {
+        "es": 1.261,
+        "en": 1.134
+      }
+    },
+    {
+      "cat": "bebidas",
+      "m": {
+        "es": 1.354,
+        "en": 1.605
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<!-- 4. THE STORY — the house cup on the purple field
+     ================================================
+     b.html section 4. The reading is on the left, one large photograph on a pink
+     disc on the right, four small ones bobbing around it.
+
+     EVERY LINE HERE IS DRAFTED and every line here is chipped. What the
+     paragraphs name are products that exist, spelled the way menu.json spells
+     them, and the one number in them is counted from menu.json at build time —
+     but the sentences are ours, and the client has approved no prose. -->
+<section class="story" aria-labelledby="story-h">
+  {{sparkles:3}}
+  <div class="story__in">
+    <div class="story__words">
+      <p class="kicker kicker--bright">{{dia}}{{d:storyKicker}}{{draft}}</p>
+      <h2 class="story__h" id="story-h">{{d:storyTitleA}}<br><em>{{d:storyTitleB}}</em>{{draft}}</h2>
+      <p class="story__p">{{d:storyP1}}</p>
+      <p class="story__p">{{d:storyP2}}{{draft}}</p>
+      <a class="btn2 btn2--yellow" href="#menu">{{d:storyCta}}{{arrow}}</a>
+    </div>
+    <div class="story__art">
+      <div class="big">
+        <span class="big__disc" aria-hidden="true"></span>
+        {{storyArt}}
+      </div>
+    </div>
+  </div>
+</section>

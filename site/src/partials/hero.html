@@ -1,0 +1,79 @@
+<!-- THE HERO — the approved one
+     ===========================
+     Six pieces, top to bottom, and every one of them is in the design the client
+     approved (site/.site/b.html, section 2; the isolated version is
+     site/.heroes/combo.html):
+
+       .tick    a ticker of product names running left
+       .sign    the hot-pink marquee panel: chasing bulbs, the mark, the
+                headline, the deck, the call to action
+       .dripline the melt edge along the bottom of the pink
+       .case    a purple display case drifting sideways, products cropped by
+                both ends of the frame and named on a shelf line
+       .rail    a pink rail with the town on it
+
+     NOTHING IN HERE IS WRITTEN. The ticker is menu.json's own product names. The
+     eyebrow is menu.json's four category labels. The deck is data/ui.json's
+     approved `heroLead`. The rail is ui.json's approved `footerLocation`. The
+     case is real photographs of real products, each one labelled with the name
+     the client approved for it, and every one of them appears again in the menu
+     below — so the whole case is aria-hidden and its images carry an empty alt
+     rather than a second copy of the name for a screen reader to read twice.
+
+     THE HEADLINE IS THE ONE THING ON THIS PAGE THE CLIENT ASKED FOR BY NAME —
+     "keep the headline" — so it carries no draft chip. Every other line of prose
+     on this page does.
+
+     WHY THE MARK IS 250px WIDE ON A PHONE AND NOT 150. brand.json
+     logo.minimumSize: "For digital use, avoid reducing the full logo below 250px
+     wide", with one escape hatch — a clean cream or white area. The mark here
+     sits on hot pink, which is an approved FIELD but not a clean area, so the
+     escape hatch does not apply and the floor does. 250px fits inside the sign
+     at 320px of viewport with room to spare. scripts/brand-check.mjs measures
+     this at 390 and would fail it otherwise.
+
+     AND WHY .sign DOES NOT CLIP. b.html puts `overflow: hidden` on `.sign` to
+     round its corners. That would make the sign a clipping ancestor of the
+     complete logo, which is brand.json misuse number five — crop — and
+     brand-check.mjs walks the ancestor chain looking for exactly that. The
+     rounding is done on `.sky` and `.case` separately instead. Same picture,
+     nothing clipping the mark. -->
+<section class="hero" data-hero aria-labelledby="hero-h">
+  <div class="tick" role="presentation" aria-hidden="true">
+    <div class="tick__run">{{ticker}}</div>
+    <span class="tick__cap tick__cap--l"></span><span class="tick__cap tick__cap--r"></span>
+  </div>
+
+  <div class="sign">
+    <div class="sky">
+      <span class="dust" aria-hidden="true"></span>
+      {{sparkles:12}}
+      <span class="bulbs" aria-hidden="true">{{bulbs}}</span>
+
+      <div class="sign__in">
+        <img class="hero__mark" src="/brand/logo.png" srcset="{{logoSrcset}}"
+             sizes="(max-width: 880px) 250px, 25vw"
+             alt="{{brandName}}" width="1915" height="1788" fetchpriority="high">
+        <div class="sign__copy">
+          <p class="hero__eyebrow">{{eyebrowCats}}</p>
+          <h1 class="hero__h" id="hero-h">{{t:heroBannerA}}<br>{{t:heroBannerB}}</h1>{{draftEn}}
+          <p class="hero__deck">{{t:heroLead}}</p>
+          <a class="hero__cta" href="#menu">{{t:heroCta}}</a>
+        </div>
+      </div>
+
+      <span class="dripline" aria-hidden="true">{{drips}}</span>
+    </div>
+
+    <!-- The TRACK is aria-hidden, not the whole case: every product in it is
+         named and described again in the menu below, so reading it out is
+         reading the catalogue twice. The rail underneath is not decoration —
+         it is the one place on the first screen that says where the shop is —
+         so it stays in the accessibility tree. -->
+    <div class="case">
+      <span class="case__line" aria-hidden="true"></span>
+      <div class="case__track" aria-hidden="true">{{caseBays}}</div>
+      <p class="case__rail"><span>{{t:footerLocation}}</span></p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,127 @@
+/* ============================================================================
+   MOTION.
+
+   Everything that moves on this page, in one file, and all of it off under
+   prefers-reduced-motion. The looping pieces — the ticker, the display case, the
+   marquee bulbs, the dot field, the floating cut-outs, the sparkles — declare
+   their own animations next to the thing they animate, because a bulb's glow is
+   not separable from the bulb. What lives HERE is the part that is about the
+   page rather than about one object: the scroll-driven reveal, the hover states,
+   the dialog, and the one switch that turns all of it off.
+   ========================================================================== */
+
+/* ---- 1. THE SCROLL-DRIVEN REVEAL ---------------------------------------- */
+/* The cards settle into their tiles as the tile enters the window. It is
+   `animation-timeline: view()`, not an IntersectionObserver: the browser drives
+   it off its own compositor, there is no scroll listener, and a browser that
+   does not support it matches no `@supports` block and gets the finished layout
+   with no reveal at all. Static, never empty — the correct direction to fail in.
+
+   THE TIMELINE IS NAMED, AND THAT IS A BUG FIX RATHER THAN A STYLE.
+   `view()` resolves against the subject's nearest ancestor SCROLL CONTAINER. Any
+   ancestor with an overflow other than `visible` becomes one — so a single
+   `overflow: hidden` between the photograph and the document makes the animation
+   measure the photograph's position inside a 227px button, the progress pins at
+   1, and the reveal silently does nothing. It renders exactly like a finished
+   reveal, so no screenshot can tell the difference; scripts/smoke.mjs measures
+   it instead, by reading the same card's photograph at two scroll distances and
+   requiring it to have moved.
+
+   `.card` is outside every clip on the page — `.card__hit` and `.card__stage`
+   are both `overflow: visible`, and the chapter above them is `overflow-x: clip`
+   with `overflow-y: visible`, which clips sideways WITHOUT becoming a scroll
+   container. Naming the timeline there also keys the reveal off the CARD's
+   position rather than the photograph's, which is what it should always have
+   been: card.js sizes a square at up to 142% of its card for the thinnest
+   products, and a reveal keyed to that box would start at a different moment for
+   a paleta than for a tray of nachos. */
+@supports (animation-timeline: view()) {
+  .card { view-timeline-name: --tile; }
+
+  .card__img {
+    animation-name: food-settle, food-strength;
+    animation-fill-mode: both;
+    animation-timing-function: var(--ease), var(--ease);
+    animation-timeline: --tile, --tile;
+    animation-range: entry 0% entry 80%, entry 0% entry 34%;
+  }
+
+  /* The chapter's own heading and the four category panels arrive the same way,
+     one timeline each, no listener. */
+  .ch__head, .pan, .beat, .fact {
+    animation-name: rise-in;
+    animation-fill-mode: both;
+    animation-timing-function: var(--ease);
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+@keyframes food-settle {
+  from { translate: 0 18px; scale: 0.92; }
+  to   { translate: 0 0;    scale: 1; }
+}
+@keyframes food-strength {
+  from { opacity: 0.5; }
+  to   { opacity: 1; }
+}
+@keyframes rise-in {
+  from { translate: 0 22px; opacity: 0; }
+  to   { translate: 0 0;    opacity: 1; }
+}
+
+/* ---- 2. HOVER ------------------------------------------------------------ */
+/* Only on a device that actually has a pointer. On a touch screen `:hover`
+   sticks after a tap, so a card stays lifted until you tap something else. */
+@media (hover: hover) and (pointer: fine) {
+  .card { transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 5px 0 rgb(var(--c-deep-purple-rgb) / .16), 0 24px 44px rgb(var(--c-deep-purple-rgb) / .3);
+  }
+  .card__img { transition: rotate var(--dur) var(--ease), scale var(--dur) var(--ease); }
+  .card__hit:hover .card__img { rotate: -2.6deg; scale: 1.04; }
+  .card__count { transition: scale var(--dur) var(--ease-spring), rotate var(--dur) var(--ease-spring); }
+  .card__hit:hover .card__count { scale: 1.09; rotate: 4deg; }
+}
+
+/* ---- 3. THE DIALOG ------------------------------------------------------- */
+dialog[open] { animation: dialog-in var(--dur) var(--ease) both; }
+dialog[open]::backdrop { animation: backdrop-in var(--dur) var(--ease) both; }
+@keyframes dialog-in   { from { opacity: 0; scale: 0.97; } to { opacity: 1; scale: 1; } }
+@keyframes backdrop-in { from { opacity: 0; }              to { opacity: 1; } }
+
+/* ---- 4. OFF ------------------------------------------------------------- */
+/* One switch, and it is total. Not "shorter", not "gentler": nothing on this
+   page moves for somebody who has asked their operating system for that. The
+   ticker and the display case stop where they are, which leaves both of them
+   showing a legible row of names — they are readable at rest by construction,
+   not by accident. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    /* NOT `transition-duration: 1ms`. The default transition-property is `all`,
+       so a blanket duration gives EVERY element a transition on EVERY property —
+       including ones nothing was transitioning before. The skip link moves with
+       `top`, so under reduced motion it acquired a 1ms slide, and for that
+       millisecond the first thing a keyboard user focuses is still 100px above
+       the viewport. `transition: none` removes the transition instead of making
+       it short, which is what "reduce" asks for. Nothing in src/app listens for
+       transitionend, so there is no handler left waiting on an event that will
+       now never fire. */
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .tick__run, .case__track, .dust, .b, .sp, .float {
+    animation: none !important;
+  }
+  .card:hover, .pan:hover, .btn2:hover, .hero__cta:hover, .hdr__cta:hover { transform: none !important; }
+  .card__hit:hover .card__img { rotate: 0deg; scale: 1; }
+  /* The reveal's end state, not its start: a page that never animates must
+     still be the finished page. */
+  .card__img, .ch__head, .pan, .beat, .fact {
+    animation: none !important;
+    translate: none !important; scale: none !important; opacity: 1 !important;
+  }
+}

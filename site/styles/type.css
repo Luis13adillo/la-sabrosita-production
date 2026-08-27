@@ -1,0 +1,145 @@
+/* ============================================================================
+   TYPE — two faces, one scale, for the whole page.
+
+   TWO FACES, AND THIS IS THE CORRECTION THAT MATTERED MOST. Until 2026-08-25
+   brand.json said `typography.family: "Noto Sans"` and nothing else, so every
+   heading on this website was set in the BODY face. Page 2 of the Complete
+   Brand Identity Kit does not say that: it asks for a rounded, playful display
+   face for display and headers — naming Fredoka and Baloo — and reserves Noto
+   Sans for menu items, prices and body text. brand.json is a transcription of
+   the PDF, so brand.json was the thing that was wrong, and it has been fixed.
+
+       --font-display   Fredoka, ALL CAPS, for every heading, label and control
+       --font          Noto Sans, sentence case, for every paragraph
+
+   Nothing on this page mixes them inside one element. A heading is display; a
+   sentence is body; the draft chip is body on purpose, so it does not read as
+   part of the headline it is marking.
+
+   The only measured typographic evidence we have is the approved card on page 17
+   of the guidelines:
+
+       name : description : note  =  1 : 0.72 : 0.50
+       description line-height    =  1.35
+
+   So page 17 is still the origin of the card's own scale. Everything above the
+   card is set fluidly against the viewport, because the approved design's
+   headings are display objects rather than steps of a reading scale — the
+   four-word statement is 244px at 1440 and 38px at 320, which no ratio-based
+   step can express.
+
+   TWO SIZES ARE NOT TASTE, THEY ARE FORCED BY CONTRAST. Cream on hot pink is
+   4.06:1 and hot pink on cream is 3.85:1 — both legal as LARGE text only, which
+   WCAG puts at 24px, or 18.66px when bold. So every label that sits directly on
+   a brand field is at or above 19px bold, and nothing smaller is ever painted in
+   a brand colour on a brand colour: it gets its own cream reading area instead,
+   which is what brand.json's visualDirection asks for anyway.
+   ========================================================================== */
+
+:root {
+  /* The display step. 44px at 390, 80px at 1440. */
+  --t-display: clamp(2.75rem, 1.915rem + 3.43vw, 5rem);
+
+  /* Reading levels. The deck is a FLAT 24px, which is both the approved page's
+     own value and the exact width of the contrast rule above: regular-weight
+     cream on hot pink is 4.06:1, legal at 24px and illegal below it. It does not
+     grow with the viewport because nothing in the approved hero grows with it —
+     the headline carries the scale and the deck is the thing that stays still. */
+  --t-deck: 1.5rem;
+  --t-lead: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+
+  /* Eyebrow / page-17 CATEGORY TITLE. 19px is the smallest size at which bold
+     cream-on-pink and bold pink-on-cream are legal. */
+  --t-eyebrow: 1.1875rem;
+
+  /* The card's second level, exactly 0.72 of the first at every width. */
+  --t-desc: calc(var(--fs-item) * 0.72);
+
+  /* THE APPROVED DESIGN'S OWN HEADING SIZES, COPIED RATHER THAN RE-DERIVED.
+     Every clamp below is the one in site/.site/b.html, to the decimal. They were
+     first transcribed as `Xrem + Yvw`, which is the usual way to make a fluid
+     size reach its floor sooner — and it is wrong here, because it changes the
+     size at every width between the floor and the cap. Measured against b.html
+     at 768px, the section head came out at 48px where the approved page draws
+     34px: 43% too big, on the width most likely to be a customer's phone in
+     landscape or a tablet on the counter. The middle term is a bare vw, exactly
+     as the approved page has it, so the two pages now agree at every width.
+
+     The floor and the cap of each are also b.html's, and they are why nothing
+     here is a rem-plus-vw compromise: the floor is what the heading is on a
+     320px phone and the cap is what it is on a 2560px monitor, and the client
+     looked at both. */
+  --t-h-section: clamp(1.75rem, 4.4vw, 4.125rem);     /* 28 → 66  section head  */
+  --t-h-big: clamp(1.875rem, 5.1vw, 5rem);            /* 30 → 80  story head    */
+  --t-h-menu: clamp(2rem, 5.6vw, 5.5rem);             /* 32 → 88  menu head     */
+  --t-h-chapter: clamp(2.125rem, 6vw, 6rem);          /* 34 → 96  chapter head  */
+  --t-h-hero: clamp(2.125rem, 6.1vw, 6.5rem);         /* 34 → 104 the headline  */
+  --t-h-beat: clamp(1.4375rem, 2.9vw, 2.75rem);       /* 23 → 44  beat head     */
+  --t-kicker: clamp(0.6875rem, 1.05vw, 0.875rem);     /* 11 → 14  small label   */
+  /* The approved page sets its prose per section, between 1.22vw and 1.5vw. One
+     token at 1.35vw is the middle of that band and lands within 1.5px of every
+     one of them at every width — close enough that a second, third and fourth
+     prose token would be four answers to one question. */
+  --t-prose: clamp(0.9375rem, 1.35vw, 1.25rem);       /* 15 → 20  body prose    */
+}
+
+/* ---- every heading is the display face, uppercase ----------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--w-display);
+  text-transform: uppercase;
+  line-height: 0.96;
+  letter-spacing: var(--tr-display);
+  text-wrap: balance;
+}
+
+/* The kicker above a heading. One object, four fields — so the ink is a
+   variable and the two variants below set it, rather than four copies of the
+   same six declarations. */
+.kicker {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--t-kicker);
+  letter-spacing: var(--tr-widest); text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: var(--s-3);
+  flex-wrap: wrap;
+}
+/* On cream or yellow. 0.82 alpha keeps it quiet and still clears 4.5:1 — at
+   0.60, which is where it started, deep purple on cream measures 4.0 and fails
+   at this size. */
+.kicker--dark { color: rgb(var(--c-deep-purple-rgb) / .82); }
+/* On deep purple. Sunny yellow on deep purple is 8.3:1. */
+.kicker--bright { color: var(--c-highlight); }
+
+/* A kicker small enough to need 4.5:1 that has nowhere quiet to sit — on the
+   electric-blue field, where sunny yellow is 1.97:1 — gets its own cream
+   reading area instead of a colour change. brand.json visualDirection. */
+.kick {
+  background: var(--c-reading); color: var(--c-structure);
+  border-radius: var(--r-tile); padding: 9px 18px;
+  display: inline-flex; align-items: center; gap: var(--s-3);
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--t-kicker);
+  letter-spacing: var(--tr-wider); text-transform: uppercase;
+}
+.kick .dia { color: var(--c-brand); }
+
+/* ---- prose --------------------------------------------------------------- */
+/* Body copy is the body face at every size, and its measure is set in `ch` so
+   the line length follows the type instead of the viewport. */
+.story__p, .say__foot, .pick__lead, .beat__p, .menu__lead {
+  font-family: var(--font);
+  font-weight: var(--w-body);
+  font-size: var(--t-prose);
+  line-height: 1.6;
+}
+
+/* ---- the product dialog keeps the page's faces -------------------------- */
+/* styles/detail.css is a large, self-contained component written before the
+   display face existed. Rather than rewrite it, the two places it sets type
+   that a customer reads as a HEADING are pointed at the display face here,
+   where the rule that owns "headings are Fredoka" lives. */
+.detail__name, .detail__cat, .detail__count {
+  font-family: var(--font-display);
+  font-weight: var(--w-display);
+  text-transform: uppercase;
+}
