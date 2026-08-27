@@ -1,0 +1,71 @@
+{
+ "HELADOS": {
+  "Banana Split": 6.2342,
+  "Choco Banana": 7.0777,
+  "Crazy Shake": 6.0084,
+  "Helado en Cono": 7.8228,
+  "Helado Viral": 6.069,
+  "La Sabrosita": 6.0858,
+  "Paletas": 3.65,
+  "Paletas Locas": 6.7108,
+  "Sandwich de Helado": 10.0162
+ },
+ "ANTOJITOS": {
+  "Diablitos": 4.4195,
+  "Elote": 2.5131,
+  "Elote Hot Cheetos": 8.9034,
+  "Esquimal": 4.5141,
+  "Esquite": 3.6739,
+  "Esquite Hot Cheetos": 10.0641,
+  "Chicharron en Rueda": 10.4039,
+  "Chicharron Preparado": 10.9231,
+  "Marucha Loca": 6.962,
+  "Nachos": 3.7044,
+  "Platano Frito": 6.4386,
+  "Tostilocos": 4.9319,
+  "Tosti Esquite": 6.3008
+ },
+ "POSTRES": {
+  "Bionico": 3.6772,
+  "Bionico con Nieve": 8.8441,
+  "Bomba": 3.4948,
+  "Canasta": 4.0248,
+  "Churros": 3.943,
+  "Coctel de Fruta": 7.5392,
+  "Crepa": 2.8975,
+  "Crepa Dubai": 6.0694,
+  "Croissant": 4.6798,
+  "Fresas con Crema": 8.7266,
+  "Fresas Dubai": 6.3483,
+  "Fresas en Cajita": 7.8142,
+  "Gelatina": 4.1989,
+  "Mango en Flor": 7.1331,
+  "Mini Pancakes": 7.1545,
+  "Mini Pancakes Dubai": 10.3264,
+  "Pastel Tres Leche": 8.5437,
+  "Waffle": 3.2219
+ },
+ "BEBIDAS": {
+  "Aguas Frescas": 7.0272,
+  "Aguas Explosivas": 8.5,
+  "Chamoyada": 5.8709,
+  "Frappe": 3.4361,
+  "Licuado": 3.8794,
+  "Mangonada": 5.9277,
+  "Michelaguas": 6.2839,
+  "Raspado": 4.2441,
+  "Sodas Exoticas": 7.2611
+ },
+ "TITLES": {
+  "HELADOS &amp; PALETAS": 10.3131,
+  "ANTOJITOS &amp; PREPARADOS": 13.6611,
+  "POSTRES &amp; DULCES": 9.547,
+  "BEBIDAS": 4.3541
+ },
+ "BOTTOM": {
+  "Diferentes sabores de Aguas Frescas todos los días.": 25.4767,
+  "Diferentes sabores de helado todos los días.": 21.8492,
+  "Todos nuestros sabores son naturales. Sin sabores artificiales.": 30.7317,
+  "Personaliza tu helado con tus sabores y toppings favoritos.": 29.2975
+ }
+}

@@ -1,0 +1,978 @@
+{
+  "_generated": "scripts/build-catalog.mjs — do not hand-edit",
+  "_rule": "No copy is invented. copy.en / copy.es are null when the client has not approved a line; the card then renders name-only.",
+  "categories": [
+    {
+      "id": "helados",
+      "es": "Helados",
+      "en": "Ice Cream",
+      "accent": "hotPink"
+    },
+    {
+      "id": "antojitos",
+      "es": "Antojitos",
+      "en": "Savory Snacks",
+      "accent": "electricBlue"
+    },
+    {
+      "id": "postres",
+      "es": "Postres",
+      "en": "Desserts",
+      "accent": "deepPurple"
+    },
+    {
+      "id": "bebidas",
+      "es": "Bebidas",
+      "en": "Drinks",
+      "accent": "sunnyYellow"
+    }
+  ],
+  "counts": {
+    "products": 45,
+    "images": 62,
+    "withApprovedEnglish": 38,
+    "nameOnly": 4
+  },
+  "items": [
+    {
+      "id": "banana-split",
+      "name": "Banana Split",
+      "category": "helados",
+      "alt": "banana split in a boat dish with three scoops, syrup and cherries",
+      "copy": {
+        "en": "Three Scoops, Strawberry, Nuts & Cherry",
+        "es": "Tres nieves, fresa, nuez y cereza",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Banana-Split_MASTER_v02.png",
+          "stem": "LS_Banana-Split_MASTER_v02",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "id": "choco-banana",
+      "name": "Choco Banana",
+      "category": "helados",
+      "alt": "chocolate-dipped banana on a stick with a nut sprinkle",
+      "copy": {
+        "en": "Chocolate-Covered Banana",
+        "es": "Plátano cubierto de chocolate y cacahuate",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Choco-Banana_MASTER_v01.png",
+          "stem": "LS_Choco-Banana_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "crazy-shake",
+      "name": "Crazy Shake",
+      "category": "helados",
+      "alt": "loaded milkshake with whipped cream and toppings around the rim",
+      "copy": {
+        "en": "Loaded Milkshake",
+        "es": "Malteada cargada con toppings",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Crazy-Shakes_MASTER_v01.png",
+          "stem": "LS_Crazy-Shakes_MASTER_v01",
+          "version": 1
+        },
+        {
+          "master": "assets/products/masters/LS_Crazy-Shakes_MASTER_v04.png",
+          "stem": "LS_Crazy-Shakes_MASTER_v04",
+          "version": 4
+        },
+        {
+          "master": "assets/products/masters/LS_Crazy-Shakes_MASTER_v03.png",
+          "stem": "LS_Crazy-Shakes_MASTER_v03",
+          "version": 3
+        },
+        {
+          "master": "assets/products/masters/LS_Crazy-Shakes_MASTER_v02.png",
+          "stem": "LS_Crazy-Shakes_MASTER_v02",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "id": "helado-en-cono",
+      "name": "Helado en Cono",
+      "category": "helados",
+      "alt": "two scoops on a waffle cone",
+      "copy": {
+        "en": "Ice Cream Cone",
+        "es": "Nieve en cono, del sabor que quieras",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Helado-Chico_MASTER_v01.png",
+          "stem": "LS_Helado-Chico_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "helado-viral",
+      "name": "Helado Viral",
+      "category": "helados",
+      "alt": "moulded packaged ice cream in its printed box",
+      "copy": {
+        "en": "Asian Ice Cream",
+        "es": "Helado asiático",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Helado-Chino_MASTER_v02.png",
+          "stem": "LS_Helado-Chino_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Helado-Chino_MASTER_v01.png",
+          "stem": "LS_Helado-Chino_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "la-sabrosita",
+      "name": "La Sabrosita",
+      "category": "helados",
+      "alt": "the house cup — layered ice cream, strawberries, cake and wafer",
+      "copy": {
+        "en": "Our House Cup",
+        "es": "El vaso de la casa",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Vaso-La-Sabrosita_MASTER_v01.png",
+          "stem": "LS_Vaso-La-Sabrosita_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "paletas",
+      "name": "Paletas",
+      "category": "helados",
+      "alt": "Mexican popsicle",
+      "copy": {
+        "en": "Mexican Popsicles",
+        "es": "Paletas de agua y de crema, muchos sabores",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Paletas_MASTER_v01.png",
+          "stem": "LS_Paletas_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "paletas-locas",
+      "name": "Paletas Locas",
+      "category": "helados",
+      "alt": "chamoy cup loaded with fruit and a paleta standing in it",
+      "copy": {
+        "en": "Loaded Popsicles",
+        "es": "Paleta bañada en chamoy, dulces y chile",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Paleta-Loca_MASTER_v02.png",
+          "stem": "LS_Paleta-Loca_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Paleta-Loca_MASTER_v01.png",
+          "stem": "LS_Paleta-Loca_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "sandwich-de-helado",
+      "name": "Sandwich de Helado",
+      "category": "helados",
+      "alt": "vanilla ice cream between two chocolate wafers",
+      "copy": {
+        "en": "Ice Cream Sandwich",
+        "es": "Nieve entre dos galletas",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Sandwich-de-Helado_MASTER_v01.png",
+          "stem": "LS_Sandwich-de-Helado_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "chicharron-preparado",
+      "name": "Chicharron Preparado",
+      "category": "antojitos",
+      "alt": "chicharron sheet dressed with cabbage, cream, tomato and lime",
+      "copy": {
+        "en": "Loaded Pork Rinds",
+        "es": "Repollo, aguacate, crema y limón",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Chicharron-Preparado_MASTER_v02.png",
+          "stem": "LS_Chicharron-Preparado_MASTER_v02",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "id": "chicharron-en-rueda",
+      "name": "Chicharron en Rueda",
+      "category": "antojitos",
+      "alt": "wheel-shaped chicharrones",
+      "copy": {
+        "en": "Fried Pork Rind Wheel",
+        "es": "Con salsa, limón y chile en polvo",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Chicharron-en-Rueda_MASTER_v01.png",
+          "stem": "LS_Chicharron-en-Rueda_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "diablitos",
+      "name": "Diablitos",
+      "category": "antojitos",
+      "alt": "dark chamoy cup with a tamarind straw",
+      "copy": {
+        "en": "Spicy Tamarind Shaved Ice",
+        "es": "Raspado de tamarindo con chile y dulce",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Diablitos_MASTER_v01.png",
+          "stem": "LS_Diablitos_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "elote",
+      "name": "Elote",
+      "category": "antojitos",
+      "alt": "corn on a stick with mayo, cheese and chile",
+      "copy": {
+        "en": "Mexican Street Corn, on the Cob",
+        "es": "Con mayonesa, queso y chile",
+        "source": "client-approved (pair line, resolved per product)"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Elote-Regular_MASTER_v01.png",
+          "stem": "LS_Elote-Regular_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "elote-hot-cheetos",
+      "name": "Elote Hot Cheetos",
+      "category": "antojitos",
+      "alt": "corn on a stick coated in crushed Hot Cheetos",
+      "copy": {
+        "en": "Street Corn with Hot Cheetos, on the Cob",
+        "es": "Con mayonesa, queso y Hot Cheetos",
+        "source": "client-approved (pair line, resolved per product)"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Elote-con-Hot-Cheetos_MASTER_v02.png",
+          "stem": "LS_Elote-con-Hot-Cheetos_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Elote-con-Hot-Cheetos_MASTER_v01.png",
+          "stem": "LS_Elote-con-Hot-Cheetos_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "esquimal",
+      "name": "Esquimal",
+      "category": "antojitos",
+      "alt": "chocolate-coated bar on a stick under rainbow sprinkles",
+      "copy": {
+        "en": "Chocolate-Covered Ice Cream Bar",
+        "es": "Paleta de nieve cubierta de chocolate",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Esquimales_MASTER_v01.png",
+          "stem": "LS_Esquimales_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "esquite",
+      "name": "Esquite",
+      "category": "antojitos",
+      "alt": "cup of corn with cheese, chile powder and lime",
+      "copy": {
+        "en": "Mexican Street Corn, in a Cup",
+        "es": "Con mayonesa, queso y chile",
+        "source": "client-approved (pair line, resolved per product)"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Esquites_MASTER_v01.png",
+          "stem": "LS_Esquites_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "esquite-hot-cheetos",
+      "name": "Esquite Hot Cheetos",
+      "category": "antojitos",
+      "alt": "cup of corn under a tall Hot Cheetos mound",
+      "copy": {
+        "en": "Street Corn with Hot Cheetos, in a Cup",
+        "es": "Con mayonesa, queso y Hot Cheetos",
+        "source": "client-approved (pair line, resolved per product)"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Esquites-Hot-Cheetos_MASTER_v02.png",
+          "stem": "LS_Esquites-Hot-Cheetos_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Esquites-Hot-Cheetos_MASTER_v01.png",
+          "stem": "LS_Esquites-Hot-Cheetos_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "marucha-loca",
+      "name": "Marucha Loca",
+      "category": "antojitos",
+      "alt": "instant-noodle cup buried in Hot Cheetos, cream and cheese",
+      "copy": {
+        "en": "Loaded Maruchan Noodles",
+        "es": "Maruchan preparada",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Marucha-Loca_MASTER_v01.png",
+          "stem": "LS_Marucha-Loca_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "nachos",
+      "name": "Nachos",
+      "category": "antojitos",
+      "alt": "nachos with cheese",
+      "copy": {
+        "en": null,
+        "es": null,
+        "source": "none"
+      },
+      "nameOnly": true,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Nachos_MASTER_v01.png",
+          "stem": "LS_Nachos_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "platano-frito",
+      "name": "Platano Frito",
+      "category": "antojitos",
+      "alt": "fried plantain rounds with cream and strawberry drizzle",
+      "copy": {
+        "en": "Fried Plantain",
+        "es": "Plátano macho frito con crema y lechera",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Platano-Frito_MASTER_v01.png",
+          "stem": "LS_Platano-Frito_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "tostilocos",
+      "name": "Tostilocos",
+      "category": "antojitos",
+      "alt": "open Tostitos bag loaded with cucumber, jicama, peanuts and chamoy",
+      "copy": {
+        "en": "Loaded Tostitos",
+        "es": "Tostitos con cueritos, jícama, chamoy y limón",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Tostilocos_MASTER_v01.png",
+          "stem": "LS_Tostilocos_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "bionico-con-nieve",
+      "name": "Bionico con Nieve",
+      "category": "postres",
+      "alt": "tray of fruit and cream topped with strawberries and a cherry",
+      "copy": {
+        "en": "Fruit Bowl with Ice Cream",
+        "es": "Fruta fresca, crema, granola y nieve",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Bionico-con-Nieve_MASTER_v02.png",
+          "stem": "LS_Bionico-con-Nieve_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Bionico-con-Nieve_MASTER_v01.png",
+          "stem": "LS_Bionico-con-Nieve_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "bionicos",
+      "name": "Bionicos",
+      "category": "postres",
+      "alt": "fruit and cream bowl with granola",
+      "copy": {
+        "en": null,
+        "es": null,
+        "source": "none"
+      },
+      "nameOnly": true,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Bionicos_MASTER_v01.png",
+          "stem": "LS_Bionicos_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "churros",
+      "name": "Churros",
+      "category": "postres",
+      "alt": "carton of sugared churros",
+      "copy": {
+        "en": "Fresh Cinnamon Sugar Churros",
+        "es": "Canela y azúcar, recién hechos",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Churros_MASTER_v01.png",
+          "stem": "LS_Churros_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "coctel-de-fruta",
+      "name": "Coctel de Fruta",
+      "category": "postres",
+      "alt": "clear cup of layered fruit with chile and a mango spear",
+      "copy": {
+        "en": "Fresh Fruit Cup",
+        "es": "Mango, sandía, jícama, pepino y chamoy",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Coktel-de-Fruta_MASTER_v03.png",
+          "stem": "LS_Coktel-de-Fruta_MASTER_v03",
+          "version": 3
+        },
+        {
+          "master": "assets/products/masters/LS_Coktel-de-Fruta_MASTER_v02.png",
+          "stem": "LS_Coktel-de-Fruta_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Coktel-de-Fruta_MASTER_v01.png",
+          "stem": "LS_Coktel-de-Fruta_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "crepa",
+      "name": "Crepa",
+      "category": "postres",
+      "alt": "folded crepe with strawberries, cream and icing sugar",
+      "copy": {
+        "en": "Crêpe",
+        "es": "Rellena y bañada al gusto",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Crepa_MASTER_v01.png",
+          "stem": "LS_Crepa_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "crepa-dubai",
+      "name": "Crepa Dubai",
+      "category": "postres",
+      "alt": "crepe under green kataifi, pistachio and chocolate",
+      "copy": {
+        "en": "Dubai Crêpe",
+        "es": "Pistache, chocolate y kataifi",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Crepa-Dubai_MASTER_v02.png",
+          "stem": "LS_Crepa-Dubai_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Crepa-Dubai_MASTER_v01.png",
+          "stem": "LS_Crepa-Dubai_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "croissant",
+      "name": "Croissant",
+      "category": "postres",
+      "alt": "split croissant with ice cream, fruit and chocolate",
+      "copy": {
+        "en": "Warm Croissant with Ice Cream",
+        "es": "Croissant tibio con nieve encima",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Croissant-con-Helado_MASTER_v01.png",
+          "stem": "LS_Croissant-con-Helado_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "fresas-con-crema",
+      "name": "Fresas con Crema",
+      "category": "postres",
+      "alt": "cup of strawberries in cream under a whipped-cream crown",
+      "copy": {
+        "en": "Strawberries & Cream",
+        "es": "Fresas frescas con crema y azúcar",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Fresas-con-Crema_MASTER_v01.png",
+          "stem": "LS_Fresas-con-Crema_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "fresas-dubai",
+      "name": "Fresas Dubai",
+      "category": "postres",
+      "alt": "cup of chocolate-shelled strawberries with pistachio crumb",
+      "copy": {
+        "en": "Dubai Strawberries",
+        "es": "Fresas con pistache, chocolate y kataifi",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Fresas-Dubai_MASTER_v01.png",
+          "stem": "LS_Fresas-Dubai_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "fresas-en-cajita",
+      "name": "Fresas en Cajita",
+      "category": "postres",
+      "alt": "printed strawberry carton topped with cream and sprinkles",
+      "copy": {
+        "en": "Strawberries in a Box",
+        "es": "Fresas cubiertas de chocolate, para llevar",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Fresas-en-Cajita_MASTER_v01.png",
+          "stem": "LS_Fresas-en-Cajita_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "gelatina",
+      "name": "Gelatina",
+      "category": "postres",
+      "alt": "lidded cup of layered gelatin",
+      "copy": {
+        "en": "Mexican Gelatin",
+        "es": "Gelatina de leche y de agua",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Gelatina_MASTER_v03.png",
+          "stem": "LS_Gelatina_MASTER_v03",
+          "version": 3
+        },
+        {
+          "master": "assets/products/masters/LS_Gelatina_MASTER_v02.png",
+          "stem": "LS_Gelatina_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Gelatina_MASTER_v01.png",
+          "stem": "LS_Gelatina_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "mango-en-flor",
+      "name": "Mango en Flor",
+      "category": "postres",
+      "alt": "mango carved into a flower on a stick, dusted with chile",
+      "copy": {
+        "en": "Mango Flower",
+        "es": "Mango en flor con chamoy, limón y chile",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Mango-en-Palo_MASTER_v02.png",
+          "stem": "LS_Mango-en-Palo_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Mango-en-Palo_MASTER_v01.png",
+          "stem": "LS_Mango-en-Palo_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "mini-pancakes",
+      "name": "Mini Pancakes",
+      "category": "postres",
+      "alt": "tray of mini pancakes with chocolate drizzle and strawberries",
+      "copy": {
+        "en": null,
+        "es": "Pancakes chiquitos con lechera y fruta",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Mini-Pancakes_MASTER_v01.png",
+          "stem": "LS_Mini-Pancakes_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "mini-pancakes-dubai",
+      "name": "Mini Pancakes Dubai",
+      "category": "postres",
+      "alt": "mini pancakes under green kataifi and pistachio",
+      "copy": {
+        "en": "Dubai Mini Pancakes",
+        "es": "Mini pancakes con pistache y chocolate",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Mini-Pancakes-Dubai_MASTER_v01.png",
+          "stem": "LS_Mini-Pancakes-Dubai_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "pastel-de-tres-leches",
+      "name": "Pastel de Tres Leches",
+      "category": "postres",
+      "alt": "slice of tres leches cake",
+      "copy": {
+        "en": null,
+        "es": null,
+        "source": "none"
+      },
+      "nameOnly": true,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Pastel-Tres-Leche_MASTER_v02.png",
+          "stem": "LS_Pastel-Tres-Leche_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Pastel-Tres-Leche_MASTER_v01.png",
+          "stem": "LS_Pastel-Tres-Leche_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "waffle",
+      "name": "Waffle",
+      "category": "postres",
+      "alt": "waffle bowl with cream, strawberries, chocolate and wafer sticks",
+      "copy": {
+        "en": null,
+        "es": "Waffle recién hecho con nieve y fruta",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Waffle_MASTER_v01.png",
+          "stem": "LS_Waffle_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "aguas-frescas",
+      "name": "Aguas Frescas",
+      "category": "bebidas",
+      "alt": "agua fresca in a jar with fruit",
+      "copy": {
+        "en": "Fresh Fruit Waters",
+        "es": "Horchata, jamaica, sandía, mango y más",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Agua-Fresca_MASTER_v01.png",
+          "stem": "LS_Agua-Fresca_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "aguas-explosivas",
+      "name": "Aguas Explosivas",
+      "category": "bebidas",
+      "alt": "chamoy-rimmed cup loaded with fruit and a tamarind stick",
+      "copy": {
+        "en": "Explosive Loaded Fruit Water",
+        "es": "Fresa, piña y tamarindo con escarchado",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Aguas-Explosivas_MASTER_v02.png",
+          "stem": "LS_Aguas-Explosivas_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Aguas-Explosivas_MASTER_v01.png",
+          "stem": "LS_Aguas-Explosivas_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "chamoyada",
+      "name": "Chamoyada",
+      "category": "bebidas",
+      "alt": "mango chamoyada with chamoy swirl and a tamarind straw",
+      "copy": {
+        "en": "Chamoy Fruit Freeze",
+        "es": "Nieve de mango, chamoy y tamarindo",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Chamoyada_MASTER_v01.png",
+          "stem": "LS_Chamoyada_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "frappe",
+      "name": "Frappe",
+      "category": "bebidas",
+      "alt": "frappe with whipped cream and a straw",
+      "copy": {
+        "en": null,
+        "es": "Frappé de 20 oz, frío y cremoso",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Frappe_20oz_MASTER_v01.png",
+          "stem": "LS_Frappe_20oz_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "licuado",
+      "name": "Licuado",
+      "category": "bebidas",
+      "alt": "strawberry licuado under a dome lid with whipped cream",
+      "copy": {
+        "en": "Smoothie",
+        "es": "Licuado de fruta con leche",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Licuado_MASTER_v02.png",
+          "stem": "LS_Licuado_MASTER_v02",
+          "version": 2
+        },
+        {
+          "master": "assets/products/masters/LS_Licuado_MASTER_v01.png",
+          "stem": "LS_Licuado_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "mangonada",
+      "name": "Mangonada",
+      "category": "bebidas",
+      "alt": "mangonada cup with chamoy, chile and a tamarind straw",
+      "copy": {
+        "en": null,
+        "es": null,
+        "source": "none"
+      },
+      "nameOnly": true,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Mangonada_16oz_MASTER_v02.png",
+          "stem": "LS_Mangonada_16oz_MASTER_v02",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "id": "michelaguas",
+      "name": "Michelaguas",
+      "category": "bebidas",
+      "alt": "branded Micheláguas jar of mango with a chile rim",
+      "copy": {
+        "en": "Loaded Fruit Water",
+        "es": "Agua fresca preparada",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Michelaguas_MASTER_v01.png",
+          "stem": "LS_Michelaguas_MASTER_v01",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "raspado",
+      "name": "Raspado",
+      "category": "bebidas",
+      "alt": "cup of shaved ice piled above the rim",
+      "copy": {
+        "en": "Shaved Ice",
+        "es": "Hielo raspado con jarabe de sabores",
+        "source": "client-approved"
+      },
+      "nameOnly": false,
+      "images": [
+        {
+          "master": "assets/products/masters/LS_Raspados_MASTER_v01.png",
+          "stem": "LS_Raspados_MASTER_v01",
+          "version": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "_what": "Products where a person has chosen which of several photographs leads — on the card, in the display case, and as the first frame of the product view.",
+  "_why": "build-catalog defaults to the newest master version, which is usually right and sometimes wrong. Correcting it by renaming or reordering files under assets/ is not an option: CLAUDE.md forbids touching that folder and Rubric records those exact paths. So the choice is recorded here instead.",
+  "_keys": "Product name exactly as PRODUCTS in scripts/build-catalog.mjs spells it. Value is the master filename stem, without the extension.",
+  "lead": {
+    "Crazy Shake": "LS_Crazy-Shakes_MASTER_v01"
+  },
+  "_notes": {
+    "Crazy Shake": "Chosen by the client on 2026-08-26 from all four side by side. v01 is the Oreo one — the cleanest silhouette of the four and the strongest contrast. v04, the newest and therefore the previous default, was the weakest: sliding cake slice, patchy sprinkle rim, palest of the set. The other three remain as alternates in the product view's photo strip; nothing is lost."
+  }
+}

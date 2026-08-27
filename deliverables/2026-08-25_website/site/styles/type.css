@@ -1,0 +1,157 @@
+/* ============================================================================
+   TYPE — one scale, one origin, for the whole page.
+
+   brand.json publishes exactly one family (Noto Sans) and two weights, and no
+   sizes at all. The only measured typographic evidence we have is the approved
+   card on page 17 of the guidelines:
+
+       name : description : note  =  1 : 0.72 : 0.50
+       description line-height    =  1.35
+
+   So page 17 is the origin. --fs-item is the "1". The card's second level is
+   derived from it with calc() rather than carrying its own clamp, so the 0.72
+   holds at every viewport width instead of only at the top of a clamp. The
+   levels above the card continue the same step upward — 1 / 0.72 = 1.389 —
+   which is where --fs-section (52px at 1440) and the display size (80px, one
+   step above it) come from. One ratio, measured once, used everywhere.
+
+   Two sizes below are not taste, they are forced by the contrast table in
+   BRIEF.md. White on hot pink is 4.06 and hot pink on cream is 3.85 — both are
+   legal as large text only. WCAG's large-text floor is 14pt bold = 18.67px, so
+   every eyebrow that sits on a brand field (the hero kicker, the page-17
+   CATEGORY TITLE) is set at 19px bold, and the hero lead — white on pink,
+   regular weight — is never smaller than 24px.
+
+   Measure is set on the text elements themselves in `ch`, which resolves
+   against each element's own font-size, so a heading and a paragraph keep their
+   own line lengths as the type scales. Wrapper elements are released from their
+   `ch` caps (see the two `max-width: none` rules) because a cap set in `ch` on a
+   16px wrapper silently squeezes an 80px heading into one word per line.
+   ========================================================================== */
+
+:root {
+  /* The display step: roughly 1.389 above --fs-section, which is itself 1.389
+     above the card. 44px at 390, 80px at 1440. Supersedes --fs-display in
+     tokens.css — see the report; data/invented.json needs the new number. */
+  --t-display: clamp(2.75rem, 1.915rem + 3.43vw, 5rem);
+
+  /* Reading levels. The deck's 24px floor is the contrast rule above, not a
+     preference. */
+  --t-deck: clamp(1.5rem, 1.407rem + 0.38vw, 1.75rem);
+  --t-lead: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+
+  /* Eyebrow / page-17 CATEGORY TITLE. 19px is the smallest size at which bold
+     white-on-pink and bold pink-on-cream are legal. */
+  --t-eyebrow: 1.1875rem;
+
+  /* The card's second level, exactly 0.72 of the first at every width. */
+  --t-desc: calc(var(--fs-item) * 0.72);
+}
+
+/* ---- weights ------------------------------------------------------------- */
+/* brand.json typography: Bold for names and category titles, Regular for
+   descriptions. Nothing else is available. */
+.hero__title, .menu__title, .detail__name, .card__name,
+.filter, .nav__word, .menu__count {
+  font-weight: var(--w-bold);
+}
+
+/* ---- display ------------------------------------------------------------- */
+.hero__title, .menu__title, .detail__name {
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: manual;
+}
+
+.hero__title { font-size: var(--t-display); }
+.menu__title { font-size: var(--fs-section); }
+.detail .detail__name { font-size: var(--fs-section); line-height: 1.08; }
+
+/* ---- eyebrows: page 17's CATEGORY TITLE treatment ------------------------ */
+.hero__kicker, .detail__cat, .foot__banner {
+  font-weight: var(--w-bold);
+  font-size: var(--t-eyebrow);
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  text-wrap: balance;
+}
+
+/* ---- reading text -------------------------------------------------------- */
+/* 1.35 is the measured line-height off page 17. It is the only line-height in
+   the guidelines, so every paragraph on the page uses it. */
+.hero__lead, .menu__lead, .detail__desc, .card__desc, .foot__note, .menu__empty {
+  line-height: var(--lh-desc);
+  text-wrap: pretty;
+}
+.hero__lead { font-size: var(--t-deck); }
+.menu__lead { font-size: var(--t-lead); }
+.detail .detail__desc { font-size: var(--t-lead); }
+
+/* ---- the card: page 17, reproduced --------------------------------------- */
+.card__name {
+  font-size: var(--fs-item);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: manual;
+}
+.card__desc {
+  font-size: var(--t-desc);
+  font-weight: var(--w-body);
+}
+
+/* ---- measure ------------------------------------------------------------- */
+/* Every cap below is in `ch` on the element that carries the type, so it scales
+   with that element. The two `none`s undo caps that were set on wrappers at
+   16px and were strangling the headings inside them. */
+.hero .hero__inner { max-width: none; }
+.menu .menu__head  { max-width: none; }
+
+.hero__title { max-width: 17ch; }
+.hero__lead  { max-width: 34ch; }
+.menu__title { max-width: 20ch; }
+.menu__lead  { max-width: 46ch; }
+.detail .detail__name { max-width: 18ch; }
+.detail .detail__desc { max-width: 38ch; }
+.foot__note  { max-width: 52ch; }
+
+/* ---- rhythm -------------------------------------------------------------- */
+/* Space between text blocks scales with the block above it: the bigger the
+   type, the more air it needs under it. */
+.hero .hero__kicker { margin-bottom: var(--s-5); }
+.hero .hero__lead   { margin-block: var(--s-6) var(--s-7); }
+.menu .menu__title  { margin-bottom: var(--s-4); }
+
+/* The hero's call to action is part of the hero's type, not a control that
+   happens to have words in it: under a 28px deck, a 16px button reads as an
+   afterthought. Eyebrow size is the smallest that holds its own there. */
+.hero .btn { font-size: var(--t-eyebrow); }
+
+/* ---- micro text: the 0.50 level ------------------------------------------ */
+/* Page 17's third level is bold and small. There is no note line in the card
+   markup, so the 0.50 level lives on the interface's own micro labels. */
+.menu__count {
+  font-size: var(--fs-note);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+.menu__count, .card__count { font-variant-numeric: tabular-nums; }
+
+/* ---- footer -------------------------------------------------------------- */
+/* Three levels, with a measure on the only real sentence. The two rules this
+   block used to carry — `text-align: center` and `margin-inline: auto` on all
+   three lines — were the footer's LAYOUT, written here because the footer had no
+   owner. It has one now (styles/foot.css), the block is a two-column lockup on a
+   desktop and a centred stack on a phone, and a centring rule stated from this
+   file could only fight it. What is left here is type, which is what this file
+   is for.
+
+   `--t-deck` on the location, not `--t-lead`. It is the one fact the site has and
+   it was set two steps under a 300px mark, so the largest word in an 800px block
+   was 21px. 28px is the same token the hero's deck uses under the same mark. */
+.foot__loc  { font-size: var(--t-deck); font-weight: var(--w-bold); }
+.foot__note { font-size: var(--t-desc); }

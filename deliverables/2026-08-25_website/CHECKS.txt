@@ -1,0 +1,96 @@
+La Sabrosita website — gate output at handoff, 2026-08-25
+================================================================
+
+  pass  functional      images decode, copy is approved, no prices, search, dialog, tap targets, scroll reveal
+  pass  accessibility   contrast against painted pixels, heading order, landmarks, accessible names
+  pass  disclosure      every invented value appears in INVENTED.md; no hardcoded colour or font
+  pass  keyboard        the whole site driven by keyboard alone: skip link, tab order, a visible focus ring, dialog trap and focus return
+  pass  widths          eleven viewport widths from 320 to 2560, including 200% zoom
+  pass  brand           the rendered logo against brand.json's own six misuses, minimum size and background rule
+  pass  engines         the real page in Chromium, Firefox and WebKit
+  pass  media           the client's approved media is byte-identical: git, the PDF's recorded hash, and a manifest of all 62 masters
+
+all gates clean  (43s)
+(design measurements are separate: npm run fill, npm run perf)
+
+
+================================================================
+Design measurements
+
+$ node scripts/fill-check.mjs
+
+desktop 1440 — 45 cards measured
+  median             39.4%
+  worst five         Choco Banana 14%, Elote Hot Cheetos 16%, Elote 17%, Paletas 25%, Aguas Explosivas 25%
+  best three         Platano Frito 67%, Pastel de Tres Leches 60%, Mini Pancakes Dubai 58%
+  spread             14% to 67% — 4.9x  ← a row can hold two tiles this far apart
+  michoacana         44.4%   we are 5.0 points behind
+  heladosmexico      36.8%   we beat it
+  cropped            none — no product loses any of itself to the tile edge
+
+mobile 390 — 45 cards measured
+  median             42.1%
+  worst five         Choco Banana 14%, Elote Hot Cheetos 16%, Elote 17%, Banana Split 25%, Helado en Cono 26%
+  best three         Platano Frito 62%, Mini Pancakes 60%, Pastel de Tres Leches 58%
+  spread             14% to 62% — 4.5x  ← a row can hold two tiles this far apart
+  michoacana         44.4%   we are 2.3 points behind
+  heladosmexico      36.8%   we beat it
+  cropped            none — no product loses any of itself to the tile edge
+
+$ node scripts/perf.mjs
+desktop 1440
+  first screen        2022 kB   (23 images)
+  whole page          3809 kB   (52 images, 3171 kB of it picture)
+  LCP                  348 ms
+  load event           185 ms
+  layout shift       0.009      good  (Chrome: good is <= 0.1)
+  heaviest          LS_Churros_MASTER_v01-1400.webp 206 kB
+                    LS_Mini-Pancakes-Dubai_MASTER_v01- 153 kB
+                    LS_Mini-Pancakes_MASTER_v01-600.we 137 kB
+mobile  390
+  first screen        1408 kB   (19 images)
+  whole page          3260 kB   (49 images, 2623 kB of it picture)
+  LCP                  220 ms
+  load event           151 ms
+  layout shift           0      good  (Chrome: good is <= 0.1)
+  heaviest          LS_Mini-Pancakes-Dubai_MASTER_v01- 153 kB
+                    LS_Mini-Pancakes_MASTER_v01-600.we 137 kB
+                    LS_Crepa-Dubai_MASTER_v02-600.webp 136 kB
+mobile  390 on 4G
+  first screen        1408 kB   (19 images)
+  whole page          2233 kB   (36 images, 1596 kB of it picture)
+  LCP                 2920 ms   (3 Mbit, 40ms RTT, 4x CPU)
+  load event          4389 ms
+  layout shift           0      good  (Chrome: good is <= 0.1)
+  heaviest           120 kB
+                    LS_Platano-Frito_MASTER_v01-600.we 114 kB
+                    LS_Marucha-Loca_MASTER_v01-600.web 85 kB
+
+$ node scripts/tails.mjs
+
+no feature tile
+  category      n     2col  3col  4col  5col  6col
+  Helados       9        1     —     3     1     3
+  Antojitos    12        —     —     —     3     —
+  Postres      16        —     2     —     4     2
+  Bebidas       8        —     1     —     2     4
+
+one 2x2 feature tile per category
+  category      n     2col  3col  4col  5col  6col
+  Helados       9        —     —     —     3     —
+  Antojitos    12        1     —     1     —     3
+  Postres      16        1     2     1     1     5
+  Bebidas       8        1     1     1     4     1
+
+  — means the category tiles exactly: no hole at the end of the section.
+  Numbers are empty slots left in the final row.
+
+  No single column count tiles all four categories cleanly.
+
+  Per-section column counts that leave no hole at all:
+    with 0 feature tile: Helados 3 · Antojitos 2/3/4/6 · Postres 2/4 · Bebidas 2/4
+
+  Absorbing it in the layout is the other route: let the last item of a section
+  span the remaining columns, or end each section with something that is not a
+  product. Either is better than a row of holes.
+

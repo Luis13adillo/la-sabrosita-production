@@ -1,0 +1,52 @@
+<!-- 8. VISIT US
+     ===========
+     This section used to print three [ FALTA ] panels, because the street
+     address, the hours and the phone number were in no file in this project —
+     not in the guidelines PDF, not in the Identity Kit, not anywhere. On
+     2026-08-26 the client gave them, and they now live in brand/business.json
+     with their provenance recorded beside them.
+
+     Nothing below is typed in. Every value is {{biz:…}}, resolved by
+     build-site.mjs out of that one file, for the same reason the colours are
+     tokens: an address pasted into a page is a second answer to "where is the
+     shop", and it stops being true the day they move. -->
+<section class="visit" aria-labelledby="visit-h">
+  <div class="visit__bulbs" aria-hidden="true">{{visitBulbs}}</div>
+  <div class="visit__in">
+    <p><span class="kick">{{dia}}{{d:visitKicker}}{{dia}}</span>{{draft}}</p>
+    <h2 class="visit__h" id="visit-h">{{d:visitTitle}}{{draft}}</h2>
+    <p class="visit__place">{{t:footerLocation}}</p>
+    <!-- The room itself. "Seating inside and outside" stops being a claim and
+         becomes something you can look at. Renders nothing if the photograph is
+         not in the repo. -->
+    <!-- Two photographs: how to recognise it from the street, and what it looks
+         like once you are in. The storefront is the one a customer actually needs
+         — the window decal is what you scan the street for. -->
+    <div class="visit__pics">
+      <figure class="visit__fig">{{frontPhoto}}</figure>
+      <figure class="visit__fig">{{seatingPhoto}}</figure>
+    </div>
+    <div class="facts">
+      <div class="fact">
+        <p class="fact__l">{{t:factAddress}}</p>
+        <p class="fact__v"><a class="fact__link" href="{{biz:maps}}" target="_blank" rel="noopener">{{biz:street}}</a></p>
+        <p class="fact__n">{{biz:cityline}} · {{t:factAddressNote}}</p>
+      </div>
+      <div class="fact fact--hours">
+        <p class="fact__l">{{t:factHours}}</p>
+        <dl class="hours">{{biz:hours}}</dl>
+      </div>
+      <div class="fact">
+        <p class="fact__l">{{t:factSeating}}</p>
+        <p class="fact__v">{{t:factSeatingValue}}</p>
+        <p class="fact__n">{{t:factSeatingNote}}</p>
+      </div>
+      <div class="fact">
+        <p class="fact__l">{{t:factPhone}}</p>
+        <p class="fact__v"><a class="fact__link" href="tel:{{biz:tel}}">{{biz:phone}}</a></p>
+        <p class="fact__n">{{t:factPhoneNote}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+{{dripstrip:electric-blue}}

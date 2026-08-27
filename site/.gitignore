@@ -1,0 +1,32 @@
+node_modules/
+public/
+.build.lock
+
+# ---------------------------------------------------------------------
+# Screenshot and comparison working folders.
+#
+# Every capture run during the build of this site wrote a folder of PNGs
+# here — blind A/B rounds, hero direction options, benchmark captures,
+# width sheets, live checks. They are working artifacts of HOW the site
+# was arrived at, not the site. Together they are several gigabytes,
+# which is two orders of magnitude more than the source they were taken
+# of.
+#
+# They are listed one by one rather than as `.*/` because a blanket rule
+# on dot-folders would also swallow things that DO belong in git.
+#
+# If you add a new capture folder, add it here in the same breath. The
+# first version of this file missed five of them, and 221 MB of
+# screenshots came within one `git add` of the history.
+# ---------------------------------------------------------------------
+.shots/
+.snap/
+.bench/
+.bench2/
+.live/
+.site/
+.heroes/
+.directions/
+
+# A stray capture written to the site root by a one-off check.
+x.png

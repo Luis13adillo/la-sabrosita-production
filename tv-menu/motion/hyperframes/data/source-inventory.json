@@ -16,7 +16,7 @@
       "Banana Split",
       "Choco Banana",
       "Crazy Shake",
-      "Helado Chino",
+      "Helado Viral",
       "Helado en Cono",
       "La Sabrosita",
       "Paletas",
@@ -69,7 +69,7 @@
       "lasabrosita_crazy-shakes_master_v03_1786751666844.png",
       "lasabrosita_crazy-shakes_master_v04_1786754000102.png"
     ],
-    "Helado Chino": [
+    "Helado Viral": [
       "lasabrosita_helado-chino_master_v01_1786749676565.png",
       "lasabrosita_helado-chino_master_v02_1786751663700.png"
     ],
@@ -151,7 +151,7 @@
     },
     {
       "file": "lasabrosita_helado-chino_master_v01_1786749676565.png",
-      "name": "Helado Chino",
+      "name": "Helado Viral",
       "category": "HELADOS",
       "depicts": "packaged peach-flavour moulded ice cream in its printed box",
       "width": 2000,
@@ -161,7 +161,7 @@
     },
     {
       "file": "lasabrosita_helado-chino_master_v02_1786751663700.png",
-      "name": "Helado Chino",
+      "name": "Helado Viral",
       "category": "HELADOS",
       "depicts": "packaged mango-flavour moulded ice cream in its printed box",
       "width": 2000,

@@ -1,0 +1,86 @@
+{
+  "_what": "The shop's real-world facts: where it is, when it is open, how to reach it. This is the ONE place these live. Anything that needs an address, a phone number or opening hours reads it from here.",
+  "_whyNotBrandJson": "brand/brand.json is a transcription of brand/guidelines/LS_Brand-Guidelines_v01.pdf and nothing else — that contract is written in CLAUDE.md and in brand/README.md. None of the facts below appear in that PDF or in the Complete Brand Identity Kit; all 20 pages and all 3 pages were read on 2026-08-26 to confirm it. Putting them in brand.json would quietly break the rule that brand.json says what the PDF says. So they live here instead, beside it.",
+  "_source": {
+    "givenBy": "the client, Luis, on 2026-08-26",
+    "form": "a screenshot of the Google Business Profile panel for 'la sabrosita swedesboro'",
+    "profileNote": "The panel reads 'Updated by this business 11 weeks ago', so the hours are the shop's own, not crowd-sourced.",
+    "rule": "These are the client's facts, not observations of ours. If the shop changes its hours, this file changes and everything else follows."
+  },
+  "name": "La Sabrosita Ice Cream & Snacks",
+  "category": "Ice cream shop",
+  "address": {
+    "street": "1422 Kings Hwy",
+    "locality": "Swedesboro",
+    "region": "NJ",
+    "regionFull": "New Jersey",
+    "postalCode": "08085",
+    "country": "US",
+    "oneLine": "1422 Kings Hwy, Swedesboro, NJ 08085",
+    "_settled": "1422 Kings Hwy is CORRECT and SETTLED. The client confirmed it on 2026-08-26 and asked that it not be questioned again: the Google Business Profile is the source of truth for this address. A neighbouring storefront sign reads 1420 Kings Hwy (King's Things, the furniture store next door) — that is the adjacent unit, not a discrepancy. Do not raise it again."
+  },
+  "phone": {
+    "display": "(856) 472-2254",
+    "e164": "+18564722254"
+  },
+  "hours": {
+    "_format": "24-hour, opens/closes, local time. Days the shop is closed would carry closed: true.",
+    "_confirm": "CONFIRMED BY THE CLIENT on 2026-08-26. Friday's 11:00-18:00 and Saturday's 19:00-22:00 are correct as written — they looked unusual for an ice cream shop and were queried; Luis confirmed them. Do not 'fix' them.",
+    "monday": {
+      "opens": "11:00",
+      "closes": "22:00"
+    },
+    "tuesday": {
+      "opens": "11:00",
+      "closes": "22:00"
+    },
+    "wednesday": {
+      "opens": "11:00",
+      "closes": "22:00"
+    },
+    "thursday": {
+      "opens": "11:00",
+      "closes": "22:00"
+    },
+    "friday": {
+      "opens": "11:00",
+      "closes": "18:00"
+    },
+    "saturday": {
+      "opens": "19:00",
+      "closes": "22:00"
+    },
+    "sunday": {
+      "opens": "11:00",
+      "closes": "22:00"
+    }
+  },
+  "presence": {
+    "googleBusinessProfile": {
+      "rating": 4.8,
+      "reviewCount": 25,
+      "_note": "Recorded as a fact about the profile on 2026-08-26. NOT for printing on the site as a rating badge unless Luis asks — a star count that drifts out of date on a real shop's own website is worse than none, and the individual review text is not ours to reproduce."
+    },
+    "website": null,
+    "_websiteNote": "The Google panel offers 'Add website', so no site is linked yet. Once this one is live, adding it to the profile is worth doing — it is the single highest-value SEO action available here."
+  },
+  "unconfirmed": {
+    "_what": "Seen on third-party listings, NOT given by the client. Do not publish any of these until confirmed. Cash-only was one of these and turned out to be false.",
+    "cashOnly": "FALSE — corrected by the client on 2026-08-26. Yelp's listing says '** CASH ONLY **' and it is WRONG. The shop takes cards. Never publish the Yelp claim, and if anyone re-scrapes third-party listings later, this line is why it must not come back.",
+    "parking": "Yelp says the shop has parking options.",
+    "freeWifi": "Yelp says free WiFi.",
+    "_yelpIsWrong": "Yelp is telling customers the shop is cash only when it is not. That is a listing costing the shop walk-ins, and it is fixable from Yelp's own 'suggest an edit' flow. Worth doing — it is not a website change."
+  },
+  "payments": {
+    "cardsAccepted": true,
+    "_source": "the client, 2026-08-26, correcting Yelp",
+    "_note": "Recorded as a fact. NOT printed on the site — 'we take cards' is a strange thing for a shop to have to announce, and saying it invites the question. It is here so the repo knows the Yelp claim is false."
+  },
+  "amenities": {
+    "seating": "inside and outside",
+    "seatingIndoor": true,
+    "seatingOutdoor": true,
+    "_source": "the client, 2026-08-26",
+    "_note": "Published on the site. It answers \"can we stay?\", which is a real reason to choose this shop over a counter you eat outside of, and neither reference site can say it — they are packaged brands in a freezer aisle."
+  }
+}

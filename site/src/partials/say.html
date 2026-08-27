@@ -1,0 +1,43 @@
+<!-- 3. THE TYPOGRAPHIC STATEMENT
+     ===========================
+     The four category names, stacked as one solid block of Fredoka on the yellow
+     field, with products floating at the corners. b.html section 3, unchanged.
+
+     ONE COMMON WIDTH, FOUR DIFFERENT SIZES. `--m` is the ratio of ANTOJITOS's
+     measured advance width in Fredoka 700 to this word's, so the block is flush
+     on both sides instead of a ragged centred list. Measured, not guessed:
+     scripts/build-say.mjs renders each label in the real face at a real size and
+     writes the eight numbers into data/scenery.json. The words themselves are
+     menu.json's own approved labels, printed by scripts/build-site.mjs, so a
+     re-spelled category changes the heading and gets re-measured on the next
+     build rather than drifting out of alignment.
+
+     THE SPANISH WORD IS THE REFERENCE IN ENGLISH TOO. Two of the English labels
+     are two words — ICE CREAM and SAVORY SNACKS — so measuring English against
+     its own longest line would set the block at ANTOJITOS's size and ICE CREAM
+     would wrap, turning four lines into six. Against one shared reference the
+     English block renders at exactly the Spanish block's width, which is what
+     the section was drawn to hold.
+
+     LINES TWO TO FOUR ARE HOLLOW RATHER THAN FADED. A 55%-alpha purple on
+     yellow is under 3:1; a full-strength outline is 8.3:1 and recedes just as
+     far. The outline is a double-width stroke with an opaque yellow copy of the
+     same word laid over it — stroking alone traces the font's inner contours as
+     well as its edge, which put a stray diagonal through the R of POSTRES.
+
+     `color` stays deep purple and only `-webkit-text-fill-color` goes
+     transparent. That is not decoration: the ink a reader actually sees IS the
+     purple stroke, and scripts/a11y.mjs reads `color` to decide what the ink is.
+     Declaring the fill transparent and leaving `color: transparent` behind would
+     report this heading as invisible-on-invisible, which is both a gate failure
+     and a lie about what is on the screen. -->
+<section class="say" aria-labelledby="say-h">
+  {{sayFloats}}
+  {{sparkles:5}}
+  <div class="say__in">
+    <p class="kicker kicker--dark">{{dia}}{{d:sayKicker}}{{dia}}{{draft}}</p>
+    <h2 class="say__h" id="say-h">{{sayLines}}</h2>
+    <p class="say__foot">{{d:sayFoot}}{{draft}}</p>
+  </div>
+</section>
+{{dripstrip:sunny-yellow}}

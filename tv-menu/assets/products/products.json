@@ -1,0 +1,331 @@
+[
+ {
+  "key": "PA-0005",
+  "pa": "PA-0005",
+  "name": "Tostilocos",
+  "file": "LS_Tostilocos_MASTER_v01.png",
+  "sha256": "4a01e1f8001c3f0e"
+ },
+ {
+  "key": "PA-0008",
+  "pa": "PA-0008",
+  "name": "Raspados",
+  "file": "LS_Raspados_MASTER_v01.png",
+  "sha256": "1fa74224c05ffb60"
+ },
+ {
+  "key": "PA-0009",
+  "pa": "PA-0009",
+  "name": "Esquimales",
+  "file": "LS_Esquimales_MASTER_v01.png",
+  "sha256": "5b654c3957588ec2"
+ },
+ {
+  "key": "PA-0021",
+  "pa": "PA-0021",
+  "name": "Agua Fresca",
+  "file": "LS_Agua-Fresca_MASTER_v01.png",
+  "sha256": "fc8e37fc33db6b50"
+ },
+ {
+  "key": "PA-0023",
+  "pa": "PA-0023",
+  "name": "Choco Banana",
+  "file": "LS_Choco-Banana_MASTER_v01.png",
+  "sha256": "11d40857bc576dcd"
+ },
+ {
+  "key": "PA-0029",
+  "pa": "PA-0029",
+  "name": "Frappe 20 oz",
+  "file": "LS_Frappe_20oz_MASTER_v01.png",
+  "sha256": "b70726238f59f2cc"
+ },
+ {
+  "key": "PA-0006",
+  "pa": "PA-0006",
+  "name": "Crazy Shake",
+  "file": "LS_Crazy-Shakes_MASTER_v01.png",
+  "sha256": "657b41512505888a"
+ },
+ {
+  "key": "PA-0020",
+  "pa": "PA-0020",
+  "name": "Aguas Explosivas",
+  "file": "LS_Aguas-Explosivas_MASTER_v01.png",
+  "sha256": "be1a92631b2c6338"
+ },
+ {
+  "key": "PA-0028",
+  "pa": "PA-0028",
+  "name": "Esquites Hot Cheetos",
+  "file": "LS_Esquites-Hot-Cheetos_MASTER_v01.png",
+  "sha256": "53570989d06a7630"
+ },
+ {
+  "key": "PA-0033",
+  "pa": "PA-0033",
+  "name": "Gelatina",
+  "file": "LS_Gelatina_MASTER_v01.png",
+  "sha256": "c553e24399a74233"
+ },
+ {
+  "key": "PA-0034",
+  "pa": "PA-0034",
+  "name": "Licuado",
+  "file": "LS_Licuado_MASTER_v01.png",
+  "sha256": "a34be6dc76d25ea6"
+ },
+ {
+  "key": "PA-0039",
+  "pa": "PA-0039",
+  "name": "Pastel Tres Leche",
+  "file": "LS_Pastel-Tres-Leche_MASTER_v01.png",
+  "sha256": "582c9bcecb97324f"
+ },
+ {
+  "key": "PA-0042",
+  "pa": "PA-0042",
+  "name": "Helado Viral",
+  "file": "LS_Helado-Chino_MASTER_v01.png",
+  "sha256": "b4e28a13c46f3f58"
+ },
+ {
+  "key": "PA-0025",
+  "pa": "PA-0025",
+  "name": "Diablito",
+  "file": "LS_Diablitos_MASTER_v01.png",
+  "sha256": "5c06798be9c31504"
+ },
+ {
+  "key": "PA-0027",
+  "pa": "PA-0027",
+  "name": "Elote con Hot Cheetos",
+  "file": "LS_Elote-con-Hot-Cheetos_MASTER_v02.png",
+  "sha256": "4ff871f75b4fcdfe"
+ },
+ {
+  "key": "PA-0030",
+  "pa": "PA-0030",
+  "name": "Fresas con Crema",
+  "file": "LS_Fresas-con-Crema_MASTER_v01.png",
+  "sha256": "ce704e788c381d5e"
+ },
+ {
+  "key": "PA-0032",
+  "pa": "PA-0032",
+  "name": "Fresas en Cajita",
+  "file": "LS_Fresas-en-Cajita_MASTER_v01.png",
+  "sha256": "7e14cbf696b5843e"
+ },
+ {
+  "key": "PA-0037",
+  "pa": "PA-0037",
+  "name": "Mini Pancakes",
+  "file": "LS_Mini-Pancakes_MASTER_v01.png",
+  "sha256": "c1072a7479fc8e8f"
+ },
+ {
+  "key": "PA-0040",
+  "pa": "PA-0040",
+  "name": "Waffle",
+  "file": "LS_Waffle_MASTER_v01.png",
+  "sha256": "251c465b647d4ac2"
+ },
+ {
+  "key": "PA-0041",
+  "pa": "PA-0041",
+  "name": "Paleta",
+  "file": "LS_Paletas_MASTER_v03.png",
+  "sha256": "43140cc03fe02f13"
+ },
+ {
+  "key": "PA-0043",
+  "pa": "PA-0043",
+  "name": "Crepa Dubai",
+  "file": "LS_Crepa-Dubai_MASTER_v02.png",
+  "sha256": "fd35a2b122cf959a"
+ },
+ {
+  "key": "PA-0063",
+  "pa": "PA-0063",
+  "name": "Platano Frito",
+  "file": "LS_Platano-Frito_MASTER_v01.png",
+  "sha256": "bbee40c516643e13"
+ },
+ {
+  "key": "PA-0045",
+  "pa": "PA-0045",
+  "name": "Sandwich de Helado",
+  "file": "LS_Sandwich-de-Helado_MASTER_v01.png",
+  "sha256": "93197779c3ecb1de"
+ },
+ {
+  "key": "PA-0022",
+  "pa": "PA-0022",
+  "name": "Chamoyada",
+  "file": "LS_Chamoyada_MASTER_v01.png",
+  "sha256": "8a09538080de7af8"
+ },
+ {
+  "key": "PA-0026",
+  "pa": "PA-0026",
+  "name": "Elote",
+  "file": "LS_Elote-Regular_MASTER_v01.png",
+  "sha256": "e83805761070430b"
+ },
+ {
+  "key": "PA-0035",
+  "pa": "PA-0035",
+  "name": "Mango en Palo",
+  "file": "LS_Mango-en-Palo_MASTER_v02.png",
+  "sha256": "172670c5782fa59b"
+ },
+ {
+  "key": "PA-0038",
+  "pa": "PA-0038",
+  "name": "Paleta Loca",
+  "file": "LS_Paleta-Loca_MASTER_v02.png",
+  "sha256": "2500723ab8ca1437"
+ },
+ {
+  "key": "PA-0013",
+  "pa": "PA-0013",
+  "name": "Licuado",
+  "file": "LS_Licuado_MASTER_v02.png",
+  "sha256": "edd6899da4adae99"
+ },
+ {
+  "key": "PA-0014",
+  "pa": "PA-0014",
+  "name": "Crazy Shake (bomb\u00f3n)",
+  "file": "LS_Crazy-Shakes_MASTER_v02.png",
+  "sha256": "ac73fff8e40c8f79"
+ },
+ {
+  "key": "PA-0015",
+  "pa": "PA-0015",
+  "name": "Aguas Explosivas",
+  "file": "LS_Aguas-Explosivas_MASTER_v02.png",
+  "sha256": "5ff9b4e03b8b00e4"
+ },
+ {
+  "key": "PA-0016",
+  "pa": "PA-0016",
+  "name": "Esquites Hot Cheetos",
+  "file": "LS_Esquites-Hot-Cheetos_MASTER_v02.png",
+  "sha256": "350c51237f7f0d98"
+ },
+ {
+  "key": "PA-0017",
+  "pa": "PA-0017",
+  "name": "Gelatina",
+  "file": "LS_Gelatina_MASTER_v02.png",
+  "sha256": "12412f59ab9e4195"
+ },
+ {
+  "key": "PA-0018",
+  "pa": "PA-0018",
+  "name": "Gelatina (second flavour)",
+  "file": "LS_Gelatina_MASTER_v03.png",
+  "sha256": "58b77cbe93060b2f"
+ },
+ {
+  "key": "PA-0019",
+  "pa": "PA-0019",
+  "name": "Pastel Tres Leche",
+  "file": "LS_Pastel-Tres-Leche_MASTER_v02.png",
+  "sha256": "44f091a7d14153d1"
+ },
+ {
+  "key": "PA-0024",
+  "pa": "PA-0024",
+  "name": "Crepa",
+  "file": "LS_Crepa_MASTER_v01.png",
+  "sha256": "dcc72a4ad7b49483"
+ },
+ {
+  "key": "PA-0054",
+  "pa": "PA-0054",
+  "name": "Helado Chico",
+  "file": "LS_Helado-Chico_MASTER_v01.png",
+  "sha256": "1956ce58e1b6ae0c"
+ },
+ {
+  "key": "PA-0044",
+  "pa": "PA-0044",
+  "name": "Michelaguas",
+  "file": "LS_Michelaguas_MASTER_v01.png",
+  "sha256": "5969f973c3ddc33f"
+ },
+ {
+  "key": "PA-0047",
+  "pa": "PA-0047",
+  "name": "Bionico con Nieve",
+  "file": "LS_Bionico-con-Nieve_MASTER_v02.png",
+  "sha256": "f77724057772eaf6"
+ },
+ {
+  "key": "PA-0050",
+  "pa": "PA-0050",
+  "name": "Chicharron en Rueda",
+  "file": "LS_Chicharron-en-Rueda_MASTER_v01.png",
+  "sha256": "a884c977d584504a"
+ },
+ {
+  "key": "PA-0052",
+  "pa": "PA-0052",
+  "name": "Esquites",
+  "file": "LS_Esquites_MASTER_v01.png",
+  "sha256": "37a30f1224f45c2c"
+ },
+ {
+  "key": "PA-0058",
+  "pa": "PA-0058",
+  "name": "Mini Pancakes Dubai",
+  "file": "LS_Mini-Pancakes-Dubai_MASTER_v01.png",
+  "sha256": "b5372adaf00cff92"
+ },
+ {
+  "key": "PA-0051",
+  "pa": "PA-0051",
+  "name": "Churros",
+  "file": "LS_Churros_MASTER_v01.png",
+  "sha256": "af54a2d26395ab69"
+ },
+ {
+  "key": "PA-0006#2",
+  "pa": "PA-0006",
+  "name": "Crazy Shake (cookie)",
+  "file": "LS_Crazy-Shakes_MASTER_v03.png",
+  "sha256": "3390fa6176aa5a9b"
+ },
+ {
+  "key": "PA-0042#2",
+  "pa": "PA-0042",
+  "name": "Helado Viral (mango)",
+  "file": "LS_Helado-Chino_MASTER_v02.png",
+  "sha256": "55f250955a457cdf"
+ },
+ {
+  "key": "UNFILED-1",
+  "pa": "UNFILED-1",
+  "name": "Croissant con Helado",
+  "file": "LS_Croissant-con-Helado_MASTER_v01.png",
+  "sha256": "dce0c4635cd7baf8"
+ },
+ {
+  "key": "UNFILED-2",
+  "pa": "UNFILED-2",
+  "name": "Vaso La Sabrosita",
+  "file": "LS_Vaso-La-Sabrosita_MASTER_v01.png",
+  "sha256": "4cfe3461859fcc5a"
+ },
+ {
+  "key": "PA-0006#3",
+  "pa": "PA-0006",
+  "name": "Crazy Shake (pastel)",
+  "file": "LS_Crazy-Shakes_MASTER_v04.png",
+  "sha256": "36f88a3b46d1d780"
+ }
+]

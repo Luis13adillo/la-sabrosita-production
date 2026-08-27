@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>La Sabrosita — Still Menu Motion</title>
+
+    <!--
+      This composition does not re-implement the client's video. It hosts it.
+
+      StillMenuMotion.zip is a Claude Design project: a React scene whose every
+      frame is a pure function of one number, the authored time T. It already
+      exposes the seek protocol a frame renderer needs — dispatch
+      `data-om-seek-to-time-frame` with {time, sync:true} on its canvas and the
+      committed DOM is that timestamp before dispatchEvent returns.
+
+      So the scene files in src/ are the client's, compiled but not rewritten,
+      and this page's only job is to mount them, hide the Claude Design editor
+      chrome that is not part of the picture, and hand HyperFrames a paused
+      GSAP timeline that forwards its playhead into that seek protocol.
+
+      The design, the layout, the copy, the timing and the motion all still live
+      in src/sabrosita-scene.jsx. Nothing here changes any of them.
+    -->
+
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/react.production.min.js"></script>
+    <script src="vendor/react-dom.production.min.js"></script>
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #25062c;
+      }
+
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+
+      /* The scene paints its own backdrop; this is the floor under it, on a
+         child rather than on #root — the producer can drop a background set on
+         the composition root itself and render the frame black. */
+      #field { position: absolute; inset: 0; background: #25062c; }
+
+      #stage { position: absolute; inset: 0; overflow: hidden; }
+
+      /* ── Claude Design stage chrome, removed for render ──────────────────
+         animations-v3's <Stage> is built for an editor: it paints a dark mat,
+         stacks a 44px playback bar under the canvas, and scales the canvas down
+         to fit whatever viewport it is in. None of that belongs in the video.
+         The canvas itself — the <svg data-om-exportable-video-...> — is exactly
+         1920x1080 and is what Claude Design's own exporter captures, so pinning
+         it to scale 1 in a 1920x1080 box reproduces the authored frame 1:1.
+         `!important` is required: those values are React inline styles. */
+      #stage > div[data-om-starter="animations-v3"] { background: transparent !important; }
+
+      /* Everything after the canvas area is the playback bar. */
+      #stage > div[data-om-starter="animations-v3"] > *:not(:first-child) { display: none !important; }
+
+      #stage svg[data-om-exportable-video-with-duration-secs] {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      id="root"
+      data-composition-id="still-menu"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="60"
+    >
+      <div id="field"></div>
+
+      <div
+        id="stage"
+        class="clip"
+        data-start="0"
+        data-duration="60"
+        data-track-index="1"
+      ></div>
+    </div>
+
+    <!-- The authoring contract from the client's project file,
+         "La Sabrosita Reel.dc.html", copied verbatim. OM_SCENES is what sets
+         the length: two 30-second halves, Spanish then English, 60s total. -->
+    <script>
+      window.OM_SCENES = '[{"name":"Español","dur":30,"desc":"The Spanish menu board builds in — logo, ¡HECHO CON SABOR!, the four category panels item by item, then holds steady"},{"name":"English","dur":30,"desc":"The board swaps to English — MADE WITH FLAVOR! and the same four panels rebuild, then hold steady before looping"}]';
+      window.OM_PLAYBACK = '{"mode":"loop"}';
+      window.TWEAK_DEFAULTS = { showSparkles: true, motionEditor: true };
+    </script>
+
+    <!-- The client's scene, compiled from src/*.jsx by scripts/build-jsx.mjs
+         with the same Babel version and presets Claude Design uses. -->
+    <script src="build/animations-v3.js"></script>
+    <script src="build/tweaks-panel.js"></script>
+    <script src="build/sabrosita-scene.js"></script>
+
+    <script>
+      (function () {
+        var DURATION = 60;
+        var host = document.getElementById("stage");
+
+        // <Stage> restores its playhead from localStorage on first render. Every
+        // rendered frame is an explicit seek so it cannot reach the picture, but
+        // a render worker must not start from whatever a previous preview left
+        // behind.
+        try { window.localStorage.removeItem("animstage-v3:t"); } catch (e) {}
+
+        // Mount synchronously. flushSync forces the commit *and* flushes the
+        // passive effects behind it, which is what registers the scene's seek
+        // listener — an async mount would let the first frame be sampled off an
+        // empty page.
+        var root = ReactDOM.createRoot(host);
+        ReactDOM.flushSync(function () {
+          root.render(React.createElement(window.SabrositaReel));
+        });
+        ReactDOM.flushSync(function () {});
+
+        function canvas() {
+          return host.querySelector("svg[data-om-exportable-video-with-duration-secs]");
+        }
+
+        // Hand one timestamp to the scene. sync:true makes the scene apply it
+        // through ReactDOM.flushSync, so the DOM *is* that frame by the time
+        // this returns — no waiting on a paint, which is what makes the render
+        // deterministic and order-independent.
+        function seek(t) {
+          var el = canvas();
+          if (!el) return false;
+          el.dispatchEvent(
+            new CustomEvent("data-om-seek-to-time-frame", {
+              detail: { time: t, sync: true },
+            })
+          );
+          return true;
+        }
+
+        if (!seek(0)) {
+          // The listener lives in a useEffect; if it somehow has not attached,
+          // flush again rather than render a page-load frame.
+          ReactDOM.flushSync(function () {});
+          seek(0);
+        }
+
+        // The one paused timeline HyperFrames drives. It animates nothing on
+        // this page — it exists to carry the playhead, and every seek of it is
+        // forwarded straight into the scene.
+        window.__timelines = window.__timelines || {};
+        var tl = gsap.timeline({ paused: true });
+        tl.to({ t: 0 }, { t: DURATION, duration: DURATION, ease: "none" }, 0);
+        tl.eventCallback("onUpdate", function () {
+          seek(tl.time());
+        });
+        window.__timelines["still-menu"] = tl;
+      })();
+    </script>
+  </body>
+</html>

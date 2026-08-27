@@ -1,0 +1,44 @@
+<!-- 8. THE TOWN
+     ==========
+     The one thing neither benchmark can answer.
+
+     michoacana.com and heladosmexico.com are national packaged brands sold out of
+     a freezer aisle; belonging to one town is structurally unavailable to them.
+     La Sabrosita has a neon I ♥ SWEDESBORO on the wall above its tables, and that
+     sign is the strongest single asset in this project — not because it is pretty,
+     but because it is an argument the competition cannot make.
+
+     So it gets its own band, on the darkest ground on the site, and it is the last
+     thing a customer reads before "come by the shop". The order is deliberate:
+     menu, then who we are, then where.
+
+     THE HEART IS DRAWN, NOT TYPED. An emoji heart renders as a different glyph on
+     every platform and is announced by screen readers as "red heart". This is an
+     inline SVG with the word "loves" as its accessible name, so the line reads as
+     "I loves Swedesboro"... which is wrong, so the visible mark is aria-hidden and
+     the whole line carries its own label instead.
+
+     THE PHOTOGRAPH. There is a real photograph of this sign — the client has it.
+     It is not in the repo yet, so this band renders the sign as type for now and
+     the figure below is marked. When the photo lands at
+     assets/shop/LS_Neon-Swedesboro_ORIGINAL_v01.jpg it replaces the drawn version
+     and this band becomes a photograph of the actual wall. -->
+<section class="town" aria-labelledby="town-h">
+  <div class="town__glow" aria-hidden="true"></div>
+  <div class="town__in">
+    <p class="kick town__kick">{{dia}}{{t:townKicker}}{{dia}}</p>
+
+    <p class="neon" role="img" aria-label="{{t:townHeart}}">
+      <span aria-hidden="true">I</span>
+      <svg class="neon__heart" viewBox="0 0 24 22" aria-hidden="true" focusable="false">
+        <path d="M12 21.4 3.6 12.9A5.6 5.6 0 0 1 12 5.6a5.6 5.6 0 0 1 8.4 7.3Z"/>
+      </svg>
+      <span aria-hidden="true">Swedesboro</span>
+    </p>
+
+    <h2 class="town__h" id="town-h">{{d:townTitle}}{{draft}}</h2>
+    <p class="town__body">{{d:townBody}}{{draft}}</p>
+    <a class="town__cta" href="#visit">{{t:townCta}}</a>
+    <figure class="town__fig">{{casePhoto}}</figure>
+  </div>
+</section>

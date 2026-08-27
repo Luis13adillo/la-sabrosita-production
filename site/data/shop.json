@@ -1,0 +1,71 @@
+{
+  "_generated": "scripts/build-shop.mjs — do not hand-edit",
+  "_what": "Photographs of the shop itself. Rectangular room photographs, not product cut-outs.",
+  "photos": {
+    "Counter": {
+      "stem": "LS_Counter_ORIGINAL_v01",
+      "width": 3000,
+      "height": 4000,
+      "aspect": 0.75,
+      "widths": [
+        700,
+        1200,
+        1800
+      ],
+      "srcset": "/shop/LS_Counter_ORIGINAL_v01-700.webp 700w, /shop/LS_Counter_ORIGINAL_v01-1200.webp 1200w, /shop/LS_Counter_ORIGINAL_v01-1800.webp 1800w",
+      "lqip": "data:image/webp;base64,UklGRuwAAABXRUJQVlA4IOAAAACwBQCdASoUABsAPxF+tlWsJ6SjKAgBgCIJbACdFQv56MAYC70wc2pjJs2vTKzYx9uzBPTNuwAA+SwZBoe0Lvm8otO/0Zvd2f1u5Deh2rmV2Y8oGfG8GWckwQSflAsEzPDeW+/VZCGNUk6MBbVaa2n6/484f9QXwO1jwO21A5wqXSgD8Kgc/POxuOGTMeo+qUJy2ebU2hiXeYwh7lTdwGtWgoGAfcda7CtNgqmCDfNxdCcJyRwWcVZ03nhmNQsmnn9vwTPOpjPYu+xIbhzNcPRjCkJGQO0IYlTR/6wTkz4AAA=="
+    },
+    "Display-Case": {
+      "stem": "LS_Display-Case_ORIGINAL_v01",
+      "width": 3000,
+      "height": 4000,
+      "aspect": 0.75,
+      "widths": [
+        700,
+        1200,
+        1800
+      ],
+      "srcset": "/shop/LS_Display-Case_ORIGINAL_v01-700.webp 700w, /shop/LS_Display-Case_ORIGINAL_v01-1200.webp 1200w, /shop/LS_Display-Case_ORIGINAL_v01-1800.webp 1800w",
+      "lqip": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAABwBQCdASoUABsAPxF8r1GsKCQisBgIAYAiCWwAnTMvxLD+frfpn2UwT+y43Gz1xeRnRwNQAP7M0HdQAD0hQAS2nK9aAnnzOR8xdZL+ySSqApI5Q68DlG0tmKnwq3jdo+gMQPE3Pqb2viDe3jaAa2ilTrOZtzpZaJEBdxLoUJiIrCHEI2BPcUj1nxL46ZZKmjYKEr99GSyGggs5Lpa5jN7T0z1d+sJWzD2MpyC55kpC3GSNMAA="
+    },
+    "Interior": {
+      "stem": "LS_Interior_ORIGINAL_v01",
+      "width": 3000,
+      "height": 4000,
+      "aspect": 0.75,
+      "widths": [
+        700,
+        1200,
+        1800
+      ],
+      "srcset": "/shop/LS_Interior_ORIGINAL_v01-700.webp 700w, /shop/LS_Interior_ORIGINAL_v01-1200.webp 1200w, /shop/LS_Interior_ORIGINAL_v01-1800.webp 1800w",
+      "lqip": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAAAQBQCdASoUABsAPxF4q1CsJ6OisBgMAYAiCWoAnSEzQJ3+EGAexcCV5QESoyBAweLAAPcGygDByJEJZNMZOtNTxIpWWpXmbkrg5ZWx9rzZnOuYRHdA7/LOM36uJDExLKONNVNbeTxwZ1QVluLNDGLGviBhAQUTmXvgk13GjgA/JZicu5mGV7PHzHYpwCuGnC+U68xFiiDpWtXhvZf3RhqySnpdX+716nPa1OkvRgH4CtBUgAA="
+    },
+    "Neon-Swedesboro": {
+      "stem": "LS_Neon-Swedesboro_ORIGINAL_v01",
+      "width": 3000,
+      "height": 4000,
+      "aspect": 0.75,
+      "widths": [
+        700,
+        1200,
+        1800
+      ],
+      "srcset": "/shop/LS_Neon-Swedesboro_ORIGINAL_v01-700.webp 700w, /shop/LS_Neon-Swedesboro_ORIGINAL_v01-1200.webp 1200w, /shop/LS_Neon-Swedesboro_ORIGINAL_v01-1800.webp 1800w",
+      "lqip": "data:image/webp;base64,UklGRtAAAABXRUJQVlA4IMQAAAAwBQCdASoUABsAPxF8tFQsJ6SjKAqpgCIJbACdMwnBGRyTMeMjV+gi2dekLWzEMZpbIADcaQjv4/qrO8JaouQcppqlFHtEsuUwE1N0+uTB4leloiqGAdN3k9sPwFXmyaoGw5S6/GxjgY86UAiLH62YatAEbAZn5jXLgUmlgwMFp++dU3r6n53F3RZHYR6hnu0hzBIoJ7VoMhRWKcAoyzbWRiWEcqga06VgvH6X1dpJwIStnB9tfr2fUMPRtRDNDjHA8VQA"
+    },
+    "Storefront": {
+      "stem": "LS_Storefront_ORIGINAL_v01",
+      "width": 3000,
+      "height": 4000,
+      "aspect": 0.75,
+      "widths": [
+        700,
+        1200,
+        1800
+      ],
+      "srcset": "/shop/LS_Storefront_ORIGINAL_v01-700.webp 700w, /shop/LS_Storefront_ORIGINAL_v01-1200.webp 1200w, /shop/LS_Storefront_ORIGINAL_v01-1800.webp 1800w",
+      "lqip": "data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAADwBACdASoUABsAPxF+t1WsJ6UjKAgBgCIJaACsABEZiAosi9kfDWBFtaPMxDg9rwAA4CRiQWOAZ4dCMj+jupaIUSVtM8cTsNhZJJeOQifclf4/qzCgDh6k0TIcb5AxxUb4ranLOwhfdgtufi9sW1nFtrps/Fov/aVGP/1TX2u8ziD1D3A3rmBVnAM4/JMj1QelSeETpux+TiE29cHpxMiBuqK2geos0uxD2//AMAA="
+    }
+  }
+}

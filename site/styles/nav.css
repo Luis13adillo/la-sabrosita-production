@@ -1,0 +1,123 @@
+/* ============================================================================
+   THE HEADER — the approved design's bar, doing this site's extra job.
+
+   One deep purple row: the mark on a cream plaque, the four chapter words, the
+   call to action, the language switch. It sticks, so `html { scroll-padding-top }`
+   in base.css clears it for every jump link on the page.
+
+   THE CHAPTER WORDS ARE BUTTONS. They set the filter rather than jumping, which
+   is why they are `<button>` and why src/app/main.js builds them out of
+   menu.json instead of this file carrying a second copy of four labels.
+
+   BELOW 760px THE WORDS GO AND NOTHING REPLACES THEM, on purpose. The same four
+   words are the first thing under the hero (the typographic statement), the four
+   category panels, the four jump links in the menu head, the four chips in the
+   sticky bar and the four columns of the footer. A phone that hides them here
+   still meets them five times before the menu, and a hamburger would add a
+   control whose only content is words already on the screen.
+   ========================================================================== */
+
+.hdr {
+  position: sticky; top: 0; z-index: 120;
+  background: var(--c-structure);
+  border-bottom: 2px solid rgb(var(--c-base-cream-rgb) / .14);
+}
+.hdr__in {
+  max-width: var(--maxw); margin-inline: auto;
+  padding: 7px var(--gutter);
+  display: flex; align-items: center; gap: clamp(10px, 2vw, 28px);
+}
+
+/* THE PLAQUE IS brand.json, NOT TASTE. logo.minimumSize says do not take the
+   complete logo below 250px wide, and names one escape hatch: "use the official
+   complete logo on a clean cream or white area". At header size there is no
+   other legal way to show it.
+
+   The padding is larger than the radius so that all four corners of the mark's
+   own bounding box land on cream — scripts/brand-check.mjs samples exactly those
+   four corners and fails the page if any of them has slipped onto the pink. */
+/* NO PLAQUE, BY THE CLIENT'S DECISION. brand.json's minimumSize rule says a mark
+   under 250px goes on cream or white, and this one is 54-70px; the client waived
+   that clause for the header on 2026-08-26 and it is recorded in brand.json under
+   logo.minimumSize._clientException. Everything else about the rule still holds —
+   deep purple is an approved background, and the complete mark is used unaltered.
+   It works because the artwork carries its own white keyline, which is what
+   separates it from the purple. The FOOTER mark keeps its cream plaque. */
+.hdr__mark {
+  background: none; padding: 0;
+  flex: 0 0 auto; display: flex; align-items: center;
+}
+/* 90px at the top end, up from 70. Without the cream plaque the mark has to
+   carry itself on the purple, and size is the lever that does that — the
+   plaque never made the lettering more legible, it only separated it. The
+   phone floor moves 54 -> 62: enough to gain from, small enough that the
+   header row still fits the CTA and the language switch at 390. */
+.hdr__mark img { width: clamp(62px, 6.3vw, 90px); }
+
+.hdr__nav { display: flex; align-items: center; gap: clamp(6px, 1.3vw, 22px); margin-left: auto; }
+.nav__cat {
+  font-family: var(--font-display); font-weight: var(--w-semi);
+  font-size: clamp(0.75rem, 1.05vw, 0.875rem);
+  letter-spacing: var(--tr-wide);
+  color: var(--c-reading); text-decoration: none; text-transform: uppercase;
+  min-height: 44px; display: inline-flex; align-items: center; padding: 0 6px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav__cat:hover { border-bottom-color: var(--c-highlight); }
+.nav__cat[aria-pressed="true"] { border-bottom-color: var(--c-highlight); color: var(--c-highlight); }
+
+.hdr__cta {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--fs-tag); letter-spacing: var(--tr-wide); text-transform: uppercase;
+  background: var(--c-reading); color: var(--c-structure); text-decoration: none;
+  min-height: 44px; display: inline-flex; align-items: center; padding: 0 18px;
+  border-radius: var(--r-pill); white-space: nowrap; flex: 0 0 auto;
+  box-shadow: 0 3px 0 rgb(var(--c-deep-purple-rgb) / .5);
+}
+.hdr__cta:hover { transform: translateY(-1px); box-shadow: 0 4px 0 rgb(var(--c-deep-purple-rgb) / .5); }
+
+/* Sunny yellow on deep purple is 8.3:1, so the switch can be an outline rather
+   than a second filled pill competing with the call to action beside it. */
+.hdr__lang {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--fs-tag); letter-spacing: var(--tr-wide); text-transform: uppercase;
+  background: transparent; color: var(--c-highlight); text-decoration: none;
+  border: 2px solid rgb(var(--c-sunny-yellow-rgb) / .55); border-radius: var(--r-pill);
+  min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px;
+  white-space: nowrap; flex: 0 0 auto;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.hdr__lang:hover { background: var(--c-highlight); color: var(--c-structure); }
+
+/* THE ENGLISH ROW IS WIDER THAN THE SPANISH ONE, AND THE BAR IS SHARED.
+   b.html is a Spanish page, so its header only ever had to fit HELADOS /
+   ANTOJITOS / POSTRES / BEBIDAS. In English the same four words are ICE CREAM /
+   SAVORY SNACKS / DESSERTS / DRINKS, which is 44px wider, and at 768 the
+   Spanish row already fits with about a pixel to spare. So the English page
+   pushed 27px of horizontal scroll onto every reader at tablet portrait.
+
+   The words stay — hiding them in both languages to fix one of them would give
+   up the approved header at the width where it still reads well. Instead the
+   row is squeezed between the point where it stops being comfortable and the
+   point where the words are dropped altogether: less air between the four
+   items, less inside each of them, and the smaller of the two tracking tokens.
+   Nothing here is a new value; --tr-caps is the same tracking the chapter chips
+   use. Measured at 768: 795px of content becomes 748px, and Spanish gains
+   47px of slack it did not have. */
+@media (min-width: 760px) and (max-width: 900px) {
+  .hdr__in { gap: 10px; }
+  .hdr__nav { gap: 6px; }
+  .nav__cat { padding: 0 3px; letter-spacing: var(--tr-caps); }
+}
+
+@media (max-width: 759px) {
+  .hdr__nav { display: none; }
+  .hdr__cta { margin-left: auto; }
+}
+@media (max-width: 420px) {
+  .hdr__in { gap: 6px; padding-inline: var(--s-3); }
+  .hdr__mark { padding: 5px 9px; }
+  .hdr__cta, .hdr__lang { padding: 0 11px; font-size: var(--fs-chip); letter-spacing: var(--tr-caps); }
+}

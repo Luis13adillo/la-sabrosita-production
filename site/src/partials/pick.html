@@ -1,0 +1,20 @@
+<!-- 5. THE FOUR CATEGORY PANELS
+     ===========================
+     b.html section 5. One panel per chapter, each on its own brand colour, each
+     with two photographs and a cream (or deep purple) reading strip across the
+     bottom. The panels are ordinary links to the four chapter ids, so they work
+     with no JavaScript at all.
+
+     THE STRIP'S INK IS TWO TOKENS, NOT ONE. `--panel-fg` is the category name at
+     display size, which is legal at 3:1; `--panel-go` is the 13px "see Helados"
+     line under it, which needs 4.5:1 and therefore cannot be hot pink on cream
+     (3.85:1). b.html used one colour for both and reached for a sixth hue
+     (#0B6EA3) to make the blue one work. There is no sixth hue here. -->
+<section class="pick" aria-labelledby="pick-h">
+  <div class="pick__head">
+    <p class="kicker kicker--dark">{{dia}}{{d:pickKicker}}{{dia}}{{draft}}</p>
+    <h2 class="pick__h" id="pick-h">{{d:pickTitle}}{{draft}}</h2>
+    <p class="pick__lead">{{d:pickLead}}</p>
+  </div>
+  <div class="pans">{{panels}}</div>
+</section>

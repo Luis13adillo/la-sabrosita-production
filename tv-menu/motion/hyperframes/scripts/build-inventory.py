@@ -99,10 +99,10 @@ INVENTORY = {
         "Helado en Cono", "HELADOS",
         "two scoops on a waffle cone"),
     "lasabrosita_helado-chino_master_v01_1786749676565.png": (
-        "Helado Chino", "HELADOS",
+        "Helado Viral", "HELADOS",
         "packaged peach-flavour moulded ice cream in its printed box"),
     "lasabrosita_helado-chino_master_v02_1786751663700.png": (
-        "Helado Chino", "HELADOS",
+        "Helado Viral", "HELADOS",
         "packaged mango-flavour moulded ice cream in its printed box"),
     "lasabrosita_paleta-loca_master_v02_1786750630712.png": (
         "Paletas Locas", "HELADOS",

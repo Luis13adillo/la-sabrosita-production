@@ -1,0 +1,136 @@
+{
+  "_what": "DRAFTED PAGE COPY. Not approved by the client. Every line in this file is written by us, and every line renders on the page behind a visible 'Borrador' / 'Draft' chip so nobody — the client, or whoever inherits this repo — can mistake it for something that was signed off.",
+  "_rules": [
+    "Nothing here states a fact we were not given. No address, no hours, no phone, no price, no founding date, no family history, no claim about how the food is made, no review, no rating.",
+    "Where a line names products, the names are menu.json's own approved product names, spelled the way menu.json spells them.",
+    "Where a line states a number, the number is counted from menu.json at build time, never typed. See {n} and the per-category counts in scripts/build-site.mjs.",
+    "Approved copy always wins. The hero deck, the menu title and the menu lead are NOT here: they are approved strings in data/ui.json and the page uses those.",
+    "When the client approves a line, it moves to data/ui.json and its chip disappears with it.",
+    "APPROVED 2026-08-26 — see _approved. The chip mechanism is off."
+  ],
+  "lines": {
+    "sayKicker": {
+      "es": "Cuatro capítulos",
+      "en": "Four chapters"
+    },
+    "sayFoot": {
+      "es": "Las cuatro categorías del menú. {n} productos repartidos entre ellas.",
+      "en": "The four categories on the menu. {n} items split between them."
+    },
+    "storyKicker": {
+      "es": "La tienda",
+      "en": "The shop"
+    },
+    "storyTitleA": {
+      "es": "Aquí cabe",
+      "en": "Every craving"
+    },
+    "storyTitleB": {
+      "es": "todo el antojo",
+      "en": "fits in here"
+    },
+    "storyP1": {
+      "es": "Elotes y esquites. Nieve en cono, en vaso y en paleta. Fresas con crema, churros, crepas y gelatina. Aguas frescas, licuados, raspados y chamoyadas.",
+      "en": "Elotes and esquites. Ice cream in a cone, in a cup, on a stick. Fresas con crema, churros, crepas and gelatina. Aguas frescas, licuados, raspados and chamoyadas."
+    },
+    "storyP2": {
+      "es": "Cuarenta y cinco cosas en el menú. Ninguna que no reconozcas.",
+      "en": "Forty-five things on the menu. Nothing you wouldn't recognise."
+    },
+    "storyCta": {
+      "es": "Ver los {n}",
+      "en": "See all {n}"
+    },
+    "pickKicker": {
+      "es": "Escoge por dónde empezar",
+      "en": "Pick where to start"
+    },
+    "pickTitle": {
+      "es": "Cuatro maneras de entrar",
+      "en": "Four ways in"
+    },
+    "pickLead": {
+      "es": "Cada categoría lleva su propio color en esta página.",
+      "en": "Each category carries its own colour on this page."
+    },
+    "beatsKicker": {
+      "es": "Tres antojos",
+      "en": "Three cravings"
+    },
+    "beatsTitle": {
+      "es": "Dulce, salado y frío",
+      "en": "Sweet, savoury and cold"
+    },
+    "beat1Title": {
+      "es": "Nieve, como la quieras",
+      "en": "Ice cream, however you want it"
+    },
+    "beat1P": {
+      "es": "En cono, en vaso, entre dos galletas o en palito. Helado en Cono, Sandwich de Helado, Banana Split, Paletas, Choco Banana y el vaso de la casa.",
+      "en": "In a cone, in a cup, between two cookies or on a stick. Helado en Cono, Sandwich de Helado, Banana Split, Paletas, Choco Banana and the house cup."
+    },
+    "beat2Title": {
+      "es": "Lo salado también cuenta",
+      "en": "The savoury half counts too"
+    },
+    "beat2P": {
+      "es": "Elote y Esquite, con o sin Hot Cheetos. Tostilocos, Nachos, Marucha Loca, Chicharron Preparado y Platano Frito. Doce antojitos en total.",
+      "en": "Elote and Esquite, with or without Hot Cheetos. Tostilocos, Nachos, Marucha Loca, Chicharron Preparado and Platano Frito. Twelve savoury snacks in all."
+    },
+    "beat3Title": {
+      "es": "Y algo frío para beber",
+      "en": "And something cold to drink"
+    },
+    "beat3P": {
+      "es": "Aguas Frescas, Licuado, Frappe, Raspado, Chamoyada, Mangonada, Michelaguas y Aguas Explosivas. Ocho bebidas, todas frías.",
+      "en": "Aguas Frescas, Licuado, Frappe, Raspado, Chamoyada, Mangonada, Michelaguas and Aguas Explosivas. Eight drinks, all cold."
+    },
+    "menuKicker": {
+      "es": "Todo, de una vez",
+      "en": "All of it, at once"
+    },
+    "visitKicker": {
+      "es": "Visítanos",
+      "en": "Visit us"
+    },
+    "visitTitle": {
+      "es": "Pásate por la tienda",
+      "en": "Come by the shop"
+    },
+    "visitNote": {
+      "es": "Tres datos por confirmar. Nada inventado en su lugar.",
+      "en": "Three facts still to confirm. Nothing invented in their place."
+    },
+    "footMenu": {
+      "es": "El menú",
+      "en": "The menu"
+    },
+    "footPage": {
+      "es": "La página",
+      "en": "This page"
+    },
+    "footWhere": {
+      "es": "Dónde",
+      "en": "Where"
+    },
+    "footTop": {
+      "es": "Inicio",
+      "en": "Top"
+    },
+    "townTitle": {
+      "es": "Somos de aquí",
+      "en": "We are from here"
+    },
+    "townBody": {
+      "es": "El letrero está colgado en la pared del local, encima de las mesas. No es decoración: es de dónde somos. La Sabrosita abrió en la Kings Highway y aquí se queda.",
+      "en": "The sign hangs on the wall inside, above the tables. It is not decoration — it is where we are from. La Sabrosita opened on Kings Highway and this is where it stays."
+    }
+  },
+  "_approved": {
+    "by": "the client, Luis",
+    "on": "2026-08-26",
+    "scope": "All 29 lines in this file, in both languages, plus the English hero headline \"Sweet, salty, spicy, cold\" in data/ui.json.",
+    "effect": "The Borrador / Draft chips no longer render — build-site.mjs sets draftChip to an empty string. The file keeps its name and structure on purpose, so the provenance stays legible: these lines were written by the agency, not supplied by the shop, and that is still true now that they are approved.",
+    "ifEdited": "A line edited from here on is NEW copy and needs approving again. Do not silently reword an approved line."
+  }
+}

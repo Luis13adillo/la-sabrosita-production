@@ -1,0 +1,48 @@
+<!-- THE HEADER
+     ==========
+     This is the approved design's header (site/.site/b.html, section 1): a deep
+     purple bar with the mark on a cream plaque at the left, the four chapters as
+     words in the middle, and the two tools — "see the menu" and the language
+     switch — at the right.
+
+     THREE THINGS ARE NOT b.html, AND ALL THREE ARE THINGS b.html DID NOT HAVE TO DO.
+
+     1. THE CHAPTER WORDS ARE BUTTONS, NOT ANCHORS. b.html is one static page, so
+        its header could link to `#helados`. This site FILTERS: the same word has
+        to set the category, put it in the URL, and carry it across the language
+        switch. src/app/main.js fills `[data-catnav]` with one button per
+        category read out of menu.json, so the words are the client's own
+        approved labels and there is no second copy of them here.
+
+     2. THE LANGUAGE SWITCH IS A LINK, NOT A TOGGLE. b.html flips a `data-lang`
+        attribute because it holds both languages at once. Here the two languages
+        are two documents — `/` and `/en/` — so this is an ordinary anchor, and
+        src/app/url-state.js rewrites its href to carry the filter and the search
+        term across. That is why it is `<a>` and not `<button>`.
+
+     3. THERE IS NO SEARCH FIELD UP HERE. b.html has none, and the field belongs
+        with the thing it searches: it sits in the menu's own sticky bar beside
+        the filter chips, where the count that answers it also lives.
+
+     THE MARK SITS ON A CREAM PLAQUE, and that is brand.json rather than taste.
+     `logo.minimumSize` says do not take the complete logo below 250px wide, and
+     names the escape hatch when you must: "use the official complete logo on a
+     clean cream or white area". At 54-70px in a header there is no other legal
+     way to show it. The plaque's padding is larger than its corner radius so
+     that all four corners of the mark's own box land on cream — which is exactly
+     what scripts/brand-check.mjs samples. -->
+<header class="hdr" data-nav>
+  <div class="hdr__in">
+    <a class="hdr__mark" href="#top" aria-label="{{brandName}}">
+      <img src="/brand/logo.png" srcset="{{logoSrcset}}" sizes="(max-width: 420px) 62px, 90px"
+           alt="{{brandName}}" width="1915" height="1788" fetchpriority="high" decoding="async">
+    </a>
+
+    <nav class="hdr__nav" aria-label="{{t:navCategories}}" data-catnav></nav>
+
+    <a class="hdr__cta" href="#menu">{{t:heroCta}}</a>
+
+    <a class="hdr__lang nav__lang" data-lang-link href="{{otherHome}}"
+       hreflang="{{otherLang}}" lang="{{otherLang}}">{{t:langSwitch}}</a>
+  </div>
+</header>

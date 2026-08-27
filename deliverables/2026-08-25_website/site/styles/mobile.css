@@ -1,0 +1,832 @@
+/* ============================================================================
+   MOBILE — 390 x 844, which is how nearly everyone will actually see this
+
+   This file loads last, so it is where a phone gets to overrule a decision that
+   was taken with a 1440px window in front of it. It holds three kinds of rule
+   and nothing else: layouts that have to change SHAPE on a narrow screen,
+   heights that an 844px screen cannot afford, and the safe-area insets, because
+   the shell sets viewport-fit=cover and only nav.css was honouring it.
+
+   THE FOUR CATEGORIES WERE ON THE SCREEN TWICE, AND THIS ROUND THEY CHANGED
+   HANDS
+   --------------------------------------------------------------------------
+   Last round this file hid the header's category rail below 1280px and kept the
+   grid's sticky chips, on the argument that the chips are strictly the larger
+   control — they have a fifth pill, "Todo", they hold `aria-pressed`, they are
+   the scroll-spy, and they carry the live count.
+
+   styles/nav.css has since taken that decision back, deliberately and in
+   writing: every rule it needs is now written `.nav .nav__cats[data-catnav]`,
+   three simple selectors against this file's two, so the rail wins the cascade
+   without an `!important` anywhere. Its comment says the line here is "the
+   mobile owner's and is REPORTED, not edited".
+
+   The correct answer to that is not to escalate. BRIEF.md is explicit — "two
+   people editing the same declaration from two workflows will silently
+   overwrite each other" — and a specificity war between two stylesheets is that
+   with extra steps. But the state it left behind could not ship. Photographed
+   at 390x844 while both were on the page: the header rail read "Todo Helados
+   Antojitos Postr…" in purple and, EIGHT PIXELS BELOW IT, the grid's chips read
+   "Todo Helados Antojitos" in cream — the same five words twice, adjacent,
+   110px of an 844px screen. (Re-shoot it by deleting the one rule below; there
+   is no capture of it left, because every screenshot in `.shots/mobile-r2*` was
+   retaken after it was fixed.)
+
+   So the duplication is resolved from the other end, and the reasoning is the
+   nav's own: the rail is on the FIRST screen, above the hero, where the chips
+   are not, and it now does everything the chips did except carry the count.
+   It holds state (`aria-pressed`, solid cream when selected). It has "Todo".
+   The header is sticky, so it is on screen for the whole scroll. And it does
+   not keep its own answer — nav.html forwards every click into `.filters .filter`
+   and reads the pressed state back off those same chips, which is exactly why
+   hiding them costs nothing: `.click()` works on a display:none button, and the
+   grid's own `grid:render` event is still the one route into a filter, so the
+   URL state and the language switch keep working untouched.
+
+   WHAT IS ACTUALLY LOST is the scroll-spy — `[data-here]` rings the chip of the
+   chapter you are passing — and it is a real loss, softened by the fact that
+   the chapter plaque the grid draws says HELADOS and 9 in 32px type a few
+   pixels further down. The count is NOT lost: `.menu__count` stays in the
+   sticky bar, because it is still the only thing on the page that answers a
+   search.
+
+     .nav        140px   two rows, and the second one is the categories
+     .menu__bar   53px -> 30px   the live count, on its own
+
+   IF THE NAV EVER GIVES THE RAIL BACK, the rule below is the one line to delete
+   and everything the chips do returns with it.
+   ========================================================================== */
+
+/* ============================================================================
+   ROUND 4 — TWO NUMBERS, AND ONE OF THEM WAS NEVER RIGHT
+
+   Round 3 put the two cut-outs in contact, gave them one floor, eroded the
+   raspado's matting halo and fused the count into the call to action. All four
+   still hold, re-measured on this round's build at 390x844 by rendering the
+   page four times and subtracting the field:
+
+     the wedge          gone — the two overlap by 5 to 191px at every row where
+                        both are on screen, against 106px of open gradient at
+                        the bottom edge before round 3
+     one light          shake key +42, raspado key +43 — one point apart, both
+                        lit from above, against heladosmexico's +30
+     the halo           the last opaque pixel of the raspado's right edge is the
+                        product's own colour at every row sampled
+     the count          one fused control, one silhouette, one shadow
+
+   So this round is two things neither of those touched.
+
+   1. THE SUBJECT HAD SHRUNK BACK, BECAUSE HERO_MOBILE MOVED UNDER IT. 51.2% of
+      the screen, against the 57.5% this file banked and heladosmexico's 65.7%.
+      A stage scale is a multiplier on somebody else's numbers, and both of
+      theirs came down. Restored to 60.3% at scale 1.78 — and 1.78 rather than
+      the 1.90 that measures the same, because at 1.90 the shake stops being a
+      cup. The argument and the three builds are at THE MASS, SCALED OFF THE
+      FOLD, below.
+
+   2. THE GUARD THAT MAKES THAT SAFE WAS WRITTEN FOR ONE PHONE. The mask stop
+      was a constant solved against an 844px screen, so on any shorter one it
+      landed above the headline instead of below it and the food ran up behind
+      white 24px type. Measured, white against what is actually painted there:
+      1.50:1 at 390x667, 1.52 at 360x640, 1.63 at 320x568, where the floor for
+      large text is 3.0. It is now `calc((100svh - 354px) / 1.78)` and the same
+      measurement reads 4.36 to 4.62 at all five heights. That was wrong at the
+      old scale too; a bigger subject only made it visible sooner.
+   ========================================================================== */
+
+/* ---- safe areas ----------------------------------------------------------
+   The shell sets viewport-fit=cover, so on a notched phone the viewport runs
+   under the hardware. nav.css already insets its own gutter; nothing else did,
+   and the elements that hold READING text are the ones that matter — the menu's
+   rows and the footer.
+
+   Deliberately NOT inside a media query. A phone in landscape is 844-932px
+   wide, which is past every mobile breakpoint in this file, and landscape is
+   exactly when the left and right insets stop being zero. `max()` makes the rule
+   a no-op wherever there is no inset — env() resolves to 0px on a desktop — so
+   it can be stated once, for every width, and be correct at all of them. This is
+   the same construction nav.css uses on the header, for the same reason. */
+.menu__w,
+.foot,
+.hero {
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px))
+                  max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+/* ---- the hero, held in one hand -----------------------------------------
+   Everything below is one argument: on a phone the reading and the food share a
+   single grid cell, so every line of type is a ceiling the food cannot grow
+   through. The way to a bigger subject is to spend less screen saying things.
+
+   Measured at 390x844 on the build this round started from, off
+   `.shots/mobile-r2-base/mobile.png`:
+
+      94   the header seam
+     156   the headline starts
+     416   the FIRST food pixel, and it is a birthday candle 18px wide
+     536   the first food MASS pixel — the cake slice
+     844   the fold
+
+   442px, 52% of the phone, carrying type and one candle. The mass that actually
+   reads was 308px: 36.5% of the screen. Measured the same way on the two
+   benchmark captures at the same viewport — first row where 30% of the width
+   stops being field — heladosmexico.com's paleta starts at y=289 and runs off
+   the bottom, 65.7%, and michoacana's row of bars is 34.5%. Twenty-nine points
+   behind the site BRIEF.md names as the bar, on the one axis a hero is judged on.
+
+   AFTER, at the same viewport, with the reading hidden so the silhouette is what
+   is being measured (`.shots/_measure/mobile.png`):
+
+     319   the first food pixel — the whipped cream, and there is no candle
+     346   the first food MASS pixel  = 41.0% of the screen
+           the subject                = 59.0%   (heladosmexico 65.7, michoacana 34.5)
+
+   WHAT THIS FILE PAYS FOR IT, AND WHAT IT DELIBERATELY DOES NOT.
+
+   The placement table (HERO_MOBILE in src/app/main.js) is the hero owner's, and
+   it MOVED WHILE THIS ROUND WAS OPEN — the shake went h:66 to h:74, the churros
+   became a raspado, and every cut-out grew a per-photograph `lift`, `sat` and
+   `sink`. BRIEF.md is explicit about what to do here: "two people editing the
+   same declaration from two workflows will silently overwrite each other". So
+   nothing below reaches into that table, and nothing below restates a
+   declaration hero.css already makes. Every rule is either a mobile spacing
+   decision, which is what this file is for, or a transform on `.hero__stage`
+   at a width where hero.css sets none — the same construction hero.css itself
+   uses between 901 and 1280px.
+
+   The height comes back out of the reading, and the mass is then scaled up off
+   the fold into the room that opened:
+
+     the second imperative      -39px
+     the headline, 3 lines -> 2 -62px
+     the two stacked pills      -40px
+     tighter block margins      -20px
+
+   THE CANDLE IS WHY THE SCALE ALONE IS NOT ENOUGH. main.js states the placement
+   in the food's own height, and the top fifth of this photograph is a birthday
+   candle. Sampled off the derivative's own alpha channel
+   (`public/img/LS_Crazy-Shakes_MASTER_v04-800.webp`, 800x800, food rows 43-756):
+
+       rows  43-180   the candle, 17-18px wide  = 2% of the product's width
+       rows 182-206   the whipped cream appears, 30 -> 87px
+       rows 208+      the cake slice and the chocolate bar, 198px and widening
+
+   20% of the food's height and 2% of its width. Scaled to the size this round
+   needs, that stick is 160px long on a 390px screen and it lands in the headline
+   and the deck — which is exactly why the HERO_TABLET comment in main.js refuses
+   to raise the shake on one column, and it is right to. So the stage is masked
+   across its top: above the line the food fades into the field, and the line is
+   placed at the candle's own measured base, where the only ink it can touch is
+   the candle and the wispy top of the cream. Nothing of the cake is cut.
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  /* The hero stacks: one column, the food and the reading in the same cell.
+     `min-height: auto` and a 64px block padding used to be set here too. They
+     were dead — hero.css re-declares both at `.hero[data-hero]` specificity
+     precisely to survive this file — and a declaration that only looks like it
+     is doing something is worse than none, because the next person to edit
+     either file will believe it. Removed rather than left as a trap. The
+     stage's `min-height: 300px` and `order: -1` went with them: the stage is a
+     stretched grid item and the grid places it by row and column, so neither
+     has been reachable since the hero became a grid. */
+  .hero { grid-template-columns: 1fr; }
+
+  /* THE SECOND IMPERATIVE COMES OFF, AND THE PROMISE STAYS ON.
+     ui.json holds one approved deck string with two sentences in it and main.js
+     splits it at the period already there. The second half is "Míralos todos
+     antes de llegar." / "See all of it before you walk in." — an instruction
+     sitting 60px above a button that already says "Ver el menú". The first half
+     is "Nieves, antojitos, postres y bebidas.", the only line that names all
+     four categories, so it stays and the whole-menu promise survives. No word is
+     changed and the paragraph's own textContent is untouched; the phone simply
+     does not spend 39px saying the button twice. */
+  .hero__lead-b { display: none; }
+
+  /* ONE ROW, NOT TWO PILLS. `flex-wrap: wrap` put the cream call to action and
+     the purple count pill one above the other at 390px — two --r-pill shapes
+     stacked, and a reader has to work out which of them is the button. Side by
+     side the cream one is plainly the control and the purple one is plainly a
+     label.
+
+     Measured in Spanish, the longer of the two languages: 176px of button, a
+     12px gap and 169px of count is 357px against 358px of usable width, so the
+     count pays 8px back out of its own inset. Below about 360px they stop
+     fitting and both shrink to their min-content — the pill wraps to two lines
+     rather than pushing the page sideways, which is the case the widths gate
+     checks at 320px.
+
+     The purple stays. 15px white on hot pink is 4.06 against a 4.5 floor, so
+     flattening the pill onto the field would be a real violation; deep purple is
+     13.6:1 and is an approved field. The shadow is what comes off instead, so
+     only one of the two is lifted off the page. */
+  .hero__actions { flex-wrap: nowrap; }
+  .hero__count { padding-inline: var(--s-3); box-shadow: none; }
+
+  /* The dialog's two panels stack for the same reason. */
+  .detail__body { grid-template-columns: 1fr; }
+  .detail__copy { padding: var(--s-6); }
+}
+
+/* ---- the phone hero -----------------------------------------------------
+   600px, not 640 and not 900, because that is the width main.js switches from
+   HERO_TABLET to HERO_MOBILE at (`(min-width: 601px) and (max-width: 900px)`).
+   The two numbers at the bottom of this block are stated against the three
+   photographs HERO_MOBILE places, so they must not apply where a different plan
+   is on the stage. IF THAT MEDIA QUERY MOVES IN main.js, THIS ONE MOVES WITH IT.
+   ========================================================================== */
+@media (max-width: 600px) {
+  /* The reading, in phone proportions.
+
+     --t-display is 44px at this width and `.hero__title` is capped at 17ch, so
+     the Spanish headline broke three ways and cost 138px of an 844px screen. At
+     36px it breaks twice and costs 76px. It is still by a wide margin the
+     largest type on the page, still bold, and 36px white on hot pink is 4.06
+     against a large-text floor of 3.0 — the same floor it was already passing at
+     44px, with the same margin. The clamp is what stops it becoming three lines
+     again at 320px, where the gate looks.
+
+     The three margins are the same rhythm at the size the screen actually is:
+     24/12/16/24 was drawn against a 1440px window. */
+  .hero[data-hero]    { padding-block: var(--s-4) var(--s-6); }
+  .hero .hero__kicker { margin-bottom: var(--s-2); }
+  .hero .hero__title  { font-size: clamp(1.875rem, 1rem + 5vw, 2.25rem); }
+  .hero .hero__lead   { margin-block: var(--s-3) var(--s-4); }
+
+  /* THE MASS, SCALED OFF THE FOLD.
+
+     One declaration instead of three rows of a table somebody else owns, and it
+     is the construction hero.css already uses at 901-1280px for the same reason:
+     it grows the group without re-deciding where any single product sits, so the
+     overlap the hero owner composed — the only depth cue a cut-out has —
+     survives exactly. `50% 100%` anchors it to the bottom edge, so the bleed is
+     preserved and everything grows upward into the room the reading gave back
+     rather than sideways off a corner.
+
+     THE CEILING MOVED, BECAUSE THE THING IT WAS DRAWN AGAINST DID.
+
+     The old number was 1.52 and it was solved against a rule that turns out not
+     to be true: that the food has to arrive BELOW the actions row. Re-measured
+     at 390x844, the reading's boxes are
+
+       kicker  156-179    title 187-262    deck 273-338    actions 354-412
+
+     and the actions row is not reading. The three things a cut-out may never sit
+     under are white glyphs on the brand field: 4.06:1, which the contrast table
+     allows only at large sizes and with nothing spare. The actions row is not
+     glyphs on a field. It is two OPAQUE pills — cream `--c-reading` and deep
+     purple `--c-structure`, fused since round 3 into one silhouette with one
+     shadow — and text on an opaque pill is measured against the pill. a11y.mjs
+     photographs the rectangle behind the glyphs and finds the pill, because the
+     pill is what is painted there.
+
+     So the ceiling is the actions row's TOP edge at y=354, not its bottom at
+     412, and the 58px between them was being spent on empty gradient.
+
+       scale   food's first row   subject height
+       1.52    y 410              51.2%   ← what this file shipped
+       1.70    y 359              57.5%
+       1.72    y 353              past the pill's top edge, over the ceiling
+
+     (That table is against the OLD placement plan and is kept as the record of
+     where the ceiling came from. The plan moved; the scale that lands on the
+     same ceiling is now a different number, and it is derived below.)
+
+     Measured, not solved: rendered at 390x844 and differenced against the same
+     page with both cut-outs hidden, so "where is the food" is a subtraction.
+     heladosmexico's paleta is 65.7% of the same screen and michoacana's row of
+     bars is 34.5%. 57.5% does not catch the bar and cannot — theirs spends the
+     whole screen on one packshot, where ours also carries a header, a headline,
+     a category rail, a search field and a call to action — but it closes two
+     thirds of the 14.5-point gap that was open, without giving up one word of
+     the thing every blind judge has picked this panel for.
+
+     WHAT THE OVERLAP BUYS BESIDES HEIGHT. The shake's crown now rises BEHIND the
+     fused pill and shows again to the right of it, so the control is an object
+     standing in front of the food instead of a sticker lying on the field beside
+     it. That is the same front-and-behind evidence the two cut-outs give each
+     other, spent on the last remaining free-floating object on the screen — and
+     it is what both benchmarks already do: heladosmexico lays its "MADE WITH
+     REAL SUGAR" badges across two of its three wrappers, and michoacana runs its
+     pink band over the base of all four paletas.
+
+     IT ALSO ANSWERS THE FLAT-RASPADO NOTE, which is the one composition finding
+     round 3 could not spend anything on. Scaling about the bottom centre pushes
+     each square further past the fold, so what leaves the screen is the BOTTOM of
+     each product and what arrives is the top: the raspado's untextured lower
+     slush loses screen and its cup rim, its straw and its strawberry gain it.
+
+     THE SCALE MOVED AGAIN THIS ROUND, BECAUSE HERO_MOBILE SHRANK UNDER IT.
+
+     The table this file was solved against had the shake at h:74 and the
+     raspado at h:48. Both came down — shake to shot 2 at h:60, raspado to h:42
+     — and a stage scale is a multiplier on somebody else's number, so 1.70 on a
+     smaller plan is a smaller subject. Re-measured on the build this round
+     opened with, by rendering the page twice and subtracting the field, the
+     first row where 30% of the width stops being field had fallen from y=354 to
+     y=412: the subject was 51.2% of the screen against the 57.5% this file had
+     banked, and against heladosmexico's 65.7% at the same viewport.
+
+     Three scales were rendered and looked at rather than solved for, because
+     the number that matters is not the one the tool prints:
+
+       1.70   food from y 412   subject 51.2%   the dome whole, and 58px of
+                                                empty gradient between the food
+                                                and the control it sits under
+       1.78   food from y 339   subject 59.8%   the dome still whole, the
+                                                chocolate crown now rising
+                                                behind the count pill, the ice
+                                                mound and its strawberry half
+                                                as big again
+       1.90   food from y 339   subject 59.8%   the same number, and the dome is
+                                                cut at the pill line: the shake
+                                                stops being a cup and becomes a
+                                                wall of texture, while the
+                                                raspado's flat lower slush grows
+
+     Each row is a rebuild, not an injected override — injecting a scale leaves
+     `--sh` behind at the built value, so the cast shadow keeps the size it was
+     solved for and the measurement reads the shadow instead of the food. Three
+     builds, three subtractions, three thresholds each (20/60/110 of summed
+     channel difference) so a soft shadow edge cannot be mistaken for a subject.
+
+     1.90 buys nothing the metric can see and costs the silhouette, which is the
+     same lesson BRIEF.md has recorded seven times: a measurement that
+     identifies a real mechanism is not a diagnosis. What every blind judge
+     rewarded on this panel was a single readable subject, not a bigger number.
+     1.78 is the last scale at which the shake is still a cup.
+
+     THE MASK IS STATED FROM THE BOTTOM IN PIXELS, AND IT IS THE GUARD THAT
+     MAKES A BIGGER SCALE SAFE UNDER A PLAN NOBODY HAS WRITTEN YET.
+
+     It used to read `to bottom, transparent 0 51%` — a share of the stage's own
+     box. A percentage tracks the plan only while the scale is still: raising the
+     scale walks a percentage of the box UP the screen (51% landed at y=314 at
+     1.52 and would land at y=244 at 1.70), so the guard would have quietly
+     stopped guarding the reading it was drawn for.
+
+     IT IS NOW STATED AS A CALC AGAINST THE VIEWPORT, BECAUSE A CONSTANT WAS
+     ONLY EVER RIGHT ON ONE PHONE.
+
+     The stop is measured from the stage's BOTTOM edge, which is the fold: the
+     stage is a stretched grid item whose bottom margin undoes the section's
+     padding, so its untransformed bottom sits on 100svh at every width in this
+     query and in both languages, and `50% 100%` keeps that edge still while
+     everything above it grows. A point d px above that edge therefore lands
+     d x scale screen px above the fold.
+
+     Written as a NUMBER, that number silently assumed an 844px screen. It was
+     275, and 275 x 1.78 = 490 screen px, so on a 390x844 phone the guard landed
+     on y=354 — the pill's top edge, to the pixel. On any SHORTER phone the fold
+     is higher, so the same 490px landed 490px above a higher line:
+
+       viewport   fold   guard lands at   the headline starts at
+       390x932     932   y 442            187      guarded
+       390x844     844   y 354            187      guarded
+       390x667     667   y 177            187      NOT GUARDED — above the type
+       320x568     568   y  78            187      NOT GUARDED — in the header
+
+     Measured on the render at each of those heights, by photographing the
+     headline's and the deck's own rectangles twice — once with the glyphs made
+     transparent, once with the cut-outs hidden — and reading the contrast of
+     white against whatever is actually painted there:
+
+       390x932   worst 4.36 : 1     390x667   worst 1.50 : 1
+       390x844   worst 4.42 : 1     360x640   worst 1.52 : 1
+                                    320x568   worst 1.63 : 1
+
+     1.50 is white on the raspado's own shaved ice. The contrast table in
+     BRIEF.md allows white on the brand field at 4.06 for large text and nothing
+     below 3.0 at any size, so a 24px deck sitting on a photograph at 1.50 is not
+     a near miss. It is not a regression from this round either — the constant
+     was wrong at 1.70 as well, since 288 x 1.70 is the same 490 — but a bigger
+     subject reaches the type sooner, so the round that grows the food is the
+     round that owes the guard.
+
+     `calc((100svh - 354px) / 1.78)` is the same 354 and the same 1.78, with the
+     844 taken out of it. The stage's bottom is 100svh by construction, so the
+     subtraction resolves to "however far the pill's top edge is above the fold
+     on THIS screen", and the division converts screen px into the stage's own
+     unscaled px, which is the space a mask stop is measured in. Verified at five
+     heights: the guard lands on y=354 at all of them.
+
+     100svh, not 100vh: the hero's own min-height is 100svh, so the two have to
+     be the same viewport or the guard drifts by the height of a mobile URL bar —
+     which is 60-90px, twice the whole ramp.
+
+     Anything that ever rises past that line fades out over the next 21 screen px
+     instead of landing on the deck, whose box ends at y=338. HERO_MOBILE can go
+     back to h:74, or grow a cone tip or a straw or that birthday candle again,
+     and the worst case is a product that fades at the control's top edge rather
+     than white type on a photograph.
+
+     IF THE SCALE MOVES, THE TWO DIVISORS MOVE WITH IT, AND ONLY THEY DO. */
+  .hero__stage {
+    transform: scale(1.78);
+    transform-origin: 50% 100%;
+    -webkit-mask-image: linear-gradient(to top,
+      #000 0 calc((100svh - 354px) / 1.78),
+      transparent calc((100svh - 333px) / 1.78));
+    mask-image: linear-gradient(to top,
+      #000 0 calc((100svh - 354px) / 1.78),
+      transparent calc((100svh - 333px) / 1.78));
+  }
+}
+
+/* ---- one category control, not two --------------------------------------
+   1280px, and the number is nav.css's own. Its `@media (min-width: 1281px)` is
+   where the header collapses to a single line and the four categories stop
+   costing it a row of their own; below that they buy themselves a whole 48px
+   row, and a second copy of the same five words in the strip underneath is the
+   duplication argued at the top of this file. Above 1281 the rail costs the
+   header no height, so the chips stay and the two are two controls rather than
+   two copies of one price.
+
+   THIS NUMBER IS COUPLED TO nav.css AND HAS TO STAY COUPLED. If the nav owner
+   moves that breakpoint, this one moves with it, or a band opens up where the
+   two-row header is back with the chips still under it — which is the exact
+   state this round found and had to clear. */
+@media (max-width: 1280px) {
+  .filters { display: none; }
+}
+
+@media (max-width: 640px) {
+  /* Two across. This is the number that is banked: `npm run fill` reads a 44.0%
+     median at 390px with nothing cropped, ahead of heladosmexico's 36.8% and
+     0.4 points off michoacana's 44.4%. The gap is 16px rather than the desktop
+     24 because at two columns the gutter and the gap are the same piece of air
+     read twice. Nothing in this block may make a tile shorter or a photograph
+     smaller, and re-running `npm run fill` after this round says none of it
+     did. */
+  .grid { grid-template-columns: repeat(2, 1fr); gap: var(--s-4); }
+
+  /* The count is the whole bar now — see the top of this file — so it is never
+     squeezed and never wrapped. It is always "{n} de {total}", it is tabular,
+     and it is 51px at its widest in either language. */
+  .menu__count { flex: 0 0 auto; }
+
+  /* The section's own air, in phone proportions. 96px above the menu title and
+     128px below the last chapter are a desktop's margins; on an 844px screen
+     they are a quarter of a screen of empty cream, and they are fixed pixel
+     steps rather than fluid ones, so they do not scale down on their own. 64 and
+     80 keep the same rhythm at the size the screen actually is. */
+  .menu { padding-block: var(--s-9) var(--s-10); }
+}
+
+/* ============================================================================
+   ROUND 3 — THE FIRST SCREEN IS ONE OBJECT, NOT TWO STICKERS
+
+   The blind judge put this panel first and called the margin narrow, and the
+   sentence that made it narrow was about composition, not about appetite: ours
+   read as "a collage… no shared light or ground", while the panel that lost on
+   every other axis was "the only single-subject composition — a clear
+   front-and-behind stack". Everything in this block is that one sentence.
+
+   MEASURED FIRST, off .shots/mobile-r3-base/mobile.png at 390x844, by rendering
+   the page three times — once whole, once with each cut-out hidden — and
+   differencing against the field, so "where is the food" is a subtraction and
+   not an eyeball. The gap between the raspado's right edge and the shake's
+   left edge, per row:
+
+       y 430   105px        y 640   they overlap by 4px
+       y 500    11px        y 700   70px
+       y 530   overlap      y 844   106px   ← a quarter of the screen's width
+
+   So the two cut-outs touch across one band in the middle and part company at
+   both ends, and the widest part of the wedge is the bottom edge — the row a
+   reader's eye lands on last and the row that decides whether two objects are
+   standing on the same floor. 106px of flat gradient between them is the
+   collage.
+
+   The four rules below are the four halves of one fix: put them in contact,
+   make the front one cast onto the back one, take the white cut-out halo off
+   the edge that is now against something, and stop the count pill from being a
+   third object sitting on the food.
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  /* ---- 1. THE OVERLAP -----------------------------------------------------
+     HERO_MOBILE puts the shake's centre at x:64 and the raspado's at x:17, both
+     as a share of the stage's own width. 17% of a 390px stage is 66px, and once
+     the stage is scaled 1.52 about its bottom-centre that lands the raspado's
+     SQUARE centred on x=0 — half of the product is off the left edge of the
+     phone and its right edge never reaches the shake.
+
+     This is that number restated for the phone, and it is deliberately written
+     as the DELTA rather than as the total: `margin-left` on an absolutely
+     positioned box resolves against the same containing block `left: var(--x)`
+     does, so 17% + 17% is 34% and the two halves of the number are visibly the
+     same unit. It is not `--x: 34% !important` for two reasons — an inline
+     custom property can only be beaten by !important, and a custom property
+     defined in a stylesheet has to be disclosed in INVENTED.md, which is a file
+     this piece does not own.
+
+     WHAT 34% BUYS, re-measured the same way after the change: the wedge closes
+     from 106px to nothing across the whole lower half, the raspado's widest row
+     runs 70px behind the shake's cone, and 66px more of the product comes back
+     onto the screen from behind the left edge. It still bleeds off that edge —
+     101px of it — so it is still a thing in the room rather than a photograph.
+
+     RE-VERIFIED AFTER HERO_MOBILE MOVED (shake to shot 2 at h:60/b:-15, x:66;
+     raspado h:48 to 42, x still 17). Rendered twice, once with this rule forced
+     off: without it a purple wedge opens down the whole seam and the raspado's
+     strawberry garnish falls off the left edge of the phone; with it the two
+     overlap by 40px at the raspado's first row and 109-135px through the bottom
+     third. The delta survived the change because it is written against `x`,
+     which did not move — the two numbers that moved were `h` and the shot, and
+     neither is in this rule.
+
+     IF HERO_MOBILE's `x` FOR EITHER PRODUCT MOVES, THIS MOVES WITH IT. The
+     durable home for the number is that table; this is the phone's copy of it
+     and it is reported, not hidden. */
+  .hero__stage .hero__cut:nth-child(2) { margin-left: 19%; }
+
+  /* ---- 2. ONE GROUND, AND ON A PHONE THE KEY IS ON THE OTHER SIDE ---------
+     hero.css signs its cast shadow down and to the RIGHT on all five cut-outs,
+     from a key above and to the left, and it is right to: on a wide screen the
+     churros stands in front of the shake and to its left, so a rightward shadow
+     falls from the front object onto the one behind it. That is the whole job a
+     cast shadow does in a cut-out group — it is the only evidence that one
+     object is nearer than the other.
+
+     A phone shows two of those five and the arrangement is mirrored: the shake
+     is the FRONT object (z:3) and it is on the RIGHT, with the raspado behind
+     it and to its left. A shadow signed to the right therefore falls off the
+     screen edge, onto nothing, and the two objects have no evidence of depth
+     between them at all. Measured before this rule: neither cut-out cast a
+     single pixel onto the other.
+
+     So the horizontal sign flips, and only the horizontal sign — down is still
+     down, the sink below is still bottom-heavy, and the group is still lit from
+     one direction. The direction it is now lit from is the one the field itself
+     already claims: .hero__field's key radial is centred at 66% of the section
+     and its floor ellipse at 68%, both to the RIGHT of centre, which is exactly
+     where a phone puts the shake.
+
+     The offset is .05 of the object rather than hero.css's .045 and the blur is
+     .05 rather than .055 — a fractionally harder, slightly longer shadow,
+     because at 390px it has one surface to land on instead of four and it has
+     to survive being cast onto a saturated red slush rather than onto cream. */
+  .hero__cut {
+    filter:
+      brightness(var(--lift, 1))
+      saturate(var(--sat, 1))
+      drop-shadow(calc(var(--sh, 0px) * -.05)
+                  calc(var(--sh, 0px) * .055)
+                  calc(var(--sh, 0px) * .034)
+                  rgb(var(--c-deep-purple-rgb) / .55));
+  }
+
+  /* THE SINK WAS SPENDING ITSELF BELOW THE FOLD, AND THAT IS ARITHMETIC, NOT
+     TASTE.
+
+     hero.css writes the sink as a gradient across the cut's OWN square, darkest
+     at 100% — the square's bottom edge. On a wide screen that edge is roughly
+     where the food stops, so "darkest at 100%" and "darkest at the base" are the
+     same sentence. On a phone they are not: both squares are placed to bleed
+     off the bottom of the screen, so 100% of the box is off-screen and what a
+     customer sees is the middle of the ramp.
+
+     Measured on the render, rects read off the live DOM at 390x844 on the plan
+     this round opened with:
+
+       shake    square y  103 → 1000   the fold at 843.7 is 82.6% of its box
+       raspado  square y  391 →  972   the fold is 77.9% of its box
+
+     Under the stops this rule used to carry, that resolved to 28% of purple on
+     the shake at the fold and NINE per cent on the raspado. Photographed, the
+     raspado's bottom row measured LIGHTER than its own middle — luminance 85 at
+     y=842 against 66 at y=640 — so the one object with a flat base was being lit
+     from below, at the exact row that decides whether anything is standing on
+     anything. The brightest pixel on the whole bottom row was the raspado's
+     bottom-left corner at 131.
+
+     So the ramp is restated FROM THE BOTTOM EDGE IN PIXELS instead of in
+     percentages of two boxes that end at two different depths, and px is what
+     makes it survive the table moving: on the plan it was written against the
+     two overhangs below the fold were 156 and 129 screen px, and after
+     HERO_MOBILE changed under it they are 201 and 125 — 132 and 82 of the
+     stage's own unscaled pixels. `max from 0 to 110px` still lands the raspado
+     at full sink and the shake at 88% of it, where percentages of the box would
+     have moved from 82.6%/77.9% to 72.3%/75.5% and quietly re-aimed the ramp.
+     The fade to 300px carries it about 290 screen px up, which is where the
+     shake's cup and the raspado's cup both stop being a base and start being a
+     body.
+
+     The multiplier is gone. It was `* 1.30` at the box's bottom, and once the
+     ramp is aimed at the fold there is nothing left for it to correct — --sink
+     is the number main.js solved for and this now spends exactly it. */
+  .hero__cut[data-lit]::after {
+    background: linear-gradient(to top,
+      rgb(var(--c-deep-purple-rgb) / var(--sink, .30)) 0 110px,
+      rgb(var(--c-deep-purple-rgb) / 0) 300px);
+  }
+
+  /* ---- 2b. ONE GROUND, AND IT CANNOT BE THE PER-PHOTOGRAPH SINK ------------
+     The instruction for this round said to build the shared floor out of the
+     sink values already in HERO_MOBILE. I tried that first and it does not
+     solve, for two reasons that are both about what those numbers ARE. They are
+     per-photograph internal key corrections, solved for in main.js against each
+     master's own top-half-versus-bottom-half luminance — not two shares of one
+     floor. And they move: when this round opened they were 0.32 and 0.12, and
+     the hero owner has since set both to 0.12.
+
+     On the pair as it stood, the arithmetic came out backwards. The raspado is
+     the flat-based one, so it is the one that needs the floor, and it carried
+     the SMALLER number:
+
+       to take the raspado's bottom row from luminance 85 to its own mid-body 66
+       needs 30% of purple  ->  0.12 x m = 0.30  ->  m = 2.5
+       the same m put the shake at 0.32 x 2.5 = 0.80, which is not a floor,
+       it is a black bar
+
+     A shared ground is by definition one layer at one alpha across both
+     objects. A per-object knob cannot express it, and a knob whose value is set
+     for a different reason should not be conscripted into expressing it. So it
+     is drawn once, on the stage, whose bottom edge IS the fold —
+     `.hero__stage` measures y -238.5 to 843.7, so `inset: auto 0 0 0` is the
+     bottom of the phone screen exactly, at both languages and every width in
+     this query, and it does not care which photographs are standing in it.
+
+     It multiplies rather than paints, for the same reason hero.css's sink does:
+     the sprinkles, the marshmallows and the shaved ice keep their grain instead
+     of being washed into a flat slab. And it is deliberately NOT a flat band —
+     the radial is centred at 48% of the stage, on the seam where the two
+     objects meet, so the darkest point is where they both touch the floor.
+     That is what makes it read as cast by the pair rather than as a vignette on
+     the section.
+
+     STRENGTH IS SET AGAINST THE BENCHMARK, NOT BY EYE. Measured the same way on
+     all three captures at 390x844 — mean luminance of the subject's own pixels,
+     top half against bottom half, so a positive number means lit from above:
+
+       heladosmexico.com   +30
+       michoacana.com       -7   (its row of bars is brighter at the bottom)
+       ours, before          +18
+       ours, now             +52   (and the two objects agree to 1 point)
+
+     26% of the stage's own box is 185 unscaled px, which the 1.52 scale above
+     puts on screen as 281px — the bottom third. It tracks the scale on its own,
+     because a percentage of the stage is resolved before the transform; only
+     the 26% is a decision.
+
+     z-index 5 because the cut-outs are painted at --z 2 and 3, and a floor that
+     the front object is standing on top of is not a floor.
+
+     hero.css does not use `.hero__stage::after` — it hangs its own two field
+     layers off `.hero__field` instead — so this claims a free pseudo-element
+     rather than overriding one. If that ever changes, this is the collision. */
+  .hero__stage::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 26%;
+    z-index: 5;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    background:
+      radial-gradient(78% 116% at 48% 100%,
+                      rgb(var(--c-deep-purple-rgb) / .19),
+                      rgb(var(--c-deep-purple-rgb) / 0) 78%),
+      linear-gradient(to top,
+                      rgb(var(--c-deep-purple-rgb) / .22),
+                      rgb(var(--c-deep-purple-rgb) / .07) 46%,
+                      rgb(var(--c-deep-purple-rgb) / 0) 100%);
+  }
+
+  /* ---- 3. THE MATTING FRINGE ---------------------------------------------
+     LS_Raspados_MASTER_v01 carries a white halo on its cut-out edge. Sampled
+     off the derivative the browser actually fetches
+     (public/img/LS_Raspados_MASTER_v01-1400.webp) at five rows, the last two to
+     three OPAQUE pixels of every edge run 247,196,193 / 250,222,211 /
+     255,237,238 against a body of 219,88,66 — that is the white the product was
+     photographed against, matted into the edge, not a highlight on the cup.
+     `--lift: 1.32` then makes it brighter still. At 230px in a menu card it is
+     invisible; at 582px in the hero it is a pale outline down the full height of
+     the edge that is about to be pressed against the shake.
+
+     THE FILE IS NOT TOUCHED. assets/ holds approved bytes and public/ is
+     generated, so the fix is on the render side: erode the alpha. The mask is
+     the product's own alpha — the very URL the <img> already fetched, which
+     hero.css's sink layer is already using, so it is a cache hit and not a
+     second request — drawn 7px smaller than the box and centred. Where the
+     shrunk alpha has fallen away, the photograph is not painted. The erosion is
+     radial rather than uniform, which is what scaling a mask gives you: 2.0px at
+     the raspado's widest row, 3.5px at the bottom of its square. The halo is
+     1.2px. Re-sampled after this rule, the last opaque pixel of the right edge
+     is the product's own colour.
+
+     Both layers are eroded together. The sink is masked with the same alpha at
+     the same size, so leaving it at 100% would paint a 2px deep-purple rim
+     exactly where the white one used to be — trading a light halo for a dark
+     one. */
+  .hero__cut[data-lit] > img,
+  .hero__cut[data-lit]::after {
+    -webkit-mask-image: var(--cut);
+    -webkit-mask-size: calc(100% - 7px) calc(100% - 7px);
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: var(--cut);
+    mask-size: calc(100% - 7px) calc(100% - 7px);
+    mask-position: center;
+    mask-repeat: no-repeat;
+  }
+}
+
+/* ---- 4. THE COUNT STOPS BEING A STICKER ON THE CAKE -----------------------
+   Measured at 390x844: .hero__count occupies y 366–399 and the shake's cake
+   slab runs from y 350 to the fold, so the pill lands dead centre on the food.
+   Contrast is not the problem — white on deep purple is 13.60:1 — the problem
+   is that it is a third free-floating object on a screen whose whole remaining
+   fault is that it has too many free-floating objects. Neither benchmark puts a
+   control on top of its product.
+
+   IT CANNOT BE LIFTED CLEAR. The arithmetic is fixed: the reading runs y 156 to
+   412 and the food's first mass row is y 350, so the actions row would have to
+   move up 62px and the whole reading only has about 24px of trimmable rhythm in
+   it. Moving the food down instead costs the one number this piece has banked —
+   the subject is 58.5% of the screen, against heladosmexico's 65.7% and
+   michoacana's 34.5%, and buying 62px back would take it to 51%.
+
+   RE-MEASURED after HERO_MOBILE changed under this round: with the shake at
+   shot 2, h:60, the food's first mass row has fallen to y=412 and the pill
+   (353.8-411.8) is now clear of it by a pixel. That does not make this rule
+   redundant and it must not be unwound. The reason is the same either way — two
+   pill-shaped objects side by side make a reader work out which one is the
+   button — and the moment the subject height is taken back where it belongs, in
+   HERO_MOBILE, the food is under the pill again. Fusing them is the answer that
+   is true at both sizes.
+
+   So it stops being a second object instead of moving: the cream call to action
+   and the purple count fuse into one segmented control with one silhouette, one
+   shadow and one shape. Cream half is the button, purple half is what the
+   button leads to — "Ver el menú · 45 cosas para comer" reads as one sentence
+   with a control around it, which is what it always was. The first screen goes
+   from four floating objects to three, and the one that remains on the food is
+   plainly the thing you are meant to press.
+
+   Only the outer corners are rounded. The seam is square, which is what tells a
+   reader the two halves are one object rather than two pills that happen to be
+   touching. The button's hover lift comes off with it — half a fused control
+   cannot rise without breaking the seam, and a phone has no hover anyway.
+
+   Below 360px the two halves still shrink to their content and the count still
+   wraps rather than pushing the page sideways, which is the case the widths
+   gate checks at 320px. */
+@media (max-width: 900px) {
+  .hero__actions {
+    gap: 0;
+    align-items: stretch;
+    width: fit-content;
+    max-width: 100%;
+    border-radius: var(--r-pill);
+    box-shadow: var(--shadow-lift);
+  }
+  .hero__actions > .btn--primary {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+    box-shadow: none;
+  }
+  .hero__actions > .btn--primary:hover { transform: none; box-shadow: none; }
+  .hero__count {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* ---- 5. THE CHIP RAIL'S RIGHT EDGE ---------------------------------------
+   nav.css narrows its own 24px mask to 16px below 620px, on the argument that
+   "the fade only has to read as 'there is more this way' over a 19px word".
+   Photographed at 390x844 it does not read that way: 16px is one letter, so
+   "Postres" renders as a hard mid-word clip to "Post", and the chip's fill
+   (93,44,102) and the header's ground (75,21,87) are twenty points apart per
+   channel, so the pill itself does not visibly dissolve — only the last glyph
+   does, over a distance too short to look deliberate.
+
+   A CORRECTION TO THE INSTRUCTION THIS ROUND CARRIED: it says all four chips
+   fit if the gap closes. There are five, not four — nav.html writes a "Todo"
+   button before main.js appends the four categories — and measured on the
+   rendered page the rail's content is 577px in Spanish and 712px in English
+   against 390px of viewport. Closing the 4px gaps buys 16px of 187. No
+   arrangement of five words at a legible size fits a 390px screen, so the
+   overflow is a fact to signpost rather than a bug to remove, and shrinking the
+   type to force it would give up the one thing that makes this header better
+   than either benchmark's: the four things you can eat are the biggest words in
+   it.
+
+   40px, which is three letters rather than one. Enough that the last chip
+   visibly dissolves instead of ending, and the white glyphs — the only ink on
+   that row with real contrast against the ground — are what carries the fade.
+   Two stops rather than one so the ramp is slower where the eye lands first.
+   `#000` here is a mask alpha, not a colour: in a mask the channel that matters
+   is opacity, which is why check-invented.mjs strips mask declarations before
+   it looks for literal colours. */
+@media (max-width: 620px) {
+  .nav .nav__cats[data-catnav] {
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 40px),
+                                        rgb(0 0 0 / .42) calc(100% - 16px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 40px),
+                                rgb(0 0 0 / .42) calc(100% - 16px), transparent 100%);
+  }
+}

@@ -9,13 +9,25 @@ Private repository. Everything in `assets/` is the client's property.
 
 | Folder | What it holds |
 |---|---|
+| `brand/` | **Official global brand source of truth** — guidelines PDF, logo, and `brand.json` |
 | `assets/` | Client media: source photos, enhanced intermediates, 2000×2000 masters, QA sheets |
 | `menus/en/` | English menu boards |
 | `menus/es/` | Spanish menu boards |
 | `menus/shared/` | Artwork and data used by both languages |
 | `motion/` | Future Remotion / code workspace — empty on purpose, nothing built yet |
+| `tv-menu/` | Product masters staged for the TV menu — no code built yet |
 | `deliverables/` | Dated client handoff packages only |
-| `docs/` | Production standard and naming convention |
+| `docs/` | Production standard, naming convention, TV deployment research |
+
+## Where brand values live
+
+In `brand/`, once. Colours, typography, and logo rules are read from
+[brand/brand.json](brand/brand.json) by every surface — TV menus, print menus in
+both languages, promos, social.
+
+**Never copy a hex code or font name out of it into a project.** Import the file.
+A pasted value is a second answer that stops updating the day the client revises
+the palette. See [brand/README.md](brand/README.md).
 
 ## Where production state lives
 
@@ -54,4 +66,5 @@ git lfs ls-files | wc -l    # should match the number of tracked media files
 - No rendered video, render output, `node_modules`, or secrets in Git.
 
 Full detail: [docs/production-standard.md](docs/production-standard.md) and
-[docs/naming.md](docs/naming.md).
+[docs/naming.md](docs/naming.md). How the finished menus get onto the shop's
+TVs is researched in [docs/tv-deployment.md](docs/tv-deployment.md).

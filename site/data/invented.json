@@ -1,0 +1,761 @@
+{
+  "_what": "Every value this website had to choose because brand.json says null. Generated into INVENTED.md by scripts/build-tokens.mjs so the doc and the CSS can never drift apart.",
+  "_status": "NOT BRAND RULES. These are this project's choices. If the client answers one, it belongs in brand/brand.json, not here.",
+  "groups": [
+    {
+      "title": "Corner radius",
+      "why": "brand.json visualDirection.cornerRadius is null. The PDF says 'rounded panels' six times and never publishes a number.",
+      "method": "Measured off the approved menu card printed on page 17 of the guidelines, rendered at 300 dpi. The card is 1406x704 px there and its corner arc has a 32 px radius — 2.3% of the card's width. Every panel radius below is that same 2.3% ratio applied at that panel's own width. The pill and the squircle are separate measured shapes from the same PDF.",
+      "values": [
+        {
+          "token": "--r-card",
+          "value": "10px",
+          "note": "2.3% of a ~430px product card. Matches page 17 exactly."
+        },
+        {
+          "token": "--r-panel",
+          "value": "24px",
+          "note": "2.3% of a ~1040px reading panel."
+        },
+        {
+          "token": "--r-tile",
+          "value": "16px",
+          "note": "2.3% of a ~700px tile; used for mid-size panels."
+        },
+        {
+          "token": "--r-pill",
+          "value": "999px",
+          "note": "Observed, not invented: the 'Page 17' badge in the guidelines is a full pill."
+        },
+        {
+          "token": "--r-motif",
+          "value": "23%",
+          "note": "Observed: the four rounded colour squares on page 19 measure 96px radius on a 418px side."
+        }
+      ]
+    },
+    {
+      "title": "Two text greys that page 17 shows but that fail AA",
+      "why": "The approved card on page 17 sets its description in a warm grey that samples around #716C68–#787276, and its supporting note in a lighter grey around #948F8B. On the cream reading area those measure roughly 8:1 and 3.0:1. The lighter one fails WCAG AA at any size.",
+      "method": "The description grey is used as measured. The supporting grey is darkened along the same hue until it is the lightest value that passes AA on cream — no further. brand.json does not name either colour, so neither is a brand value; the PDF only demonstrates them in a rendered example.",
+      "values": [
+        {
+          "token": "--c-body",
+          "value": "#4a4448",
+          "note": "Card and paragraph text. 9.0:1 on cream. Within the range sampled off page 17."
+        },
+        {
+          "token": "--c-muted",
+          "value": "#6f686b",
+          "note": "Supporting detail. Page 17's own value is about 3.0:1 and fails AA; this is 5.15:1, the lightest value on the same hue that passes."
+        }
+      ]
+    },
+    {
+      "title": "Type sizes and line heights",
+      "why": "brand.json typography.sizes and typography.lineHeights are null. Page 17 publishes relative hierarchy only.",
+      "method": "The three text levels on the page-17 card measure 26.1 / 18.7 / 13.0 px at a 1280px-wide slide — a ratio of 1 : 0.72 : 0.50, with the description set at 1.35 line height. The site's card scale reproduces that ratio. Display sizes above the card are a 1.25 minor-third scale continued upward, and fluid via clamp().",
+      "values": [
+        {
+          "token": "--fs-item",
+          "value": "clamp(1.125rem, 0.9rem + 0.6vw, 1.375rem)",
+          "note": "Menu item name — the '1' of the measured ratio."
+        },
+        {
+          "token": "--fs-desc",
+          "value": "clamp(0.875rem, 0.8rem + 0.25vw, 1rem)",
+          "note": "0.72 of the item name, per page 17."
+        },
+        {
+          "token": "--fs-note",
+          "value": "0.6875rem",
+          "note": "0.50 of the item name, per page 17."
+        },
+        {
+          "token": "--lh-desc",
+          "value": "1.35",
+          "note": "Measured: 76px baseline-to-baseline on an 18.7px face."
+        },
+        {
+          "token": "--lh-tight",
+          "value": "1.05",
+          "note": "Display headings. Not in the PDF."
+        },
+        {
+          "token": "--fs-display",
+          "value": "clamp(2.75rem, 1.2rem + 6.4vw, 7rem)",
+          "note": "Hero. Not in the PDF."
+        },
+        {
+          "token": "--fs-section",
+          "value": "clamp(1.75rem, 1.1rem + 2.4vw, 3.25rem)",
+          "note": "Category titles. Not in the PDF."
+        },
+        {
+          "token": "--tracking-caps",
+          "value": "0.06em",
+          "note": "Letter-spacing for the ALL-CAPS category titles page 17 calls for. The PDF does not publish tracking."
+        }
+      ]
+    },
+    {
+      "title": "Spacing scale",
+      "why": "brand.json notSpecifiedInSource lists 'Spacing / layout scale'.",
+      "method": "A plain 4px base scale. Nothing in the guidelines suggests a different rhythm, and 4px divides the measured card padding (28px left, 30px top) cleanly.",
+      "values": [
+        {
+          "token": "--s-1 … --s-12",
+          "value": "4 8 12 16 24 32 40 48 64 80 96 128 px",
+          "note": ""
+        },
+        {
+          "token": "--pad-card",
+          "value": "clamp(16px, 6cqw, 28px)",
+          "note": "Page 17's card padding is 6.0% of card width; expressed as a container query unit so it holds at any card size."
+        }
+      ]
+    },
+    {
+      "title": "Gradient",
+      "why": "brand.json gradient.exactStops and gradient.angleDeg are null, with an explicit warning not to fill them in and call the result approved.",
+      "method": "Used only where the PDF permits — as a large supporting visual, never inside the logo, always with high-contrast type over it. Stops and angle below are this project's choice and are NOT brand-approved.",
+      "values": [
+        {
+          "token": "--grad-brand",
+          "value": "linear-gradient(160deg, hotPink 0%, deepPurple 100%)",
+          "note": "UNAPPROVED. Ask the client before this appears in print."
+        }
+      ]
+    },
+    {
+      "title": "Elevation",
+      "why": "The guidelines forbid effects on the logo and publish no shadow spec for anything else.",
+      "method": "Shadows are tinted with deepPurple rather than black so they sit inside the palette instead of greying it.",
+      "values": [
+        {
+          "token": "--shadow-card",
+          "value": "0 1px 2px rgba(75,21,87,.06), 0 8px 24px -8px rgba(75,21,87,.14)",
+          "note": ""
+        },
+        {
+          "token": "--shadow-lift",
+          "value": "0 2px 6px rgba(75,21,87,.10), 0 24px 48px -16px rgba(75,21,87,.26)",
+          "note": "Hover / focus state."
+        },
+        {
+          "token": "--shadow-food",
+          "value": "drop-shadow(0 18px 22px rgba(75,21,87,.22))",
+          "note": "Contact shadow under a cut-out so the food sits on the page instead of floating."
+        }
+      ]
+    },
+    {
+      "title": "Motion",
+      "why": "brand.json notSpecifiedInSource lists 'Motion timing, easing, or transition rules for animated surfaces'. The PDF gives a character — 'vibrant, playful, appetizing', 'rounded animated shapes' — and no numbers at all. Everything below is this project's choice.",
+      "method": "Two eases and three durations, and then one governing rule that decides where each is allowed to be used: a reveal is a function of SCROLL POSITION, never of elapsed time. A time-based reveal has a mid-flight state that depends on when the customer arrived, which is what made the previous build look half-loaded 120ms after a scroll jump; a scroll-linked one is always in the state its position implies. So the durations below apply only to hover, to the product-view transition, and to the two things at the top of the page that have no scroll position to read. Everything else is expressed as a range of scroll, in the browser's own `entry` / `cover` units, and has no duration at all. Nothing a customer reads is ever animated: card tiles, names and descriptions are painted at full opacity in the first frame and never move. Every animated property is opacity, translate, rotate or scale. All of it is disabled under prefers-reduced-motion, and motion.css ends with a global switch that also zeroes the transitions declared in the six stylesheets it does not own.",
+      "values": [
+        {
+          "token": "--ease",
+          "value": "cubic-bezier(.22,1,.36,1)",
+          "note": "The default. Front-loaded, so a scroll-linked reveal is most of the way there almost as soon as the element appears."
+        },
+        {
+          "token": "--ease-spring",
+          "value": "cubic-bezier(.34,1.56,.64,1)",
+          "note": "Overshoot, for the 'playful' attribute on page 4. Used on the page-19 motif squares, the chapter count and hover."
+        },
+        {
+          "token": "--dur-fast",
+          "value": "160ms",
+          "note": "Chip states, the dialog backdrop."
+        },
+        {
+          "token": "--dur",
+          "value": "280ms",
+          "note": "Hover, and the product-view panel."
+        },
+        {
+          "token": "--dur-slow",
+          "value": "560ms",
+          "note": "The hero lines settling in on load."
+        },
+        {
+          "token": "Cut-out reveal (scroll range)",
+          "value": "entry 0%–80% geometry, entry 0%–34% opacity",
+          "note": "As a card enters the window its photograph rises 18px and grows from 0.92, and comes up from 0.5 opacity. The opacity finishes first and deliberately early: measured across 24 scroll positions at both viewports, the only cut-outs ever below full strength are on cards showing 22px or less of themselves at the very bottom edge."
+        },
+        {
+          "token": "Cut-out parallax (scroll range)",
+          "value": "cover 0%–100%, ±9px (±18px on the 2x2 tile)",
+          "note": "The photograph drifts against its own tile as the card crosses the window, so rows sit on different planes. Every card in a row shares a viewport position, so a row’s baseline stays level. The 2x2 feature tile is twice the size and gets twice the travel, which is the same drift, not a louder one."
+        },
+        {
+          "token": "Chapter header (scroll ranges)",
+          "value": "title rise cover 0%–26%, rule draw cover 2%–40%, motif squares cover 4/7/10%–26/29/32%, count cover 8%–30%",
+          "note": "The category title only rises — it is never faded, because a heading at partial opacity in a still frame is indistinguishable from a page that failed to load. The three page-19 motif squares scale from 0 with a -35° twist on the overshoot ease; they are decoration and carry no text. The stagger between them is three different scroll ranges, not three delays."
+        },
+        {
+          "token": "Hero float",
+          "value": "6.4s / 7.9s / 5.3s, -7px→8px, -1.1°→1.4°",
+          "note": "The only infinite animation on the site. Three periods that do not divide into each other, so the three cut-outs never fall into step. Paused whenever the hero is off screen. An 8px bob cannot hide anything, which is why it is allowed to be time-based."
+        },
+        {
+          "token": "Hero lines on load",
+          "value": "--dur-slow, 22px rise, 0/60/120/180ms",
+          "note": "The only stagger anywhere on the site, and the only clock-driven reveal. Allowed because it is translate-only: every line is fully opaque in the first frame, so nothing is waited for and Largest Contentful Paint is untouched."
+        },
+        {
+          "token": "Hover on a cut-out",
+          "value": "rotate -2.6°; badge scale 1.09 / rotate 4°; chip dot scale 1.55",
+          "note": "card.css already lifts the tile and grows the photograph; the tilt is what makes it read as picking something up rather than inflating it. Gated on a real pointer so it cannot latch after a tap on a phone."
+        },
+        {
+          "token": "Card → product view",
+          "value": "panel --dur from scale 0.97; photograph 420ms after a 60ms lag",
+          "note": "The big photograph starts life in the exact rectangle the card’s cut-out occupied and flies from there, so the dialog reads as the same food enlarged rather than as a new screen. The 60ms lag lets the reading panel arrive first."
+        },
+        {
+          "token": "prefers-reduced-motion",
+          "value": "every rule above is absent, not shortened",
+          "note": "Verified rather than promised: document.getAnimations() comes back empty on a loaded and fully scrolled page, hovering a cut-out and opening the product view start nothing, and two screenshots a second apart are byte-identical."
+        }
+      ]
+    },
+    {
+      "title": "English category labels",
+      "why": "The client's four menu categories are Spanish. The English view needs an English word for each. brand.json does not translate them.",
+      "method": "Direct translation of the category, not of any product. No product name is ever translated — those are the client's menu-board wording.",
+      "values": [
+        {
+          "token": "Helados",
+          "value": "Ice Cream",
+          "note": ""
+        },
+        {
+          "token": "Antojitos",
+          "value": "Savory Snacks",
+          "note": "'Antojitos' has no single English word; 'Savory Snacks' describes what is in the category."
+        },
+        {
+          "token": "Postres",
+          "value": "Desserts",
+          "note": ""
+        },
+        {
+          "token": "Bebidas",
+          "value": "Drinks",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "title": "Interface copy",
+      "why": "The brief supplies product copy only. Buttons, nav labels and section headings still need words.",
+      "method": "Kept to plain nouns and verbs in both languages. No marketing claim is made about the shop, no ingredient is described, and nothing is said that the client has not already said on their own menu.",
+      "values": [
+        {
+          "token": "nav / sections / buttons",
+          "value": "see site/data/ui.json",
+          "note": "Every UI string in both languages lives in one file so the client can correct any of it in one place."
+        }
+      ]
+    },
+    {
+      "title": "Things this site deliberately does NOT say",
+      "why": "Inventing these would put false information in front of customers.",
+      "method": "Left out entirely. They are questions for the client.",
+      "values": [
+        {
+          "token": "Prices",
+          "value": "omitted",
+          "note": "The brief says there are none anywhere. None appear."
+        },
+        {
+          "token": "Street address",
+          "value": "omitted",
+          "note": "Only 'Swedesboro, New Jersey' is stated, which is brand.json brand.location."
+        },
+        {
+          "token": "Opening hours",
+          "value": "omitted",
+          "note": "Not known."
+        },
+        {
+          "token": "Phone / email / social handles",
+          "value": "omitted",
+          "note": "Not known."
+        },
+        {
+          "token": "Ingredient and allergen detail",
+          "value": "omitted",
+          "note": "Beyond the client-approved line, nothing is added."
+        }
+      ]
+    },
+    {
+      "title": "Logo clear space in the footer",
+      "why": "brand.json logo.clearSpace measures the minimum in mascot-bow heights — a feature of the artwork, not a pixel value. Nobody has measured the bow.",
+      "method": "Rather than measure it badly, the footer uses a deliberate over-estimate: clear space equal to 20% of the logo's rendered width on every side. That is larger than the bow appears to be at any size the footer renders, so the rule is satisfied by exceeding it. If the client or the designer gives a real bow measurement, this can come down.",
+      "values": [
+        {
+          "token": "--foot-clear",
+          "value": "calc(clamp(250px, 22vw, 300px) * 0.20)",
+          "note": "Over-estimate of one mascot-bow height. Not a measurement. The clamp mirrors the footer logo's own rendered width so the two cannot drift; the whole-site pass took that logo from 340px to 300px when the footer became a two-column lockup, and this followed it."
+        }
+      ]
+    },
+    {
+      "title": "Product card geometry",
+      "why": "brand.json publishes one approved card (page 17) and no layout system around it. Everything about how a photograph is seated inside a card — how much room the food gets, where it rests, how the cream panel meets the colour above it — had to be decided.",
+      "method": "Round 1 sized the photo frame to the square canvas the derivative is exported on, then divided that square by the largest ink-normalisation multiplier in the catalogue so the single thinnest paleta could not crop. Measured across all 62 photographs that left the median cut-out at 37.7% of the card's width. Round 2 sizes the frame to the FOOD instead, using the `fillW` / `fillH` that data/images.json publishes for each photograph, and the two targets below are what a cut-out is allowed to grow to. They were chosen by modelling all 62 photographs against them and then shooting the result (.shots/card-r2): the median cut-out is 69% of the card's width and 113% of it in height, against 87% and ~51% for michoacana's packshot and ~46% for heladosmexico's. Everything is in container-query units so one shape holds from a 169px phone tile to the ~475px feature tile.",
+      "values": [
+        {
+          "token": "FOOD_MAX_W (card.js)",
+          "value": "0.94",
+          "note": "The most of the card's width a cut-out may occupy. 3% of clear field is left on each side. michoacana runs its packshot to 87% of its tile and heladosmexico bleeds off the tile entirely, so this is deliberately at the generous end."
+        },
+        {
+          "token": "--stage-h",
+          "value": "1.34",
+          "note": "The ceiling on the coloured field's height, in card widths. Not square: 38 of the 62 photographs are taller than wide once fitted to the food. It is a ceiling rather than a height — grid.js shrinks each row's field to the tallest photograph actually in that row — so raising it costs a row of flat products nothing. Five values were built and measured with scripts/fill-check.mjs (the product's share of its own tile, desktop / mobile): 1.18 -> 35.3 / 35.7, 1.22 -> 35.3 / 36.6, 1.26 -> 41.9 / 47.2, 1.34 -> 42.4 / 47.1, 1.40 -> 43.7 / 46.6. Desktop keeps climbing and mobile turns over, because a two-up phone row pairs a tall product with a flat one more often; 1.34 is the top of both curves."
+        },
+        {
+          "token": "FOOD_MAX_H (card.js)",
+          "value": "--stage-h less EDGE_CLEAR top and bottom = 1.280 card widths",
+          "note": "The most of the field a cut-out may occupy vertically. Round 1 spent 17cqw here on \"clearance\"; this leaves only what the scallop needs."
+        },
+        {
+          "token": "EDGE_CLEAR (card.js)",
+          "value": "0.03",
+          "note": "Not breathing room. The cream scallop where the panel meets the colour rises min(5.6cqw, 16px) / 2.48 = up to 2.3cqw into the field, and a product whose base stops short of that is nibbled by a wavy cream edge — shot at 0.012 and the Helado Viral box lost its bottom edge to it. card.css also lifts the frame half a scallop above centre, spending clearance the top of the field is not using on the one edge that has something in it, so this number is the other half plus a visible margin of field under the food. The sink is capped against it too."
+        },
+        {
+          "token": "NORM_MID / NORM_FLOOR (card.js)",
+          "value": "1.005 / 0.88",
+          "note": "data/images.json's visualScale normalises ink coverage. Applied as a raw multiplier it forced every card to shrink so the one photograph at 1.45 would fit. It is applied instead as a modulation about the catalogue's median (1.005) and clamped downward only, so it can quieten a heavy product and can never push one past the field. Worst case it costs a single card 12%."
+        },
+        {
+          "token": "GROUND (card.js)",
+          "value": "0.5",
+          "note": "How much of a photograph's own vertical slack is used to drop it toward the panel. The one number here that is a judgement rather than a measurement: at 1 a flat wrapped package is marooned on the bottom edge, at 0 nothing looks like it rests on anything. See .shots/card-r4 and card-r5."
+        },
+        {
+          "token": "frame, food-w, food-h, sink (set by card.js)",
+          "value": "derived, in cqw",
+          "note": "Not choices. --frame is min(FOOD_MAX_W / fillW, FOOD_MAX_H / fillH) modulated by the ink normalisation; the other three fall out of it. They are published as container-query lengths so card.css never repeats the arithmetic, the contact shadow can be drawn to the size of the food it belongs to, and grid.js can read --food-h and --sink back to size each row."
+        },
+        {
+          "token": "food drop shadow",
+          "value": "0 5cqw 6cqw of --c-deep-purple at .22, plus 0 1cqw 1.6cqw of --c-dark at .20",
+          "note": "tokens.css's --shadow-food is 0 18px 22px, a fixed geometry that is a smudge under a 70px cut-out and a hairline under a 550px one. The colours are the token's; only the offsets are re-expressed in container units so they hold at both. The dark second layer exists because a deep-purple shadow on the deep-purple chapter is that tile's own colour over itself."
+        },
+        {
+          "token": "field-rgb — a custom property set by grid.js, card.js and detail.js",
+          "value": "the category accent, as an r,g,b triplet",
+          "note": "Which brand colour a chapter, a card and a product view are painted in. Set from the category menu.json already carries, so the four chapters cannot drift apart from the four chips. It is a triplet rather than a colour so the same token can be used at an alpha."
+        },
+        {
+          "token": "spotlight (--c-base-cream at .28)",
+          "value": "radial 74% x 62% at 50% / 58%",
+          "note": "A pool of light behind the cut-out so a white styrofoam cup or a clear tray separates from a saturated field. Cream over the brand colour — no new colour. At the round-1 values (.17 over 58% x 44%) it was invisible in the screenshot and did none of that work."
+        },
+        {
+          "token": "badge inset",
+          "value": "5cqw",
+          "note": "Multi-photo marker. It sits on the stage above the food, because a cut-out that fills its field passes under it."
+        },
+        {
+          "token": "hover lift",
+          "value": "6px tile, 1.025 on the food",
+          "note": "Gated on (hover: hover) so it cannot latch after a tap. Much smaller than round 1's 1.055: the tallest cut-out now stands 128cqw, and growing that 5.5% puts its base through the scallop."
+        }
+      ]
+    },
+    {
+      "title": "The type scale's own tokens",
+      "why": "brand.json typography.sizes and typography.lineHeights are null. Page 17 publishes relative hierarchy only.",
+      "method": "Page 17 is the origin: its three card levels measure 1 : 0.72 : 0.50, so --fs-item is the '1' and the card's second level is derived from it with calc() rather than carrying its own clamp — which keeps the measured 0.72 true at every viewport width instead of only at the top of a clamp. The levels above the card continue the same 1.389 step upward. Two of the sizes below are forced by the contrast table rather than chosen: white on hot pink is 4.06 and hot pink on cream is 3.85, both legal as large text only, and WCAG's large-text floor is 14pt bold = 18.67px. The eight sizes below the card levels are the approved design’s own display sizes, transcribed from site/.site/b.html clamp for clamp rather than re-derived. They are fluid rather than steps of a ratio because the design uses its headings as objects: the chapter head is 96px at 1600 and 34px at 320, which no single ratio expresses. The middle term of each is a bare vw, as the approved page has it — an earlier transcription wrote them as `Xrem + Yvw`, which reaches the floor sooner but is a different size at every width in between, and drew the section head 43% too large at 768.",
+      "values": [
+        {
+          "token": "--t-display",
+          "value": "clamp(2.75rem, 1.915rem + 3.43vw, 5rem)",
+          "note": "Hero. 44px at 390, 80px at 1440. One step above the section size."
+        },
+        {
+          "token": "--t-deck",
+          "value": "1.5rem",
+          "note": "24px flat, at every width. Regular-weight cream on hot pink is 4.06:1, which WCAG allows at 24px and forbids below it — so this is the contrast floor and the approved page’s own value at the same time."
+        },
+        {
+          "token": "--t-lead",
+          "value": "clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem)",
+          "note": "Standfirst and dialog description."
+        },
+        {
+          "token": "--t-eyebrow",
+          "value": "1.1875rem",
+          "note": "19px. The smallest size at which bold white-on-pink and bold pink-on-cream are legal — not a taste decision."
+        },
+        {
+          "token": "--t-desc",
+          "value": "calc(var(--fs-item) * 0.72)",
+          "note": "Exactly 0.72 of the item name at every width, which is what page 17 measures."
+        },
+        {
+          "token": "--t-h-section",
+          "value": "clamp(1.75rem, 4.4vw, 4.125rem)",
+          "note": "A section head on a cream or light field — \"CUATRO MANERAS DE ENTRAR\". 28px at 320, 66px at 1500 and above."
+        },
+        {
+          "token": "--t-h-big",
+          "value": "clamp(1.875rem, 5.1vw, 5rem)",
+          "note": "The two story beats’ own heads — \"AQUÍ CABE TODO EL ANTOJO\". Also the VISIT US head, which the approved page draws 1.4px smaller at 1440; one token rather than two for a difference nobody can see."
+        },
+        {
+          "token": "--t-h-menu",
+          "value": "clamp(2rem, 5.6vw, 5.5rem)",
+          "note": "The menu’s own head — \"EL MENÚ COMPLETO\". One step above a section head, because it opens the half of the page the customer came for."
+        },
+        {
+          "token": "--t-h-chapter",
+          "value": "clamp(2.125rem, 6vw, 6rem)",
+          "note": "A chapter head standing on its own colour field — HELADOS, ANTOJITOS, POSTRES, BEBIDAS. Painted cream on a brand colour, so it is far above the 24px large-text floor at every width."
+        },
+        {
+          "token": "--t-h-hero",
+          "value": "clamp(2.125rem, 6.1vw, 6.5rem)",
+          "note": "The headline the client asked to keep, ASÍ SABE LA ALEGRÍA. The largest size on the page; cream on hot pink, which is 4.06:1 and therefore legal only as large text."
+        },
+        {
+          "token": "--t-h-beat",
+          "value": "clamp(1.4375rem, 2.9vw, 2.75rem)",
+          "note": "The numbered heads inside the second story band. They sit inside a cream reading card, not on the blue field, so they are free of the large-text floor."
+        },
+        {
+          "token": "--t-kicker",
+          "value": "clamp(0.6875rem, 1.05vw, 0.875rem)",
+          "note": "The small tracked label above a head — \"LA TIENDA\", \"CUATRO CAPÍTULOS\". Never painted in a brand colour on a brand field: it always gets its own cream pill or a cream ground, because at 11–14px it is far below the large-text floor."
+        },
+        {
+          "token": "--t-prose",
+          "value": "clamp(0.9375rem, 1.35vw, 1.25rem)",
+          "note": "Body copy in the story bands and the category panels. The approved page sets prose per section between 1.22vw and 1.5vw; this one token sits in the middle of that band and lands within 1.5px of every one of them."
+        }
+      ]
+    },
+    {
+      "title": "Page frame",
+      "why": "brand.json notSpecifiedInSource lists 'Spacing / layout scale'. Nothing in the guidelines suggests a page width or a gutter.",
+      "method": "The width is the measure the approved design was drawn to — four product cards on a chapter field, with the display case and the typographic statement running the same width. The gutter is fluid so a phone loses margin before it loses card.",
+      "values": [
+        {
+          "token": "--maxw",
+          "value": "1480px",
+          "note": "Content width. Four cards plus gutters at 1440, and the measure the approved design (site/.site/b.html) was drawn at. Was 1320px before the design was replaced."
+        },
+        {
+          "token": "--gutter",
+          "value": "clamp(16px, 4vw, 64px)",
+          "note": "Page margin."
+        }
+      ]
+    },
+    {
+      "title": "What goes in the URL",
+      "why": "Not a brand question — a decision about what the site remembers, which nothing in the guidelines speaks to.",
+      "method": "Only two things, both of which the customer typed or tapped and neither of which is private: which category they are looking at, and what they searched for. They live in the query string rather than the hash so they survive the language switch, which is an ordinary link. Nothing is stored on the device, and no identifier of any kind is created.",
+      "values": [
+        {
+          "token": "?c=",
+          "value": "category id",
+          "note": "Omitted when the category is 'all'."
+        },
+        {
+          "token": "?q=",
+          "value": "search term",
+          "note": "Omitted when empty."
+        },
+        {
+          "token": "history",
+          "value": "replaceState",
+          "note": "So typing a search does not put one history entry per keystroke between the customer and the back button."
+        }
+      ]
+    },
+    {
+      "title": "Grid layout",
+      "why": "brand.json says nothing about how many products sit in a row, how a section ends, or how a sticky bar behaves. The guidelines describe one card, not a catalogue of 45.",
+      "method": "The column counts step down at widths where the food stops reading rather than at conventional device breakpoints, and were chosen by measuring the product's share of its tile at each step (scripts/fill-check.mjs). The sticky offsets are measured from the rendered header at runtime rather than typed, so a change in the header cannot silently push the sticky bar out of place. The sparse-section width exists because no column count divides all four categories evenly — see scripts/tails.mjs.",
+      "values": [
+        {
+          "token": "cols — a custom property set inline by detail.js",
+          "value": "2 or 3, from the photograph count",
+          "note": "How many alternate photographs a product view lays out across. Two at four photographs, three above that. The menu grid itself no longer carries a column count: the approved design sizes its cards with auto-fit, so the column count is whatever fits."
+        },
+        {
+          "token": "nav-h — a custom property measured and set by grid.js",
+          "value": "64px, then measured",
+          "note": "A fallback only. grid.js replaces it with the header's real rendered height, so the sticky category bar cannot drift when the header changes."
+        },
+        {
+          "token": "bar-h — a custom property set by grid.js",
+          "value": "60px",
+          "note": "Height of the sticky category bar, which the section headings offset against."
+        }
+      ]
+    },
+    {
+      "title": "Type sizes and tracking typed as literals",
+      "why": "brand.json typography.sizes, typography.lineHeights and letter-spacing are ALL null, so every type size and every piece of tracking on this site is a choice. Most of them live in tokens; these six were typed straight into a rule, and a literal is the easiest kind of invented value to introduce without noticing. scripts/check-invented.mjs now fails until each one appears here.",
+      "method": "Each is recorded with what it is and why it is not a token. Two of them are not really design decisions at all — one is the deck's own floor reused, and one is a browser behaviour — and saying so is more honest than promoting them to tokens to make a checker quiet.",
+      "values": [
+        {
+          "token": "hero.css .hero__lead-b",
+          "value": "1.5rem",
+          "note": "24px — exactly the floor of --t-deck, which type.css declares and this file already documents. There is no token for 'the deck's floor on its own', so it is written as the number it is."
+        },
+        {
+          "token": "nav.css .nav__word",
+          "value": "1.375rem",
+          "note": "22px. The wordmark beside the mark in the header. Sized to hold its own against the search field rather than to a step of the scale."
+        },
+        {
+          "token": "nav.css .search__input",
+          "value": "1rem",
+          "note": "16px, and NOT a taste decision: iOS Safari zooms the whole page when a field smaller than 16px takes focus, and a zoomed page under a sticky header is a trap."
+        },
+        {
+          "token": "grid.css .filter",
+          "value": "0.9375rem",
+          "note": "15px. Filter chips — a control, deliberately a step below the card's item name so a chip never competes with a product."
+        },
+        {
+          "token": "type.css display tracking",
+          "value": "-0.02em",
+          "note": "Headings. The PDF publishes no tracking at all; large bold type needs negative tracking to avoid reading as loose."
+        },
+        {
+          "token": "type.css item-name tracking",
+          "value": "-0.01em",
+          "note": "Card names. Half the display value, because the size is half."
+        },
+        {
+          "token": "nav.css .nav__cat",
+          "value": "1.3125rem",
+          "note": "21px. The category links, deliberately the biggest type in the header — bigger than the 16px wordmark and the 16px search placeholder — because the four words naming what the shop sells are the most valuable thing in that bar. Narrows back toward 19px where the row is genuinely tight."
+        }
+      ]
+    },
+    {
+      "title": "Metric-matched fallback fonts",
+      "why": "brand.json publishes one family, Noto Sans, with a fallback stack of Helvetica Neue, Arial, sans-serif. It does not say what should happen in the moment before the webfont arrives — and that moment is when a page reflows under the reader's thumb.",
+      "method": "Two extra @font-face families are declared, each pointing at a font the brand's own stack already names, stretched to occupy exactly the space Noto Sans will. No new typeface is introduced and the visible font is unchanged. The numbers were measured in a browser, same string at 100px: Noto Sans 3375.3 wide with ascent 107 and descent 29; Helvetica Neue 3245.2 (Noto is 1.0401x wider); Arial 3224.4 (1.0468x). The ascent and descent overrides are Noto's own metrics divided by that factor, because the overrides are relative to the adjusted em. Measured after: the fallback now matches Noto's width to within 0.66%, from 3.9% before.",
+      "values": [
+        {
+          "token": "'Noto Sans metric Helvetica'",
+          "value": "size-adjust 104.01%, ascent 102.87%, descent 27.88%",
+          "note": "local('Helvetica Neue'). macOS."
+        },
+        {
+          "token": "'Noto Sans metric Arial'",
+          "value": "size-adjust 104.68%, ascent 102.22%, descent 27.70%",
+          "note": "local('Arial'). Windows and most others."
+        },
+        {
+          "token": "font stack order",
+          "value": "'Noto Sans', metric Helvetica, metric Arial, then brand.json's own stack",
+          "note": "The real face still wins whenever it is available; these only stand in before it arrives."
+        }
+      ]
+    },
+    {
+      "title": "The display typeface",
+      "why": "brand.json typography.display asks for 'a bold, rounded, playful sans-serif' for display and headers and names Fredoka and Baloo as REFERENCES. The brand kit's own wording is 'Fredoka, Baloo, or a comparable rounded display typeface', so it does not lock one. Picking a specific face is therefore this website's decision, not the client's.",
+      "method": "Fredoka was taken because it is the first face the kit names, it is a variable font (300-700, one file for every weight this site uses), and its latin subset is 29 kB self-hosted. Baloo would have been equally compliant. brand.json records the pick as typography.display.chosen; this page is the disclosure that goes with it. If the client wants Baloo, or a face of their own, the answer belongs in brand.json and this site follows it.",
+      "values": [
+        {
+          "token": "typography.display.chosen",
+          "value": "Fredoka",
+          "note": "Not a CSS token — the choice itself. --font-display, --w-display and --w-semi in tokens.css are all read out of brand.json and are not inventions."
+        },
+        {
+          "token": "fonts.css @font-face 'Fredoka'",
+          "value": "weight 300 700, latin + latin-ext",
+          "note": "Self-hosted from public/fonts. The cyrillic subset is on disk and deliberately not declared: nothing here is set in Cyrillic."
+        }
+      ]
+    },
+    {
+      "title": "The approved design's own values",
+      "why": "The design the client approved on 2026-08-25 (site/.site/b.html) is drawn with tracking, small fixed type sizes, corner radii and animation periods. brand.json publishes NONE of these: typography.sizes and typography.lineHeights are null, letter-spacing is never mentioned, visualDirection.cornerRadius is null, and motion is in notSpecifiedInSource. Every value here is therefore a decision made to ship this page.",
+      "method": "Read off the approved page and promoted to tokens so there is one name per role rather than the same number typed in nine files. Nothing was re-tuned in the move: the values are what the client looked at and said yes to.",
+      "values": [
+        {
+          "token": "--tr-caps",
+          "value": "0.06em",
+          "note": "Tracking for the smallest all-caps labels. Same value as --tracking-caps, under a name that matches the other three."
+        },
+        {
+          "token": "--tr-wide",
+          "value": "0.14em",
+          "note": "Tracking for header links and chips."
+        },
+        {
+          "token": "--tr-wider",
+          "value": "0.20em",
+          "note": "Tracking for section kickers and the display-case tags."
+        },
+        {
+          "token": "--tr-widest",
+          "value": "0.24em",
+          "note": "Tracking for the widest kickers and the ticker."
+        },
+        {
+          "token": "--tr-display",
+          "value": "-0.012em",
+          "note": "Negative tracking on Fredoka headings, which are drawn loose at display size."
+        },
+        {
+          "token": "--tr-slab",
+          "value": "-0.022em",
+          "note": "Tighter still, for the four-line typographic statement where the words are set as one block."
+        },
+        {
+          "token": "--fs-tiny",
+          "value": "11px",
+          "note": "The smallest label on the page — the card's photo count and the display case's tag at its floor."
+        },
+        {
+          "token": "--fs-chip",
+          "value": "12px",
+          "note": "Chip and column-heading size."
+        },
+        {
+          "token": "--fs-tag",
+          "value": "13px",
+          "note": "Header links, jump links and footer links at their floor."
+        },
+        {
+          "token": "--fs-lede",
+          "value": "19px",
+          "note": "The hero eyebrow and the shop-name rail. Deliberately at or above 18.66px so bold cream on hot pink is legal at 3:1 rather than needing 4.5:1."
+        },
+        {
+          "token": "--r-sign",
+          "value": "clamp(20px, 3vw, 44px)",
+          "note": "The hero sign's corner radius."
+        },
+        {
+          "token": "--r-panel-lg",
+          "value": "26px",
+          "note": "Category panels, story beats."
+        },
+        {
+          "token": "--r-tile-lg",
+          "value": "20px",
+          "note": "Product cards and fact panels."
+        },
+        {
+          "token": "--drip-h",
+          "value": "6px",
+          "note": "The height of the flat part of a drip edge; the lobes hang below it."
+        },
+        {
+          "token": "--bulb-cycle",
+          "value": "2.6s",
+          "note": "One pass of the marquee bulbs around the sign."
+        },
+        {
+          "token": "--tick-cycle",
+          "value": "68s",
+          "note": "One pass of the product-name ticker."
+        },
+        {
+          "token": "--case-cycle",
+          "value": "74s",
+          "note": "One pass of the display case."
+        },
+        {
+          "token": "--dust-cycle",
+          "value": "56s",
+          "note": "One pass of the dot field behind the sign."
+        },
+        {
+          "token": "--bob-cycle",
+          "value": "7s",
+          "note": "The base period of a floating cut-out; every second and third one is offset from it."
+        },
+        {
+          "token": "m — a custom property set per line by build-site.mjs",
+          "value": "1 / 1.186 / 1.261 / 1.354",
+          "note": "Per-line multipliers on the four-word typographic statement. The ratio of each word's measured advance width in Fredoka 700 to the widest of them, so the four words stack as one solid block instead of a ragged centred list."
+        },
+        {
+          "token": "--sayw",
+          "value": "clamp(38px, 16vw, 244px)",
+          "note": "The common width the four statement lines are solved against."
+        },
+        {
+          "token": "--tint",
+          "value": "0.10-0.34 alpha of the chapter's accent",
+          "note": "The wash behind a product on its card, so a cut-out stands on the chapter's colour rather than on bare cream."
+        },
+        {
+          "token": "--panel-body",
+          "value": "cream, or deep purple on the yellow panel",
+          "note": "The reading strip across a category panel. brand.json visualDirection: keep menu text on cream reading areas."
+        },
+        {
+          "token": "--panel-fg",
+          "value": "the category's own accent",
+          "note": "The category name inside that strip."
+        },
+        {
+          "token": "--panel-go",
+          "value": "deep purple, or cream on the purple strip",
+          "note": "The 'see Helados' line. Separate from --panel-fg because hot pink on cream is 3.85:1 and that line is 13px, which needs 4.5:1."
+        },
+        {
+          "token": "--panel-dim",
+          "value": "0.76 alpha of the strip's ink",
+          "note": "The item count under the name."
+        },
+        {
+          "token": "--panel-k",
+          "value": "0.72 alpha of the strip's ink",
+          "note": "The 01-04 numeral above the name."
+        },
+        {
+          "token": "--bay",
+          "value": "clamp(104px, 12.1vw, 186px)",
+          "note": "One slot of the drifting display case. Everything in the case — its height, the shelf line, each photograph — is a multiple of this."
+        },
+        {
+          "token": "--k",
+          "value": "1, 1.2 above 1900px, 0.66 below 900px, 0.46 below 520px",
+          "note": "The scale of a drip lobe. The lobes are drawn from one measured melt profile and this is the only thing that changes with the viewport."
+        },
+        {
+          "token": "--stage-h",
+          "value": "116cqw",
+          "note": "The height of a card's coloured field, as a share of the card's own width."
+        },
+        {
+          "token": "CASE_W (build-site.mjs)",
+          "value": "1.72",
+          "note": "How wide a photograph in the display case may be, in bay widths. Above 1 on purpose: the case's products are cropped by their neighbours and by both ends of the frame."
+        },
+        {
+          "token": "CASE_H (build-site.mjs)",
+          "value": "1.56",
+          "note": "How tall, in bay widths, against a bay that is 2 tall."
+        },
+        {
+          "token": "CASE_CAP (build-site.mjs)",
+          "value": "1.92",
+          "note": "The ceiling on a case photograph's square, so a very thin product cannot burst the case."
+        }
+      ]
+    }
+  ]
+}

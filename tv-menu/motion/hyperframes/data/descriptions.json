@@ -38,7 +38,7 @@
                                "desc_es": "Malteada cargada con toppings" },
     "Helado en Cono":        { "desc": "Ice Cream Cone",                          "source": "client-approved",
                                "desc_es": "Nieve en cono, del sabor que quieras" },
-    "Helado Chino":          { "desc": "Asian Ice Cream",                         "source": "client-approved",
+    "Helado Viral":          { "desc": "Asian Ice Cream",                         "source": "client-approved",
                                "desc_es": "Helado asiático" },
     "La Sabrosita":          { "desc": "Our House Cup",                           "source": "client-approved",
                                "desc_es": "El vaso de la casa" },
